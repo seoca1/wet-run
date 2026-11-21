@@ -33,9 +33,7 @@ const WHITELIST: ReadonlyArray<{
 ]);
 
 /** Every behaviour an effect string names. Unknown text resolves to nothing. */
-export function resolveExtraEffects(
-  effect: string,
-): ReadonlyArray<ExtraEffectId> {
+export function resolveExtraEffects(effect: string): ReadonlyArray<ExtraEffectId> {
   if (effect.length === 0) return [];
   const out: ExtraEffectId[] = [];
   for (const { marker, id } of WHITELIST) {

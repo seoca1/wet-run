@@ -11,11 +11,7 @@
  * up to wall time.
  */
 
-import {
-  loadPrologueChain,
-  loadSceneChain,
-  resolveSound,
-} from "./graphic_novel_loaders";
+import { loadPrologueChain, loadSceneChain, resolveSound } from "./graphic_novel_loaders";
 import { dialogueTypedChars, sceneProgress } from "./graphic_novel_text";
 import type {
   CharacterId,
@@ -127,10 +123,7 @@ export function progress(p: GraphicNovelPlayer): number {
 export function isDialogueComplete(p: GraphicNovelPlayer): boolean {
   const d = currentDialogue(p);
   if (d === null) return true;
-  return (
-    dialogueTypedChars(d.duration_ms, p.elapsed_ms, d.text_en.length) >=
-    d.text_en.length
-  );
+  return dialogueTypedChars(d.duration_ms, p.elapsed_ms, d.text_en.length) >= d.text_en.length;
 }
 
 /* -------------------------------------------------------------------------- *
@@ -138,10 +131,7 @@ export function isDialogueComplete(p: GraphicNovelPlayer): boolean {
  * -------------------------------------------------------------------------- */
 
 /** Advance playback by deltaMs of wall time. Returns events for the renderer. */
-export function tick(
-  p: GraphicNovelPlayer,
-  deltaMs: number,
-): ReadonlyArray<TickEvent> {
+export function tick(p: GraphicNovelPlayer, deltaMs: number): ReadonlyArray<TickEvent> {
   if (p.done || p.paused) return Object.freeze([]);
   const events: TickEvent[] = [];
   p.elapsed_ms += deltaMs;
@@ -221,11 +211,7 @@ export function skipCurrentScene(p: GraphicNovelPlayer): boolean {
     const d = dlgs[p.dialogue_index];
     if (d === undefined) break;
     p.elapsed_ms = d.duration_ms;
-    const typed = dialogueTypedChars(
-      d.duration_ms,
-      p.elapsed_ms,
-      d.text_en.length,
-    );
+    const typed = dialogueTypedChars(d.duration_ms, p.elapsed_ms, d.text_en.length);
     if (typed >= d.text_en.length) {
       p.dialogue_index += 1;
       if (p.dialogue_index >= dlgs.length) {
@@ -304,9 +290,7 @@ export function restoreProgress(
   const clampedScene = Math.min(progress.scene_index, chain.length);
   const scene = chain[clampedScene];
   const clampedDialogue =
-    scene === undefined
-      ? 0
-      : Math.min(progress.dialogue_index, scene.dialogue.length);
+    scene === undefined ? 0 : Math.min(progress.dialogue_index, scene.dialogue.length);
   return {
     mode: progress.mode,
     chain,

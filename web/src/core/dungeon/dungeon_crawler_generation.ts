@@ -154,11 +154,7 @@ export function generateLevel(
 }
 
 /** Convert dungeon rooms and corridors to walkable tiles */
-export function digRoomsAndCorridors(
-  state: DungeonState,
-  graph: DungeonGraph,
-  rng: Rng,
-): void {
+export function digRoomsAndCorridors(state: DungeonState, graph: DungeonGraph, rng: Rng): void {
   // Start with all walls
   for (let y = 0; y < state.height; y++) {
     for (let x = 0; x < state.width; x++) {
@@ -264,10 +260,8 @@ export function placeStairs(state: DungeonState, graph: DungeonGraph): void {
   const centerX = Math.floor(state.width / 2);
   const centerY = Math.floor(state.height / 2);
   rooms.sort((a, b) => {
-    const distA =
-      Math.abs(a.x + a.w / 2 - centerX) + Math.abs(a.y + a.h / 2 - centerY);
-    const distB =
-      Math.abs(b.x + b.w / 2 - centerX) + Math.abs(b.y + b.h / 2 - centerY);
+    const distA = Math.abs(a.x + a.w / 2 - centerX) + Math.abs(a.y + a.h / 2 - centerY);
+    const distB = Math.abs(b.x + b.w / 2 - centerX) + Math.abs(b.y + b.h / 2 - centerY);
     return distA - distB;
   });
 
@@ -284,7 +278,6 @@ export function placeStairs(state: DungeonState, graph: DungeonGraph): void {
     const downRoom = rooms[rooms.length - 1]; // Farthest from center
     state.stairsDownX = downRoom.x + Math.floor(downRoom.w / 2);
     state.stairsDownY = downRoom.y + Math.floor(downRoom.h / 2);
-    state.tiles[state.stairsDownY][state.stairsDownX].type =
-      TileType.STAIRS_DOWN;
+    state.tiles[state.stairsDownY][state.stairsDownX].type = TileType.STAIRS_DOWN;
   }
 }

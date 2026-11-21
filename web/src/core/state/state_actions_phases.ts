@@ -51,22 +51,12 @@ import {
 } from "./loot_choice";
 import { bossGateNeed, missionGradeOf } from "../combat/ice_scaling";
 import { activeIceOf } from "../combat/roster";
-import {
-  resolveEnding,
-  type EndingContext,
-  type ArcId,
-} from "../combat/ending_resolver";
+import { resolveEnding, type EndingContext, type ArcId } from "../combat/ending_resolver";
 import { onMissionComplete, type FactionId } from "./faction_reputation";
-import {
-  recordMissionComplete,
-  evaluateFarGridUnlock,
-} from "../dungeon/far_grid_gate";
+import { recordMissionComplete, evaluateFarGridUnlock } from "../dungeon/far_grid_gate";
 
 /** Tier 5: matrix view actions (navigate, enter combat, jack out). */
-export function applyMatrixAction(
-  state: GameState,
-  action: GameAction,
-): GameState {
+export function applyMatrixAction(state: GameState, action: GameAction): GameState {
   if (state.encounterDecision && action.type !== "jack_out") {
     return applyEncounterDecision(state, action);
   }
@@ -140,18 +130,14 @@ export function applyMatrixAction(
 
     const forward = action.type === "move_south" || action.type === "move_east";
     const neighbours = node.adjacent;
-    if (neighbours.length === 0)
-      return { ...state, message: "No adjacent routes" };
-    const current = neighbours.findIndex(
-      (i) => i === state.selectedMatrixNodeIndex,
-    );
+    if (neighbours.length === 0) return { ...state, message: "No adjacent routes" };
+    const current = neighbours.findIndex((i) => i === state.selectedMatrixNodeIndex);
     const index =
       current < 0
         ? forward
           ? 0
           : neighbours.length - 1
-        : (current + (forward ? 1 : -1) + neighbours.length) %
-          neighbours.length;
+        : (current + (forward ? 1 : -1) + neighbours.length) % neighbours.length;
     return {
       ...state,
       selectedMatrixNodeIndex: neighbours[index],
@@ -176,17 +162,13 @@ export function applyMatrixAction(
   if (action.type === "select_program") {
     return {
       ...state,
-      message:
-        "ENTER for encounter options; utility cards can SCAN before combat",
+      message: "ENTER for encounter options; utility cards can SCAN before combat",
     };
   }
   return state;
 }
 
-export function applyLootAction(
-  state: GameState,
-  action: GameAction,
-): GameState {
+export function applyLootAction(state: GameState, action: GameAction): GameState {
   // Mission complete: matrix cleared, OR dead-end node (no forward path), OR boss defeated.
   if (isTerminalNode(state)) return applyTerminalLoot(state, action);
 
@@ -364,9 +346,7 @@ function continueToMatrix(state: GameState, note = ""): GameState {
     : [...state.visitedNodes, state.currentNodeIndex];
   // ADR-0261: name the card the player just took, so the destination carries
   // the growth instead of the reward vanishing with the screen.
-  const taken = state.cardRewardTaken
-    ? rewardProgram(state.cardRewardTaken)
-    : undefined;
+  const taken = state.cardRewardTaken ? rewardProgram(state.cardRewardTaken) : undefined;
   const grown = taken ? `Took ${taken.name}. ` : "";
   // ADR-0278: the next encounter opens on a full hand. This runs after the card
   // reward is in the draw pile, so the card just taken is dealt here — a short
@@ -390,10 +370,7 @@ function continueToMatrix(state: GameState, note = ""): GameState {
 
 /** ADR-0282: spend the loot stop on a repair instead of a card. */
 function takeLootRepair(state: GameState): GameState {
-  const amount = lootRepairAmount(
-    state.player.maxHp,
-    missionGradeOf(state.mission),
-  );
+  const amount = lootRepairAmount(state.player.maxHp, missionGradeOf(state.mission));
   return continueToMatrix(
     {
       ...state,
@@ -464,8 +441,7 @@ export function burnTarget(state: GameState): Program | null {
 
 /** True when there is a card the run can spare (it never burns the last one). */
 function canBurn(state: GameState): boolean {
-  const total =
-    state.deck.length + state.drawPile.length + state.discardPile.length;
+  const total = state.deck.length + state.drawPile.length + state.discardPile.length;
   return total > 1 && burnTarget(state) !== null;
 }
 
@@ -642,10 +618,7 @@ function takeLootIntel(state: GameState): GameState {
   );
 }
 
-export function applyDeathAction(
-  state: GameState,
-  action: GameAction,
-): GameState {
+export function applyDeathAction(state: GameState, action: GameAction): GameState {
   if (action.type === "trigger_death") {
     const jockey = createDeceasedJockey({
       name: state.mission.title,
@@ -707,10 +680,7 @@ export function applyDeathAction(
   return state;
 }
 
-export function applyEndingAction(
-  state: GameState,
-  action: GameAction,
-): GameState {
+export function applyEndingAction(state: GameState, action: GameAction): GameState {
   if (action.type === "confirm" || action.type === "jack_out") {
     return {
       ...state,
@@ -721,10 +691,7 @@ export function applyEndingAction(
   return state;
 }
 
-export function applyMenuAction(
-  state: GameState,
-  action: GameAction,
-): GameState {
+export function applyMenuAction(state: GameState, action: GameAction): GameState {
   if (action.type === "confirm") {
     return {
       ...state,
@@ -742,10 +709,7 @@ export function applyMenuAction(
   return state;
 }
 
-export function applyApproachAction(
-  state: GameState,
-  action: GameAction,
-): GameState {
+export function applyApproachAction(state: GameState, action: GameAction): GameState {
   if (action.type === "confirm") {
     // P15 — combat entry presentation. The `ice_intro` banner ("INCOMING:
     // <ICE>" + scanning line) had a renderer but no spawn site, so combat
@@ -774,8 +738,7 @@ export function applyApproachAction(
   if (action.type === "select_program") {
     return {
       ...state,
-      message:
-        "Press ENTER (or SPACE) to engage combat — programs activate during combat",
+      message: "Press ENTER (or SPACE) to engage combat — programs activate during combat",
     };
   }
   if (action.type === "jack_out") {
@@ -784,10 +747,7 @@ export function applyApproachAction(
   return state;
 }
 
-export function applyEndAction(
-  state: GameState,
-  action: GameAction,
-): GameState {
+export function applyEndAction(state: GameState, action: GameAction): GameState {
   if (action.type === "confirm") {
     return { ...state, phase: "exit" };
   }
@@ -797,8 +757,7 @@ export function applyEndAction(
 function getMissionFaction(missionId: string): FactionId | null {
   if (missionId.includes("hosaka")) return "hosaka";
   if (missionId.includes("maas")) return "maas";
-  if (missionId.includes("sense") || missionId.includes("net"))
-    return "sense_net";
+  if (missionId.includes("sense") || missionId.includes("net")) return "sense_net";
   if (missionId.includes("ta")) return "ta";
   return null;
 }

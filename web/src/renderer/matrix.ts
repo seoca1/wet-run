@@ -9,17 +9,8 @@
 import type { Grid, Matrix, Ice } from "../core/types";
 import { makeGrid } from "../core/grid";
 import { PALETTE } from "./palette";
-import {
-  CARD_ROWS,
-  matrixCardLines,
-  type MatrixPosition,
-} from "./matrix_nodes";
-import {
-  drawPanel,
-  panelInnerRect,
-  screenFrameRect,
-  type PanelRect,
-} from "./panel";
+import { CARD_ROWS, matrixCardLines, type MatrixPosition } from "./matrix_nodes";
+import { drawPanel, panelInnerRect, screenFrameRect, type PanelRect } from "./panel";
 import { EVENT_LABELS, type MatrixEventKind } from "../core/event_matrix";
 import { planBoard, type BoardPlan } from "./matrix_board_layout";
 import { routeCorridors, type CorridorSet } from "./matrix_board_routes";
@@ -66,11 +57,9 @@ export function matrixLayout(grid: Grid, matrix: Matrix): MatrixLayout {
   const titleY = inner.y + Math.max(0, Math.floor((available - block) / 2));
   const board = planBoard(matrix, inner, titleY + 3, available - FIXED_ROWS);
   const cardWidth = Math.max(2, Math.min(CARD_WIDTH, inner.width - 2));
-  const hasPreview =
-    inner.width >= CARD_WIDTH + PREVIEW_GAP + PREVIEW_WIDTH + 2;
+  const hasPreview = inner.width >= CARD_WIDTH + PREVIEW_GAP + PREVIEW_WIDTH + 2;
   const blockWidth = cardWidth + (hasPreview ? PREVIEW_GAP + PREVIEW_WIDTH : 0);
-  const cardX =
-    inner.x + Math.max(1, Math.floor((inner.width - blockWidth) / 2));
+  const cardX = inner.x + Math.max(1, Math.floor((inner.width - blockWidth) / 2));
   const legendY = board.rect.y + board.rect.height;
   return {
     frame,
@@ -106,14 +95,8 @@ export function matrixFooter(
           ]
         : ["↑↓ pick route | ESC jack out", "↑↓: pick route | ESC: jack out"]
       : target
-        ? [
-            "ENTER ICE | ↑↓ route | ESC jack out",
-            "ENTER: enter ICE | ↑↓: route | ESC: jack out",
-          ]
-        : [
-            "ENTER travel | ↑↓ | ESC jack out",
-            "ENTER: travel | ↑↓: route | ESC: jack out",
-          ];
+        ? ["ENTER ICE | ↑↓ route | ESC jack out", "ENTER: enter ICE | ↑↓: route | ESC: jack out"]
+        : ["ENTER travel | ↑↓ | ESC jack out", "ENTER: travel | ↑↓: route | ESC: jack out"];
   // The footer starts one cell inside the frame.
   return innerWidth < 40 || long.length > innerWidth - 1 ? short : long;
 }
@@ -140,9 +123,7 @@ export function renderMatrix(
   intel: readonly number[] = [],
 ): Grid {
   const gates = (i: number): boolean =>
-    (matrix.nodes[i]?.iceIds.length ?? 0) > 0 &&
-    !cleared.includes(i) &&
-    !bypassed.includes(i);
+    (matrix.nodes[i]?.iceIds.length ?? 0) > 0 && !cleared.includes(i) && !bypassed.includes(i);
   let grid = makeGrid(cols, rows);
   const layout = matrixLayout(grid, matrix);
   const { inner, footerY } = layout;
@@ -172,10 +153,7 @@ export function renderMatrix(
     layout.cardX + layout.cardWidth,
   );
   put(
-    Math.max(
-      inner.x + 1,
-      Math.min(inner.x + inner.width - 1, right) - progress.length,
-    ),
+    Math.max(inner.x + 1, Math.min(inner.x + inner.width - 1, right) - progress.length),
     layout.progressY,
     progress,
     PALETTE.GRAY_LIGHT,
@@ -184,14 +162,7 @@ export function renderMatrix(
   const clip: PanelRect = { ...inner, height: Math.max(0, footerY - inner.y) };
   grid =
     travel !== null && travel.to === currentNodeIndex
-      ? drawTravelBoard(
-          grid,
-          clip,
-          layout.board,
-          layout.corridors,
-          position,
-          travel,
-        )
+      ? drawTravelBoard(grid, clip, layout.board, layout.corridors, position, travel)
       : drawBoard(grid, clip, layout.board, layout.corridors, position);
   BOARD_LEGEND.forEach((line, k) =>
     put(layout.cardX, layout.legendY + k, line, PALETTE.GRAY_LIGHT),
@@ -209,10 +180,7 @@ export function renderMatrix(
   // One-time entry hint: one blank row under the card when there is room,
   // else flush above the footer; never over the card.
   if (entryHint) {
-    const first = Math.min(
-      layout.cardY + CARD_ROWS + 1,
-      footerY - MATRIX_ENTRY_HINT_LINES.length,
-    );
+    const first = Math.min(layout.cardY + CARD_ROWS + 1, footerY - MATRIX_ENTRY_HINT_LINES.length);
     MATRIX_ENTRY_HINT_LINES.forEach((line, k) => {
       if (first + k >= layout.cardY + CARD_ROWS)
         put(layout.cardX, first + k, line, PALETTE.YELLOW_AMBER);
@@ -226,12 +194,7 @@ export function renderMatrix(
     const node = matrix.nodes[currentNodeIndex];
     put(x, y, "── CURRENT NODE ──", PALETTE.GRAY_LIGHT);
     put(x, y + 1, icePreview.name.slice(0, PREVIEW_WIDTH), PALETTE.ICE_BLUE);
-    put(
-      x,
-      y + 2,
-      `HP:  ${node?.iceHp[0]?.toString() ?? "—"}`,
-      PALETTE.GREEN_NEON,
-    );
+    put(x, y + 2, `HP:  ${node?.iceHp[0]?.toString() ?? "—"}`, PALETTE.GREEN_NEON);
     if (node) {
       const eventKind: MatrixEventKind = node.eventKind ?? "combat";
       put(x, y + 3, `Evt: ${EVENT_LABELS[eventKind]}`, PALETTE.YELLOW_AMBER);
@@ -244,14 +207,7 @@ export function renderMatrix(
     gates(currentNodeIndex),
     selectedNodeIndex === null ? null : gates(selectedNodeIndex),
   );
-  grid = putInside(
-    grid,
-    inner,
-    inner.x + 1,
-    footerY,
-    status,
-    PALETTE.YELLOW_AMBER,
-  );
+  grid = putInside(grid, inner, inner.x + 1, footerY, status, PALETTE.YELLOW_AMBER);
 
   // Frame last, so an overlong label can never erase a rail.
   return drawPanel(grid, layout.frame).grid;

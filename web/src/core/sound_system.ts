@@ -219,10 +219,7 @@ export function shouldTransition(
   return { track: target, immediate };
 }
 
-export function calculateVolume(
-  trackId: BgmTrackId,
-  masterVolume: number,
-): number {
+export function calculateVolume(trackId: BgmTrackId, masterVolume: number): number {
   const track = TRACKS[trackId];
   if (!track) return 0;
   return Math.max(0, Math.min(1, track.volume * masterVolume));

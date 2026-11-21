@@ -16,13 +16,7 @@ import { makeGrid, setText } from "../core/grid";
 import { t, type Language } from "../core/i18n";
 import { PALETTE } from "./palette";
 import { formatNavIndex } from "./nav_index";
-import {
-  drawPanel,
-  panelInnerRect,
-  screenFrameRect,
-  setInnerText,
-  type PanelRect,
-} from "./panel";
+import { drawPanel, panelInnerRect, screenFrameRect, setInnerText, type PanelRect } from "./panel";
 
 export type MenuOption =
   | "new_run"
@@ -61,20 +55,54 @@ export interface MenuEntry {
 
 export const MENU_OPTIONS: ReadonlyArray<MenuEntry> = [
   // PLAY
-  { key: "continue", label: "menu.continue", desc: "menu.desc.continue", available: true, group: "menu.group.play" },
+  {
+    key: "continue",
+    label: "menu.continue",
+    desc: "menu.desc.continue",
+    available: true,
+    group: "menu.group.play",
+  },
   { key: "new_run", label: "menu.new_run", desc: "menu.desc.new_run", available: true },
-  { key: "far_grid_hub", label: "menu.far_grid_hub", desc: "menu.desc.far_grid_hub", available: true },
-  { key: "dungeon_crawl", label: "menu.dungeon_crawl", desc: "menu.desc.dungeon_crawl", available: true },
+  {
+    key: "far_grid_hub",
+    label: "menu.far_grid_hub",
+    desc: "menu.desc.far_grid_hub",
+    available: true,
+  },
+  {
+    key: "dungeon_crawl",
+    label: "menu.dungeon_crawl",
+    desc: "menu.desc.dungeon_crawl",
+    available: true,
+  },
   { key: "tutorial", label: "menu.tutorial", desc: "menu.desc.tutorial", available: true },
   // WORKSHOP
-  { key: "craft", label: "menu.craft", desc: "menu.desc.craft", available: true, group: "menu.group.workshop" },
+  {
+    key: "craft",
+    label: "menu.craft",
+    desc: "menu.desc.craft",
+    available: true,
+    group: "menu.group.workshop",
+  },
   { key: "equipment", label: "menu.equipment", desc: "menu.desc.equipment", available: true },
   // ARCHIVE
-  { key: "hall_of_dead", label: "menu.hall_of_dead", desc: "menu.desc.hall_of_dead", available: true, group: "menu.group.archive" },
+  {
+    key: "hall_of_dead",
+    label: "menu.hall_of_dead",
+    desc: "menu.desc.hall_of_dead",
+    available: true,
+    group: "menu.group.archive",
+  },
   { key: "endings", label: "menu.endings", desc: "menu.desc.endings", available: true },
   { key: "stats", label: "menu.stats", desc: "menu.desc.stats", available: true },
   // SYSTEM
-  { key: "settings", label: "menu.settings", desc: "menu.desc.settings", available: true, group: "menu.group.system" },
+  {
+    key: "settings",
+    label: "menu.settings",
+    desc: "menu.desc.settings",
+    available: true,
+    group: "menu.group.system",
+  },
   { key: "help", label: "menu.help", desc: "menu.desc.help", available: true },
   { key: "credits", label: "menu.credits", desc: "menu.desc.credits", available: true },
 ] as const;
@@ -97,9 +125,7 @@ export interface MenuReveal {
 }
 
 /** The entries to show for this player, in display order. */
-export function visibleMenuOptions(
-  reveal: MenuReveal,
-): ReadonlyArray<MenuEntry> {
+export function visibleMenuOptions(reveal: MenuReveal): ReadonlyArray<MenuEntry> {
   return MENU_OPTIONS.filter((opt) => {
     switch (opt.key) {
       case "continue":
@@ -122,9 +148,7 @@ export function visibleMenuOptions(
 }
 
 /** Rows an option block needs: one per entry plus one per group header. */
-export function menuBlockRows(
-  options: ReadonlyArray<MenuEntry>,
-): number {
+export function menuBlockRows(options: ReadonlyArray<MenuEntry>): number {
   return options.length + options.filter((o) => o.group !== undefined).length;
 }
 
@@ -157,10 +181,7 @@ function widestOptionRow(language: Language): number {
   for (const opt of MENU_OPTIONS) {
     widestDesc = Math.max(widestDesc, t(opt.desc, language).length);
   }
-  const gated = Math.max(
-    t("menu.no_save", language).length,
-    t("menu.locked", language).length,
-  );
+  const gated = Math.max(t("menu.no_save", language).length, t("menu.locked", language).length);
   return prefix + labelW + 1 + Math.max(widestDesc, gated) + 2;
 }
 
@@ -184,11 +205,8 @@ export function mainMenuLayout(
   const available = footerY - 1 - inner.y;
   // 6 title rows + the option block + 3 footer/hint rows.
   const blockRows = 6 + menuBlockRows(options) + 3;
-  const titleY =
-    inner.y + Math.max(1, Math.floor((available - blockRows) / 2));
-  const optionsX =
-    inner.x +
-    Math.max(3, Math.floor((inner.width - widestOptionRow(language)) / 2));
+  const titleY = inner.y + Math.max(1, Math.floor((available - blockRows) / 2));
+  const optionsX = inner.x + Math.max(3, Math.floor((inner.width - widestOptionRow(language)) / 2));
   return { frame, inner, titleY, optionsX, optionsY: titleY + 6, footerY };
 }
 
@@ -266,14 +284,7 @@ export function renderMainMenu(
     if (!opt) continue;
     if (row >= footerY) break;
     if (opt.group !== undefined) {
-      grid = setInnerText(
-        grid,
-        inner,
-        optionsX,
-        row,
-        t(opt.group, language),
-        PALETTE.GRAY_MID,
-      );
+      grid = setInnerText(grid, inner, optionsX, row, t(opt.group, language), PALETTE.GRAY_MID);
       row += 1;
       if (row >= footerY) break;
     }
@@ -293,11 +304,7 @@ export function renderMainMenu(
       suffix = t("menu.locked", language);
       gated = true;
     }
-    const fg = gated
-      ? PALETTE.GRAY_DARK
-      : isSelected
-        ? PALETTE.GREEN_NEON
-        : PALETTE.GRAY_LIGHT;
+    const fg = gated ? PALETTE.GRAY_DARK : isSelected ? PALETTE.GREEN_NEON : PALETTE.GRAY_LIGHT;
     const head = `${marker} ${num} ${label} `;
     grid = setInnerText(grid, inner, optionsX, row, head, fg);
     grid = setInnerText(
@@ -317,14 +324,7 @@ export function renderMainMenu(
     const hintRow = lastRow + 2;
     if (hintRow < footerY) {
       const hint = `→ ${saveMeta.missionId} (turn ${saveMeta.turnCount + 1})`;
-      grid = setInnerText(
-        grid,
-        inner,
-        optionsX + 2,
-        hintRow,
-        hint,
-        PALETTE.YELLOW_AMBER,
-      );
+      grid = setInnerText(grid, inner, optionsX + 2, hintRow, hint, PALETTE.YELLOW_AMBER);
     }
   }
 
@@ -333,14 +333,7 @@ export function renderMainMenu(
     const msgRow = lastRow + 3;
     if (msgRow < footerY) {
       const msgX = Math.max(inner.x + 1, optionsX - 2);
-      grid = setInnerText(
-        grid,
-        inner,
-        msgX,
-        msgRow,
-        statusMessage,
-        PALETTE.YELLOW_AMBER,
-      );
+      grid = setInnerText(grid, inner, msgX, msgRow, statusMessage, PALETTE.YELLOW_AMBER);
     }
   }
 
@@ -371,11 +364,7 @@ export function renderMainMenu(
  * Shows the option name + "Coming soon" message so the user gets
  * immediate feedback when selecting a deferred menu item.
  */
-export function renderStubScreen(
-  optionLabel: string,
-  cols: number,
-  rows: number,
-): Grid {
+export function renderStubScreen(optionLabel: string, cols: number, rows: number): Grid {
   let grid = makeGrid(cols, rows);
   grid = setText(
     grid,
@@ -391,12 +380,6 @@ export function renderStubScreen(
     "[ Coming soon — Tier 5+ ]",
     PALETTE.YELLOW_AMBER,
   );
-  grid = setText(
-    grid,
-    2,
-    rows - 2,
-    "ESC: back to main menu",
-    PALETTE.GRAY_DARK,
-  );
+  grid = setText(grid, 2, rows - 2, "ESC: back to main menu", PALETTE.GRAY_DARK);
   return grid;
 }

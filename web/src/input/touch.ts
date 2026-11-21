@@ -132,9 +132,7 @@ function buildActionButtons(config: LayoutConfig): ReadonlyArray<ButtonConfig> {
 }
 
 /** Inject CSS + DOM elements for the on-screen gamepad. */
-export function mountVirtualGamepad(
-  handler: (action: GameAction) => void,
-): () => void {
+export function mountVirtualGamepad(handler: (action: GameAction) => void): () => void {
   if (typeof document === "undefined") {
     return () => {};
   }
@@ -254,10 +252,7 @@ function ensureOverlayRoot(): HTMLElement {
   return root;
 }
 
-function renderOverlay(
-  root: HTMLElement,
-  handler: (action: GameAction) => void,
-): void {
+function renderOverlay(root: HTMLElement, handler: (action: GameAction) => void): void {
   const config = getLayoutConfig();
   const dpadButtons = buildDpadButtons(config);
   const actionButtons = buildActionButtons(config);

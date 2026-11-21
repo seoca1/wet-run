@@ -162,22 +162,21 @@ export const PALETTE_VARIANTS: Readonly<
  * mapped onto the palette tokens that carry meaning. Applied *after* the
  * colorblind overrides, so a player who wants both gets both.
  */
-const HIGH_CONTRAST_OVERRIDES: Readonly<Partial<Record<PaletteToken, string>>> =
-  Object.freeze({
-    FOREGROUND: getHighContrastColors().text,
-    BACKGROUND: getHighContrastColors().background,
-    GRAY_DARK: "#a0a0a0",
-    GRAY: "#c0c0c0",
-    GRAY_MID: "#d0d0d0",
-    GRAY_LIGHT: "#e0e0e0",
-    GREEN_NEON: getHighContrastColors().success,
-    RED_BRIGHT: getHighContrastColors().error,
-    ALARM_RED: getHighContrastColors().error,
-    YELLOW_AMBER: getHighContrastColors().secondary,
-    YELLOW: getHighContrastColors().secondary,
-    CYAN_LIGHT: getHighContrastColors().primary,
-    HEAL_COLOR: getHighContrastColors().success,
-  });
+const HIGH_CONTRAST_OVERRIDES: Readonly<Partial<Record<PaletteToken, string>>> = Object.freeze({
+  FOREGROUND: getHighContrastColors().text,
+  BACKGROUND: getHighContrastColors().background,
+  GRAY_DARK: "#a0a0a0",
+  GRAY: "#c0c0c0",
+  GRAY_MID: "#d0d0d0",
+  GRAY_LIGHT: "#e0e0e0",
+  GREEN_NEON: getHighContrastColors().success,
+  RED_BRIGHT: getHighContrastColors().error,
+  ALARM_RED: getHighContrastColors().error,
+  YELLOW_AMBER: getHighContrastColors().secondary,
+  YELLOW: getHighContrastColors().secondary,
+  CYAN_LIGHT: getHighContrastColors().primary,
+  HEAL_COLOR: getHighContrastColors().success,
+});
 
 /**
  * The palette for a colorblind mode — pure.
@@ -218,10 +217,7 @@ export function activeHighContrast(): boolean {
  * properties is enough to switch the whole game's colours — no renderer
  * call site changes. Passing `"none"` restores the byte-identical default.
  */
-export function applyPaletteMode(
-  mode: ColorblindMode,
-  highContrast: boolean = false,
-): void {
+export function applyPaletteMode(mode: ColorblindMode, highContrast: boolean = false): void {
   const next = paletteFor(mode, highContrast);
   for (const key of Object.keys(DEFAULT_PALETTE) as PaletteToken[]) {
     PALETTE[key] = next[key];
@@ -237,9 +233,7 @@ export function applyPaletteMode(
  */
 export function resolveColorHint(hint: string): string {
   if (hint in PALETTE) {
-    return (
-      (PALETTE as Readonly<Record<string, string>>)[hint] ?? PALETTE.FOREGROUND
-    );
+    return (PALETTE as Readonly<Record<string, string>>)[hint] ?? PALETTE.FOREGROUND;
   }
   return PALETTE.FOREGROUND;
 }

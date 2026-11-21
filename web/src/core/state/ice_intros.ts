@@ -15,9 +15,7 @@ import type { OnboardingStorage } from "./onboarding";
 export const ICE_INTRO_SEEN_KEY = "wetrun_ice_intro_seen";
 
 /** The ICE ids this profile has already heard. Empty when storage is absent. */
-export function seenIceIntros(
-  storage: OnboardingStorage | null | undefined,
-): ReadonlySet<string> {
+export function seenIceIntros(storage: OnboardingStorage | null | undefined): ReadonlySet<string> {
   if (!storage) return new Set();
   try {
     const raw = storage.getItem(ICE_INTRO_SEEN_KEY);

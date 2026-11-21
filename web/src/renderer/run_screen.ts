@@ -88,12 +88,7 @@ export function renderRunScreen(
   switch (state.runPhase) {
     case "matrix": {
       if (state.encounterDecision)
-        return renderEncounterDecision(
-          state,
-          cols,
-          rows,
-          narrative?.iceVoice ?? null,
-        );
+        return renderEncounterDecision(state, cols, rows, narrative?.iceVoice ?? null);
       const matrix = state.matrix;
       if (!matrix) return null;
       return {
@@ -182,9 +177,7 @@ export function renderRunScreen(
           }
         });
         const uniqueHint =
-          cols < 40
-            ? `1-${uniqueIds.length}: pick`
-            : `1-${uniqueIds.length}: unique · ENTER: skip`;
+          cols < 40 ? `1-${uniqueIds.length}: pick` : `1-${uniqueIds.length}: unique · ENTER: skip`;
         return {
           grid: renderLootScreen(
             state.player.hp,
@@ -225,18 +218,13 @@ export function renderRunScreen(
       // short form is used, so the offered numbers still fit on the panel.
       const narrow = cols < 76;
       // ADR-0329: a salvage offer, when this stop has one.
-      const gearDrop =
-        !terminal && takenId === null ? offeredEquipmentDrop(state) : null;
+      const gearDrop = !terminal && takenId === null ? offeredEquipmentDrop(state) : null;
       // ADR-0330: a carried consumable, when the run has one.
       const useItem =
-        !terminal && takenId === null
-          ? carriedConsumable(state.inventory.materials)
-          : null;
+        !terminal && takenId === null ? carriedConsumable(state.inventory.materials) : null;
       // ADR-0331: the grade's material offer, bought with the run's credits.
       const buyOffer =
-        !terminal && takenId === null
-          ? materialOfferForGrade(missionGradeOf(state.mission))
-          : null;
+        !terminal && takenId === null ? materialOfferForGrade(missionGradeOf(state.mission)) : null;
       // ADR-0251 rule 5: do not promise a key that does nothing. The trace exits
       // only exist while there is a trace, and both of them stay open, so a deep
       // hole can be cleared in one stop (ADR-0297) — which is worth saying.
@@ -258,9 +246,7 @@ export function renderRunScreen(
           ...(useItem !== null ? ["10: use"] : []),
           ...(buyOffer !== null ? ["11: buy"] : []),
         ].join(" · ") +
-        (traceExits.includes("6: vent") && traceExits.includes("7: burn")
-          ? " · 6+7 stack"
-          : "");
+        (traceExits.includes("6: vent") && traceExits.includes("7: burn") ? " · 6+7 stack" : "");
       // ADR-0299: the 40-column panel has 36 usable columns, so the hint gets a
       // short form rather than being clipped mid-word.
       const offeredSlots = [
@@ -272,9 +258,7 @@ export function renderRunScreen(
       ];
       const maxSlot = terminal ? 5 : Math.max(...offeredSlots);
       const lootHint =
-        lootHintFull.length <= cols - 4
-          ? lootHintFull
-          : `1-3 card · 4-${maxSlot} options`;
+        lootHintFull.length <= cols - 4 ? lootHintFull : `1-3 card · 4-${maxSlot} options`;
       if (!terminal && takenId === null) {
         const repair = lootRepairAmount(state.player.maxHp, grade);
         const repairPct = lootRepairPctForGrade(grade);
@@ -403,10 +387,7 @@ export function renderCombatScreen(
   cols: number,
   rows: number,
 ) {
-  const statusGroups = groupStatusByTarget(
-    view.state.statusEffects,
-    view.state.activeIceIndex,
-  );
+  const statusGroups = groupStatusByTarget(view.state.statusEffects, view.state.activeIceIndex);
   const layout = runScreenLayout(cols, rows);
   return renderGrid(
     view.state,
@@ -427,19 +408,9 @@ export function composeCombatScreen(
   const hud = buildHudLines(state);
   if (state.vfxInstances.length === 0) return { grid: state.grid, hud };
   const layout = runScreenLayout(state.grid.width, state.grid.height);
-  const composed = composeCombatVfx(
-    state.grid,
-    state.vfxInstances,
-    layout.cols,
-    layout.rows,
-  );
+  const composed = composeCombatVfx(state.grid, state.vfxInstances, layout.cols, layout.rows);
   return {
-    grid: composeFloatingDamage(
-      composed,
-      state.vfxInstances,
-      layout.cols,
-      layout.rows,
-    ),
+    grid: composeFloatingDamage(composed, state.vfxInstances, layout.cols, layout.rows),
     hud,
     shake: overlayShake(state.vfxInstances, reducedMotion),
   };

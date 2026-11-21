@@ -43,9 +43,7 @@ export const LOOT_VENT_SLOT = LOOT_PROGRAM_SLOTS + 3; // 6
  * The repair slot (below) stays, as the top-up: the automatic heal is partial,
  * so a runner who took a bad hit still has a reason to spend a stop on HP.
  */
-export const VICTORY_HEAL_PCT_BY_GRADE: ReadonlyArray<number> = [
-  50, 50, 50, 50, 50, 50,
-];
+export const VICTORY_HEAL_PCT_BY_GRADE: ReadonlyArray<number> = [50, 50, 50, 50, 50, 50];
 
 /** The automatic recovery after a win, as an HP amount.
  *
@@ -54,11 +52,7 @@ export const VICTORY_HEAL_PCT_BY_GRADE: ReadonlyArray<number> = [
  * one. A flat grant would double-count with the repair slot below and measured
  * g4 at 99.7%; a floor only pays when the body is actually below it.
  */
-export function victoryHealAmount(
-  maxHp: number,
-  hp: number,
-  grade: number,
-): number {
+export function victoryHealAmount(maxHp: number, hp: number, grade: number): number {
   const pct = VICTORY_HEAL_PCT_BY_GRADE[clampGrade(grade) - 1] ?? 25;
   const floor = Math.floor(maxHp * (pct / 100));
   return Math.max(0, Math.min(maxHp, floor) - hp);
@@ -101,9 +95,7 @@ export function lootRepairAmount(maxHp: number, grade: number): number {
  * gate; this sells it for credits, and about the routes ahead rather than the
  * node you are standing on.
  */
-export const LOOT_INTEL_PRICE_BY_GRADE: ReadonlyArray<number> = [
-  30, 40, 60, 80, 110, 120,
-];
+export const LOOT_INTEL_PRICE_BY_GRADE: ReadonlyArray<number> = [30, 40, 60, 80, 110, 120];
 
 /** What the intel costs at a mission grade. */
 export function lootIntelPrice(grade: number): number {
@@ -192,9 +184,7 @@ export function recoverHpAmount(maxHp: number): number {
 export function canRecover(state: {
   readonly player: { readonly alarm: number; readonly hp: number; readonly maxHp: number };
 }): boolean {
-  return (
-    state.player.alarm >= RECOVER_MIN_COST && state.player.hp < state.player.maxHp
-  );
+  return state.player.alarm >= RECOVER_MIN_COST && state.player.hp < state.player.maxHp;
 }
 
 /** Percent of max HP one vent costs.
@@ -223,17 +213,7 @@ export function ventHpPrice(maxHp: number): number {
 /** The slot a loot keypress refers to, or null when it is not a loot option. */
 export function lootSlotChoice(
   slot: number,
-):
-  | "program"
-  | "repair"
-  | "intel"
-  | "vent"
-  | "burn"
-  | "recover"
-  | "gear"
-  | "item"
-  | "buy"
-  | null {
+): "program" | "repair" | "intel" | "vent" | "burn" | "recover" | "gear" | "item" | "buy" | null {
   if (slot >= 1 && slot <= LOOT_PROGRAM_SLOTS) return "program";
   if (slot === LOOT_REPAIR_SLOT) return "repair";
   if (slot === LOOT_INTEL_SLOT) return "intel";

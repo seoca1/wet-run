@@ -22,10 +22,7 @@ export function activeIceOf(state: GameState): Ice {
  * multi-ICE fight names a name that was actually killed. Falls back to the
  * active target when the roster is empty.
  */
-export function defeatedIceName(
-  state: GameState,
-  defeated: ReadonlyArray<Ice> = [],
-): string {
+export function defeatedIceName(state: GameState, defeated: ReadonlyArray<Ice> = []): string {
   const lastDefeated = defeated[defeated.length - 1];
   if (lastDefeated) return lastDefeated.name;
   const active = state.iceRoster[state.activeIceIndex];

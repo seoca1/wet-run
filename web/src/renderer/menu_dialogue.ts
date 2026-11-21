@@ -26,16 +26,9 @@ export function renderMissionBriefing(
 ): Grid {
   let grid = makeGrid(cols, rows);
   const width = Math.max(16, cols - 8);
-  const centre = (text: string): number =>
-    Math.max(2, Math.floor((cols - text.length) / 2));
+  const centre = (text: string): number => Math.max(2, Math.floor((cols - text.length) / 2));
 
-  grid = setText(
-    grid,
-    centre("MISSION BRIEFING"),
-    2,
-    "MISSION BRIEFING",
-    PALETTE.GREEN_NEON,
-  );
+  grid = setText(grid, centre("MISSION BRIEFING"), 2, "MISSION BRIEFING", PALETTE.GREEN_NEON);
   const heading = `Mission: ${title}`;
   grid = setText(
     grid,
@@ -176,11 +169,7 @@ export function renderBriefingScreen(
  * Stage: travel — atmospheric transition to matrix.
  * Auto-advances after a few seconds or key press.
  */
-export function renderTravelScreen(
-  cols: number,
-  rows: number,
-  step: number = 0,
-): Grid {
+export function renderTravelScreen(cols: number, rows: number, step: number = 0): Grid {
   let grid = makeGrid(cols, rows);
 
   // Title
@@ -305,29 +294,16 @@ export function renderNPCDialogueScreen(
   // Dialogue lines
   for (let i = 0; i < dialogueLines.length; i++) {
     const line = dialogueLines[i];
-    const truncated =
-      line.length > boxWidth - 4 ? line.slice(0, boxWidth - 7) + "..." : line;
+    const truncated = line.length > boxWidth - 4 ? line.slice(0, boxWidth - 7) + "..." : line;
     const padded = truncated.padEnd(boxWidth - 4);
     const isCurrent = i === currentLine;
     const color = isCurrent ? PALETTE.GREEN_NEON : PALETTE.GRAY_LIGHT;
-    grid = setText(
-      grid,
-      boxLeft,
-      dialogueStartY + 1 + i,
-      `║ ${padded} ║`,
-      color,
-    );
+    grid = setText(grid, boxLeft, dialogueStartY + 1 + i, `║ ${padded} ║`, color);
   }
 
   // Bottom border
   const bottomY = dialogueStartY + 1 + dialogueLines.length;
-  grid = setText(
-    grid,
-    boxLeft,
-    bottomY,
-    "╚" + "═".repeat(boxWidth - 2) + "╝",
-    PALETTE.CYAN_LIGHT,
-  );
+  grid = setText(grid, boxLeft, bottomY, "╚" + "═".repeat(boxWidth - 2) + "╝", PALETTE.CYAN_LIGHT);
 
   // Progress indicator
   grid = setText(
@@ -340,13 +316,7 @@ export function renderNPCDialogueScreen(
 
   // Footer
   const footerY = rows - 2;
-  grid = setText(
-    grid,
-    2,
-    footerY,
-    "ENTER: next line | ESC: skip dialogue",
-    PALETTE.GRAY_DARK,
-  );
+  grid = setText(grid, 2, footerY, "ENTER: next line | ESC: skip dialogue", PALETTE.GRAY_DARK);
 
   return grid;
 }
@@ -408,13 +378,7 @@ export function renderGhostEncounterScreen(
   let lineY = dialogueStartY + 1;
   for (const word of words) {
     if ((line + word).length > boxWidth - 4) {
-      grid = setText(
-        grid,
-        boxLeft,
-        lineY,
-        `║ ${line.padEnd(boxWidth - 4)} ║`,
-        PALETTE.GRAY_LIGHT,
-      );
+      grid = setText(grid, boxLeft, lineY, `║ ${line.padEnd(boxWidth - 4)} ║`, PALETTE.GRAY_LIGHT);
       line = word + " ";
       lineY++;
     } else {
@@ -422,13 +386,7 @@ export function renderGhostEncounterScreen(
     }
   }
   if (line.length > 0) {
-    grid = setText(
-      grid,
-      boxLeft,
-      lineY,
-      `║ ${line.padEnd(boxWidth - 4)} ║`,
-      PALETTE.GRAY_LIGHT,
-    );
+    grid = setText(grid, boxLeft, lineY, `║ ${line.padEnd(boxWidth - 4)} ║`, PALETTE.GRAY_LIGHT);
     lineY++;
   }
 
@@ -448,24 +406,12 @@ export function renderGhostEncounterScreen(
     const isSelected = i === selectedOption;
     const marker = isSelected ? "▸" : " ";
     const color = isSelected ? PALETTE.MAGENTA_NEON : PALETTE.GRAY_LIGHT;
-    grid = setText(
-      grid,
-      boxLeft + 1,
-      bottomY + 1 + i,
-      `${marker} ${opt.label}`,
-      color,
-    );
+    grid = setText(grid, boxLeft + 1, bottomY + 1 + i, `${marker} ${opt.label}`, color);
   }
 
   // Footer
   const footerY = rows - 2;
-  grid = setText(
-    grid,
-    2,
-    footerY,
-    "↑↓: select | ENTER: confirm | ESC: leave",
-    PALETTE.GRAY_DARK,
-  );
+  grid = setText(grid, 2, footerY, "↑↓: select | ENTER: confirm | ESC: leave", PALETTE.GRAY_DARK);
 
   return grid;
 }

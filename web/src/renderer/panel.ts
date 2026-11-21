@@ -41,14 +41,8 @@ function validRect(frame: PanelRect): boolean {
  */
 export function panelInnerRect(grid: Grid, frame: PanelRect): PanelRect {
   if (!validRect(frame)) return { x: 0, y: 0, width: 0, height: 0 };
-  const x = Math.min(
-    grid.width,
-    Math.max(0, frame.x + Math.min(1, frame.width)),
-  );
-  const y = Math.min(
-    grid.height,
-    Math.max(0, frame.y + Math.min(1, frame.height)),
-  );
+  const x = Math.min(grid.width, Math.max(0, frame.x + Math.min(1, frame.width)));
+  const y = Math.min(grid.height, Math.max(0, frame.y + Math.min(1, frame.height)));
   const right = Math.min(grid.width, Math.max(0, frame.x + frame.width - 1));
   const bottom = Math.min(grid.height, Math.max(0, frame.y + frame.height - 1));
   return {
@@ -124,12 +118,7 @@ function drawRule(grid: Grid, frame: PanelRect, rule: PanelRule): Grid {
   const end = Math.min(grid.width, frame.x + frame.width);
   let text = "";
   for (let x = start; x < end; x++) {
-    text +=
-      x === frame.x
-        ? rule.left
-        : x === frame.x + frame.width - 1
-          ? rule.right
-          : "═";
+    text += x === frame.x ? rule.left : x === frame.x + frame.width - 1 ? rule.right : "═";
   }
   return setText(grid, start, rule.y, text, PALETTE.GREEN_NEON);
 }
@@ -140,14 +129,9 @@ function drawRule(grid: Grid, frame: PanelRect, rule: PanelRule): Grid {
  * corner; status is right-aligned and takes priority, with a rail between labels.
  * Overlong labels truncate on the right. Colours resolve at call time.
  */
-export function drawPanel(
-  grid: Grid,
-  frame: PanelRect,
-  options: PanelOptions = {},
-): PanelResult {
+export function drawPanel(grid: Grid, frame: PanelRect, options: PanelOptions = {}): PanelResult {
   const inner = panelInnerRect(grid, frame);
-  if (!validRect(frame) || frame.width < 2 || frame.height < 2)
-    return { grid, inner };
+  if (!validRect(frame) || frame.width < 2 || frame.height < 2) return { grid, inner };
 
   let next = drawRule(grid, frame, { y: frame.y, left: "╔", right: "╗" });
   next = drawRule(next, frame, {
@@ -164,10 +148,7 @@ export function drawPanel(
   if (frame.y >= 0 && frame.y < grid.height) {
     const capacity = Math.max(0, frame.width - 4);
     const status = (options.status ?? "").slice(0, capacity);
-    const titleCapacity = Math.max(
-      0,
-      capacity - status.length - (status ? 1 : 0),
-    );
+    const titleCapacity = Math.max(0, capacity - status.length - (status ? 1 : 0));
     const title = (options.title ?? "").slice(0, titleCapacity);
     next = setText(next, frame.x + 2, frame.y, title, PALETTE.GREEN_NEON);
     next = setText(
@@ -185,11 +166,7 @@ export function drawPanel(
  * Invalid/outside rows and degenerate frames are no-ops. Like the frame border,
  * the separator uses the current GREEN_NEON foreground and BACKGROUND colour.
  */
-export function drawPanelSeparator(
-  grid: Grid,
-  frame: PanelRect,
-  y: number,
-): Grid {
+export function drawPanelSeparator(grid: Grid, frame: PanelRect, y: number): Grid {
   if (
     !validRect(frame) ||
     frame.width < 2 ||

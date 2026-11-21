@@ -53,10 +53,7 @@ const COMPLETED_STORAGE_KEY = "wetrun_completed_missions";
  */
 const ARC_ONE_REQUIRED_IDS: ReadonlyArray<string> = Object.freeze(
   loadMissionsCatalog(missionsData)
-    .filter(
-      (m: Mission): boolean =>
-        m.arc === 1 && (m.source_universe ?? "sprawl") === "sprawl",
-    )
+    .filter((m: Mission): boolean => m.arc === 1 && (m.source_universe ?? "sprawl") === "sprawl")
     .map((m: Mission): string => m.id)
     .filter((id) => id.length > 0),
 );
@@ -66,8 +63,7 @@ const ARC_ONE_REQUIRED_IDS: ReadonlyArray<string> = Object.freeze(
  * English, Gibson-detached. No emoji. Updated for the full-clear semantics:
  * "Win a Sprawl Arc 1 mission" → "Clear all Sprawl Arc 1 missions".
  */
-export const FAR_GRID_LOCKED_MESSAGE =
-  "Clear all Sprawl Arc 1 missions to unlock the Far Grid";
+export const FAR_GRID_LOCKED_MESSAGE = "Clear all Sprawl Arc 1 missions to unlock the Far Grid";
 
 /** Pure helper — read the legacy unlock flag from localStorage.
  *
@@ -221,9 +217,7 @@ export function recordMissionComplete(missionId: string): boolean {
  * non-array inputs from a corrupted localStorage payload (returns `false`
  * when the completion set cannot be read).
  */
-export function isArcOneCleared(
-  required: ReadonlyArray<string> = ARC_ONE_REQUIRED_IDS,
-): boolean {
+export function isArcOneCleared(required: ReadonlyArray<string> = ARC_ONE_REQUIRED_IDS): boolean {
   if (required.length === 0) return true;
   const completed = getCompletedMissions();
   for (const id of required) {

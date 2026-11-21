@@ -63,10 +63,7 @@ export function measureRender<T>(fn: () => T): { result: T; duration: number } {
 }
 
 /** Get current performance metrics. */
-export function getMetrics(
-  fps: number,
-  renderTime: number,
-): PerformanceMetrics {
+export function getMetrics(fps: number, renderTime: number): PerformanceMetrics {
   const memory = getMemoryUsage();
   return Object.freeze({
     fps,

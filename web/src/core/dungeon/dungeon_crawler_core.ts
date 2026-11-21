@@ -68,9 +68,7 @@ export function tryMoveMonster(
   }
 
   // Check if tile is occupied by another entity
-  const occupied = state.entities.some(
-    (e) => e !== entity && e.x === newX && e.y === newY,
-  );
+  const occupied = state.entities.some((e) => e !== entity && e.x === newX && e.y === newY);
 
   if (occupied) {
     return false;
@@ -93,16 +91,11 @@ export function processMonsterAi(state: DungeonState, rng: Rng): void {
 
       if (dx <= 1 && dy <= 1) {
         // Adjacent - attack player
-        playerTakeDamage(
-          state,
-          getMonsterDamage(state, entity.subtype as MonsterType),
-        );
+        playerTakeDamage(state, getMonsterDamage(state, entity.subtype as MonsterType));
       } else if (dx + dy > 1) {
         // Not adjacent - try to move toward player
-        const moveX =
-          state.playerX > entity.x ? 1 : state.playerX < entity.x ? -1 : 0;
-        const moveY =
-          state.playerY > entity.y ? 1 : state.playerY < entity.y ? -1 : 0;
+        const moveX = state.playerX > entity.x ? 1 : state.playerX < entity.x ? -1 : 0;
+        const moveY = state.playerY > entity.y ? 1 : state.playerY < entity.y ? -1 : 0;
 
         // Try to move diagonally first if both axes need movement
         if (moveX !== 0 && moveY !== 0 && rng() < 0.7) {
@@ -159,14 +152,7 @@ export class DungeonCrawler {
   /** Handle player movement */
   public tryMovePlayer(dx: number, dy: number): boolean {
     if (this.isGameOver()) return false;
-    return tryMovePlayer(
-      this._state,
-      this.rng,
-      this.rngInt,
-      this.generator,
-      dx,
-      dy,
-    );
+    return tryMovePlayer(this._state, this.rng, this.rngInt, this.generator, dx, dy);
   }
 
   /** Close a door after some time (called periodically) */
@@ -276,7 +262,6 @@ export function createDungeonCrawlerFromMission(
   mission: Mission | null = null,
   seed?: number,
 ): DungeonCrawler {
-  const resolvedSeed =
-    seed ?? Date.now() + (mission ? stringHashCode(mission.id) : 0);
+  const resolvedSeed = seed ?? Date.now() + (mission ? stringHashCode(mission.id) : 0);
   return new DungeonCrawler(resolvedSeed, mission);
 }

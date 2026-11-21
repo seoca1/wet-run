@@ -20,10 +20,7 @@ import type { EquipmentLoadout } from "./loadout";
  *  absorbing damage, not by running out of enemy ticks — gear matches. */
 const GEAR_SHIELD_LIFETIME = 9999;
 
-export function applyEquipmentSurvival(
-  state: GameState,
-  loadout: EquipmentLoadout,
-): GameState {
+export function applyEquipmentSurvival(state: GameState, loadout: EquipmentLoadout): GameState {
   const stats = loadout.totalStats();
   let next = state;
 

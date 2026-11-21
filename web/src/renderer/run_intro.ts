@@ -40,11 +40,7 @@ export const RUN_INTRO: Readonly<Record<ArcId, readonly string[]>> = {
     "Something in there is awake, and pretending not to be.",
     "Ask the question carefully. It is listening.",
   ],
-  5: [
-    "THE CHOICE",
-    "One last run. After this the Sprawl decides what you were.",
-    "Go.",
-  ],
+  5: ["THE CHOICE", "One last run. After this the Sprawl decides what you were.", "Go."],
 };
 
 /** Keep the right rail free and the text readable at every layout. */
@@ -53,10 +49,7 @@ export function runIntroWidth(cols: number): number {
 }
 
 /** Greedy wrap, same shape as the ending screen's, so long lines fit. */
-export function wrapIntroLines(
-  lines: readonly string[],
-  width: number,
-): readonly string[] {
+export function wrapIntroLines(lines: readonly string[], width: number): readonly string[] {
   const out: string[] = [];
   for (const line of lines) {
     let current = "";
@@ -89,15 +82,13 @@ export function renderRunIntro(
 ): Grid {
   let grid = makeGrid(cols, rows);
   const width = runIntroWidth(cols);
-  const centre = (text: string): number =>
-    Math.max(2, Math.floor((cols - text.length) / 2));
+  const centre = (text: string): number => Math.max(2, Math.floor((cols - text.length) / 2));
   const [title = "", ...body] = RUN_INTRO[arc] ?? RUN_INTRO[1];
   const wrapped = wrapIntroLines(body, width);
   const beatLines = beat === null ? [] : wrapIntroLines(beat.lines, width);
   // A blank separator, the speaker's name when the beat has one voice, then
   // the lines.
-  const beatBlock =
-    beat === null ? 0 : (beat.speaker.length > 0 ? 1 : 0) + 1 + beatLines.length;
+  const beatBlock = beat === null ? 0 : (beat.speaker.length > 0 ? 1 : 0) + 1 + beatLines.length;
   const total = 1 + wrapped.length + (jockey === null ? 0 : 1) + beatBlock;
   let y = Math.max(3, Math.floor(rows / 2) - Math.floor(total / 2));
 
@@ -115,13 +106,7 @@ export function renderRunIntro(
   if (beat !== null) {
     y += 1; // the voice gets air between it and the framing lines.
     if (beat.speaker.length > 0) {
-      grid = setText(
-        grid,
-        centre(beat.speaker),
-        y,
-        beat.speaker,
-        PALETTE.YELLOW_AMBER,
-      );
+      grid = setText(grid, centre(beat.speaker), y, beat.speaker, PALETTE.YELLOW_AMBER);
       y += 1;
     }
     for (const line of beatLines) {

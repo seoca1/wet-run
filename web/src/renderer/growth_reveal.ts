@@ -95,11 +95,7 @@ export function beginLootCommit(
 }
 
 /** The stage to draw, clamped to the last one. Reduced motion pins it there. */
-export function lootCommitStage(
-  commit: LootCommit,
-  nowMs: number,
-  reducedMotion: boolean,
-): number {
+export function lootCommitStage(commit: LootCommit, nowMs: number, reducedMotion: boolean): number {
   const last = LOOT_COMMIT_STAGES - 1;
   if (suppressMotion("reveal", reducedMotion)) return last;
   const elapsed = Math.max(0, nowMs - commit.startedMs);
@@ -169,19 +165,12 @@ export function drawLootCommit(
 ): Grid {
   const lines = lootCommitLines(commit, stage, wide);
   const widest = lines.reduce((w, l) => Math.max(w, l.length), 0);
-  const x = Math.max(
-    inner.x + 1,
-    inner.x + Math.floor((inner.width - widest) / 2),
-  );
+  const x = Math.max(inner.x + 1, inner.x + Math.floor((inner.width - widest) / 2));
   let out = grid;
   lines.forEach((line, i) => {
     const last = i === lines.length - 1;
     // The final line is the confirmation, so it reads as the settled state.
-    const colour = last
-      ? PALETTE.GREEN_NEON
-      : i === 0
-        ? PALETTE.YELLOW_AMBER
-        : PALETTE.CYAN_LIGHT;
+    const colour = last ? PALETTE.GREEN_NEON : i === 0 ? PALETTE.YELLOW_AMBER : PALETTE.CYAN_LIGHT;
     out = setText(out, x, firstRow + i, line, colour);
   });
   return out;
@@ -199,10 +188,7 @@ export function beginMatrixArrival(
 }
 
 /** Whether the arrival note is still within its window. */
-export function matrixArrivalActive(
-  arrival: MatrixArrival | null,
-  nowMs: number,
-): boolean {
+export function matrixArrivalActive(arrival: MatrixArrival | null, nowMs: number): boolean {
   if (arrival === null) return false;
   return nowMs - arrival.startedMs < MATRIX_ARRIVAL_MS;
 }

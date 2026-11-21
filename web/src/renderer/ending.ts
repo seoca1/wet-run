@@ -6,11 +6,7 @@
 import type { EndingChoice, Grid } from "../core/types";
 import { makeGrid, setText } from "../core/grid";
 import { PALETTE } from "./palette";
-import {
-  drawLootCommit,
-  LOOT_COMMIT_MAX_LINES,
-  type LootCommitFrame,
-} from "./growth_reveal";
+import { drawLootCommit, LOOT_COMMIT_MAX_LINES, type LootCommitFrame } from "./growth_reveal";
 import { ENDINGS } from "../core/combat/ending_resolver";
 import type { DialogueBeat } from "../core/state/event_beats";
 
@@ -105,9 +101,10 @@ export function renderEndingScreen(
   if (summary !== null) {
     const width = Math.max(8, cols - 4);
     const who = summary.jockey ?? null;
-    const mission = (
-      who === null ? summary.mission : `${who} — ${summary.mission}`
-    ).slice(0, width);
+    const mission = (who === null ? summary.mission : `${who} — ${summary.mission}`).slice(
+      0,
+      width,
+    );
     const stats =
       `HP ${summary.hp}/${summary.maxHp} · ` +
       `${summary.credits.toLocaleString()}cr · ` +
@@ -232,14 +229,13 @@ export function renderLootScreen(
       // ADR-0261: the card the player took stands out; once one is taken the
       // rest are spent, so they fade back.
       const isTaken = i === takenIndex;
-      const color =
-        detailRows.includes(i)
-          ? PALETTE.GRAY_DARK
-          : takenIndex < 0
-            ? PALETTE.CYAN_LIGHT
-            : isTaken
-              ? PALETTE.GREEN_NEON
-              : PALETTE.GRAY_DARK;
+      const color = detailRows.includes(i)
+        ? PALETTE.GRAY_DARK
+        : takenIndex < 0
+          ? PALETTE.CYAN_LIGHT
+          : isTaken
+            ? PALETTE.GREEN_NEON
+            : PALETTE.GRAY_DARK;
       grid = setText(grid, offerX, Math.floor(rows / 2) + 6 + i, line, color);
     });
   }
@@ -249,11 +245,7 @@ export function renderLootScreen(
   // now be a lie (ADR-0251 rule 5).
   const healed = hp;
   const reserved =
-    commitFrame !== null
-      ? LOOT_COMMIT_MAX_LINES + 1
-      : offers.length > 0
-        ? offers.length + 3
-        : 0;
+    commitFrame !== null ? LOOT_COMMIT_MAX_LINES + 1 : offers.length > 0 ? offers.length + 3 : 0;
   const healRow = Math.floor(rows / 2) + 5 + reserved;
   grid = setText(
     grid,
@@ -276,9 +268,7 @@ export function renderLootScreen(
       ? "ENTER: continue"
       : offers.length > 0
         ? (hint ??
-          (mode === "unique"
-            ? "1-3: unique | ENTER: skip"
-            : "1-3: card | 4: repair | 5: intel"))
+          (mode === "unique" ? "1-3: unique | ENTER: skip" : "1-3: card | 4: repair | 5: intel"))
         : "ENTER: route selection";
   grid = setText(
     grid,

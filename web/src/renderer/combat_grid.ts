@@ -40,11 +40,7 @@ import {
   ICE_DEFEAT_ART,
   PLAYER_DEFEAT_ART,
 } from "./vfx";
-import {
-  drawTargetStatus,
-  statusGroupForTarget,
-  type TargetStatusGroup,
-} from "./status_hud";
+import { drawTargetStatus, statusGroupForTarget, type TargetStatusGroup } from "./status_hud";
 
 /** Rows below the frame's top rail that the combat header occupies (1, 3, 5),
  * plus one blank row; the header rule is drawn on the next row. */
@@ -83,10 +79,7 @@ export function renderGrid(
   const turnCol = Math.max(iceNameCol, cols - Math.floor(cols * 0.25));
   const statusArtCol = Math.max(20, Math.floor(cols * 0.45));
   const showHand = state.phase === "combat" && state.deck.length > 0;
-  const handRow = Math.min(
-    innerBottom - 1,
-    combatHandRow(rows, state.deck.length),
-  );
+  const handRow = Math.min(innerBottom - 1, combatHandRow(rows, state.deck.length));
   // ICE rows stop above the hand so a long roster can never cover a slot.
   const rosterBottom = showHand ? handRow : innerBottom;
   const artWidth = Math.min(32, innerRight - statusArtCol - 1);
@@ -99,23 +92,9 @@ export function renderGrid(
     `Mission: ${state.mission.title}`,
     PALETTE.GREEN_NEON,
   );
-  grid = setInnerText(
-    grid,
-    inner,
-    textX,
-    headerY + 2,
-    state.message,
-    PALETTE.GRAY_LIGHT,
-  );
+  grid = setInnerText(grid, inner, textX, headerY + 2, state.message, PALETTE.GRAY_LIGHT);
 
-  grid = setInnerText(
-    grid,
-    inner,
-    turnCol,
-    headerY,
-    `T${state.turnCount + 1}`,
-    PALETTE.GRAY_LIGHT,
-  );
+  grid = setInnerText(grid, inner, turnCol, headerY, `T${state.turnCount + 1}`, PALETTE.GRAY_LIGHT);
 
   const playerHpText = `P ${healthBar(state.player.hp, state.player.maxHp)} ${state.player.hp}/${state.player.maxHp}`;
   grid = setInnerText(
@@ -137,11 +116,7 @@ export function renderGrid(
     PALETTE.YELLOW_AMBER,
   );
 
-  if (
-    state.phase === "combat" ||
-    state.phase === "victory" ||
-    state.phase === "defeat"
-  ) {
+  if (state.phase === "combat" || state.phase === "victory" || state.phase === "defeat") {
     const rosterStartRow = Math.floor(rows * 0.44);
     for (let i = 0; i < state.iceRoster.length; i++) {
       const ice = state.iceRoster[i];
@@ -152,9 +127,7 @@ export function renderGrid(
       const alive = ice.hp > 0;
       const iceHp = Math.max(0, ice.hp);
       const iceMaxHp =
-        ice.maxHp !== undefined && Number.isFinite(ice.maxHp) && ice.maxHp > 0
-          ? ice.maxHp
-          : 100;
+        ice.maxHp !== undefined && Number.isFinite(ice.maxHp) && ice.maxHp > 0 ? ice.maxHp : 100;
 
       // Name line: "> [1] ICE_NAME  A7". ADR-0320: the armor rides here, so the
       // thing that eats the player's damage is a number on the screen. The name
@@ -194,10 +167,7 @@ export function renderGrid(
         const hpText = `${iceHp}/${iceMaxHp}`;
         const hpRoom = inner.x + inner.width - iceCol;
         // Two brackets and the space between the bar and the numbers.
-        const barCells = Math.max(
-          3,
-          Math.min(12, hpRoom - hpText.length - 3),
-        );
+        const barCells = Math.max(3, Math.min(12, hpRoom - hpText.length - 3));
         grid = setInnerText(
           grid,
           inner,
@@ -207,44 +177,22 @@ export function renderGrid(
           delta !== null ? hitFlashColor(delta) : healthColor(iceHp, iceMaxHp),
         );
       } else {
-        grid = setInnerText(
-          grid,
-          inner,
-          iceCol,
-          row + 2,
-          "[DEAD]",
-          PALETTE.GRAY_MID,
-        );
+        grid = setInnerText(grid, inner, iceCol, row + 2, "[DEAD]", PALETTE.GRAY_MID);
       }
     }
   }
 
   const statusLabel = formatStatusLabel(state.phase);
   if (statusLabel !== "") {
-    const statusColor =
-      state.phase === "victory" ? PALETTE.GREEN_NEON : PALETTE.RED_BRIGHT;
+    const statusColor = state.phase === "victory" ? PALETTE.GREEN_NEON : PALETTE.RED_BRIGHT;
     const statusRow = Math.floor(rows * 0.52);
-    grid = setInnerText(
-      grid,
-      inner,
-      statusArtCol,
-      statusRow,
-      statusLabel,
-      statusColor,
-    );
+    grid = setInnerText(grid, inner, statusArtCol, statusRow, statusLabel, statusColor);
     if (state.phase === "victory") {
       const art = centerArt(ICE_DEFEAT_ART, artWidth);
       let y = statusRow + 2;
       for (const line of art) {
         if (y >= innerBottom) break;
-        grid = setInnerText(
-          grid,
-          inner,
-          statusArtCol,
-          y,
-          line,
-          PALETTE.GRAY_MID,
-        );
+        grid = setInnerText(grid, inner, statusArtCol, y, line, PALETTE.GRAY_MID);
         y += 1;
       }
     } else if (state.phase === "defeat") {
@@ -252,14 +200,7 @@ export function renderGrid(
       let y = statusRow + 2;
       for (const line of art) {
         if (y >= innerBottom) break;
-        grid = setInnerText(
-          grid,
-          inner,
-          statusArtCol,
-          y,
-          line,
-          PALETTE.GRAY_MID,
-        );
+        grid = setInnerText(grid, inner, statusArtCol, y, line, PALETTE.GRAY_MID);
         y += 1;
       }
     }

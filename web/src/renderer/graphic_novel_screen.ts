@@ -39,36 +39,14 @@ export function graphicNovelLayout(cols: number, rows: number) {
 }
 
 /** Render the current typed page; story loading and playback stay in the controller. */
-export function renderGraphicNovelScreen(
-  view: GraphicNovelView,
-  cols: number,
-  rows: number,
-): Grid {
+export function renderGraphicNovelScreen(view: GraphicNovelView, cols: number, rows: number): Grid {
   let grid = makeGrid(cols, rows);
   const layout = graphicNovelLayout(cols, rows);
   grid = setText(grid, 2, 1, "GRAPHIC NOVEL", PALETTE.GREEN_NEON);
   if (view.chapter) {
-    grid = setText(
-      grid,
-      2,
-      3,
-      `Chapter: ${toRoman(view.chapter.order)}`,
-      PALETTE.GRAY_LIGHT,
-    );
-    grid = setText(
-      grid,
-      2,
-      4,
-      `Speaker: ${view.chapter.speaker}`,
-      PALETTE.YELLOW_AMBER,
-    );
-    grid = setText(
-      grid,
-      2,
-      5,
-      `Title: ${view.chapter.title}`,
-      PALETTE.GRAY_LIGHT,
-    );
+    grid = setText(grid, 2, 3, `Chapter: ${toRoman(view.chapter.order)}`, PALETTE.GRAY_LIGHT);
+    grid = setText(grid, 2, 4, `Speaker: ${view.chapter.speaker}`, PALETTE.YELLOW_AMBER);
+    grid = setText(grid, 2, 5, `Title: ${view.chapter.title}`, PALETTE.GRAY_LIGHT);
   }
   const wrapped = wrapTextForNovel(view.text, { width: layout.wrapWidth });
   const paginated = paginateLines(wrapped, layout.linesPerPage);

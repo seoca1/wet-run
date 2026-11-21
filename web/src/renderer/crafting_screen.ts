@@ -7,13 +7,7 @@ import { makeGrid, type Grid } from "../core/grid";
 import type { Inventory } from "../core/types";
 import type { MaterialDef, Recipe } from "../core/state/crafting";
 import { PALETTE } from "./palette";
-import {
-  drawPanel,
-  panelInnerRect,
-  screenFrameRect,
-  setInnerText,
-  type PanelRect,
-} from "./panel";
+import { drawPanel, panelInnerRect, screenFrameRect, setInnerText, type PanelRect } from "./panel";
 
 export interface CraftingView {
   readonly inventory: Inventory;
@@ -53,11 +47,7 @@ export function craftingLayout(cols: number, rows: number): CraftingLayout {
 }
 
 /** Render inventory, numbered craftable recipes and feedback without mutating inputs. */
-export function renderCraftingScreen(
-  view: CraftingView,
-  cols: number,
-  rows: number,
-): Grid {
+export function renderCraftingScreen(view: CraftingView, cols: number, rows: number): Grid {
   let grid = makeGrid(cols, rows);
   const layout = craftingLayout(cols, rows);
   const { inner, x, itemX } = layout;
@@ -124,12 +114,7 @@ export function renderCraftingScreen(
     y += 1;
   }
   y += 1;
-  grid = put(
-    x,
-    y,
-    "Press 1-9 to craft a recipe, ESC to go back",
-    PALETTE.GRAY_LIGHT,
-  );
+  grid = put(x, y, "Press 1-9 to craft a recipe, ESC to go back", PALETTE.GRAY_LIGHT);
   y += 1;
   if (view.materials.length > 0) {
     const names = view.materials.map((m) => `${m.id} (${m.name})`).join(", ");
@@ -138,12 +123,7 @@ export function renderCraftingScreen(
     y += 1;
   }
   if (view.marketItemCount > 0) {
-    grid = put(
-      x,
-      y,
-      `Market items: ${view.marketItemCount}`,
-      PALETTE.GRAY_DARK,
-    );
+    grid = put(x, y, `Market items: ${view.marketItemCount}`, PALETTE.GRAY_DARK);
     y += 1;
   }
   if (view.message !== "") grid = put(x, y, view.message, PALETTE.YELLOW_AMBER);

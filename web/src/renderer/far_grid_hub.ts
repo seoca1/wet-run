@@ -80,13 +80,7 @@ export function renderFarGridHub(
   let grid = makeGrid(cols, rows);
 
   // Header (mirrors mission_select's "WET RUN — Select Mission" line)
-  grid = setText(
-    grid,
-    2,
-    1,
-    t("far_grid.header", language),
-    PALETTE.GREEN_NEON,
-  );
+  grid = setText(grid, 2, 1, t("far_grid.header", language), PALETTE.GREEN_NEON);
 
   // Intro — frame the Far Grid as set apart from Sprawl's mission board
   grid = setText(grid, 2, 3, t("far_grid.intro", language), PALETTE.GRAY_LIGHT);
@@ -94,13 +88,7 @@ export function renderFarGridHub(
   // Mission list — start at row 5 to mirror mission_select's spacing
   const listStartY = 5;
   if (missions.length === 0) {
-    grid = setText(
-      grid,
-      2,
-      listStartY,
-      t("far_grid.empty", language),
-      PALETTE.GRAY_DARK,
-    );
+    grid = setText(grid, 2, listStartY, t("far_grid.empty", language), PALETTE.GRAY_DARK);
   } else {
     let y = listStartY;
     for (let i = 0; i < missions.length; i++) {
@@ -109,9 +97,7 @@ export function renderFarGridHub(
       const isSelected = i === selected;
       const fg = isSelected ? PALETTE.GREEN_NEON : PALETTE.GRAY_LIGHT;
       const marker = isSelected ? "▸" : " ";
-      const source = m.story?.source
-        ? ` [Source: ${m.story.source.slice(0, 60)}]`
-        : "";
+      const source = m.story?.source ? ` [Source: ${m.story.source.slice(0, 60)}]` : "";
       const titleText =
         language === "ko" && m.title_ko !== undefined && m.title_ko.length > 0
           ? m.title_ko
@@ -131,13 +117,7 @@ export function renderFarGridHub(
 
   // Footer — mirror mission_select's "↑↓: navigate | ENTER: launch | ESC: back"
   const footerY = rows - 2;
-  grid = setText(
-    grid,
-    2,
-    footerY,
-    t("far_grid.footer", language),
-    PALETTE.GRAY_DARK,
-  );
+  grid = setText(grid, 2, footerY, t("far_grid.footer", language), PALETTE.GRAY_DARK);
 
   // Briefing block (Wave 2, ADR-0213) — selected mission's briefing,
   // wrapped to (cols - 4) columns (matching the 2-col indent of the intro),
@@ -162,13 +142,7 @@ export function renderFarGridHub(
     const maxLines = Math.max(0, lastAllowedY - startY);
     const toRender = lines.slice(0, maxLines);
     for (let i = 0; i < toRender.length; i++) {
-      grid = setText(
-        grid,
-        2,
-        startY + i,
-        toRender[i] ?? "",
-        PALETTE.GRAY_LIGHT,
-      );
+      grid = setText(grid, 2, startY + i, toRender[i] ?? "", PALETTE.GRAY_LIGHT);
     }
   }
 

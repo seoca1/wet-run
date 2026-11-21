@@ -89,8 +89,7 @@ export function rollIceCrit(
   if (rng() >= critChance) {
     return { damage, isCrit: false };
   }
-  const critMult =
-    rng() * (CRIT_MULTIPLIER_MAX - CRIT_MULTIPLIER_MIN) + CRIT_MULTIPLIER_MIN;
+  const critMult = rng() * (CRIT_MULTIPLIER_MAX - CRIT_MULTIPLIER_MIN) + CRIT_MULTIPLIER_MIN;
   return {
     damage: Math.max(1, Math.floor(damage * critMult)),
     isCrit: true,

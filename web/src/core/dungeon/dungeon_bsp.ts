@@ -48,10 +48,7 @@ export class BspNode {
         this.room.y + Math.floor(this.room.h / 2),
       ] as const;
     }
-    return [
-      this.x + Math.floor(this.w / 2),
-      this.y + Math.floor(this.h / 2),
-    ] as const;
+    return [this.x + Math.floor(this.w / 2), this.y + Math.floor(this.h / 2)] as const;
   }
 }
 
@@ -99,11 +96,7 @@ export function bspPartition(
 }
 
 /** Place one room inside each leaf. Returns the number of rooms placed. */
-export function placeRooms(
-  rngInt: RngInt,
-  roomPadding: number,
-  node: BspNode,
-): number {
+export function placeRooms(rngInt: RngInt, roomPadding: number, node: BspNode): number {
   let counter = 0;
   const walk = (n: BspNode): void => {
     if (n.isLeaf) {

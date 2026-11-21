@@ -40,9 +40,8 @@ interface Dialogue {
   readonly lines?: readonly DialogueLine[];
 }
 
-const DIALOGUES: Readonly<Record<string, Dialogue>> = (
-  eventDialogues as { dialogues?: Record<string, Dialogue> }
-).dialogues ?? {};
+const DIALOGUES: Readonly<Record<string, Dialogue>> =
+  (eventDialogues as { dialogues?: Record<string, Dialogue> }).dialogues ?? {};
 
 /** How many lines of a beat a card shows. Kept small: the run intro is a card,
  * not a conversation, and the player should be in the matrix in one keypress. */
@@ -86,14 +85,11 @@ export function dialogueBeat(
   // One voice -> a heading. Several voices -> each line names its own, so a
   // line is never attributed to whoever spoke first.
   const oneVoice =
-    spoken.every((line) => line.speaker === first.speaker) &&
-    first.speaker.length > 0;
+    spoken.every((line) => line.speaker === first.speaker) && first.speaker.length > 0;
   return {
     speaker: oneVoice ? first.speaker : "",
     lines: spoken.map((line) =>
-      oneVoice || line.speaker.length === 0
-        ? line.text
-        : `${line.speaker}: ${line.text}`,
+      oneVoice || line.speaker.length === 0 ? line.text : `${line.speaker}: ${line.text}`,
     ),
   };
 }
@@ -119,10 +115,7 @@ export function runOpeningBeat(
  * ICE are silent, as the design file says they should be; only the ones with a
  * tagline return a beat, and `null` means "this one says nothing".
  */
-export function iceIntroBeat(
-  iceId: string,
-  language: Language = "en",
-): DialogueBeat | null {
+export function iceIntroBeat(iceId: string, language: Language = "en"): DialogueBeat | null {
   return dialogueBeat(`ice_${iceId}_intro`, language, ICE_BEAT_LINES);
 }
 
@@ -136,9 +129,7 @@ export const STORY_BEAT_LINES = 4;
  * it was rewritten to fit any ICE. It fires once per profile, at the first
  * combat, where the advice is something the player can act on.
  */
-export function firstFightWarningBeat(
-  language: Language = "en",
-): DialogueBeat | null {
+export function firstFightWarningBeat(language: Language = "en"): DialogueBeat | null {
   return dialogueBeat("dixie_warning", language, STORY_BEAT_LINES);
 }
 
@@ -199,8 +190,6 @@ export function flatlineBeat(language: Language = "en"): DialogueBeat | null {
  * never had — its endings are arc outcomes — so they were replaced by one
  * arc-agnostic sign-off that fits every ending the screen can show.
  */
-export function endingSignoffBeat(
-  language: Language = "en",
-): DialogueBeat | null {
+export function endingSignoffBeat(language: Language = "en"): DialogueBeat | null {
   return dialogueBeat("dixie_signoff", language, STORY_BEAT_LINES);
 }

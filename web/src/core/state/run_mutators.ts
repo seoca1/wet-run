@@ -17,8 +17,7 @@
  */
 
 /** All available mutator kinds. */
-export type RunMutator =
-  "low_hp" | "double_alarm" | "ice_x2" | "no_heal" | "stealth_only";
+export type RunMutator = "low_hp" | "double_alarm" | "ice_x2" | "no_heal" | "stealth_only";
 
 /** Display info for a single mutator. */
 export interface MutatorInfo {
@@ -54,39 +53,38 @@ export interface MutableRunState {
 }
 
 /** Full catalog of mutators and their display info. */
-export const MUTATORS: Readonly<Record<RunMutator, MutatorInfo>> =
-  Object.freeze({
-    low_hp: Object.freeze({
-      id: "low_hp",
-      name: "FRAGILE WETWARE",
-      description: "Start with 50% max HP. One bad run ends you.",
-      icon: "low_hp",
-    }),
-    double_alarm: Object.freeze({
-      id: "double_alarm",
-      name: "HOT TRACE",
-      description: "COST gains doubled. ICE pursues.",
-      icon: "double_alarm",
-    }),
-    ice_x2: Object.freeze({
-      id: "ice_x2",
-      name: "POPULATED GRID",
-      description: "Every encounter is 1v2 or 1v3. The grid is *crowded*.",
-      icon: "ice_x2",
-    }),
-    no_heal: Object.freeze({
-      id: "no_heal",
-      name: "DEAD MAN WALKING",
-      description: "Cannot salvage HEAL from kills. No recovery.",
-      icon: "no_heal",
-    }),
-    stealth_only: Object.freeze({
-      id: "stealth_only",
-      name: "GHOST PROTOCOL",
-      description: "Only stealth skills available. Silent runs.",
-      icon: "stealth_only",
-    }),
-  });
+export const MUTATORS: Readonly<Record<RunMutator, MutatorInfo>> = Object.freeze({
+  low_hp: Object.freeze({
+    id: "low_hp",
+    name: "FRAGILE WETWARE",
+    description: "Start with 50% max HP. One bad run ends you.",
+    icon: "low_hp",
+  }),
+  double_alarm: Object.freeze({
+    id: "double_alarm",
+    name: "HOT TRACE",
+    description: "COST gains doubled. ICE pursues.",
+    icon: "double_alarm",
+  }),
+  ice_x2: Object.freeze({
+    id: "ice_x2",
+    name: "POPULATED GRID",
+    description: "Every encounter is 1v2 or 1v3. The grid is *crowded*.",
+    icon: "ice_x2",
+  }),
+  no_heal: Object.freeze({
+    id: "no_heal",
+    name: "DEAD MAN WALKING",
+    description: "Cannot salvage HEAL from kills. No recovery.",
+    icon: "no_heal",
+  }),
+  stealth_only: Object.freeze({
+    id: "stealth_only",
+    name: "GHOST PROTOCOL",
+    description: "Only stealth skills available. Silent runs.",
+    icon: "stealth_only",
+  }),
+});
 
 /** All mutator IDs in declaration order. */
 export const ALL_MUTATORS: ReadonlyArray<RunMutator> = Object.freeze([
@@ -108,10 +106,7 @@ export function hpMultiplier(mutator: RunMutator): number {
 }
 
 /** Apply mutators to a run state (idempotent — clears previous first). */
-export function applyMutators(
-  state: MutableRunState,
-  mutators: ReadonlyArray<RunMutator>,
-): void {
+export function applyMutators(state: MutableRunState, mutators: ReadonlyArray<RunMutator>): void {
   clearMutators(state);
   for (const mutator of mutators) {
     switch (mutator) {
@@ -165,17 +160,12 @@ export function clearMutators(state: MutableRunState): void {
 }
 
 /** True if the given mutator is currently active. */
-export function isMutatorActive(
-  state: MutableRunState,
-  mutator: RunMutator,
-): boolean {
+export function isMutatorActive(state: MutableRunState, mutator: RunMutator): boolean {
   return state.activeMutators.includes(mutator);
 }
 
 /** Return the active mutators list (defensive copy). */
-export function getActiveMutators(
-  state: MutableRunState,
-): ReadonlyArray<RunMutator> {
+export function getActiveMutators(state: MutableRunState): ReadonlyArray<RunMutator> {
   return state.activeMutators.slice();
 }
 

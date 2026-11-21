@@ -13,11 +13,7 @@
  * No new dependencies — pure type-guard validation.
  */
 import { programEffectDescription } from "./combat/program_effects";
-import {
-  parseIceSkills,
-  parseIceSkillDefs,
-  type IceSkillDefs,
-} from "./combat/ice_skills";
+import { parseIceSkills, parseIceSkillDefs, type IceSkillDefs } from "./combat/ice_skills";
 import type { Mission, Program, Ice } from "./types";
 
 interface LegacyMission {
@@ -79,11 +75,7 @@ const VALID_ICE_AGGRESSION: ReadonlySet<string> = new Set([
   "boss",
 ]);
 
-function expectNumber(
-  obj: Record<string, unknown>,
-  key: string,
-  ctx: string,
-): number {
+function expectNumber(obj: Record<string, unknown>, key: string, ctx: string): number {
   const v = obj[key];
   if (typeof v !== "number" || !Number.isFinite(v)) {
     throw new Error(
@@ -93,11 +85,7 @@ function expectNumber(
   return v;
 }
 
-function expectString(
-  obj: Record<string, unknown>,
-  key: string,
-  ctx: string,
-): string {
+function expectString(obj: Record<string, unknown>, key: string, ctx: string): string {
   const v = obj[key];
   if (typeof v !== "string" || v.length === 0) {
     throw new Error(
@@ -122,15 +110,9 @@ export function parseMission(raw: unknown, idHint: string): Mission {
   const seed = (r.matrix_seed ?? r.seed ?? 0) as number;
   const grade = (r.grade_max ?? r.grade_min ?? r.grade ?? 1) as number;
   if (!r.rewards || typeof r.rewards !== "object") {
-    throw new Error(
-      `[data_loaders] mission '${id}': field 'rewards' must be an object`,
-    );
+    throw new Error(`[data_loaders] mission '${id}': field 'rewards' must be an object`);
   }
-  const credits = expectNumber(
-    r.rewards as Record<string, unknown>,
-    "credits",
-    `mission '${id}'`,
-  );
+  const credits = expectNumber(r.rewards as Record<string, unknown>, "credits", `mission '${id}'`);
   // source_universe is optional in JSON; absent means "sprawl" (ADR-0213)
   const source_universe = r.source_universe ?? "sprawl";
   if (source_universe !== "sprawl" && source_universe !== "far-grid") {
@@ -197,8 +179,7 @@ export function parseMission(raw: unknown, idHint: string): Mission {
     grade_max,
     rewards: {
       credits,
-      materials:
-        (r.rewards as { materials?: Record<string, number> }).materials ?? {},
+      materials: (r.rewards as { materials?: Record<string, number> }).materials ?? {},
     },
     grade,
     seed,
@@ -219,9 +200,7 @@ export function parseProgram(raw: unknown, idHint: string): Program {
   const tier = expectNumber(r, "tier", `program '${name}'`);
   // ap_cost (legacy) → cost (current). Both must not be set simultaneously.
   if (typeof r.cost === "number" && typeof r.ap_cost === "number") {
-    throw new Error(
-      `[data_loaders] program '${name}' has both 'cost' and 'ap_cost'; choose one`,
-    );
+    throw new Error(`[data_loaders] program '${name}' has both 'cost' and 'ap_cost'; choose one`);
   }
   const cost = r.cost ?? r.ap_cost;
   if (typeof cost !== "number" || !Number.isFinite(cost)) {
@@ -229,8 +208,7 @@ export function parseProgram(raw: unknown, idHint: string): Program {
       `[data_loaders] program '${name}' requires 'cost' or 'ap_cost' as finite number`,
     );
   }
-  const plannedDescription =
-    typeof r.planned_description === "string" ? r.planned_description : "";
+  const plannedDescription = typeof r.planned_description === "string" ? r.planned_description : "";
   const effect = typeof r.effect === "string" ? r.effect : "attack";
   const aoe = r.aoe === true;
   // ADR-0251 rule 5: the description states what the program does. The
@@ -263,11 +241,7 @@ const PARSE_ICE_DEFAULT_GRADE = 1;
  * `tests/data_loaders.test.ts:234` (`expect(ice.hp).toBeGreaterThan(0)`). */
 const PARSE_ICE_LEGACY_HP = 100;
 
-export function parseIce(
-  raw: unknown,
-  idHint: string,
-  skillDefs: IceSkillDefs = {},
-): Ice {
+export function parseIce(raw: unknown, idHint: string, skillDefs: IceSkillDefs = {}): Ice {
   if (typeof raw !== "object" || raw === null) {
     throw new Error(`[data_loaders] ice '${idHint}' must be an object`);
   }
@@ -275,20 +249,15 @@ export function parseIce(
   const name = expectString(r, "name", `ice '${idHint}'`);
   // defense (legacy) → armor (current). Throw if both set.
   if (typeof r.armor === "number" && typeof r.defense === "number") {
-    throw new Error(
-      `[data_loaders] ice '${name}' has both 'armor' and 'defense'; choose one`,
-    );
+    throw new Error(`[data_loaders] ice '${name}' has both 'armor' and 'defense'; choose one`);
   }
   const armor = (r.armor ?? r.defense ?? 0) as number;
   if (typeof armor !== "number" || !Number.isFinite(armor)) {
-    throw new Error(
-      `[data_loaders] ice '${name}' requires 'armor' or 'defense' as finite number`,
-    );
+    throw new Error(`[data_loaders] ice '${name}' requires 'armor' or 'defense' as finite number`);
   }
   const tier = typeof r.tier === "number" ? r.tier : 1;
   const hpBase = typeof r.hp_base === "number" ? r.hp_base : undefined;
-  const hpPerGrade =
-    typeof r.hp_per_grade === "number" ? r.hp_per_grade : undefined;
+  const hpPerGrade = typeof r.hp_per_grade === "number" ? r.hp_per_grade : undefined;
   // ADR-0211 Option 2: derive `hp` from `hp_base` + `hp_per_grade` when both are
   // available so the field is non-arbitrary and aligned with the runtime
   // `iceHpForGrade` curve. Fall back to the legacy 100 default when grade data
@@ -307,10 +276,7 @@ export function parseIce(
   // than coerce (ADR-0216 defect class).
   let personality: Ice["personality"];
   if (r.personality !== undefined) {
-    if (
-      typeof r.personality !== "string" ||
-      !VALID_ICE_PERSONALITY.has(r.personality)
-    ) {
+    if (typeof r.personality !== "string" || !VALID_ICE_PERSONALITY.has(r.personality)) {
       throw new Error(
         `[data_loaders] ice '${name}': field 'personality' must be one of ${[...VALID_ICE_PERSONALITY].join(", ")} (got ${JSON.stringify(r.personality)})`,
       );
@@ -326,10 +292,7 @@ export function parseIce(
   // ADR-0220 defect class).
   let aggression: Ice["aggression"];
   if (r.aggression !== undefined) {
-    if (
-      typeof r.aggression !== "string" ||
-      !VALID_ICE_AGGRESSION.has(r.aggression)
-    ) {
+    if (typeof r.aggression !== "string" || !VALID_ICE_AGGRESSION.has(r.aggression)) {
       throw new Error(
         `[data_loaders] ice '${name}': field 'aggression' must be one of ${[...VALID_ICE_AGGRESSION].join(", ")} (got ${JSON.stringify(r.aggression)})`,
       );
@@ -353,23 +316,15 @@ export function parseIce(
 /** Load a missions JSON file. Throws on first malformed entry. */
 export function loadMissionsCatalog(raw: unknown): ReadonlyArray<Mission> {
   if (typeof raw !== "object" || raw === null) {
-    throw new Error(
-      "[data_loaders] missions JSON must be an object keyed by id",
-    );
+    throw new Error("[data_loaders] missions JSON must be an object keyed by id");
   }
-  return Object.entries(raw as Record<string, unknown>).map(([id, m]) =>
-    parseMission(m, id),
-  );
+  return Object.entries(raw as Record<string, unknown>).map(([id, m]) => parseMission(m, id));
 }
 
 /** Load a programs JSON file into a Map. Throws on first malformed entry. */
-export function loadProgramsCatalog(
-  raw: unknown,
-): Readonly<Record<string, Program>> {
+export function loadProgramsCatalog(raw: unknown): Readonly<Record<string, Program>> {
   if (typeof raw !== "object" || raw === null) {
-    throw new Error(
-      "[data_loaders] programs JSON must be an object keyed by id",
-    );
+    throw new Error("[data_loaders] programs JSON must be an object keyed by id");
   }
   const out: Record<string, Program> = {};
   for (const [id, p] of Object.entries(raw as Record<string, unknown>)) {
@@ -390,9 +345,7 @@ const ICE_SKILL_DEFS_KEY = "skill_defs";
  */
 export function loadIceCatalog(raw: unknown): Readonly<Record<string, Ice>> {
   if (typeof raw !== "object" || raw === null) {
-    throw new Error(
-      "[data_loaders] ice types JSON must be an object keyed by id",
-    );
+    throw new Error("[data_loaders] ice types JSON must be an object keyed by id");
   }
   const entries = Object.entries(raw as Record<string, unknown>);
   const skillDefs = parseIceSkillDefs(

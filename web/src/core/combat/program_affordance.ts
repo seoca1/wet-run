@@ -192,15 +192,8 @@ export const FULL_ROW_WIDTH = formatAffordanceRow({
 /** Visible lines of a touch button (narrow enough for five in a phone row). */
 export function touchAffordanceLines(a: ProgramAffordance): readonly string[] {
   const last =
-    a.damage === null || a.damage === undefined
-      ? a.target
-      : `${damageText(a)} ${a.target}`;
-  return [
-    `${a.slot} COST+${a.cost}`,
-    a.name,
-    a.blocked ? "BLOCKED" : a.effectTag,
-    last,
-  ];
+    a.damage === null || a.damage === undefined ? a.target : `${damageText(a)} ${a.target}`;
+  return [`${a.slot} COST+${a.cost}`, a.name, a.blocked ? "BLOCKED" : a.effectTag, last];
 }
 
 /** Spoken label for a touch button; says the same facts as the canvas row. */
@@ -212,9 +205,7 @@ export function affordanceAriaLabel(a: ProgramAffordance): string {
   }
   const effect = a.effectTag ? `, ${a.effectTag}` : "";
   const dmg =
-    a.damage === null || a.damage === undefined
-      ? ""
-      : `, damage ${formatDamageRange(a.damage)}`;
+    a.damage === null || a.damage === undefined ? "" : `, damage ${formatDamageRange(a.damage)}`;
   return `${a.slot} ${a.name}, COST plus ${a.cost}${effect}${dmg}, target ${a.target}`;
 }
 
@@ -242,10 +233,7 @@ export function rewardAffordances(
       after: state.player.alarm + cost,
       // A reward is not being played now, so it is never refused.
       blocked: false,
-      target:
-        card && programHitsAllIce(card)
-          ? ("ALL ICE" as const)
-          : ("ICE" as const),
+      target: card && programHitsAllIce(card) ? ("ALL ICE" as const) : ("ICE" as const),
       effectTag: card ? programEffectTag(card) : "",
     };
   });
@@ -261,10 +249,7 @@ export function formatRewardOption(
    * truncation turns "NULL POINTER" into "NULL POIN", which is not a choice. */
   nameWidth: number = NAME_WIDTH,
 ): string {
-  const name = program.name
-    .toUpperCase()
-    .slice(0, nameWidth)
-    .padEnd(nameWidth);
+  const name = program.name.toUpperCase().slice(0, nameWidth).padEnd(nameWidth);
   const tag = programEffectTag(program);
   const body = `${slot} ${name} ${tag}`.trimEnd();
   // The caret marks the card the player actually took; the others are spent,
@@ -276,13 +261,7 @@ export function formatRewardOption(
  * `max(HAND_LAYOUT_SLOTS, count)` rows and ends on the last inner row of the
  * screen frame (`rows - 3`); the header never sits lower than the pre-0251
  * `HAND:` row. */
-export function combatHandRow(
-  rows: number,
-  count: number = HAND_LAYOUT_SLOTS,
-): number {
+export function combatHandRow(rows: number, count: number = HAND_LAYOUT_SLOTS): number {
   const slots = Math.max(HAND_LAYOUT_SLOTS, count);
-  return Math.max(
-    8,
-    Math.min(rows - Math.floor(rows * 0.16), rows - 3 - slots),
-  );
+  return Math.max(8, Math.min(rows - Math.floor(rows * 0.16), rows - 3 - slots));
 }

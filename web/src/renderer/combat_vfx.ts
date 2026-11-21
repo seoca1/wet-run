@@ -58,11 +58,7 @@ export * from "./combat_vfx_core";
  * The function writes the effect's visual at its current tick. The caller
  * is responsible for compositing this over the base combat grid.
  */
-export function renderCombatVfx(
-  instance: CombatVfxInstance,
-  cols: number,
-  rows: number,
-): Grid {
+export function renderCombatVfx(instance: CombatVfxInstance, cols: number, rows: number): Grid {
   const grid = makeGrid(cols, rows);
   const t = instance.tick;
   const dur = instance.duration;
@@ -89,23 +85,14 @@ export function composeCombatVfx(
 }
 
 /** Overlay `overlay` onto `base` (overlay takes precedence where set). */
-function compositeGrid(
-  base: Grid,
-  overlay: Grid,
-  cols: number,
-  rows: number,
-): Grid {
+function compositeGrid(base: Grid, overlay: Grid, cols: number, rows: number): Grid {
   let result = base;
   for (let y = 0; y < rows; y++) {
     for (let x = 0; x < cols; x++) {
       const overlayCell = overlay.get(x, y);
       if (!overlayCell || overlayCell.char === " ") continue;
       const baseCell = base.get(x, y);
-      if (
-        baseCell &&
-        baseCell.char === overlayCell.char &&
-        baseCell.fg === overlayCell.fg
-      ) {
+      if (baseCell && baseCell.char === overlayCell.char && baseCell.fg === overlayCell.fg) {
         continue;
       }
       result = setText(result, x, y, overlayCell.char, overlayCell.fg);

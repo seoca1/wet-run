@@ -19,13 +19,7 @@ export function renderSceneVfx(ctx: VfxRenderCtx, grid: Grid): Grid | null {
     case "ice_intro": {
       const cx = Math.floor(cols / 2);
       const iceName = instance.payload || "ICE";
-      grid = setText(
-        grid,
-        Math.max(2, cx - 10),
-        1,
-        "┌──────────────────┐",
-        PALETTE.RED_BRIGHT,
-      );
+      grid = setText(grid, Math.max(2, cx - 10), 1, "┌──────────────────┐", PALETTE.RED_BRIGHT);
       grid = setText(
         grid,
         Math.max(2, cx - 10),
@@ -33,13 +27,7 @@ export function renderSceneVfx(ctx: VfxRenderCtx, grid: Grid): Grid | null {
         `│ INCOMING: ${iceName.padEnd(8)} │`,
         PALETTE.RED_BRIGHT,
       );
-      grid = setText(
-        grid,
-        Math.max(2, cx - 10),
-        3,
-        "└──────────────────┘",
-        PALETTE.RED_BRIGHT,
-      );
+      grid = setText(grid, Math.max(2, cx - 10), 3, "└──────────────────┘", PALETTE.RED_BRIGHT);
       const scanLines = ["[ scanning... ]", "[ scanning... ]", "[ DETECTED ]"];
       grid = setText(
         grid,
@@ -53,41 +41,11 @@ export function renderSceneVfx(ctx: VfxRenderCtx, grid: Grid): Grid | null {
     case "ice_death": {
       const cx = Math.floor(cols / 2);
       const iceName = instance.payload || "ICE";
-      grid = setText(
-        grid,
-        Math.max(2, cx - 10),
-        1,
-        `▼ ${iceName} OFFLINE ▼`,
-        PALETTE.GRAY_LIGHT,
-      );
-      grid = setText(
-        grid,
-        Math.max(2, cx - 10),
-        3,
-        "╔══════════════════╗",
-        PALETTE.GRAY_LIGHT,
-      );
-      grid = setText(
-        grid,
-        Math.max(2, cx - 10),
-        4,
-        "║   CONNECTION     ║",
-        PALETTE.GRAY_LIGHT,
-      );
-      grid = setText(
-        grid,
-        Math.max(2, cx - 10),
-        5,
-        "║     SEVERED      ║",
-        PALETTE.GRAY_LIGHT,
-      );
-      grid = setText(
-        grid,
-        Math.max(2, cx - 10),
-        6,
-        "╚══════════════════╝",
-        PALETTE.GRAY_LIGHT,
-      );
+      grid = setText(grid, Math.max(2, cx - 10), 1, `▼ ${iceName} OFFLINE ▼`, PALETTE.GRAY_LIGHT);
+      grid = setText(grid, Math.max(2, cx - 10), 3, "╔══════════════════╗", PALETTE.GRAY_LIGHT);
+      grid = setText(grid, Math.max(2, cx - 10), 4, "║   CONNECTION     ║", PALETTE.GRAY_LIGHT);
+      grid = setText(grid, Math.max(2, cx - 10), 5, "║     SEVERED      ║", PALETTE.GRAY_LIGHT);
+      grid = setText(grid, Math.max(2, cx - 10), 6, "╚══════════════════╝", PALETTE.GRAY_LIGHT);
       return grid;
     }
     case "boss_phase_transition": {
@@ -124,34 +82,10 @@ export function renderSceneVfx(ctx: VfxRenderCtx, grid: Grid): Grid | null {
       const cfg = phaseConfig[phase] ?? phaseConfig[1]!;
       const cx = Math.floor(cols / 2);
       const header = `${cfg.icon} BOSS ${cfg.label} ${cfg.icon}`;
-      grid = setText(
-        grid,
-        Math.max(2, cx - Math.floor(header.length / 2)),
-        1,
-        header,
-        cfg.color,
-      );
-      grid = setText(
-        grid,
-        Math.max(2, cx - 10),
-        3,
-        "╔══════════════╗",
-        cfg.color,
-      );
-      grid = setText(
-        grid,
-        Math.max(2, cx - 10),
-        4,
-        `║ ${cfg.message.padEnd(14)} ║`,
-        cfg.color,
-      );
-      grid = setText(
-        grid,
-        Math.max(2, cx - 10),
-        5,
-        "╚══════════════╝",
-        cfg.color,
-      );
+      grid = setText(grid, Math.max(2, cx - Math.floor(header.length / 2)), 1, header, cfg.color);
+      grid = setText(grid, Math.max(2, cx - 10), 3, "╔══════════════╗", cfg.color);
+      grid = setText(grid, Math.max(2, cx - 10), 4, `║ ${cfg.message.padEnd(14)} ║`, cfg.color);
+      grid = setText(grid, Math.max(2, cx - 10), 5, "╚══════════════╝", cfg.color);
       if (phase === 3) {
         if (t === 0 || t === 2) {
           for (let x = 4; x < cols - 4; x++) {
@@ -171,13 +105,7 @@ export function renderSceneVfx(ctx: VfxRenderCtx, grid: Grid): Grid | null {
       const cx = Math.floor(cols / 2);
       const stars = ["✦", "✧", "✶", "✷", "★"];
       const star = stars[t % stars.length] ?? "✦";
-      grid = setText(
-        grid,
-        cx - 5,
-        1,
-        `* ${star} VICTORY ${star} *`,
-        PALETTE.GREEN_NEON,
-      );
+      grid = setText(grid, cx - 5, 1, `* ${star} VICTORY ${star} *`, PALETTE.GREEN_NEON);
       grid = setText(grid, 2, 3, "╔══════════════════╗", PALETTE.GREEN_NEON);
       grid = setText(grid, 2, 4, "║   ICE DEFEATED   ║", PALETTE.GREEN_NEON);
       grid = setText(grid, 2, 5, "╚══════════════════╝", PALETTE.GREEN_NEON);
@@ -218,32 +146,14 @@ export function renderSceneVfx(ctx: VfxRenderCtx, grid: Grid): Grid | null {
     case "jackout_whiteout": {
       // Whiteout flash + sparse particles.
       const fade = t === 0 ? PALETTE.HIT_FLASH_COLOR : PALETTE.GRAY_LIGHT;
-      grid = setText(
-        grid,
-        Math.floor(cols / 2) - 4,
-        Math.floor(rows / 2),
-        "JACK OUT",
-        fade,
-      );
+      grid = setText(grid, Math.floor(cols / 2) - 4, Math.floor(rows / 2), "JACK OUT", fade);
       if (t === 0) {
         for (let x = 0; x < cols; x += 4) {
-          grid = setText(
-            grid,
-            x,
-            Math.floor(rows / 2) - 1,
-            "·",
-            PALETTE.HIT_FLASH_COLOR,
-          );
+          grid = setText(grid, x, Math.floor(rows / 2) - 1, "·", PALETTE.HIT_FLASH_COLOR);
         }
       } else if (t === 1) {
         for (let x = 0; x < cols; x += 4) {
-          grid = setText(
-            grid,
-            x,
-            Math.floor(rows / 2) + 1,
-            "·",
-            PALETTE.GRAY_LIGHT,
-          );
+          grid = setText(grid, x, Math.floor(rows / 2) + 1, "·", PALETTE.GRAY_LIGHT);
         }
       }
       return grid;
@@ -278,13 +188,7 @@ export function renderSceneVfx(ctx: VfxRenderCtx, grid: Grid): Grid | null {
         }
       }
       if (t < 2) {
-        grid = setText(
-          grid,
-          cx - 6,
-          cy - 3,
-          "DATA FRAGMENT",
-          PALETTE.TIER_GOLD,
-        );
+        grid = setText(grid, cx - 6, cy - 3, "DATA FRAGMENT", PALETTE.TIER_GOLD);
       }
       return grid;
     }

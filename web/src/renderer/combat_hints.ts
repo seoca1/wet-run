@@ -1,8 +1,5 @@
 import { setText, type Grid } from "../core/grid";
-import {
-  COMBAT_ENTRY_HINT_LINES,
-  combatEntryHintRows,
-} from "../core/state/onboarding";
+import { COMBAT_ENTRY_HINT_LINES, combatEntryHintRows } from "../core/state/onboarding";
 import { PALETTE } from "./palette";
 
 /** Existing hint rows, shared by entry instructions and press acknowledgement. */
@@ -37,13 +34,7 @@ export function renderCombatHints(grid: Grid, view: CombatHintView): Grid {
     });
   }
   if (view.pressLabel !== null) {
-    out = setText(
-      out,
-      layout.x,
-      layout.rows[0] ?? 0,
-      view.pressLabel,
-      PALETTE.GREEN_NEON,
-    );
+    out = setText(out, layout.x, layout.rows[0] ?? 0, view.pressLabel, PALETTE.GREEN_NEON);
   }
   if (view.costCapped === true) {
     const row = layout.rows[layout.rows.length - 1];

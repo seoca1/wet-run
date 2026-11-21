@@ -97,9 +97,7 @@ const ICE_SKILL_NON_DAMAGE_EFFECTS: ReadonlySet<string> = new Set([
  */
 export function parseIceSkillDefs(raw: unknown, ctx: string): IceSkillDefs {
   if (typeof raw !== "object" || raw === null || Array.isArray(raw)) {
-    throw new Error(
-      `[data_loaders] ${ctx}: field 'skill_defs' must be an object when present`,
-    );
+    throw new Error(`[data_loaders] ${ctx}: field 'skill_defs' must be an object when present`);
   }
   const out: Record<string, IceSkillDef> = {};
   for (const [id, value] of Object.entries(raw as Record<string, unknown>)) {
@@ -128,10 +126,7 @@ export function parseIceSkillDefs(raw: unknown, ctx: string): IceSkillDefs {
       );
     }
     const magnitude = r["magnitude"];
-    if (
-      magnitude !== undefined &&
-      (typeof magnitude !== "number" || !Number.isFinite(magnitude))
-    ) {
+    if (magnitude !== undefined && (typeof magnitude !== "number" || !Number.isFinite(magnitude))) {
       throw new Error(
         `[data_loaders] ${ctx}: skill_defs entry '${id}': field 'magnitude' must be a finite number when present (got ${typeof magnitude}: ${String(magnitude)})`,
       );
@@ -176,9 +171,7 @@ export function parseIceSkills(
 ): Ice["skills"] | undefined {
   if (raw === undefined) return undefined;
   if (!Array.isArray(raw)) {
-    throw new Error(
-      `[data_loaders] ${ctx}: field 'skills' must be an array when present`,
-    );
+    throw new Error(`[data_loaders] ${ctx}: field 'skills' must be an array when present`);
   }
   type IceSkill = NonNullable<Ice["skills"]>[number];
   const skills: IceSkill[] = [];

@@ -20,18 +20,10 @@ import {
   statusEventLines,
 } from "../status";
 import { AudioManager } from "../../audio/manager";
-import {
-  calculateDamage,
-  countRoleSynergy,
-  programPowerArmorBypassPct,
-} from "./combat_engine";
+import { calculateDamage, countRoleSynergy, programPowerArmorBypassPct } from "./combat_engine";
 import { absorbIceDamage } from "./ice_combat_effects";
 import { programEffect } from "./program_effects";
-import {
-  COST_LIMIT,
-  programAlarmCost,
-  programHitsAllIce,
-} from "./program_affordance";
+import { COST_LIMIT, programAlarmCost, programHitsAllIce } from "./program_affordance";
 import { creditKills, killedBetween, resolveVictory } from "./victory";
 import {
   COMBAT_LOG_CAP,
@@ -60,8 +52,7 @@ export function useProgram(state: GameState, programId: string): GameState {
   }
   // ADR-0251: the hand label reads the same helper, so the COST it shows is
   // the COST charged here and BLOCKED is exactly this refusal.
-  const newAlarm =
-    state.player.alarm + programAlarmCost(program, state.activeMutators);
+  const newAlarm = state.player.alarm + programAlarmCost(program, state.activeMutators);
   if (newAlarm > COST_LIMIT) {
     return { ...state, message: "Cost too high — program failed" };
   }
@@ -97,15 +88,12 @@ export function useProgram(state: GameState, programId: string): GameState {
   // armor, so it is worth nothing on a bare ICE and a lot on a plated one.
   const effect = programEffect(program);
   const piercePoints = effect.kind === "pierce" ? effect.amount : 0;
-  const armorKeptPct =
-    effect.kind === "armor_ignore" ? 100 - effect.amount : 100;
+  const armorKeptPct = effect.kind === "armor_ignore" ? 100 - effect.amount : 100;
   // ADR-0327: the deck's programPower eats into whatever armor survives the
   // card's own pierce / armor_ignore — a share, so it scales with the ICE's
   // plate instead of flattening the damage curve.
   const powerBypassPct = programPowerArmorBypassPct(equipStats.programPower);
-  const keptAfterPower = Math.floor(
-    (armorKeptPct * (100 - powerBypassPct)) / 100,
-  );
+  const keptAfterPower = Math.floor((armorKeptPct * (100 - powerBypassPct)) / 100);
   const defenderArmor = defenderIce.armor ?? 0;
   const effectiveArmor = Math.floor(
     (Math.max(0, defenderArmor - piercePoints) * keptAfterPower) / 100,
@@ -122,10 +110,7 @@ export function useProgram(state: GameState, programId: string): GameState {
     lastSkillRole: (program as { role?: string }).role ?? null,
     lastSkillCritBonus: 0,
     playerCombo: newCombo,
-    roleSynergyCount: countRoleSynergy(
-      (program as { role?: string }).role ?? null,
-      [],
-    ),
+    roleSynergyCount: countRoleSynergy((program as { role?: string }).role ?? null, []),
     defenderVulnerabilityPct: vulnerableBonus + equipStats.damageBonusPct,
     defenderSlowReductionPct: 0,
     rng: Math.random,
@@ -140,11 +125,8 @@ export function useProgram(state: GameState, programId: string): GameState {
   // dispatch otherwise; falls back to legacy COMBAT_HIT default.
   void AudioManager.getInstance().playSfx(pickProgramSfxId(program, damage));
 
-  const slowIdx = state.statusEffects.findIndex(
-    (e) => e.kind === "slow" && e.target === "ice",
-  );
-  const slowReduction =
-    slowIdx >= 0 ? (state.statusEffects[slowIdx]?.magnitude ?? 0) : 0;
+  const slowIdx = state.statusEffects.findIndex((e) => e.kind === "slow" && e.target === "ice");
+  const slowReduction = slowIdx >= 0 ? (state.statusEffects[slowIdx]?.magnitude ?? 0) : 0;
   if (slowReduction > 0) {
     const reduction = Math.floor((damage * slowReduction) / 100);
     damage = Math.max(1, damage - reduction);
@@ -174,20 +156,12 @@ export function useProgram(state: GameState, programId: string): GameState {
     comboLastHitMs: currentMs,
   };
   const statusCountBeforeProcs = stateWithDamage.statusEffects.length;
-  if (
-    rollStatusProc("burn") &&
-    damagedRoster[targetIdx] &&
-    damagedRoster[targetIdx].hp > 0
-  ) {
+  if (rollStatusProc("burn") && damagedRoster[targetIdx] && damagedRoster[targetIdx].hp > 0) {
     stateWithDamage = applyStatus(stateWithDamage, "ice", "burn", 2, 3);
   }
 
   // Apply slow effect 20% chance to slow ice for 2 turns with 30% damage reduction
-  if (
-    rollStatusProc("slow") &&
-    damagedRoster[targetIdx] &&
-    damagedRoster[targetIdx].hp > 0
-  ) {
+  if (rollStatusProc("slow") && damagedRoster[targetIdx] && damagedRoster[targetIdx].hp > 0) {
     stateWithDamage = applyStatus(stateWithDamage, "ice", "slow", 2, 30, {
       slowPct: 30,
     });
@@ -229,45 +203,20 @@ export function useProgram(state: GameState, programId: string): GameState {
   // starts at its full duration — a 3-turn shield must not be born at 2, and
   // a 1-turn decoy must not expire in the same turn it was played.
   if (effect.kind === "shield") {
-    finalState = applyStatus(
-      finalState,
-      "player",
-      "shield",
-      effect.turns,
-      effect.amount,
-    );
+    finalState = applyStatus(finalState, "player", "shield", effect.turns, effect.amount);
   } else if (effect.kind === "empower") {
-    finalState = applyStatus(
-      finalState,
-      "player",
-      "powered",
-      effect.turns,
-      effect.amount,
-      { attackBonus: effect.amount },
-    );
+    finalState = applyStatus(finalState, "player", "powered", effect.turns, effect.amount, {
+      attackBonus: effect.amount,
+    });
   } else if (effect.kind === "evade") {
-    finalState = applyStatus(
-      finalState,
-      "player",
-      "evasive",
-      effect.turns,
-      effect.amount,
-    );
+    finalState = applyStatus(finalState, "player", "evasive", effect.turns, effect.amount);
   } else if (effect.kind === "decoy") {
     // The decoy takes part of the next hit meant for the player.
-    finalState = applyStatus(
-      finalState,
-      "player",
-      "evasive",
-      effect.turns,
-      effect.amount,
-    );
+    finalState = applyStatus(finalState, "player", "evasive", effect.turns, effect.amount);
   }
 
   // ADR-0251 slice B: procs append, so what this play applied is the tail.
-  const appliedStatuses = finalState.statusEffects.slice(
-    statusCountBeforeProcs,
-  );
+  const appliedStatuses = finalState.statusEffects.slice(statusCountBeforeProcs);
   // ADR-0251 slice B: name every status this play started or ended. Between
   // the input and `finalState` effects are only added by the procs above, so
   // the before/after difference is exactly what a shield break, a spent
@@ -276,10 +225,7 @@ export function useProgram(state: GameState, programId: string): GameState {
   const statusLines = [
     ...statusEventLines(appliedStatuses, "on", rosterSize),
     ...statusEventLines(
-      endedStatuses(
-        [...state.statusEffects, ...appliedStatuses],
-        finalState.statusEffects,
-      ),
+      endedStatuses([...state.statusEffects, ...appliedStatuses], finalState.statusEffects),
       "off",
       rosterSize,
     ),
@@ -294,8 +240,7 @@ export function useProgram(state: GameState, programId: string): GameState {
           ),
         ]
       : [];
-  const dotOrRegenVfx: import("../../renderer/combat_vfx.ts").CombatVfxInstance[] =
-    [];
+  const dotOrRegenVfx: import("../../renderer/combat_vfx.ts").CombatVfxInstance[] = [];
   if (tickResult.burnDamagePlayer > 0 || tickResult.burnDamageIce > 0) {
     dotOrRegenVfx.push(
       import_vfx(
@@ -309,8 +254,7 @@ export function useProgram(state: GameState, programId: string): GameState {
     );
   }
   const allDefeated = finalState.iceRoster.every((ice) => ice.hp === 0);
-  const bossPhaseChanged =
-    state.bossPhase > 0 && finalState.bossPhase !== state.bossPhase;
+  const bossPhaseChanged = state.bossPhase > 0 && finalState.bossPhase !== state.bossPhase;
   const programVfxKind = pickProgramVfxKind(program, damage);
   const programVfxInstances: ReadonlyArray<
     import("../../renderer/combat_vfx.ts").CombatVfxInstance
@@ -327,9 +271,7 @@ export function useProgram(state: GameState, programId: string): GameState {
             damage,
           ),
         ];
-  const vfxNew: ReadonlyArray<
-    import("../../renderer/combat_vfx.ts").CombatVfxInstance
-  > = [
+  const vfxNew: ReadonlyArray<import("../../renderer/combat_vfx.ts").CombatVfxInstance> = [
     ...finalState.vfxInstances,
     import_vfx(programVfxKind, program.name, 3),
     import_vfx("ice_hit", `${damage}`, 2),
@@ -351,9 +293,7 @@ export function useProgram(state: GameState, programId: string): GameState {
           ),
         ]
       : []),
-    ...(bossPhaseChanged &&
-    finalState.bossPhase >= 1 &&
-    finalState.bossPhase <= 4
+    ...(bossPhaseChanged && finalState.bossPhase >= 1 && finalState.bossPhase <= 4
       ? [
           import_vfx_ms(
             "boss_phase_transition",
@@ -385,10 +325,7 @@ export function useProgram(state: GameState, programId: string): GameState {
         ...stateWithLoot,
         deck: newDeck,
         discardPile: discard,
-        combatLog: [...statusLines, ...stateWithLoot.combatLog].slice(
-          0,
-          COMBAT_LOG_CAP,
-        ),
+        combatLog: [...statusLines, ...stateWithLoot.combatLog].slice(0, COMBAT_LOG_CAP),
         vfxInstances: vfxNew,
       },
       { defeated: newlyDefeated, drops: lootDrops, kind: "program" },
@@ -407,11 +344,10 @@ export function useProgram(state: GameState, programId: string): GameState {
     discardPile: discard,
     player: { ...stateWithLoot.player, alarm: newAlarm },
     message: programMessage,
-    combatLog: [
-      programMessage,
-      ...statusLines,
-      ...stateWithLoot.combatLog,
-    ].slice(0, COMBAT_LOG_CAP),
+    combatLog: [programMessage, ...statusLines, ...stateWithLoot.combatLog].slice(
+      0,
+      COMBAT_LOG_CAP,
+    ),
     vfxInstances: vfxNew,
     unlockedAchievements: stateWithLoot.unlockedAchievements,
     achievementCredits: stateWithLoot.achievementCredits,

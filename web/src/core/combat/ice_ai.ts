@@ -32,13 +32,12 @@ import { IDLE_ALARM_TUNING } from "./idle_alarm";
 // ============================================================================
 
 /** Per-tick probability of ICE choosing to cast a skill (ADR-0148). */
-export const AGGRESSION_PROBABILITY: Readonly<Record<AggressionTier, number>> =
-  {
-    passive: 0.05,
-    standard: 0.15,
-    aggressive: 0.35,
-    boss: 0.5,
-  } as const;
+export const AGGRESSION_PROBABILITY: Readonly<Record<AggressionTier, number>> = {
+  passive: 0.05,
+  standard: 0.15,
+  aggressive: 0.35,
+  boss: 0.5,
+} as const;
 
 /** Valid aggression values for coercion guards. */
 const VALID_AGGRESSION: ReadonlySet<string> = new Set<string>([
@@ -114,10 +113,7 @@ export function enemyShouldUseSkill(
   }
   const tier = coerceAggression(combatant.aggression);
   const prob = AGGRESSION_PROBABILITY[tier] ?? AGGRESSION_PROBABILITY.standard;
-  return (
-    rng() <
-    Math.min(1, prob + alarmLevel * IDLE_ALARM_TUNING.aggressionPerLevel)
-  );
+  return rng() < Math.min(1, prob + alarmLevel * IDLE_ALARM_TUNING.aggressionPerLevel);
 }
 
 // ============================================================================
@@ -130,10 +126,7 @@ export function enemyShouldUseSkill(
  *
  * @returns A randomly selected skill, or null if no skills are equipped.
  */
-export function chooseSkill(
-  combatant: Combatant,
-  rng: () => number,
-): Skill | null {
+export function chooseSkill(combatant: Combatant, rng: () => number): Skill | null {
   if (combatant.skills.length === 0) {
     return null;
   }
@@ -226,9 +219,7 @@ function effectivePreference(
 ): ReadonlyArray<SkillEffectKind> {
   const prefs = PERSONALITY_SKILL_PREFERENCE[personality];
   if (personality !== "defensive") return prefs;
-  return isAtOrAboveDefensiveThreshold(combatant)
-    ? DEFENSIVE_HEALTHY_PREFERENCE
-    : prefs;
+  return isAtOrAboveDefensiveThreshold(combatant) ? DEFENSIVE_HEALTHY_PREFERENCE : prefs;
 }
 
 /**
@@ -366,10 +357,7 @@ export function getCritBonus(combatant: PersonalityBearer): number {
  * and a wounded ally (HP < 70% of max) exists in the combat state.
  * Used for heal/buff targeting in multi-enemy combat.
  */
-export function shouldTargetAlly(
-  combatant: Combatant,
-  allies: ReadonlyArray<Combatant>,
-): boolean {
+export function shouldTargetAlly(combatant: Combatant, allies: ReadonlyArray<Combatant>): boolean {
   const personality = coercePersonality(combatant.personality);
   if (personality !== "support") return false;
 

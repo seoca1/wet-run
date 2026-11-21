@@ -42,20 +42,14 @@ export interface MissionListLayout {
  * two rows under the ╠═╣ rule, is centred vertically in
  * the body when it fits, and its column is centred on the widest row.
  */
-export function missionListLayout(
-  grid: Grid,
-  rowLabels: readonly string[],
-): MissionListLayout {
+export function missionListLayout(grid: Grid, rowLabels: readonly string[]): MissionListLayout {
   const frame = screenFrameRect(grid);
   const inner = panelInnerRect(grid, frame);
   const separatorY = inner.y + 3;
   const bodyTop = separatorY + 2;
   const listBottom = inner.y + inner.height - 1;
   const spare = listBottom - bodyTop + 1 - rowLabels.length;
-  const widest = rowLabels.reduce(
-    (w, label) => Math.max(w, label.length + 2),
-    0,
-  );
+  const widest = rowLabels.reduce((w, label) => Math.max(w, label.length + 2), 0);
   return {
     frame,
     inner,
@@ -137,20 +131,12 @@ export function renderMissionList(
   // Reserve the bottom rows — the contract's shape, then the briefing — before
   // placing the list.
   const contractLine =
-    contract !== null && contract !== "" && contract.length <= inner.width - 4
-      ? contract
-      : null;
+    contract !== null && contract !== "" && contract.length <= inner.width - 4 ? contract : null;
   const briefLines =
-    briefing !== null && briefing !== ""
-      ? wrap(briefing, Math.max(16, inner.width - 4), 3)
-      : [];
+    briefing !== null && briefing !== "" ? wrap(briefing, Math.max(16, inner.width - 4), 3) : [];
   const blockRows = (contractLine !== null ? 1 : 0) + briefLines.length;
-  const briefTop =
-    inner.y + inner.height - (blockRows > 0 ? blockRows + 1 : 0);
-  const listBottom = Math.min(
-    layout.listBottom,
-    blockRows > 0 ? briefTop - 2 : layout.listBottom,
-  );
+  const briefTop = inner.y + inner.height - (blockRows > 0 ? blockRows + 1 : 0);
+  const listBottom = Math.min(layout.listBottom, blockRows > 0 ? briefTop - 2 : layout.listBottom);
   for (let i = 0; i < rowLabels.length; i++) {
     const y = layout.listY + i;
     if (y > listBottom) break;
@@ -161,14 +147,7 @@ export function renderMissionList(
     grid = setInnerText(grid, inner, layout.listX, y, row, fg);
   }
   if (contractLine !== null) {
-    grid = setInnerText(
-      grid,
-      inner,
-      inner.x + 2,
-      briefTop,
-      contractLine,
-      PALETTE.YELLOW_AMBER,
-    );
+    grid = setInnerText(grid, inner, inner.x + 2, briefTop, contractLine, PALETTE.YELLOW_AMBER);
   }
   briefLines.forEach((line, i) => {
     grid = setInnerText(

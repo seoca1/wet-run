@@ -65,20 +65,14 @@ export function pressProgramButton(
  * The expiry is compared against the wall clock, so a frame that arrives late
  * clears the acknowledgement instead of leaving a stale one on screen.
  */
-export function expirePressFeedback(
-  state: PressFeedbackState,
-  nowMs: number,
-): PressFeedbackState {
+export function expirePressFeedback(state: PressFeedbackState, nowMs: number): PressFeedbackState {
   if (state.deadlineMs === null) return state;
   if (nowMs < state.deadlineMs) return state;
   return IDLE_PRESS_FEEDBACK;
 }
 
 /** The label shown for an acknowledged press (e.g. `> 3.prog`). */
-export function pressFeedbackLabel(
-  state: PressFeedbackState,
-  programLabel?: string,
-): string {
+export function pressFeedbackLabel(state: PressFeedbackState, programLabel?: string): string {
   if (state.handIndex === null) return "";
   if (programLabel === undefined || programLabel === "") {
     return `> ${state.handIndex}`;
@@ -92,10 +86,7 @@ export function pressFeedbackLabel(
  * Mirrors `expirePressFeedback` but as a predicate, so a render path can ask
  * "should I draw this?" without rebuilding the state.
  */
-export function isPressFeedbackLive(
-  state: PressFeedbackState,
-  nowMs: number,
-): boolean {
+export function isPressFeedbackLive(state: PressFeedbackState, nowMs: number): boolean {
   if (state.deadlineMs === null) return false;
   return nowMs < state.deadlineMs;
 }

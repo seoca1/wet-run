@@ -81,32 +81,22 @@ export function craftItem(
   };
 }
 
-export function makeRecipesFromData(
-  raw: Readonly<Record<string, unknown>>,
-): ReadonlyArray<Recipe> {
+export function makeRecipesFromData(raw: Readonly<Record<string, unknown>>): ReadonlyArray<Recipe> {
   const list = Array.isArray(raw["recipes"]) ? raw["recipes"] : [];
   const recipes: Recipe[] = [];
   for (const entry of list) {
-    if (entry === null || typeof entry !== "object" || Array.isArray(entry))
-      continue;
+    if (entry === null || typeof entry !== "object" || Array.isArray(entry)) continue;
     const r = entry as RawRecipeEntry;
     const name = typeof r.name === "string" ? r.name : null;
     if (name === null) continue;
     const itemId = typeof r.item_id === "string" ? r.item_id : slugify(name);
-    const tierLevel = Number.isFinite(r.tier_level)
-      ? Math.trunc(r.tier_level as number)
-      : 1;
+    const tierLevel = Number.isFinite(r.tier_level) ? Math.trunc(r.tier_level as number) : 1;
     const glyph = typeof r.glyph === "string" ? r.glyph : "";
     const ready = r.ready === true;
     const materials: Record<string, number> = {};
-    if (
-      r.materials !== null &&
-      typeof r.materials === "object" &&
-      !Array.isArray(r.materials)
-    ) {
+    if (r.materials !== null && typeof r.materials === "object" && !Array.isArray(r.materials)) {
       for (const [k, v] of Object.entries(r.materials)) {
-        if (Number.isFinite(v))
-          materials[k] = Math.max(0, Math.trunc(v as number));
+        if (Number.isFinite(v)) materials[k] = Math.max(0, Math.trunc(v as number));
       }
     }
     recipes.push(
@@ -141,8 +131,7 @@ export function makeMaterialsFromData(
   const list = Array.isArray(raw["materials"]) ? raw["materials"] : [];
   const out: MaterialDef[] = [];
   for (const entry of list) {
-    if (entry === null || typeof entry !== "object" || Array.isArray(entry))
-      continue;
+    if (entry === null || typeof entry !== "object" || Array.isArray(entry)) continue;
     const m = entry as RawMaterialEntry;
     if (typeof m.id !== "string" || typeof m.name !== "string") continue;
     if (!Number.isFinite(m.need)) continue;
@@ -179,8 +168,6 @@ export function hasMaterials(
   return true;
 }
 
-export function getHubRecipes(
-  recipes: ReadonlyArray<Recipe>,
-): ReadonlyArray<string> {
+export function getHubRecipes(recipes: ReadonlyArray<Recipe>): ReadonlyArray<string> {
   return Object.freeze(recipes.filter((r) => r.ready).map((r) => r.itemId));
 }

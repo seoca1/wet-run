@@ -72,10 +72,7 @@ export class KeyboardInput {
   }
 
   private onKeyDown(event: KeyboardEvent): void {
-    if (
-      event.target instanceof HTMLInputElement ||
-      event.target instanceof HTMLTextAreaElement
-    ) {
+    if (event.target instanceof HTMLInputElement || event.target instanceof HTMLTextAreaElement) {
       return;
     }
     // Ignore OS auto-repeat on modifier-bearing keystrokes — Enter held, etc.

@@ -51,34 +51,33 @@ export const NO_EFFECT: ProgramEffect = Object.freeze({
  * that have to be real. Every other catalog program stays a plain tier * 5
  * attack and its designed effect stays in `plannedDescription`.
  */
-export const PROGRAM_EFFECTS: Readonly<Record<string, ProgramEffect>> =
-  Object.freeze({
-    // Sized against the ICE armor curve (tier 1 avg 1.0 -> tier 6 avg 10.5)
-    // against a tier*5 player hit: a 3-point pierce is a real gain on the
-    // lightly armored ICEs without doubling the hit on the armored ones.
-    backdoor: Object.freeze({ kind: "pierce", amount: 2, turns: 0 }),
-    // ADR-0277: `exploit` is the generalist's answer to armor. A flat pierce
-    // is worth nothing against an unarmored ICE and everything against a
-    // heavily armored one; a share of the armor scales with the target, which
-    // is the ICE tier curve itself (armor runs 1.0 at tier 1 to 10.5 at
-    // tier 6). Half is sized so the card stays a tier-3 attack on light ICE
-    // and turns into roughly a tier-4 hit on the armored ones.
-    exploit: Object.freeze({ kind: "armor_ignore", amount: 50, turns: 0 }),
-    barrier: Object.freeze({ kind: "shield", amount: 2, turns: 2 }),
-    // `powered` adds a flat bonus to the player's attacks (combat_engine.ts
-    // reads `attackerAttackBonus`), so the amount is points, not percent.
-    boost: Object.freeze({ kind: "empower", amount: 2, turns: 2 }),
-    cloak: Object.freeze({ kind: "evade", amount: 15, turns: 2 }),
-    decoy: Object.freeze({ kind: "decoy", amount: 50, turns: 1 }),
-    // ADR-0303: the three tier-6 programs are g6-only drops (card_reward gates
-    // them). Each is a different answer to the same 30-damage hit, so the choice
-    // between them is about WHAT the deck cannot do, not about a bigger number:
-    // armor so thick nothing else gets through, a body that has to survive one
-    // more exchange, or one hit that must not land at all.
-    ghost_key: Object.freeze({ kind: "armor_ignore", amount: 100, turns: 0 }),
-    null_pointer: Object.freeze({ kind: "shield", amount: 8, turns: 3 }),
-    red_shift: Object.freeze({ kind: "decoy", amount: 100, turns: 1 }),
-  });
+export const PROGRAM_EFFECTS: Readonly<Record<string, ProgramEffect>> = Object.freeze({
+  // Sized against the ICE armor curve (tier 1 avg 1.0 -> tier 6 avg 10.5)
+  // against a tier*5 player hit: a 3-point pierce is a real gain on the
+  // lightly armored ICEs without doubling the hit on the armored ones.
+  backdoor: Object.freeze({ kind: "pierce", amount: 2, turns: 0 }),
+  // ADR-0277: `exploit` is the generalist's answer to armor. A flat pierce
+  // is worth nothing against an unarmored ICE and everything against a
+  // heavily armored one; a share of the armor scales with the target, which
+  // is the ICE tier curve itself (armor runs 1.0 at tier 1 to 10.5 at
+  // tier 6). Half is sized so the card stays a tier-3 attack on light ICE
+  // and turns into roughly a tier-4 hit on the armored ones.
+  exploit: Object.freeze({ kind: "armor_ignore", amount: 50, turns: 0 }),
+  barrier: Object.freeze({ kind: "shield", amount: 2, turns: 2 }),
+  // `powered` adds a flat bonus to the player's attacks (combat_engine.ts
+  // reads `attackerAttackBonus`), so the amount is points, not percent.
+  boost: Object.freeze({ kind: "empower", amount: 2, turns: 2 }),
+  cloak: Object.freeze({ kind: "evade", amount: 15, turns: 2 }),
+  decoy: Object.freeze({ kind: "decoy", amount: 50, turns: 1 }),
+  // ADR-0303: the three tier-6 programs are g6-only drops (card_reward gates
+  // them). Each is a different answer to the same 30-damage hit, so the choice
+  // between them is about WHAT the deck cannot do, not about a bigger number:
+  // armor so thick nothing else gets through, a body that has to survive one
+  // more exchange, or one hit that must not land at all.
+  ghost_key: Object.freeze({ kind: "armor_ignore", amount: 100, turns: 0 }),
+  null_pointer: Object.freeze({ kind: "shield", amount: 8, turns: 3 }),
+  red_shift: Object.freeze({ kind: "decoy", amount: 100, turns: 1 }),
+});
 
 /** The effect of a program — the plain attack when it has no special one. */
 export function programEffect(program: Pick<Program, "id">): ProgramEffect {
@@ -94,9 +93,7 @@ export function programBaseDamage(program: Pick<Program, "tier">): number {
  * The program's description — built from the mechanic, so it cannot lie.
  * (The designed effect that is not wired yet stays in `plannedDescription`.)
  */
-export function programEffectDescription(
-  program: Pick<Program, "id" | "tier" | "aoe">,
-): string {
+export function programEffectDescription(program: Pick<Program, "id" | "tier" | "aoe">): string {
   const effect = programEffect(program);
   const target = program.aoe ? "every ICE" : "the ICE";
   const damage = `Deals ${programBaseDamage(program)} damage to ${target}`;
@@ -126,10 +123,7 @@ export function programEffectDescription(
  * answer DOES, which is the thing the player is choosing between. `short` keeps
  * it inside 36 usable columns at the 40-column layout.
  */
-export function programEffectExplain(
-  program: Pick<Program, "id">,
-  short = false,
-): string {
+export function programEffectExplain(program: Pick<Program, "id">, short = false): string {
   const effect = programEffect(program);
   switch (effect.kind) {
     case "armor_ignore":
@@ -137,9 +131,7 @@ export function programEffectExplain(
     case "pierce":
       return short ? `pierces ${effect.amount}` : `armor counts ${effect.amount} less`;
     case "shield":
-      return short
-        ? `absorbs ${effect.amount} dmg`
-        : `absorbs ${effect.amount} of the next hit`;
+      return short ? `absorbs ${effect.amount} dmg` : `absorbs ${effect.amount} of the next hit`;
     case "decoy":
       return short ? "erases the hit" : "erases the next hit";
     case "empower":

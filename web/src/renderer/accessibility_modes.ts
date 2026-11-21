@@ -22,14 +22,10 @@
  * coupling — so enabling an accessibility mode cannot perturb the balance
  * harness (ADR-0229 §A1).
  */
-import {
-  prefersHighContrast,
-  prefersReducedMotion,
-} from "../core/state/accessibility";
+import { prefersHighContrast, prefersReducedMotion } from "../core/state/accessibility";
 
 /** The 4 colorblind palette modes (ADR-0196 §"Option A"). */
-export type ColorblindMode =
-  "none" | "deuteranopia" | "protanopia" | "tritanopia";
+export type ColorblindMode = "none" | "deuteranopia" | "protanopia" | "tritanopia";
 
 /** Cycle order — ADR-0196 §"Option A": none → deuter → protan → tri → none. */
 export const COLORBLIND_MODES: ReadonlyArray<ColorblindMode> = Object.freeze([
@@ -55,12 +51,11 @@ export const TEXT_SCALE_STEPS: ReadonlyArray<TextScaleStep> = Object.freeze([
  * `medium` is exactly **1.0** — the default rendering is unchanged
  * (ADR-0110 discipline: the default path must be byte-identical).
  */
-export const TEXT_SCALE_FACTORS: Readonly<Record<TextScaleStep, number>> =
-  Object.freeze({
-    small: 0.85,
-    medium: 1.0,
-    large: 1.25,
-  });
+export const TEXT_SCALE_FACTORS: Readonly<Record<TextScaleStep, number>> = Object.freeze({
+  small: 0.85,
+  medium: 1.0,
+  large: 1.25,
+});
 
 /** localStorage key for the persisted colorblind palette mode. */
 export const COLORBLIND_STORAGE_KEY = "wetrun_colorblind_mode";
@@ -112,10 +107,7 @@ export function nextTextScale(current: TextScaleStep): TextScaleStep {
 /** The previous text-scale step in the ascending cycle (wraps around). */
 export function previousTextScale(current: TextScaleStep): TextScaleStep {
   const idx = TEXT_SCALE_STEPS.indexOf(current);
-  const prev =
-    TEXT_SCALE_STEPS[
-      (idx - 1 + TEXT_SCALE_STEPS.length) % TEXT_SCALE_STEPS.length
-    ];
+  const prev = TEXT_SCALE_STEPS[(idx - 1 + TEXT_SCALE_STEPS.length) % TEXT_SCALE_STEPS.length];
   return prev ?? "medium";
 }
 
@@ -131,10 +123,7 @@ export function textScaleFactor(step: TextScaleStep): number {
  * suppressed. When it is off, nothing changes — the default path is
  * byte-identical to the pre-P10 behaviour.
  */
-export function suppressMotion(
-  kind: MotionKind,
-  reducedMotion: boolean,
-): boolean {
+export function suppressMotion(kind: MotionKind, reducedMotion: boolean): boolean {
   if (!reducedMotion) return false;
   return (
     kind === "shake" ||

@@ -128,9 +128,7 @@ import type { Ice } from "../types";
  *  - **g5 has no non-`aggressive` slot** (see "Archetype coverage" above).
  *    The grade's archetype diversity is carried by g4 and g6 instead.
  */
-export const ENCOUNTER_ICE_BY_GRADE: Readonly<
-  Record<number, ReadonlyArray<string>>
-> = {
+export const ENCOUNTER_ICE_BY_GRADE: Readonly<Record<number, ReadonlyArray<string>>> = {
   1: ["watchdog", "sense_net_alert", "wisp", "hosaka_courier"],
   2: ["spider", "sense_net_spin", "corporate_guard", "loa_zombie"],
   3: ["black", "hosaka_defender", "ice_dixie_echo", "sense_net_reporter"],
@@ -387,9 +385,7 @@ export function encounterIceIdForGrade(grade: number, seed?: number): string {
  * The per-grade discussion below is kept for the mechanism (why the cap is a
  * step function), not as a description of the current numbers.
  */
-const ENCOUNTER_HP_BY_GRADE: ReadonlyArray<number> = [
-  95, 95, 95, 95, 95, 95,
-];
+const ENCOUNTER_HP_BY_GRADE: ReadonlyArray<number> = [95, 95, 95, 95, 95, 95];
 
 /** Per-grade ICE auto-attack bonus (percentage added to the base `tier * 3 +
  * armor` formula). Index = grade - 1.
@@ -496,9 +492,7 @@ const ENCOUNTER_HP_BY_GRADE: ReadonlyArray<number> = [
  * above describe how this knob behaves (a step function with cliffs) and why the
  * early grades need it; they predate the re-baseline.
  */
-const ENCOUNTER_DMG_BONUS_PCT_BY_GRADE: ReadonlyArray<number> = [
-  50, 30, -32, 0, -10, -10,
-];
+const ENCOUNTER_DMG_BONUS_PCT_BY_GRADE: ReadonlyArray<number> = [50, 30, -32, 0, -10, -10];
 
 export function iceDmgBonusPctForGrade(grade: number): number {
   const idx = clampGrade(grade) - 1;
@@ -517,11 +511,7 @@ export function iceDmgBonusPctForGrade(grade: number): number {
  */
 export const BOSS_HP_BY_GRADE: ReadonlyArray<number> = [95, 95, 95, 95, 165, 165];
 
-export function iceHpForGrade(
-  ice: Ice,
-  grade: number,
-  isBoss = false,
-): number {
+export function iceHpForGrade(ice: Ice, grade: number, isBoss = false): number {
   const g = clampGrade(grade);
   const base = ice.hpBase;
   const perGrade = ice.hpPerGrade;
@@ -554,7 +544,5 @@ export function missionSeedOf(mission: {
   readonly seed?: number;
   readonly matrix_seed?: number;
 }): number {
-  return (
-    (mission as { matrix_seed?: number }).matrix_seed ?? mission.seed ?? 42
-  );
+  return (mission as { matrix_seed?: number }).matrix_seed ?? mission.seed ?? 42;
 }

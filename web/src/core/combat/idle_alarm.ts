@@ -2,11 +2,7 @@
  * Damage is a relative multiplier; aggression adds probability points to the
  * authored tier's skill-use chance. Measured together, not per-ICE calibration.
  */
-import {
-  ALARM_MAX_LEVEL,
-  ALARM_TICK_INTERVAL_MS,
-  tickAlarm,
-} from "./combat_engine";
+import { ALARM_MAX_LEVEL, ALARM_TICK_INTERVAL_MS, tickAlarm } from "./combat_engine";
 import type { GameAction, GameState } from "../types";
 import { getAlarmMultiplier } from "./ice_ai";
 
@@ -51,8 +47,7 @@ export function applyIdleAlarmTick(
   if (idleAlarmAction(state, idleSinceMs, currentMs) === null) return state;
   // ADR-0242: living roster minimum, recomputed each tick; stealth never stacks.
   const iceAlarmSpeed = state.iceRoster.reduce(
-    (speed, ice) =>
-      ice.hp > 0 ? Math.min(speed, getAlarmMultiplier(ice)) : speed,
+    (speed, ice) => (ice.hp > 0 ? Math.min(speed, getAlarmMultiplier(ice)) : speed),
     1,
   );
   const result = tickAlarm(

@@ -81,30 +81,14 @@ export interface TutorialOverlayState {
 }
 
 /** Render the tutorial overlay for the current step. */
-export function renderTutorialOverlay(
-  stepIndex: number,
-  cols: number,
-  rows: number,
-): Grid {
+export function renderTutorialOverlay(stepIndex: number, cols: number, rows: number): Grid {
   const grid = makeGrid(cols, rows);
   const step = TUTORIAL_STEPS[Math.min(stepIndex, TUTORIAL_STEPS.length - 1)];
 
   // Semi-transparent background
-  let g = setText(
-    grid,
-    2,
-    1,
-    "╔════════════════════════════════════════════╗",
-    PALETTE.CYAN_LIGHT,
-  );
+  let g = setText(grid, 2, 1, "╔════════════════════════════════════════════╗", PALETTE.CYAN_LIGHT);
   g = setText(g, 2, 2, `║  ${step.title.padEnd(50)} ║`, PALETTE.CYAN_LIGHT);
-  g = setText(
-    g,
-    2,
-    3,
-    "╠═════════════════════════════════════════════╣",
-    PALETTE.CYAN_LIGHT,
-  );
+  g = setText(g, 2, 3, "╠═════════════════════════════════════════════╣", PALETTE.CYAN_LIGHT);
 
   // Body text
   let y = 5;
@@ -119,21 +103,9 @@ export function renderTutorialOverlay(
 
   // Action hint
   if (step.action) {
-    g = setText(
-      g,
-      4,
-      rows - 3,
-      `Press ${step.action} to continue`,
-      PALETTE.YELLOW_AMBER,
-    );
+    g = setText(g, 4, rows - 3, `Press ${step.action} to continue`, PALETTE.YELLOW_AMBER);
   } else {
-    g = setText(
-      g,
-      4,
-      rows - 3,
-      "Press ESC to skip tutorial",
-      PALETTE.GRAY_DARK,
-    );
+    g = setText(g, 4, rows - 3, "Press ESC to skip tutorial", PALETTE.GRAY_DARK);
   }
 
   // Border

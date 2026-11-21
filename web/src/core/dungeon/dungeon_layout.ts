@@ -21,12 +21,7 @@ import {
   makeMulberry32,
   withInt,
 } from "./dungeon";
-import {
-  type BspNode,
-  collectLeaves,
-  placeRooms,
-  bspPartition,
-} from "./dungeon_bsp";
+import { type BspNode, collectLeaves, placeRooms, bspPartition } from "./dungeon_bsp";
 
 // ============================================================================
 //  Spanning tree + dead-ends
@@ -115,8 +110,7 @@ export function addDeadEnds(
   const out: Array<readonly [string, string]> = [...existingEdges];
   let added = 0;
   const maxTries = Math.max(1, targetExtras * 8);
-  const idOf = (leaf: BspNode): string | null =>
-    leaf.room !== null ? leaf.room.roomId : null;
+  const idOf = (leaf: BspNode): string | null => (leaf.room !== null ? leaf.room.roomId : null);
 
   for (let t = 0; t < maxTries && added < targetExtras; t += 1) {
     const i = Math.floor(rng() * leaves.length);
@@ -148,14 +142,7 @@ export type DungeonIceKind = "none" | "standard" | "watchdog" | "black";
 
 /** Node kind for the resulting MatrixGraph. */
 export type DungeonNodeKind =
-  | "entry"
-  | "data"
-  | "system"
-  | "ice"
-  | "construct"
-  | "router"
-  | "core"
-  | "exit";
+  "entry" | "data" | "system" | "ice" | "construct" | "router" | "core" | "exit";
 
 /** A typed node produced by the procedural generator. */
 export interface DungeonNode {
@@ -355,9 +342,7 @@ export function buildBidirectionalEdges(
     const b = parts[1] as string;
     result.push([a, b] as const);
   }
-  result.sort((x, y) =>
-    x[0] + x[1] < y[0] + y[1] ? -1 : x[0] + x[1] > y[0] + y[1] ? 1 : 0,
-  );
+  result.sort((x, y) => (x[0] + x[1] < y[0] + y[1] ? -1 : x[0] + x[1] > y[0] + y[1] ? 1 : 0));
   return result.map(([a, b]) => ({ src: a, dst: b }));
 }
 
@@ -366,9 +351,7 @@ export function buildBidirectionalEdges(
 // ============================================================================
 
 /** Grid size (cols x rows) per mission grade (1-5). */
-export const GRID_BY_GRADE: Readonly<
-  Record<number, readonly [number, number]>
-> = {
+export const GRID_BY_GRADE: Readonly<Record<number, readonly [number, number]>> = {
   1: [7, 5],
   2: [9, 6],
   3: [11, 7],

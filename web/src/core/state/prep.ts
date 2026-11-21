@@ -89,11 +89,7 @@ function prepTableValue(grade: number, choice: PrepChoice): number {
 }
 
 /** The stockpile's share of a prep, and what it costs (ADR-0284). */
-export function prepWalletUse(
-  grade: number,
-  choice: PrepChoice,
-  balance: number,
-): number {
+export function prepWalletUse(grade: number, choice: PrepChoice, balance: number): number {
   return prepWalletContribution(
     prepTableValue(grade, choice),
     balance,

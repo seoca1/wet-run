@@ -8,20 +8,11 @@
 
 import type { Rng, RngInt } from "./dungeon";
 import { DungeonGraph } from "./dungeon";
-import {
-  TileType,
-  EntityType,
-  ItemType,
-  MonsterType,
-} from "./dungeon_crawler_types";
+import { TileType, EntityType, ItemType, MonsterType } from "./dungeon_crawler_types";
 import type { DungeonState } from "./dungeon_crawler_types";
 
 /** Place entities (monsters, items, traps) in the dungeon */
-export function placeEntities(
-  state: DungeonState,
-  rng: Rng,
-  rngInt: RngInt,
-): void {
+export function placeEntities(state: DungeonState, rng: Rng, rngInt: RngInt): void {
   // Collect all floor tiles where we can place entities
   const floorPositions: { x: number; y: number }[] = [];
   for (let y = 0; y < state.height; y++) {
@@ -41,9 +32,7 @@ export function placeEntities(
     if (pos) {
       addMonster(state, rng, pos.x, pos.y);
       // Remove this position from available spots to avoid stacking
-      const index = floorPositions.findIndex(
-        (p) => p.x === pos.x && p.y === pos.y,
-      );
+      const index = floorPositions.findIndex((p) => p.x === pos.x && p.y === pos.y);
       if (index !== -1) floorPositions.splice(index, 1);
     }
   }
@@ -54,9 +43,7 @@ export function placeEntities(
     const pos = getRandomFloorPosition(rngInt, floorPositions);
     if (pos) {
       addItem(state, rng, pos.x, pos.y);
-      const index = floorPositions.findIndex(
-        (p) => p.x === pos.x && p.y === pos.y,
-      );
+      const index = floorPositions.findIndex((p) => p.x === pos.x && p.y === pos.y);
       if (index !== -1) floorPositions.splice(index, 1);
     }
   }
@@ -67,9 +54,7 @@ export function placeEntities(
     const pos = getRandomFloorPosition(rngInt, floorPositions);
     if (pos) {
       addTrap(state, pos.x, pos.y);
-      const index = floorPositions.findIndex(
-        (p) => p.x === pos.x && p.y === pos.y,
-      );
+      const index = floorPositions.findIndex((p) => p.x === pos.x && p.y === pos.y);
       if (index !== -1) floorPositions.splice(index, 1);
     }
   }
@@ -89,11 +74,7 @@ export function getRandomFloorPosition(
 export function getMonsterCount(state: DungeonState): number {
   const baseCount = state.level + 2;
   const charMultiplier =
-    state.characterRef === "novice"
-      ? 0.5
-      : state.characterRef === "veteran"
-        ? 1.0
-        : 1.5; // heretic
+    state.characterRef === "novice" ? 0.5 : state.characterRef === "veteran" ? 1.0 : 1.5; // heretic
   return Math.floor(baseCount * charMultiplier);
 }
 
@@ -103,12 +84,7 @@ export function getItemCount(state: DungeonState): number {
 }
 
 /** Add a monster at the specified position */
-export function addMonster(
-  state: DungeonState,
-  rng: Rng,
-  x: number,
-  y: number,
-): void {
+export function addMonster(state: DungeonState, rng: Rng, x: number, y: number): void {
   // Determine monster type based on level and character ref
   let monsterType: MonsterType;
   const roll = rng();
@@ -164,12 +140,7 @@ export function getMonsterHp(state: DungeonState, type: MonsterType): number {
 }
 
 /** Add an item at the specified position */
-export function addItem(
-  state: DungeonState,
-  rng: Rng,
-  x: number,
-  y: number,
-): void {
+export function addItem(state: DungeonState, rng: Rng, x: number, y: number): void {
   // Determine item type based on level
   let itemType: ItemType;
   const roll = rng();
@@ -202,10 +173,7 @@ export function addTrap(state: DungeonState, x: number, y: number): void {
 }
 
 /** Place the player at the entry point */
-export function placePlayerAtEntry(
-  state: DungeonState,
-  graph: DungeonGraph,
-): void {
+export function placePlayerAtEntry(state: DungeonState, graph: DungeonGraph): void {
   // Find the entry room (marked as "entry" roomType)
   const entryRoom = graph.rooms.find((r) => r.roomType === "entry");
   if (entryRoom) {
@@ -246,12 +214,7 @@ export function updateFov(state: DungeonState): void {
       const worldY = state.playerY + y;
 
       // Check bounds
-      if (
-        worldX < 0 ||
-        worldX >= state.width ||
-        worldY < 0 ||
-        worldY >= state.height
-      ) {
+      if (worldX < 0 || worldX >= state.width || worldY < 0 || worldY >= state.height) {
         continue;
       }
 

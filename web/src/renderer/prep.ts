@@ -40,13 +40,7 @@ export function renderPrep(view: PrepView, cols: number, rows: number): Grid {
   let grid = makeGrid(cols, rows);
   const put = (y: number, text: string, fg: string): void => {
     const clipped = text.slice(0, TEXT_COLS);
-    grid = setText(
-      grid,
-      Math.max(1, Math.floor((cols - clipped.length) / 2)),
-      y,
-      clipped,
-      fg,
-    );
+    grid = setText(grid, Math.max(1, Math.floor((cols - clipped.length) / 2)), y, clipped, fg);
   };
 
   const top = Math.max(1, Math.floor(rows / 2) - 6);

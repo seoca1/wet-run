@@ -45,8 +45,7 @@ export async function hasWaitingWorker(): Promise<boolean> {
 
 /** Attempt to install the PWA. Returns true if the prompt was shown. */
 export async function promptInstall(prompt: unknown): Promise<boolean> {
-  if (!prompt || typeof prompt !== "object" || !("prompt" in prompt))
-    return false;
+  if (!prompt || typeof prompt !== "object" || !("prompt" in prompt)) return false;
   const p = prompt as {
     prompt: () => Promise<void>;
     userChoice: Promise<{ outcome: string }>;

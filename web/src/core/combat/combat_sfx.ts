@@ -22,10 +22,7 @@ import type { SoundEffectId } from "../../audio/manager";
 import type { GameState } from "../types";
 
 /** Minimal shape the helper needs from a `GameState`. */
-type CombatSnapshot = Pick<
-  GameState,
-  "phase" | "player" | "iceRoster" | "activeIceIndex"
->;
+type CombatSnapshot = Pick<GameState, "phase" | "player" | "iceRoster" | "activeIceIndex">;
 
 function activeIceHp(state: CombatSnapshot): number {
   const active = state.iceRoster[state.activeIceIndex];
@@ -68,16 +65,10 @@ export function pickCombatSfxLayers(
 }
 
 /** Slice of state the event picker reads. */
-type EventSnapshot = Pick<
-  GameState,
-  "phase" | "runPhase" | "player" | "bossPhase" | "inventory"
->;
+type EventSnapshot = Pick<GameState, "phase" | "runPhase" | "player" | "bossPhase" | "inventory">;
 
 function materialCount(state: EventSnapshot): number {
-  return Object.values(state.inventory.materials).reduce(
-    (sum, n) => sum + n,
-    0,
-  );
+  return Object.values(state.inventory.materials).reduce((sum, n) => sum + n, 0);
 }
 
 /**
@@ -102,11 +93,7 @@ export function pickEventSfx(
   next: EventSnapshot,
 ): ReadonlyArray<SoundEffectId> {
   const ids: SoundEffectId[] = [];
-  if (
-    previous.runPhase !== "combat" &&
-    next.runPhase === "combat" &&
-    next.bossPhase > 0
-  ) {
+  if (previous.runPhase !== "combat" && next.runPhase === "combat" && next.bossPhase > 0) {
     ids.push(SFX_IDS.BOSS_INTRO);
   } else if (previous.bossPhase > 0 && next.bossPhase > previous.bossPhase) {
     ids.push(SFX_IDS.PHASE_CHANGE);
@@ -138,10 +125,5 @@ export function pickTransitionSfx(
   previous: CombatSnapshot & EventSnapshot,
   next: CombatSnapshot & EventSnapshot,
 ): ReadonlyArray<SoundEffectId> {
-  return [
-    ...new Set([
-      ...pickCombatSfxLayers(previous, next),
-      ...pickEventSfx(previous, next),
-    ]),
-  ];
+  return [...new Set([...pickCombatSfxLayers(previous, next), ...pickEventSfx(previous, next)])];
 }

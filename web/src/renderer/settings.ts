@@ -12,13 +12,7 @@
 import type { Grid } from "../core/types";
 import { makeGrid, setText } from "../core/grid";
 import { PALETTE } from "./palette";
-import {
-  drawPanel,
-  panelInnerRect,
-  screenFrameRect,
-  setInnerText,
-  type PanelRect,
-} from "./panel";
+import { drawPanel, panelInnerRect, screenFrameRect, setInnerText, type PanelRect } from "./panel";
 import { AudioManager } from "../audio/manager";
 import {
   getStorageQuota,
@@ -123,9 +117,7 @@ const VOLUME_STEP = 0.1;
  * PWA section reflects live install/update/offline status instead of
  * `INITIAL_PWA_STATE`.
  */
-export function getInitialSettingsState(
-  pwa: PwaState = defaultPwaState(),
-): SettingsState {
+export function getInitialSettingsState(pwa: PwaState = defaultPwaState()): SettingsState {
   const language = loadPersistedLanguage();
   const accessibility = accessibilitySettings();
   let audio: AudioManager;
@@ -266,13 +258,7 @@ function bodyRow(layout: SettingsLayout, offset: number): number {
 }
 
 /** Writes text at an original grid-origin offset, re-measured from the frame. */
-type FramedWriter = (
-  grid: Grid,
-  x: number,
-  y: number,
-  text: string,
-  fg: string,
-) => Grid;
+type FramedWriter = (grid: Grid, x: number, y: number, text: string, fg: string) => Grid;
 
 function renderSlider(
   grid: Grid,
@@ -304,11 +290,7 @@ function renderSlider(
  * Items, order, values and colours are unchanged; every line goes through
  * `setInnerText` and the frame is drawn last so no line can erase a rail.
  */
-export function renderSettingsScreen(
-  state: SettingsState,
-  cols: number,
-  rows: number,
-): Grid {
+export function renderSettingsScreen(state: SettingsState, cols: number, rows: number): Grid {
   let grid = makeGrid(cols, rows);
   const layout = settingsLayout(cols, rows);
   const { frame, inner } = layout;
@@ -324,9 +306,7 @@ export function renderSettingsScreen(
   );
   grid = at(grid, 2, 3, "─".repeat(Math.min(cols - 4, 50)), PALETTE.GRAY_MID);
 
-  const audioLabel = state.audioEnabled
-    ? "[X] AUDIO ENABLED"
-    : "[ ] AUDIO ENABLED";
+  const audioLabel = state.audioEnabled ? "[X] AUDIO ENABLED" : "[ ] AUDIO ENABLED";
   const audioFg =
     state.selectedField === "audio"
       ? PALETTE.YELLOW_AMBER
@@ -345,23 +325,9 @@ export function renderSettingsScreen(
     9,
   );
 
-  grid = renderSlider(
-    grid,
-    at,
-    "BGM Volume",
-    state.bgmVolume,
-    state.selectedField === "bgm",
-    12,
-  );
+  grid = renderSlider(grid, at, "BGM Volume", state.bgmVolume, state.selectedField === "bgm", 12);
 
-  grid = renderSlider(
-    grid,
-    at,
-    "SFX Volume",
-    state.sfxVolume,
-    state.selectedField === "sfx",
-    15,
-  );
+  grid = renderSlider(grid, at, "SFX Volume", state.sfxVolume, state.selectedField === "sfx", 15);
 
   const muteLabel = state.muted ? "[X] MUTE ALL" : "[ ] MUTE ALL";
   const muteFg =
@@ -372,13 +338,7 @@ export function renderSettingsScreen(
         : PALETTE.GRAY_LIGHT;
   grid = at(grid, 4, 18, muteLabel, muteFg);
 
-  grid = at(
-    grid,
-    4,
-    20,
-    t("settings.language", state.language),
-    PALETTE.CYAN_LIGHT,
-  );
+  grid = at(grid, 4, 20, t("settings.language", state.language), PALETTE.CYAN_LIGHT);
   const languageLabel = state.language === "ko" ? "[X] KO" : "[ ] EN";
   const languageFg =
     state.selectedField === "language"
@@ -395,9 +355,7 @@ export function renderSettingsScreen(
   grid = at(grid, 4, 24, "ACCESSIBILITY", PALETTE.CYAN_LIGHT);
 
   const reducedMotion = state.reducedMotion ?? false;
-  const reducedLabel = reducedMotion
-    ? "[X] REDUCED MOTION"
-    : "[ ] REDUCED MOTION";
+  const reducedLabel = reducedMotion ? "[X] REDUCED MOTION" : "[ ] REDUCED MOTION";
   grid = at(
     grid,
     4,
@@ -411,9 +369,7 @@ export function renderSettingsScreen(
   );
 
   const highContrast = state.highContrast ?? false;
-  const contrastLabel = highContrast
-    ? "[X] HIGH CONTRAST"
-    : "[ ] HIGH CONTRAST";
+  const contrastLabel = highContrast ? "[X] HIGH CONTRAST" : "[ ] HIGH CONTRAST";
   grid = at(
     grid,
     4,
@@ -484,16 +440,10 @@ export function renderSettingsScreen(
     installFg = PALETTE.GREEN_NEON;
   } else if (pwa.canInstall) {
     installLabel = `[ ] ${t("settings.pwa_install", state.language)}`;
-    installFg =
-      state.selectedField === "pwa_install"
-        ? PALETTE.YELLOW_AMBER
-        : PALETTE.GRAY_LIGHT;
+    installFg = state.selectedField === "pwa_install" ? PALETTE.YELLOW_AMBER : PALETTE.GRAY_LIGHT;
   } else {
     installLabel = `[ ] ${t("settings.pwa_unavailable", state.language)}`;
-    installFg =
-      state.selectedField === "pwa_install"
-        ? PALETTE.YELLOW_AMBER
-        : PALETTE.GRAY_DARK;
+    installFg = state.selectedField === "pwa_install" ? PALETTE.YELLOW_AMBER : PALETTE.GRAY_DARK;
   }
   grid = at(grid, 4, 35, installLabel, installFg);
 
@@ -538,14 +488,7 @@ export function renderSettingsScreen(
                       ? "ENTER: cycle text scale | TAB: switch | ESC: back"
                       : "←/→: adjust volume | TAB: switch | ESC: back";
   const footerX = frame.x + 2;
-  grid = setInnerText(
-    grid,
-    inner,
-    footerX,
-    layout.footerY,
-    hint,
-    PALETTE.GRAY_DARK,
-  );
+  grid = setInnerText(grid, inner, footerX, layout.footerY, hint, PALETTE.GRAY_DARK);
   grid = setInnerText(
     grid,
     inner,
@@ -571,20 +514,8 @@ export function renderStorageQuota(
 ): Grid {
   let out = setText(grid, 4, row, "STORAGE", PALETTE.CYAN_LIGHT);
   if (quota.state === "unavailable") {
-    out = setText(
-      out,
-      4,
-      row + 1,
-      `[ Storage API unavailable ]`,
-      PALETTE.GRAY_DARK,
-    );
-    out = setText(
-      out,
-      4,
-      row + 2,
-      quota.reason.slice(0, Math.max(0, cols - 6)),
-      PALETTE.GRAY_DARK,
-    );
+    out = setText(out, 4, row + 1, `[ Storage API unavailable ]`, PALETTE.GRAY_DARK);
+    out = setText(out, 4, row + 2, quota.reason.slice(0, Math.max(0, cols - 6)), PALETTE.GRAY_DARK);
     return out;
   }
   const level = quotaLevel(quota.percent);
@@ -599,21 +530,9 @@ export function renderStorageQuota(
   out = setText(out, 4, row + 1, `[${bar}] ${quota.percent}%`, barColor);
   out = setText(out, 4, row + 2, summary, barColor);
   if (level === "warning") {
-    out = setText(
-      out,
-      4,
-      row + 3,
-      "! Storage filling up — clear old saves",
-      PALETTE.YELLOW_AMBER,
-    );
+    out = setText(out, 4, row + 3, "! Storage filling up — clear old saves", PALETTE.YELLOW_AMBER);
   } else if (level === "critical") {
-    out = setText(
-      out,
-      4,
-      row + 3,
-      "!! Quota nearly full — save may fail",
-      PALETTE.RED_BRIGHT,
-    );
+    out = setText(out, 4, row + 3, "!! Quota nearly full — save may fail", PALETTE.RED_BRIGHT);
   }
   return out;
 }

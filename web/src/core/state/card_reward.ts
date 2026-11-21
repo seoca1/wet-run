@@ -64,9 +64,7 @@ function iceTierOf(state: RewardSource): number {
  * steady, so taking one does not shuffle the other two.
  */
 function ownedIds(state: RewardSource): ReadonlySet<string> {
-  const owned = new Set(
-    [...state.deck, ...state.drawPile, ...state.discardPile].map((p) => p.id),
-  );
+  const owned = new Set([...state.deck, ...state.drawPile, ...state.discardPile].map((p) => p.id));
   if (state.cardRewardTaken) owned.delete(state.cardRewardTaken);
   return owned;
 }
@@ -110,10 +108,7 @@ export function offeredCardIds(
   // Deterministic from (mission seed, turn, node): the same fight offers the
   // same cards, and no `Math.random` is consumed.
   const seed =
-    (missionSeedOf(state.mission) +
-      state.turnCount * 31 +
-      state.currentNodeIndex * 7) >>>
-    0;
+    (missionSeedOf(state.mission) + state.turnCount * 31 + state.currentNodeIndex * 7) >>> 0;
   const rng = makeMulberry32(seed);
 
   // ADR-0292: a card's weight is how close its tier is to the ICE that dropped

@@ -36,10 +36,7 @@ export function bossPhaseFromHp(hpPercent: number): BossPhase {
 }
 
 /** True if the boss just transitioned (new phase differs from current). */
-export function shouldTransition(
-  currentPhase: BossPhase,
-  hpPercent: number,
-): boolean {
+export function shouldTransition(currentPhase: BossPhase, hpPercent: number): boolean {
   const next = bossPhaseFromHp(hpPercent);
   return next !== currentPhase && next > currentPhase;
 }

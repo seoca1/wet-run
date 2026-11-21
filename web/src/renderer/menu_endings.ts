@@ -98,13 +98,7 @@ export function renderDeathRestartScreen(
 
   // Footer
   const footerY = rows - 2;
-  grid = setText(
-    grid,
-    2,
-    footerY,
-    "ENTER: restart | ESC: quit to menu",
-    PALETTE.GRAY_DARK,
-  );
+  grid = setText(grid, 2, footerY, "ENTER: restart | ESC: quit to menu", PALETTE.GRAY_DARK);
 
   return grid;
 }
@@ -147,13 +141,7 @@ export function renderFailedScreen(cols: number, rows: number): Grid {
 
   // Footer
   const footerY = rows - 2;
-  grid = setText(
-    grid,
-    2,
-    footerY,
-    "ENTER: return to menu | ESC: quit",
-    PALETTE.GRAY_DARK,
-  );
+  grid = setText(grid, 2, footerY, "ENTER: return to menu | ESC: quit", PALETTE.GRAY_DARK);
 
   return grid;
 }

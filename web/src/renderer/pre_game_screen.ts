@@ -48,11 +48,7 @@ export function pauseLayout(cols: number, rows: number) {
 }
 
 /** Compose a pre-game screen from a read-only presentation snapshot. */
-export function renderPreGameScreen(
-  view: PreGameView,
-  cols: number,
-  rows: number,
-): ScreenView {
+export function renderPreGameScreen(view: PreGameView, cols: number, rows: number): ScreenView {
   switch (view.screen) {
     case "menu":
       return {
@@ -114,11 +110,7 @@ export function renderPreGameScreen(
       const layout = pauseLayout(cols, rows);
       return {
         grid: makeGrid(layout.cols, layout.rows),
-        hud: [
-          "PAUSED",
-          "",
-          "ESC: Resume | SETTINGS: Enter | ESC: Quit to Menu",
-        ],
+        hud: ["PAUSED", "", "ESC: Resume | SETTINGS: Enter | ESC: Quit to Menu"],
       };
     }
     case "crafting":
@@ -159,9 +151,7 @@ export function renderPreGameScreen(
     }
     default: {
       const opt = (view.menuOptions ?? MENU_OPTIONS)[view.menuIndex];
-      const label = opt
-        ? t(opt.label, view.language).toUpperCase()
-        : "WET RUN";
+      const label = opt ? t(opt.label, view.language).toUpperCase() : "WET RUN";
       return {
         grid: renderStubScreen(label, cols, rows),
         hud: ["STUB", "", "Coming soon — Tier 5+"],

@@ -52,9 +52,7 @@ export function renderExtractDataScreen(
   // Progress bar
   const barWidth = Math.min(cols - 4, 50);
   const barLeft = Math.max(2, Math.floor((cols - barWidth) / 2));
-  const filled = Math.floor(
-    (extractionProgress / maxProgress) * (barWidth - 2),
-  );
+  const filled = Math.floor((extractionProgress / maxProgress) * (barWidth - 2));
   const empty = barWidth - 2 - filled;
   const bar = "█".repeat(filled) + "░".repeat(empty);
   grid = setText(grid, barLeft, 10, "[" + bar + "]", PALETTE.GREEN_NEON);
@@ -67,16 +65,13 @@ export function renderExtractDataScreen(
   );
 
   // Status
-  const status =
-    extractionProgress >= maxProgress ? "EXTRACTION COMPLETE" : "EXTRACTING...";
+  const status = extractionProgress >= maxProgress ? "EXTRACTION COMPLETE" : "EXTRACTING...";
   grid = setText(
     grid,
     Math.max(2, Math.floor((cols - status.length) / 2)),
     13,
     status,
-    extractionProgress >= maxProgress
-      ? PALETTE.GREEN_NEON
-      : PALETTE.YELLOW_AMBER,
+    extractionProgress >= maxProgress ? PALETTE.GREEN_NEON : PALETTE.YELLOW_AMBER,
   );
 
   // Footer
@@ -148,10 +143,7 @@ export function renderBypassSecurityScreen(
   // Watchdog position (moves back and forth)
   const watchdogPos = patrolPhase % (patrolWidth * 2 - 2);
   const watchdogX =
-    patrolLeft +
-    (watchdogPos < patrolWidth - 1
-      ? watchdogPos
-      : patrolWidth * 2 - 2 - watchdogPos);
+    patrolLeft + (watchdogPos < patrolWidth - 1 ? watchdogPos : patrolWidth * 2 - 2 - watchdogPos);
   grid = setText(grid, watchdogX, patrolY, "▲", PALETTE.RED_BRIGHT);
 
   // Player position (fixed at left, waiting to move)
@@ -187,13 +179,7 @@ export function renderBypassSecurityScreen(
   const progFilled = Math.floor((progress / 3) * (progBarWidth - 2));
   const progEmpty = progBarWidth - 2 - progFilled;
   const progBar = "█".repeat(progFilled) + "░".repeat(progEmpty);
-  grid = setText(
-    grid,
-    progBarLeft,
-    progY,
-    "[" + progBar + "]",
-    PALETTE.GREEN_NEON,
-  );
+  grid = setText(grid, progBarLeft, progY, "[" + progBar + "]", PALETTE.GREEN_NEON);
   grid = setText(
     grid,
     progBarLeft,
@@ -294,16 +280,9 @@ export function renderBlackMarketScreen(
     y++;
     for (const item of cat.items) {
       if (y >= rows - 4) break;
-      const priceStr =
-        item.currency === "credits" ? `${item.price}cr` : `${item.price}mat`;
+      const priceStr = item.currency === "credits" ? `${item.price}cr` : `${item.price}mat`;
       const qtyStr = item.quantity ? ` x${item.quantity}` : "";
-      grid = setText(
-        grid,
-        4,
-        y,
-        `  ${item.name}${qtyStr} — ${priceStr}`,
-        PALETTE.GRAY_LIGHT,
-      );
+      grid = setText(grid, 4, y, `  ${item.name}${qtyStr} — ${priceStr}`, PALETTE.GRAY_LIGHT);
       y++;
     }
     y++; // spacing between categories

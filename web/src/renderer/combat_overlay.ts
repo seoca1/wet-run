@@ -144,10 +144,7 @@ export function composeFloatingDamage(
 
 /** Damage carried by a VFX instance — `payloadNum` first, payload string next. */
 function damageOf(instance: CombatVfxInstance): number {
-  if (
-    instance.payloadNum !== undefined &&
-    Number.isFinite(instance.payloadNum)
-  ) {
+  if (instance.payloadNum !== undefined && Number.isFinite(instance.payloadNum)) {
     return Math.abs(Math.trunc(instance.payloadNum));
   }
   const parsed = Number.parseInt(instance.payload, 10);

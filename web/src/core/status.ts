@@ -14,11 +14,7 @@
  *   2. applyTickEffects(state)    — apply DoT/slow etc. at start of actor's turn
  *   3. resolveAttack → may rollStatus → may add new effect
  */
-import type {
-  GameState,
-  StatusEffectInstance,
-  StatusEffectKind,
-} from "./types";
+import type { GameState, StatusEffectInstance, StatusEffectKind } from "./types";
 import { isMutatorActive, type MutableRunState } from "./state/run_mutators";
 
 /** Apply a new status effect to a target. Stacks (adds new instance) if same kind.
@@ -59,9 +55,7 @@ export function applyStatus(
  */
 export function tickStatus(state: GameState): GameState {
   const next = state.statusEffects
-    .map((e) =>
-      e.tickSource === "enemy" ? e : { ...e, remaining: e.remaining - 1 },
-    )
+    .map((e) => (e.tickSource === "enemy" ? e : { ...e, remaining: e.remaining - 1 }))
     .filter((e) => e.remaining > 0);
   // Always return the updated state (even if length unchanged, remaining
   // values were decremented). The early-return optimization was buggy.
@@ -138,10 +132,7 @@ export function applyTickEffects(state: GameState): {
       case "regen":
         {
           let healAmount = e.healPerTick ?? 0;
-          if (
-            healAmount > 0 &&
-            isMutatorActive(state as unknown as MutableRunState, "no_heal")
-          ) {
+          if (healAmount > 0 && isMutatorActive(state as unknown as MutableRunState, "no_heal")) {
             healAmount = 0;
           }
           if (isPlayer) healPlayer += healAmount;
@@ -217,10 +208,7 @@ export function applyBurnDamage(
 
   const netPlayerChange = playerHeal - playerDmg;
   if (netPlayerChange !== 0) {
-    const newHp = Math.max(
-      0,
-      Math.min(next.player.maxHp, next.player.hp + netPlayerChange),
-    );
+    const newHp = Math.max(0, Math.min(next.player.maxHp, next.player.hp + netPlayerChange));
     next = { ...next, player: { ...next.player, hp: newHp } };
   }
 
@@ -248,10 +236,7 @@ export function applyBurnDamage(
  * Uses an injectable RNG function (defaults to Math.random) so tests can
  * deterministically test the state machine without flaky random failures.
  */
-export function rollStatusProc(
-  _kind: StatusEffectKind,
-  rng: () => number = Math.random,
-): boolean {
+export function rollStatusProc(_kind: StatusEffectKind, rng: () => number = Math.random): boolean {
   return rng() < 0.2;
 }
 
@@ -273,8 +258,7 @@ export function endedStatuses(
   after: ReadonlyArray<StatusEffectInstance>,
 ): StatusEffectInstance[] {
   const left = new Map<string, number>();
-  for (const e of after)
-    left.set(statusKey(e), (left.get(statusKey(e)) ?? 0) + 1);
+  for (const e of after) left.set(statusKey(e), (left.get(statusKey(e)) ?? 0) + 1);
   const ended: StatusEffectInstance[] = [];
   for (const e of before) {
     const key = statusKey(e);
@@ -287,14 +271,9 @@ export function endedStatuses(
 
 /** Who carries an effect, in words: `YOU`, `ICE`, or `ICE2` when the roster
  * has more than one ICE and the effect names its ICE. */
-function statusHolder(
-  effect: StatusEffectInstance,
-  rosterSize: number,
-): string {
+function statusHolder(effect: StatusEffectInstance, rosterSize: number): string {
   if (effect.target === "player") return "YOU";
-  return rosterSize > 1 && effect.iceIndex !== undefined
-    ? `ICE${effect.iceIndex + 1}`
-    : "ICE";
+  return rosterSize > 1 && effect.iceIndex !== undefined ? `ICE${effect.iceIndex + 1}` : "ICE";
 }
 
 /** Combat-log line for a status starting (`on`) or ending (`off`), e.g.
@@ -317,12 +296,7 @@ export function statusEventLines(
   const byHolder = new Map<string, string[]>();
   for (const e of effects) {
     const holder = statusHolder(e, rosterSize);
-    byHolder.set(holder, [
-      ...(byHolder.get(holder) ?? []),
-      e.kind.toUpperCase(),
-    ]);
+    byHolder.set(holder, [...(byHolder.get(holder) ?? []), e.kind.toUpperCase()]);
   }
-  return [...byHolder].map(
-    ([holder, kinds]) => `${holder} ${kinds.join("+")} ${change}`,
-  );
+  return [...byHolder].map(([holder, kinds]) => `${holder} ${kinds.join("+")} ${change}`);
 }

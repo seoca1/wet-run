@@ -124,9 +124,7 @@ export function shakeOffsetFor(
   // The sine terms are phase-shifted off zero so the very first frame of a
   // shake already carries a displacement — an impact does not begin at rest.
   const rawX = Math.sin(t * SHAKE_FREQ_X + phase + SHAKE_START_PHASE);
-  const rawY = Math.sin(
-    t * SHAKE_FREQ_Y + phase * 1.7 + SHAKE_START_PHASE * 1.3,
-  );
+  const rawY = Math.sin(t * SHAKE_FREQ_Y + phase * 1.7 + SHAKE_START_PHASE * 1.3);
   const scaledX = rawX * magnitudePx * envelope;
   const scaledY = rawY * magnitudePx * envelope * 0.5;
   return {
@@ -175,8 +173,7 @@ export function shakeStateFor(
     // stops meaning anything.
     const isPlayerHit = inst.kind === SHAKE_VFX_KIND;
     const isBigIceHit =
-      ICE_HIT_KINDS.has(inst.kind) &&
-      damageOfInstance(inst) >= ICE_HIT_SHAKE_MIN_DAMAGE;
+      ICE_HIT_KINDS.has(inst.kind) && damageOfInstance(inst) >= ICE_HIT_SHAKE_MIN_DAMAGE;
     if (!isPlayerHit && !isBigIceHit) continue;
     if (inst.durationMs <= 0 || inst.elapsedMs >= inst.durationMs) continue;
     newest = {

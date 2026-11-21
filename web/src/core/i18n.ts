@@ -56,8 +56,7 @@ const EN_TRANSLATIONS: Readonly<Record<string, string>> = Object.freeze({
   "far_grid.intro": "Beyond the Sprawl — Far Grid-tagged missions",
   "far_grid.empty": "(no Far Grid missions available)",
   "far_grid.footer": "↑↓: navigate | ENTER: launch | ESC: back",
-  "far_grid.locked_message":
-    "Clear all Sprawl Arc 1 missions to unlock the Far Grid",
+  "far_grid.locked_message": "Clear all Sprawl Arc 1 missions to unlock the Far Grid",
 
   // Game
   "game.credits": "CREDITS",
@@ -160,8 +159,7 @@ const KO_TRANSLATIONS: Readonly<Record<string, string>> = Object.freeze({
   "far_grid.intro": "스프롤 너머 — FAR GRID 임무",
   "far_grid.empty": "(표시할 FAR GRID 임무 없음)",
   "far_grid.footer": "↑↓: 이동 | ENTER: 출격 | ESC: 뒤로",
-  "far_grid.locked_message":
-    "스프롤 1장 임무를 모두 완료하면 FAR GRID가 열립니다",
+  "far_grid.locked_message": "스프롤 1장 임무를 모두 완료하면 FAR GRID가 열립니다",
 
   // Game
   "game.credits": "크레딧",
@@ -216,9 +214,7 @@ const KO_TRANSLATIONS: Readonly<Record<string, string>> = Object.freeze({
   "common.delete": "삭제",
 });
 
-const TRANSLATIONS: Readonly<
-  Record<Language, Readonly<Record<string, string>>>
-> = Object.freeze({
+const TRANSLATIONS: Readonly<Record<Language, Readonly<Record<string, string>>>> = Object.freeze({
   en: EN_TRANSLATIONS,
   ko: KO_TRANSLATIONS,
 });
@@ -230,16 +226,11 @@ export function t(key: string, language: Language = "en"): string {
 }
 
 /** Get all translations for a language. */
-export function getTranslations(
-  language: Language,
-): Readonly<Record<string, string>> {
+export function getTranslations(language: Language): Readonly<Record<string, string>> {
   return TRANSLATIONS[language];
 }
 
-const AVAILABLE_LANGUAGES: ReadonlyArray<Language> = Object.freeze([
-  "en",
-  "ko",
-]);
+const AVAILABLE_LANGUAGES: ReadonlyArray<Language> = Object.freeze(["en", "ko"]);
 
 /** Get available languages. */
 export function getAvailableLanguages(): ReadonlyArray<Language> {

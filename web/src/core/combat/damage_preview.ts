@@ -72,11 +72,7 @@ function playerBonuses(state: GameState): {
  * `backdoor` removes armor POINTS; `exploit` keeps a SHARE of it; the deck's
  * `programPower` bypasses a further share. Same order as the reducer, so the
  * preview cannot disagree with the play. */
-function effectiveArmorAgainst(
-  program: Program,
-  ice: Ice,
-  programPower: number,
-): number {
+function effectiveArmorAgainst(program: Program, ice: Ice, programPower: number): number {
   const effect = programEffect(program);
   const piercePoints = effect.kind === "pierce" ? effect.amount : 0;
   const armorKeptPct = effect.kind === "armor_ignore" ? 100 - effect.amount : 100;
@@ -94,17 +90,12 @@ function effectiveArmorAgainst(
  * before it multiplies), so the number shown is the number the next play gets.
  */
 export function effectiveDamageFor(
-  state: Pick<
-    GameState,
-    "playerCombo" | "statusEffects" | "equipmentLoadout"
-  >,
+  state: Pick<GameState, "playerCombo" | "statusEffects" | "equipmentLoadout">,
   program: Program,
   ice: Ice,
 ): EffectiveDamage {
   const armor = ice.armor ?? 0;
-  const { attackBonus, vulnerabilityPct, programPower } = playerBonuses(
-    state as GameState,
-  );
+  const { attackBonus, vulnerabilityPct, programPower } = playerBonuses(state as GameState);
   const effectiveArmor = effectiveArmorAgainst(program, ice, programPower);
   const comboMult = COMBO_BONUSES[state.playerCombo + 1] ?? 1.0;
   const synergyMult = ROLE_SYNERGY_BONUSES[0] ?? 1.0;

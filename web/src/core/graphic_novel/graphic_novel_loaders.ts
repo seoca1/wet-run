@@ -10,12 +10,7 @@
  */
 
 import scenesJson from "../../data/scenes.json" with { type: "json" };
-import type {
-  CharacterId,
-  Ending,
-  SceneData,
-  ScenesFile,
-} from "./graphic_novel_types";
+import type { CharacterId, Ending, SceneData, ScenesFile } from "./graphic_novel_types";
 
 const SCENES: ScenesFile = scenesJson as unknown as ScenesFile;
 
@@ -37,9 +32,7 @@ export function listScenesForCharacter(
   character: CharacterId,
   scenes: Readonly<Record<string, SceneData>> = SCENES.scenes,
 ): ReadonlyArray<SceneData> {
-  const filtered = Object.values(scenes).filter(
-    (s) => s.character === character,
-  );
+  const filtered = Object.values(scenes).filter((s) => s.character === character);
   return Object.freeze([...filtered].sort((a, b) => a.order - b.order));
 }
 
@@ -76,8 +69,7 @@ export function loadPrologueChain(
     readonly characters?: ReadonlyArray<CharacterId>;
   } = {},
 ): ReadonlyArray<SceneData> {
-  const characters =
-    options.characters ?? (Object.keys(CHAR_TO_DIR) as CharacterId[]);
+  const characters = options.characters ?? (Object.keys(CHAR_TO_DIR) as CharacterId[]);
   const shuffled = seededShuffle(characters, options.seed);
   const out: SceneData[] = [];
   for (const ch of shuffled) {
@@ -108,8 +100,7 @@ function seededShuffle<T>(items: ReadonlyArray<T>, seed?: number): T[] {
 
 /** Mulberry32 PRNG seeded by number; falls back to Math.random when seed is undefined. */
 function makeRng(seed?: number): (min: number, maxExclusive: number) => number {
-  if (seed === undefined)
-    return (min, max) => Math.floor(Math.random() * (max - min)) + min;
+  if (seed === undefined) return (min, max) => Math.floor(Math.random() * (max - min)) + min;
   let s = seed >>> 0;
   return (min, max) => {
     s = (s + 0x6d2b79f5) >>> 0;
@@ -159,9 +150,7 @@ export const SCENE_SOUND_MAP: Readonly<Record<string, string>> = Object.freeze({
 });
 
 /** Map a scene sound id to a resolved key, or null if unmapped. */
-export function resolveSound(
-  sceneSound: string | null | undefined,
-): string | null {
+export function resolveSound(sceneSound: string | null | undefined): string | null {
   if (sceneSound == null) return null;
   const mapped = SCENE_SOUND_MAP[sceneSound];
   if (mapped !== undefined) return mapped;

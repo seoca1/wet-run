@@ -55,28 +55,21 @@ export function contractFor(
   const inArc = catalog
     .filter((m) => m.arc === chosen.arc && m.source_universe !== "far-grid")
     .slice()
-    .sort(
-      (a, b) =>
-        missionGradeOf(a) - missionGradeOf(b) || a.id.localeCompare(b.id),
-    );
+    .sort((a, b) => missionGradeOf(a) - missionGradeOf(b) || a.id.localeCompare(b.id));
   const start = Math.max(
     0,
     inArc.findIndex((m) => m.id === chosen.id),
   );
   const ordered = [...inArc.slice(start), ...inArc.slice(0, start)];
   return {
-    legs: ordered
-      .slice(0, CONTRACT_LENGTH)
-      .map((mission) => ({ mission, ice: iceFor(mission) })),
+    legs: ordered.slice(0, CONTRACT_LENGTH).map((mission) => ({ mission, ice: iceFor(mission) })),
     completed: 0,
   };
 }
 
 /** Is there another mission after the one the run is on? */
 export function campaignContinues(campaign: Campaign | undefined): boolean {
-  return (
-    campaign !== undefined && campaign.completed + 1 < campaign.legs.length
-  );
+  return campaign !== undefined && campaign.completed + 1 < campaign.legs.length;
 }
 
 /** How many missions the contract holds. 0 when the run is not a campaign. */

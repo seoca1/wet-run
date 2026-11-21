@@ -10,20 +10,10 @@
 
 import { Grid } from "../core/types";
 import { PALETTE } from "./palette";
-import {
-  TileType,
-  EntityType,
-  ItemType,
-  MonsterType,
-} from "../core/dungeon/dungeon_crawler";
+import { TileType, EntityType, ItemType, MonsterType } from "../core/dungeon/dungeon_crawler";
 import { DungeonCrawler } from "../core/dungeon/dungeon_crawler";
 import { makeGrid, setCell } from "../core/grid";
-import {
-  drawPanel,
-  panelInnerRect,
-  screenFrameRect,
-  type PanelRect,
-} from "./panel";
+import { drawPanel, panelInnerRect, screenFrameRect, type PanelRect } from "./panel";
 
 /** Inset Green Grid frame of the dungeon screen (ADR-0237 §2): a one-cell
  * gutter to the canvas edge on every side, shared with the other screens. */
@@ -36,11 +26,7 @@ export function dungeonFrame(cols: number, rows: number): PanelRect {
  * The map is centred inside the frame's inner rectangle and clipped to it;
  * the frame is drawn last so no tile or entity can land on a rail.
  */
-export function renderDungeonMap(
-  crawler: DungeonCrawler,
-  cols: number,
-  rows: number,
-): Grid {
+export function renderDungeonMap(crawler: DungeonCrawler, cols: number, rows: number): Grid {
   // Create empty grid using makeGrid
   let grid = makeGrid(cols, rows);
   const frame = dungeonFrame(cols, rows);
@@ -51,10 +37,8 @@ export function renderDungeonMap(
   const dungeonHeight = crawler.state.height;
 
   // A dungeon larger than the inner area is anchored at its top-left corner.
-  const offsetX =
-    inner.x + Math.max(0, Math.floor((inner.width - dungeonWidth) / 2));
-  const offsetY =
-    inner.y + Math.max(0, Math.floor((inner.height - dungeonHeight) / 2));
+  const offsetX = inner.x + Math.max(0, Math.floor((inner.width - dungeonWidth) / 2));
+  const offsetY = inner.y + Math.max(0, Math.floor((inner.height - dungeonHeight) / 2));
 
   // Render each tile
   for (let y = 0; y < dungeonHeight; y++) {
@@ -104,12 +88,7 @@ export function renderDungeonMap(
 }
 
 function insideRect(rect: PanelRect, x: number, y: number): boolean {
-  return (
-    x >= rect.x &&
-    x < rect.x + rect.width &&
-    y >= rect.y &&
-    y < rect.y + rect.height
-  );
+  return x >= rect.x && x < rect.x + rect.width && y >= rect.y && y < rect.y + rect.height;
 }
 
 /** Draw the player `@` at its position, coloured by HP ratio.
@@ -180,13 +159,8 @@ function renderEntities(
       // renderPlayer() draws it after this pass.
       switch (entity.type) {
         case EntityType.MONSTER:
-          char = entity.subtype
-            ? getMonsterChar(entity.subtype as MonsterType)
-            : "M";
-          fg = getMonsterFg(
-            entity.subtype as MonsterType,
-            (entity.hp ?? 0) > 0,
-          );
+          char = entity.subtype ? getMonsterChar(entity.subtype as MonsterType) : "M";
+          fg = getMonsterFg(entity.subtype as MonsterType, (entity.hp ?? 0) > 0);
           break;
         case EntityType.ITEM:
           char = getItemChar(entity.subtype as ItemType);

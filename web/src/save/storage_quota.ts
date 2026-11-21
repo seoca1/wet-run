@@ -26,11 +26,8 @@ export const STORAGE_QUOTA_CRITICAL_PERCENT = 95;
 
 /** Read the current storage usage + quota. Safe to call in any env. */
 export async function getStorageQuota(): Promise<StorageQuota> {
-  const sm = (
-    typeof navigator !== "undefined" ? navigator.storage : undefined
-  ) as
-    | { estimate?: () => Promise<{ usage?: number; quota?: number }> }
-    | undefined;
+  const sm = (typeof navigator !== "undefined" ? navigator.storage : undefined) as
+    { estimate?: () => Promise<{ usage?: number; quota?: number }> } | undefined;
   if (!sm || typeof sm.estimate !== "function") {
     return {
       state: "unavailable",

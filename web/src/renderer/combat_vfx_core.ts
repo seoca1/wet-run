@@ -151,9 +151,7 @@ export function advanceVfxBy(
  * for ms-precise timing. Kept for backward compatibility with existing
  * call sites that don't have a deltaMs (e.g., headless test loops).
  */
-export function tickCombatVfx(
-  instance: CombatVfxInstance,
-): CombatVfxInstance | null {
+export function tickCombatVfx(instance: CombatVfxInstance): CombatVfxInstance | null {
   return advanceVfxBy(instance, WEB_TICK_MS);
 }
 

@@ -134,10 +134,7 @@ export class GamepadInput {
     this.checkDpadAxes(prev.axes, curr.axes);
   }
 
-  private checkDpadAxes(
-    prevAxes: ReadonlyArray<number>,
-    currAxes: ReadonlyArray<number>,
-  ): void {
+  private checkDpadAxes(prevAxes: ReadonlyArray<number>, currAxes: ReadonlyArray<number>): void {
     if (!this.handler) return;
 
     // Some controllers map D-pad to axes[6] (horizontal) and axes[7] (vertical)
@@ -148,25 +145,16 @@ export class GamepadInput {
       const prevVertical = prevAxes[7] ?? 0;
 
       // Horizontal: -1 = left, +1 = right
-      if (
-        horizontal < -GAMEPAD_DEADZONE &&
-        prevHorizontal >= -GAMEPAD_DEADZONE
-      ) {
+      if (horizontal < -GAMEPAD_DEADZONE && prevHorizontal >= -GAMEPAD_DEADZONE) {
         this.handler({ type: "move_west" });
-      } else if (
-        horizontal > GAMEPAD_DEADZONE &&
-        prevHorizontal <= GAMEPAD_DEADZONE
-      ) {
+      } else if (horizontal > GAMEPAD_DEADZONE && prevHorizontal <= GAMEPAD_DEADZONE) {
         this.handler({ type: "move_east" });
       }
 
       // Vertical: -1 = up, +1 = down
       if (vertical < -GAMEPAD_DEADZONE && prevVertical >= -GAMEPAD_DEADZONE) {
         this.handler({ type: "move_north" });
-      } else if (
-        vertical > GAMEPAD_DEADZONE &&
-        prevVertical <= GAMEPAD_DEADZONE
-      ) {
+      } else if (vertical > GAMEPAD_DEADZONE && prevVertical <= GAMEPAD_DEADZONE) {
         this.handler({ type: "move_south" });
       }
     }

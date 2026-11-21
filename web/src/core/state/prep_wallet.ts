@@ -79,11 +79,7 @@ export function spendPrepWallet(amount: number): number {
 }
 
 /** What the stockpile can add to one prep, given the grade's own value. */
-export function prepWalletContribution(
-  tableValue: number,
-  balance: number,
-  floor: number,
-): number {
+export function prepWalletContribution(tableValue: number, balance: number, floor: number): number {
   if (balance <= 0) return 0;
   // A grade the advance already covers gets nothing extra: its table is fitted
   // to a target and a top-up would push it off. The stockpile is for the grades

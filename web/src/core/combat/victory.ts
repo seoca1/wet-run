@@ -185,10 +185,7 @@ export function resolveVictory(
     newAchievements.push("boss_slayer");
     achievementCredits += 1000;
   }
-  if (
-    state.playerCombo >= 6 &&
-    !state.unlockedAchievements.includes("combo_master")
-  ) {
+  if (state.playerCombo >= 6 && !state.unlockedAchievements.includes("combo_master")) {
     newAchievements.push("combo_master");
     achievementCredits += 500;
   }
@@ -199,8 +196,7 @@ export function resolveVictory(
   // no card here. No `Math.random` consumed.
   const topTier = defeated.reduce((max, ice) => Math.max(max, ice.tier ?? 0), 0);
   const opensUniquePick = !terminal && topTier >= UNIQUE_MIN_ICE_TIER;
-  const nodeReward =
-    state.matrix?.nodes[state.currentNodeIndex]?.reward.credits ?? 0;
+  const nodeReward = state.matrix?.nodes[state.currentNodeIndex]?.reward.credits ?? 0;
   const missionReward = terminal ? state.mission.rewards.credits : 0;
   // ADR-0293: each kill carries its own bounty, so a strong ICE is worth more
   // than a routine one even when the cards it drops are indistinguishable.
@@ -223,9 +219,7 @@ export function resolveVictory(
   addPrepWallet(Math.floor(totalReward * PREP_WALLET_BANK_SHARE));
 
   const lootMessage =
-    drops.length > 0
-      ? ` Loot: ${drops.map((d) => `${d.item} x${d.quantity}`).join(", ")}`
-      : "";
+    drops.length > 0 ? ` Loot: ${drops.map((d) => `${d.item} x${d.quantity}`).join(", ")}` : "";
   // ADR-0258: only the card that drops the last ICE is exempt from COST. A
   // companion's finishing blow exempts nothing, so it does not claim it.
   const costNote = kind === "program" ? " (no COST)" : "";

@@ -82,8 +82,7 @@ export function matrixTravelFrame(
   const t = Math.max(0, nowMs - travel.startedMs);
   if (t >= TRAVEL_TOTAL_MS) return null;
   const { from, to } = travel;
-  if (t >= TRAVEL_TRANSIT_MS)
-    return { from, to, phase: "arrival", progress: 1 };
+  if (t >= TRAVEL_TRANSIT_MS) return { from, to, phase: "arrival", progress: 1 };
   const x = t / TRAVEL_TRANSIT_MS;
   // Ease out: quick departure, settling into the destination.
   return { from, to, phase: "transit", progress: 1 - (1 - x) * (1 - x) };
@@ -105,15 +104,9 @@ export function travelPath(
 
 /** Arrival: the static board, with the destination token inverted for the
  * beat in which it receives `@`. */
-function drawArrival(
-  board: Grid,
-  clip: PanelRect,
-  plan: BoardPlan,
-  to: number,
-): Grid {
+function drawArrival(board: Grid, clip: PanelRect, plan: BoardPlan, to: number): Grid {
   const site = plan.sites[to];
-  if (!site || site.cy < clip.y || site.cy >= clip.y + clip.height)
-    return board;
+  if (!site || site.cy < clip.y || site.cy >= clip.y + clip.height) return board;
   let out = board;
   for (let x = site.cx - 1; x <= site.cx + 1; x += 1) {
     const cell = out.get(x, site.cy);
@@ -142,26 +135,14 @@ export function drawTravelBoard(
   const path = travelPath(routes, from, to);
   if (frame.phase === "arrival" || path.length === 0) {
     const board = drawBoard(grid, clip, plan, routes, position);
-    return frame.phase === "arrival"
-      ? drawArrival(board, clip, plan, to)
-      : board;
+    return frame.phase === "arrival" ? drawArrival(board, clip, plan, to) : board;
   }
   const before: MatrixPosition = { ...position, current: from, selected: null };
   let out = drawBoard(grid, clip, plan, routes, before);
-  const step = Math.min(
-    path.length - 1,
-    Math.floor(frame.progress * path.length),
-  );
+  const step = Math.min(path.length - 1, Math.floor(frame.progress * path.length));
   // The corridor lights up behind `@` as it runs toward the destination.
   for (const c of path.slice(0, step))
-    out = putInside(
-      out,
-      clip,
-      c.x,
-      c.y,
-      corridorGlyph("target", c.links),
-      PALETTE.GREEN_NEON,
-    );
+    out = putInside(out, clip, c.x, c.y, corridorGlyph("target", c.links), PALETTE.GREEN_NEON);
   const here = path[step];
   if (here) out = putInside(out, clip, here.x, here.y, "@", PALETTE.GREEN_NEON);
   const origin = plan.sites[from];

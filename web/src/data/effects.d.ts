@@ -32,13 +32,7 @@ export type StatusKind =
   "BUFF" | "BURN" | "DEBUFF" | "DOT" | "POISON" | "REGEN" | "SHIELD" | "STUN";
 
 export type IceType =
-  | "black"
-  | "construct"
-  | "goliath"
-  | "standard"
-  | "ta_construct_prime"
-  | "watchdog"
-  | "wintermute";
+  "black" | "construct" | "goliath" | "standard" | "ta_construct_prime" | "watchdog" | "wintermute";
 
 export const EFFECTS: ReadonlyArray<EffectSpec> = [
   EFFECT_ATTACK,

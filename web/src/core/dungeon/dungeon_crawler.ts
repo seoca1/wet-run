@@ -11,18 +11,6 @@
  * (`main.ts`, `renderer/dungeon.ts`, tests) keep working unchanged.
  */
 
-export {
-  TileType,
-  EntityType,
-  ItemType,
-  MonsterType,
-} from "./dungeon_crawler_types";
-export type {
-  DungeonTile,
-  DungeonEntity,
-  DungeonState,
-} from "./dungeon_crawler_types";
-export {
-  DungeonCrawler,
-  createDungeonCrawlerFromMission,
-} from "./dungeon_crawler_core";
+export { TileType, EntityType, ItemType, MonsterType } from "./dungeon_crawler_types";
+export type { DungeonTile, DungeonEntity, DungeonState } from "./dungeon_crawler_types";
+export { DungeonCrawler, createDungeonCrawlerFromMission } from "./dungeon_crawler_core";

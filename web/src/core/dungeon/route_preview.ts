@@ -87,13 +87,8 @@ export function routePreview(
       queue.push(next);
     }
   }
-  const reachable = [...seen].filter((i) =>
-    unresolved(matrix, cleared, bypassed, i),
-  );
-  const creditsAvailable = reachable.reduce(
-    (sum, i) => sum + (nodes[i]?.reward.credits ?? 0),
-    0,
-  );
+  const reachable = [...seen].filter((i) => unresolved(matrix, cleared, bypassed, i));
+  const creditsAvailable = reachable.reduce((sum, i) => sum + (nodes[i]?.reward.credits ?? 0), 0);
 
   // Fewest fights from the destination to the boss: a 0-1 BFS where landing on
   // an unresolved encounter costs one. That is the honest answer to "if I go
@@ -122,9 +117,7 @@ export function routePreview(
 
   // Named only where the intel was bought: an unrevealed route stays a count.
   const intel = new Set(intelNodes);
-  const knownIce = reachable
-    .filter((i) => intel.has(i))
-    .flatMap((i) => nodes[i]?.iceIds ?? []);
+  const knownIce = reachable.filter((i) => intel.has(i)).flatMap((i) => nodes[i]?.iceIds ?? []);
 
   return {
     fightsToBoss,

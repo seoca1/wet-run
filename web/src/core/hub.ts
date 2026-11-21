@@ -4,8 +4,7 @@
  * rest, talk to NPCs, buy equipment, and prepare for the next run.
  */
 
-export type HubLocation =
-  "bar" | "shop" | "workshop" | "medbay" | "command" | "dormitory";
+export type HubLocation = "bar" | "shop" | "workshop" | "medbay" | "command" | "dormitory";
 
 export interface HubNpc {
   readonly id: string;
@@ -91,11 +90,7 @@ export const HUB_SHOPS: ReadonlyArray<HubShop> = Object.freeze([
     id: "black_market",
     name: "Black Market",
     location: "bar",
-    inventory: Object.freeze([
-      "enhanced_deck",
-      "viral_program",
-      "stealth_chip",
-    ]),
+    inventory: Object.freeze(["enhanced_deck", "viral_program", "stealth_chip"]),
     markup: 1.5,
   }),
   Object.freeze({
@@ -150,14 +145,9 @@ export function enterHub(): HubState {
   });
 }
 
-export function moveToLocation(
-  state: HubState,
-  location: HubLocation,
-): HubState {
+export function moveToLocation(state: HubState, location: HubLocation): HubState {
   if (!state.active) return state;
-  const visited: ReadonlyArray<HubLocation> = state.visitedLocations.includes(
-    location,
-  )
+  const visited: ReadonlyArray<HubLocation> = state.visitedLocations.includes(location)
     ? state.visitedLocations
     : Object.freeze([...state.visitedLocations, location]);
   return Object.freeze({
@@ -167,21 +157,15 @@ export function moveToLocation(
   });
 }
 
-export function getNpcsAtLocation(
-  location: HubLocation,
-): ReadonlyArray<HubNpc> {
+export function getNpcsAtLocation(location: HubLocation): ReadonlyArray<HubNpc> {
   return Object.freeze(HUB_NPCS.filter((n) => n.location === location));
 }
 
-export function getShopsAtLocation(
-  location: HubLocation,
-): ReadonlyArray<HubShop> {
+export function getShopsAtLocation(location: HubLocation): ReadonlyArray<HubShop> {
   return Object.freeze(HUB_SHOPS.filter((s) => s.location === location));
 }
 
-export function getServicesAtLocation(
-  location: HubLocation,
-): ReadonlyArray<HubService> {
+export function getServicesAtLocation(location: HubLocation): ReadonlyArray<HubService> {
   return Object.freeze(HUB_SERVICES.filter((s) => s.location === location));
 }
 

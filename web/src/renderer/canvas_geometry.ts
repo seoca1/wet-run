@@ -41,22 +41,15 @@ export function canvasGeometry(
     2,
     Math.min(Math.floor(baseColumns / scale), Math.floor(cssWidth / 6)),
   );
-  const hudCols = Math.max(
-    1,
-    Math.round((totalColumns * base.hudCols) / baseColumns),
-  );
-  const rows = Math.max(
-    1,
-    Math.min(Math.floor(base.rows / scale), Math.floor(cssHeight / 12)),
-  );
+  const hudCols = Math.max(1, Math.round((totalColumns * base.hudCols) / baseColumns));
+  const rows = Math.max(1, Math.min(Math.floor(base.rows / scale), Math.floor(cssHeight / 12)));
   const layout: Layout = {
     ...base,
     cols: totalColumns - hudCols,
     hudCols,
     rows,
   };
-  const dpr =
-    Number.isFinite(viewport.dpr) && viewport.dpr > 0 ? viewport.dpr : 1;
+  const dpr = Number.isFinite(viewport.dpr) && viewport.dpr > 0 ? viewport.dpr : 1;
   return {
     layout,
     cssWidth,

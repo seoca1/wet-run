@@ -7,13 +7,7 @@ import { makeGrid, type Grid } from "../core/grid";
 import type { EquipmentLoadout } from "../core/types";
 import type { EquipSlot } from "../core/state/equipment";
 import { PALETTE } from "./palette";
-import {
-  drawPanel,
-  panelInnerRect,
-  screenFrameRect,
-  setInnerText,
-  type PanelRect,
-} from "./panel";
+import { drawPanel, panelInnerRect, screenFrameRect, setInnerText, type PanelRect } from "./panel";
 
 /** Where the equipment screen places its content inside the inset frame. */
 export interface EquipmentLayout {
@@ -32,11 +26,7 @@ export interface EquipmentLayout {
  * inset frame: every offset keeps its distance from the frame's top-left
  * corner that it used to have from the grid's.
  */
-export function equipmentLayout(
-  slotCount: number,
-  cols: number,
-  rows: number,
-): EquipmentLayout {
+export function equipmentLayout(slotCount: number, cols: number, rows: number): EquipmentLayout {
   const frame = screenFrameRect({ width: cols, height: rows });
   const inner = panelInnerRect(makeGrid(cols, rows), frame);
   return {
@@ -76,12 +66,7 @@ export function renderEquipmentScreen(
     y += 1;
   }
   y += 1;
-  grid = put(
-    x,
-    y,
-    "Press 1-8 to select slot to auto-equip from registry",
-    PALETTE.GRAY_LIGHT,
-  );
+  grid = put(x, y, "Press 1-8 to select slot to auto-equip from registry", PALETTE.GRAY_LIGHT);
   y += 1;
   grid = put(x, y, "Press ESC to go back", PALETTE.GRAY_LIGHT);
   if (view.message !== "") {

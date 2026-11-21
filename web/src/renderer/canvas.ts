@@ -71,11 +71,9 @@ export class AsciiRenderer {
     const baseLayout = { cols, rows, hudCols, orientation, breakpoint };
     const padding = getComputedStyle(document.body);
     const horizontalInset =
-      (parseFloat(padding.paddingLeft) || 0) +
-      (parseFloat(padding.paddingRight) || 0);
+      (parseFloat(padding.paddingLeft) || 0) + (parseFloat(padding.paddingRight) || 0);
     const verticalInset =
-      (parseFloat(padding.paddingTop) || 0) +
-      (parseFloat(padding.paddingBottom) || 0);
+      (parseFloat(padding.paddingTop) || 0) + (parseFloat(padding.paddingBottom) || 0);
     this.dpr = window.devicePixelRatio || 1;
     const geometry = canvasGeometry(
       baseLayout,
@@ -174,23 +172,13 @@ export class AsciiRenderer {
       const line = lines[i] ?? "";
       const override = colorFor?.(line, i);
       this.ctx.fillStyle = override ?? PALETTE.GREEN_NEON;
-      this.ctx.fillText(
-        line,
-        hudX,
-        hudY,
-        Math.max(1, this.hudCols - 1) * this.cellWidth,
-      );
+      this.ctx.fillText(line, hudX, hudY, Math.max(1, this.hudCols - 1) * this.cellWidth);
       hudY += this.cellHeight;
     }
   }
 
   /** Render a single character at (x, y) — for debug overlays. */
-  debugChar(
-    x: number,
-    y: number,
-    char: string,
-    color = PALETTE.GRAY_DARK,
-  ): void {
+  debugChar(x: number, y: number, char: string, color = PALETTE.GRAY_DARK): void {
     this.ctx.fillStyle = color;
     this.ctx.fillText(char, x * this.cellWidth, y * this.cellHeight);
   }

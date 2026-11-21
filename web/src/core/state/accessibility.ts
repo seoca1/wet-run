@@ -26,10 +26,7 @@ export const DEFAULT_ACCESSIBILITY_STATE: AccessibilityState = Object.freeze({
  * check degrades to "no preference" instead of throwing during boot.
  */
 export function prefersReducedMotion(): boolean {
-  if (
-    typeof window === "undefined" ||
-    typeof window.matchMedia !== "function"
-  ) {
+  if (typeof window === "undefined" || typeof window.matchMedia !== "function") {
     return false;
   }
   try {
@@ -46,10 +43,7 @@ export function prefersReducedMotion(): boolean {
  * palette overrides.
  */
 export function prefersHighContrast(): boolean {
-  if (
-    typeof window === "undefined" ||
-    typeof window.matchMedia !== "function"
-  ) {
+  if (typeof window === "undefined" || typeof window.matchMedia !== "function") {
     return false;
   }
   try {
@@ -60,11 +54,7 @@ export function prefersHighContrast(): boolean {
 }
 
 /** Get ARIA label for a menu item. */
-export function getMenuAriaLabel(
-  index: number,
-  label: string,
-  enabled: boolean,
-): string {
+export function getMenuAriaLabel(index: number, label: string, enabled: boolean): string {
   const state = enabled ? "enabled" : "disabled";
   return `${label}, option ${index + 1}, ${state}`;
 }
@@ -117,9 +107,7 @@ export function meetsContrastRatio(
     ["#ffffff", "#000000"],
     ["#000000", "#ffffff"],
   ];
-  return goodCombinations.some(
-    ([fg, bg]) => fg === foreground && bg === background,
-  );
+  return goodCombinations.some(([fg, bg]) => fg === foreground && bg === background);
 }
 
 /** Get high contrast color overrides. */

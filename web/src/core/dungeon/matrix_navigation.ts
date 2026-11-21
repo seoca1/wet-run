@@ -35,11 +35,7 @@ export const NO_HOP = -1;
  * @returns Map of node index to its next hop toward `target`, or an empty
  *   map when `from` is out of range.
  */
-function bfsToward(
-  matrix: Matrix,
-  from: number,
-  target: number,
-): Map<number, number> {
+function bfsToward(matrix: Matrix, from: number, target: number): Map<number, number> {
   const hops = new Map<number, number>();
   const nodeCount = matrix.nodes.length;
   if (from < 0 || from >= nodeCount) return hops;
@@ -94,11 +90,7 @@ function bfsToward(
  * @returns The next node index, or `-1` when `target` is unreachable from
  *   `from` (or the indices are out of range).
  */
-export function nextHopToward(
-  matrix: Matrix,
-  from: number,
-  target: number,
-): number {
+export function nextHopToward(matrix: Matrix, from: number, target: number): number {
   if (from === target) return NO_HOP;
   const chain = bfsToward(matrix, from, target);
   const hop = chain.get(from);
@@ -114,11 +106,7 @@ export function nextHopToward(
  * @returns The hop count, `0` when `from === target`, or `-1` when
  *   `target` is unreachable from `from`.
  */
-export function pathLengthBetween(
-  matrix: Matrix,
-  from: number,
-  target: number,
-): number {
+export function pathLengthBetween(matrix: Matrix, from: number, target: number): number {
   if (from === target) return 0;
   const nodeCount = matrix.nodes.length;
   if (from < 0 || from >= nodeCount) return NO_HOP;

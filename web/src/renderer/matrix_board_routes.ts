@@ -9,11 +9,7 @@
  */
 import type { Matrix } from "../core/types";
 import { heapPop, heapPush } from "./min_heap";
-import {
-  matrixEdges,
-  type BoardPlan,
-  type BoardSite,
-} from "./matrix_board_layout";
+import { matrixEdges, type BoardPlan, type BoardSite } from "./matrix_board_layout";
 
 /** Direction bits: N, E, S, W. A cell's `links` is the set it connects. */
 export const N = 1;
@@ -27,8 +23,7 @@ const STEP: Readonly<Record<number, readonly [number, number]>> = {
   [S]: [0, 1],
   [W]: [-1, 0],
 };
-const opposite = (d: number): number =>
-  d === N ? S : d === S ? N : d === E ? W : E;
+const opposite = (d: number): number => (d === N ? S : d === S ? N : d === E ? W : E);
 
 export interface CorridorCell {
   readonly x: number;
@@ -76,8 +71,7 @@ class Board {
   readonly rooms = new Map<number, number>();
   constructor(readonly plan: BoardPlan) {
     for (const site of plan.sites)
-      for (let dx = -1; dx <= 1; dx++)
-        this.rooms.set(this.key(site.cx + dx, site.cy), site.index);
+      for (let dx = -1; dx <= 1; dx++) this.rooms.set(this.key(site.cx + dx, site.cy), site.index);
   }
   key(x: number, y: number): number {
     return y * 4096 + x;
@@ -117,8 +111,7 @@ class Board {
     const base = near && terminal === 0 ? NEAR_ROOM : 0;
     if (used === 0) return base;
     const crossing =
-      (links === (N | S) && used === (E | W)) ||
-      (links === (E | W) && used === (N | S));
+      (links === (N | S) && used === (E | W)) || (links === (E | W) && used === (N | S));
     if (crossing && !near) return base + CROSS;
     return relaxed ? base + SHARE : null;
   }
@@ -146,14 +139,11 @@ function search(
   const goals = portsOf(to);
   const h = (x: number, y: number) =>
     Math.min(...goals.map((p) => Math.abs(p.x - x) + Math.abs(p.y - y)));
-  const goalAt = new Map(
-    goals.map((p) => [board.key(p.x, p.y), opposite(p.out)]),
-  );
+  const goalAt = new Map(goals.map((p) => [board.key(p.x, p.y), opposite(p.out)]));
   const best = new Map<number, number>();
   const heap: State[] = [];
   for (const p of portsOf(from)) {
-    if (!board.inside(p.x, p.y) || board.roomAt(p.x, p.y) !== undefined)
-      continue;
+    if (!board.inside(p.x, p.y) || board.roomAt(p.x, p.y) !== undefined) continue;
     const back = opposite(p.out);
     heapPush(heap, {
       x: p.x,
@@ -171,14 +161,7 @@ function search(
     if ((best.get(id) ?? Infinity) < s.g) continue;
     const into = goalAt.get(board.key(s.x, s.y));
     if (into !== undefined && into !== s.back) {
-      const extra = board.cost(
-        s.x,
-        s.y,
-        s.back | into,
-        s.terminal | into,
-        ends,
-        relaxed,
-      );
+      const extra = board.cost(s.x, s.y, s.back | into, s.terminal | into, ends, relaxed);
       if (extra !== null) return trace(s, into);
     }
     for (const d of DIRS) {
@@ -241,9 +224,7 @@ export function routeCorridors(matrix: Matrix, plan: BoardPlan): CorridorSet {
     const from = plan.sites[a];
     const to = plan.sites[b];
     const cells =
-      from && to
-        ? (search(board, from, to, false) ?? search(board, from, to, true))
-        : null;
+      from && to ? (search(board, from, to, false) ?? search(board, from, to, true)) : null;
     if (!cells) {
       unrouted.push([a, b]);
       continue;

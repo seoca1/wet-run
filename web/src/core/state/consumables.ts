@@ -34,9 +34,7 @@ export function consumableFor(id: string): Consumable | null {
 }
 
 /** The first consumable the run is carrying, or null. */
-export function carriedConsumable(
-  materials: Inventory["materials"],
-): Consumable | null {
+export function carriedConsumable(materials: Inventory["materials"]): Consumable | null {
   for (const c of CONSUMABLES) {
     if ((materials[c.id] ?? 0) > 0) return c;
   }

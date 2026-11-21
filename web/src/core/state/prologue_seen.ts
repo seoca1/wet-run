@@ -15,9 +15,7 @@ import type { OnboardingStorage } from "./onboarding";
 export const PROLOGUE_SEEN_KEY = "wetrun_prologue_seen";
 
 /** The prologues this profile has watched. Empty when storage is absent. */
-export function seenPrologues(
-  storage: OnboardingStorage | null | undefined,
-): ReadonlySet<string> {
+export function seenPrologues(storage: OnboardingStorage | null | undefined): ReadonlySet<string> {
   if (!storage) return new Set();
   try {
     const raw = storage.getItem(PROLOGUE_SEEN_KEY);

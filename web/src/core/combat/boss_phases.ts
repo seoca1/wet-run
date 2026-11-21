@@ -86,9 +86,7 @@ export const DEFAULT_BOSS_PROFILE: BossProfile = {
  * @param profile - Boss profile to track, or null for non-boss combat
  * @returns Initial tracker state with phase 1 active (or 0 if no profile)
  */
-export function createBossTracker(
-  profile: BossProfile | null,
-): BossPhaseTrackerState {
+export function createBossTracker(profile: BossProfile | null): BossPhaseTrackerState {
   return {
     bossProfile: profile,
     currentPhase: profile !== null ? 1 : 0,
@@ -154,9 +152,7 @@ export function checkPhaseTransition(
  * @param tracker - Current phase tracker state
  * @returns Damage multiplier (1.0-3.0), or 1.0 if no boss profile
  */
-export function getPhaseDamageMultiplier(
-  tracker: BossPhaseTrackerState,
-): number {
+export function getPhaseDamageMultiplier(tracker: BossPhaseTrackerState): number {
   const { bossProfile, currentPhase } = tracker;
 
   if (bossProfile === null || currentPhase === 0) {
@@ -190,9 +186,7 @@ export function getPhaseLabel(tracker: BossPhaseTrackerState): string {
  * @param tracker - Current phase tracker state
  * @returns Mechanic ID string, or undefined if no mechanic
  */
-export function getPhaseMechanic(
-  tracker: BossPhaseTrackerState,
-): string | undefined {
+export function getPhaseMechanic(tracker: BossPhaseTrackerState): string | undefined {
   const { bossProfile, currentPhase } = tracker;
 
   if (bossProfile === null || currentPhase === 0) {

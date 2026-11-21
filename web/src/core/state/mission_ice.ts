@@ -5,17 +5,10 @@
  * spreads this ICE into every encounter, rebuilds the same fight (ADR-0252).
  */
 import type { Ice, Mission } from "../types";
-import {
-  encounterIceIdForGrade,
-  missionGradeOf,
-  missionSeedOf,
-} from "../combat/ice_scaling";
+import { encounterIceIdForGrade, missionGradeOf, missionSeedOf } from "../combat/ice_scaling";
 
 /** Pick the ICE type best matched to the mission's `ice_id` (fallback: first). */
-export function missionIce(
-  mission: Mission,
-  iceTypes: Readonly<Record<string, Ice>>,
-): Ice {
+export function missionIce(mission: Mission, iceTypes: Readonly<Record<string, Ice>>): Ice {
   const keys = Object.keys(iceTypes);
   const preferred = (mission as { ice_id?: string }).ice_id;
   const normalize = (raw: Ice): Ice => {
@@ -43,10 +36,7 @@ export function missionIce(
     const ice = iceTypes[preferred];
     if (ice) return normalize(ice);
   }
-  const graded =
-    iceTypes[
-      encounterIceIdForGrade(missionGradeOf(mission), missionSeedOf(mission))
-    ];
+  const graded = iceTypes[encounterIceIdForGrade(missionGradeOf(mission), missionSeedOf(mission))];
   if (graded) return normalize(graded);
   const first = keys[0];
   if (!first) throw new Error("No ICE types in ice_types.json");

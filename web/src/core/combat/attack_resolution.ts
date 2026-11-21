@@ -91,8 +91,7 @@ export const PLAYER_ODDS: AttackOdds = Object.freeze({
 export function expectedDamageCut(odds: AttackOdds): number {
   const miss = Math.max(0, odds.missPct) / 100;
   const guard = Math.max(0, odds.guardPct) / 100;
-  return miss * (1 - CASE_DAMAGE_MULTIPLIER.miss) +
-    guard * (1 - CASE_DAMAGE_MULTIPLIER.guard);
+  return miss * (1 - CASE_DAMAGE_MULTIPLIER.miss) + guard * (1 - CASE_DAMAGE_MULTIPLIER.guard);
 }
 
 /**

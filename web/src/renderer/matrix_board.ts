@@ -65,11 +65,7 @@ export const BOARD_LEGEND: readonly string[] = [
 export type NodeState = "NEW" | "SEEN" | "CLEAR";
 
 export function nodeState(position: MatrixPosition, i: number): NodeState {
-  return position.cleared.includes(i)
-    ? "CLEAR"
-    : position.visited.includes(i)
-      ? "SEEN"
-      : "NEW";
+  return position.cleared.includes(i) ? "CLEAR" : position.visited.includes(i) ? "SEEN" : "NEW";
 }
 
 export function isBossNode(matrix: Matrix, i: number): boolean {
@@ -83,15 +79,7 @@ export function roomToken(position: MatrixPosition, i: number): string {
   const boss = isBossNode(matrix, i);
   const state = nodeState(position, i);
   const centre =
-    i === current
-      ? "@"
-      : boss
-        ? "◆"
-        : state === "CLEAR"
-          ? "+"
-          : state === "SEEN"
-            ? "✓"
-            : "·";
+    i === current ? "@" : boss ? "◆" : state === "CLEAR" ? "+" : state === "SEEN" ? "✓" : "·";
   const ice = (node?.iceIds.length ?? 0) > 0 && state !== "CLEAR";
   const [l, r] =
     i === selected && i !== current
@@ -109,8 +97,7 @@ export function tokenColour(
   i: number,
   frontier: readonly number[],
 ): string {
-  if (i === position.current || i === position.selected)
-    return PALETTE.GREEN_NEON;
+  if (i === position.current || i === position.selected) return PALETTE.GREEN_NEON;
   if (isBossNode(position.matrix, i)) return PALETTE.MAGENTA_LIGHT;
   return frontier.includes(i) ? PALETTE.CYAN_LIGHT : PALETTE.GRAY_LIGHT;
 }
@@ -120,18 +107,12 @@ export function frontierOf(position: MatrixPosition): readonly number[] {
   const here = position.matrix.nodes[position.current];
   return (here?.adjacent ?? []).filter(
     (i, k, all) =>
-      i !== position.current &&
-      position.matrix.nodes[i] !== undefined &&
-      all.indexOf(i) === k,
+      i !== position.current && position.matrix.nodes[i] !== undefined && all.indexOf(i) === k,
   );
 }
 
 /** Corridor style: only edges the player can travel from here are routes. */
-export function corridorStyle(
-  position: MatrixPosition,
-  a: number,
-  b: number,
-): Style {
+export function corridorStyle(position: MatrixPosition, a: number, b: number): Style {
   const frontier = frontierOf(position);
   const other = a === position.current ? b : b === position.current ? a : null;
   if (other === null || !frontier.includes(other)) return "link";
@@ -149,13 +130,8 @@ export function putInside(
 ): Grid {
   if (y < rect.y || y >= rect.y + rect.height) return grid;
   const skip = Math.max(0, rect.x - x);
-  const visible = [...text].slice(
-    skip,
-    Math.max(skip, rect.x + rect.width - x),
-  );
-  return visible.length === 0
-    ? grid
-    : setText(grid, x + skip, y, visible.join(""), fg);
+  const visible = [...text].slice(skip, Math.max(skip, rect.x + rect.width - x));
+  return visible.length === 0 ? grid : setText(grid, x + skip, y, visible.join(""), fg);
 }
 
 /** Draw corridors, then rooms, clipped to `clip`. */
@@ -166,10 +142,7 @@ export function drawBoard(
   routes: CorridorSet,
   position: MatrixPosition,
 ): Grid {
-  const cells = new Map<
-    string,
-    { x: number; y: number; style: Style; links: number }
-  >();
+  const cells = new Map<string, { x: number; y: number; style: Style; links: number }>();
   for (const corridor of routes.corridors) {
     const style = corridorStyle(position, corridor.a, corridor.b);
     for (const c of corridor.cells) {
@@ -189,14 +162,7 @@ export function drawBoard(
   for (const site of plan.sites) {
     const token = roomToken(position, site.index);
     const x = site.cx - 1;
-    out = putInside(
-      out,
-      clip,
-      x,
-      site.cy,
-      token,
-      tokenColour(position, site.index, frontier),
-    );
+    out = putInside(out, clip, x, site.cy, token, tokenColour(position, site.index, frontier));
   }
   return out;
 }

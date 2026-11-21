@@ -109,8 +109,7 @@ export function computeTypedPageIndex(
     const page = pages[i];
     if (page === undefined) continue;
     const pageChars =
-      page.reduce((sum, line) => sum + line.length, 0) +
-      Math.max(0, page.length - 1);
+      page.reduce((sum, line) => sum + line.length, 0) + Math.max(0, page.length - 1);
     cumulative += pageChars;
     if (typedChars <= cumulative) return i;
   }

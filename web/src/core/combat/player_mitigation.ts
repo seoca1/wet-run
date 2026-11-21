@@ -49,10 +49,7 @@ export interface PlayerDefense {
 export function playerDefense(state: GameState): PlayerDefense {
   const stats = state.equipmentLoadout.totalStats();
   return {
-    iceResistance: Math.max(
-      0,
-      Math.min(ICE_RESISTANCE_CAP_PCT, stats.iceResistance),
-    ),
+    iceResistance: Math.max(0, Math.min(ICE_RESISTANCE_CAP_PCT, stats.iceResistance)),
     defense: Math.max(0, stats.defense),
   };
 }
@@ -84,20 +81,14 @@ export interface PlayerMitigationResult {
  * so a partially used barrier keeps its remainder (ADR-0219's ICE shield
  * works the same way).
  */
-export function applyPlayerMitigation(
-  state: GameState,
-  incoming: number,
-): PlayerMitigationResult {
+export function applyPlayerMitigation(state: GameState, incoming: number): PlayerMitigationResult {
   if (incoming <= 0) {
     return { state, damage: 0, absorbed: 0, dodged: 0, reduced: 0 };
   }
 
   // ADR-0326: resistance, then flat defense, then the shield pool.
   const { iceResistance, defense } = playerDefense(state);
-  const afterDefense = Math.max(
-    0,
-    applyIceResistance(incoming, iceResistance) - defense,
-  );
+  const afterDefense = Math.max(0, applyIceResistance(incoming, iceResistance) - defense);
   const reduced = incoming - afterDefense;
 
   const pool = playerShieldPool(state);

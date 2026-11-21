@@ -66,14 +66,7 @@ export const VISIBILITY_ORDER: Readonly<Record<Visibility, number>> = {
 
 /** Node kind for visibility rules (entry/exit always visible). */
 export type ExplorationNodeKind =
-  | "entry"
-  | "data"
-  | "system"
-  | "ice"
-  | "construct"
-  | "router"
-  | "core"
-  | "exit";
+  "entry" | "data" | "system" | "ice" | "construct" | "router" | "core" | "exit";
 
 /** Whether a node of this kind should be visible from the start. */
 export function isAlwaysVisibleKind(kind: ExplorationNodeKind): boolean {
@@ -109,8 +102,7 @@ export class ExplorationState {
     }
     if (
       this.current !== "" &&
-      (this.path.length === 0 ||
-        this.path[this.path.length - 1] !== this.current)
+      (this.path.length === 0 || this.path[this.path.length - 1] !== this.current)
     ) {
       this.path.push(this.current);
     }
@@ -144,10 +136,7 @@ export class ExplorationState {
   visibility(graph: MatrixGraphView, nodeId: string): Visibility {
     if (this.current !== "" && nodeId === this.current) return "current";
     if (this.discovered.has(nodeId)) return "discovered";
-    if (
-      graph.isConnected(this.current, nodeId) ||
-      graph.isConnected(nodeId, this.current)
-    ) {
+    if (graph.isConnected(this.current, nodeId) || graph.isConnected(nodeId, this.current)) {
       return "adjacent";
     }
     return "unknown";
@@ -186,12 +175,7 @@ export class ExplorationState {
 
 /** An event triggered when the player enters a node. */
 export type NodeEventKind =
-  | "enter_combat"
-  | "enter_data"
-  | "discover_anomaly"
-  | "rest_heal"
-  | "find_cache"
-  | "trigger_trap";
+  "enter_combat" | "enter_data" | "discover_anomaly" | "rest_heal" | "find_cache" | "trigger_trap";
 
 /** Pick an event kind for the given room type (deterministic, no RNG). */
 export function eventForRoomType(roomType: string): NodeEventKind {

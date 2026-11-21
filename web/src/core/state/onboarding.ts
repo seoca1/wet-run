@@ -36,9 +36,7 @@ export interface OnboardingStorage {
 }
 
 /** Read the tutorial-completed flag. Returns `false` when storage is absent. */
-export function isTutorialCompleted(
-  storage: OnboardingStorage | null | undefined,
-): boolean {
+export function isTutorialCompleted(storage: OnboardingStorage | null | undefined): boolean {
   if (!storage) return false;
   try {
     return storage.getItem(TUTORIAL_COMPLETED_KEY) === "true";
@@ -49,9 +47,7 @@ export function isTutorialCompleted(
 }
 
 /** Mark the tutorial as completed. Silently no-ops when storage is absent. */
-export function markTutorialCompleted(
-  storage: OnboardingStorage | null | undefined,
-): void {
+export function markTutorialCompleted(storage: OnboardingStorage | null | undefined): void {
   if (!storage) return;
   try {
     storage.setItem(TUTORIAL_COMPLETED_KEY, "true");
@@ -64,9 +60,7 @@ export function markTutorialCompleted(
 export const RUNS_FINISHED_KEY = "wetrun_runs_finished";
 
 /** Runs finished — deaths and endings both count. 0 on a fresh profile. */
-export function runsFinished(
-  storage: OnboardingStorage | null | undefined,
-): number {
+export function runsFinished(storage: OnboardingStorage | null | undefined): number {
   if (!storage) return 0;
   try {
     const raw = storage.getItem(RUNS_FINISHED_KEY);
@@ -78,9 +72,7 @@ export function runsFinished(
 }
 
 /** Record a finished run. No-ops without storage. */
-export function markRunFinished(
-  storage: OnboardingStorage | null | undefined,
-): void {
+export function markRunFinished(storage: OnboardingStorage | null | undefined): void {
   if (!storage) return;
   try {
     storage.setItem(RUNS_FINISHED_KEY, String(runsFinished(storage) + 1));
@@ -90,9 +82,7 @@ export function markRunFinished(
 }
 
 /** Has this profile started a run at least once? (ADR-0315) */
-export function hasPlayedBefore(
-  storage: OnboardingStorage | null | undefined,
-): boolean {
+export function hasPlayedBefore(storage: OnboardingStorage | null | undefined): boolean {
   if (!storage) return false;
   try {
     return storage.getItem(HAS_PLAYED_KEY) === "true";
@@ -102,9 +92,7 @@ export function hasPlayedBefore(
 }
 
 /** Record that a run has been started. No-ops without storage. */
-export function markPlayed(
-  storage: OnboardingStorage | null | undefined,
-): void {
+export function markPlayed(storage: OnboardingStorage | null | undefined): void {
   if (!storage) return;
   try {
     storage.setItem(HAS_PLAYED_KEY, "true");
@@ -120,9 +108,7 @@ export function markPlayed(
  * shown exactly once per profile, then the flag is written and the flag
  * short-circuits every later boot.
  */
-export function shouldAutoShowTutorial(
-  storage: OnboardingStorage | null | undefined,
-): boolean {
+export function shouldAutoShowTutorial(storage: OnboardingStorage | null | undefined): boolean {
   return !isTutorialCompleted(storage);
 }
 
@@ -196,12 +182,9 @@ export function shouldShowMatrixEntryHint(
   alreadyShown: boolean,
   state: MatrixHintState | null,
 ): boolean {
-  if (alreadyShown || state === null || state.runPhase !== "matrix")
-    return false;
+  if (alreadyShown || state === null || state.runPhase !== "matrix") return false;
   if (state.encounterDecision) return false;
   const nodes = state.matrix?.nodes ?? [];
   const here = nodes[state.currentNodeIndex];
-  return (here?.adjacent ?? []).some(
-    (i) => i !== state.currentNodeIndex && nodes[i] !== undefined,
-  );
+  return (here?.adjacent ?? []).some((i) => i !== state.currentNodeIndex && nodes[i] !== undefined);
 }

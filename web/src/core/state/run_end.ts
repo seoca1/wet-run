@@ -32,13 +32,9 @@ export function isTerminalNode(state: GameState): boolean {
  * rebuilds any save as `runPhase: "matrix"` — resuming a death restored a
  * board with 0 HP after a flatline, and resurrected a jacked-out runner at
  * full health. Retiring on death closes both. */
-export function autosaveIntent(
-  state: GameState | null,
-): "write" | "retire" | "skip" {
+export function autosaveIntent(state: GameState | null): "write" | "retire" | "skip" {
   if (state === null) return "skip";
-  return state.runPhase === "ending" || state.runPhase === "dead"
-    ? "retire"
-    : "write";
+  return state.runPhase === "ending" || state.runPhase === "dead" ? "retire" : "write";
 }
 
 /** Confirm (or ESC) on the ending screen: the run is complete and the

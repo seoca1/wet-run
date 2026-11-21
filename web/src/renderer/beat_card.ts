@@ -24,8 +24,7 @@ export function renderBeatCard(
 ): Grid {
   let grid = makeGrid(cols, rows);
   const width = runIntroWidth(cols);
-  const centre = (text: string): number =>
-    Math.max(2, Math.floor((cols - text.length) / 2));
+  const centre = (text: string): number => Math.max(2, Math.floor((cols - text.length) / 2));
   const body = wrapIntroLines(beat.lines, width);
   const speaker = beat.speaker.length > 0 ? 1 : 0;
   const total = 1 + speaker + body.length;
@@ -34,13 +33,7 @@ export function renderBeatCard(
   grid = setText(grid, centre(title), y, title, PALETTE.YELLOW_AMBER);
   y += 2;
   if (beat.speaker.length > 0) {
-    grid = setText(
-      grid,
-      centre(beat.speaker),
-      y,
-      beat.speaker,
-      PALETTE.YELLOW_AMBER,
-    );
+    grid = setText(grid, centre(beat.speaker), y, beat.speaker, PALETTE.YELLOW_AMBER);
     y += 1;
   }
   for (const line of body) {
@@ -48,12 +41,6 @@ export function renderBeatCard(
     y += 1;
   }
 
-  grid = setText(
-    grid,
-    centre("PRESS ANY KEY"),
-    rows - 3,
-    "PRESS ANY KEY",
-    PALETTE.GRAY_DARK,
-  );
+  grid = setText(grid, centre("PRESS ANY KEY"), rows - 3, "PRESS ANY KEY", PALETTE.GRAY_DARK);
   return grid;
 }

@@ -14,13 +14,7 @@ export const ENCOUNTER_VERB_COSTS = {
   limit: 100, // Existing player.alarm cap; no new resource or TRACE coupling.
 } as const;
 
-export const ENCOUNTER_VERBS = [
-  "PROBE",
-  "BYPASS",
-  "BREACH",
-  "JACK OUT",
-  "SCAN",
-] as const;
+export const ENCOUNTER_VERBS = ["PROBE", "BYPASS", "BREACH", "JACK OUT", "SCAN"] as const;
 export type EncounterVerb = (typeof ENCOUNTER_VERBS)[number];
 
 // parseProgram drops role; resolve catalog metadata here without changing combat.
@@ -55,18 +49,13 @@ export function encounterResolved(state: GameState, index: number): boolean {
 /** Unresolved ICE at `index`: arriving opens the decision, leaving is blocked. */
 export function encounterGates(state: GameState, index: number): boolean {
   const node = state.matrix?.nodes[index];
-  return (
-    node !== undefined &&
-    node.iceIds.length > 0 &&
-    !encounterResolved(state, index)
-  );
+  return node !== undefined && node.iceIds.length > 0 && !encounterResolved(state, index);
 }
 
 function bypassPayable(state: GameState): boolean {
   return (
     bypassBlockReason(state) === null &&
-    state.player.alarm + ENCOUNTER_VERB_COSTS.bypass <=
-      ENCOUNTER_VERB_COSTS.limit
+    state.player.alarm + ENCOUNTER_VERB_COSTS.bypass <= ENCOUNTER_VERB_COSTS.limit
   );
 }
 
@@ -152,15 +141,10 @@ export function encounterRoster(state: GameState): readonly Ice[] {
   });
 }
 
-export function applyEncounterDecision(
-  state: GameState,
-  action: GameAction,
-): GameState {
+export function applyEncounterDecision(state: GameState, action: GameAction): GameState {
   const decision = state.encounterDecision;
   if (!decision) return state;
-  if (
-    ["move_north", "move_south", "move_east", "move_west"].includes(action.type)
-  ) {
+  if (["move_north", "move_south", "move_east", "move_west"].includes(action.type)) {
     const forward = action.type === "move_south" || action.type === "move_east";
     const verbs = selectableVerbs(state);
     const current = verbs.findIndex((verb) => verb === decision.selectedVerb);
@@ -208,12 +192,8 @@ export function applyEncounterDecision(
       if (verb === "BYPASS" && bypassReason) {
         return { ...state, message: `BYPASS blocked — ${bypassReason}` };
       }
-      if (verb === "PROBE" && decision.probed)
-        return { ...state, message: revealed };
-      const cost =
-        verb === "PROBE"
-          ? ENCOUNTER_VERB_COSTS.probe
-          : ENCOUNTER_VERB_COSTS.bypass;
+      if (verb === "PROBE" && decision.probed) return { ...state, message: revealed };
+      const cost = verb === "PROBE" ? ENCOUNTER_VERB_COSTS.probe : ENCOUNTER_VERB_COSTS.bypass;
       if (state.player.alarm + cost > ENCOUNTER_VERB_COSTS.limit) {
         return {
           ...state,
@@ -245,17 +225,11 @@ export function applyEncounterDecision(
     }
     case "BREACH": {
       const node = state.matrix?.nodes[state.currentNodeIndex];
-      if (
-        !node ||
-        state.clearedEncounterNodes?.includes(state.currentNodeIndex)
-      )
-        return state;
+      if (!node || state.clearedEncounterNodes?.includes(state.currentNodeIndex)) return state;
       const iceRoster = encounterRoster(state);
       const matrixEntryVfx = [import_vfx("room_flash", "TIER_GOLD", 1)];
       if (node.eventKind === "cache") {
-        matrixEntryVfx.push(
-          import_vfx("data_acquired", "", durationForKind("data_acquired")),
-        );
+        matrixEntryVfx.push(import_vfx("data_acquired", "", durationForKind("data_acquired")));
       }
       return {
         ...clearIceEffects(state),
@@ -279,11 +253,7 @@ export function applyEncounterDecision(
         message: "Jacked out — run abandoned",
         vfxInstances: [
           ...state.vfxInstances,
-          import_vfx(
-            "jackout_whiteout",
-            "",
-            durationForKind("jackout_whiteout"),
-          ),
+          import_vfx("jackout_whiteout", "", durationForKind("jackout_whiteout")),
         ],
       };
     default: {

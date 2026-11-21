@@ -19,10 +19,7 @@ export function renderCombatHitVfx(ctx: VfxRenderCtx, grid: Grid): Grid | null {
       // Projectile line: moves from startRow → targetRow over ticks.
       const row =
         instance.startRow != null && instance.targetRow != null
-          ? Math.round(
-              instance.startRow +
-                (instance.targetRow - instance.startRow) * progress,
-            )
+          ? Math.round(instance.startRow + (instance.targetRow - instance.startRow) * progress)
           : rows / 2;
       const col = Math.floor(cols * 0.2 + cols * 0.6 * progress);
       grid = setText(grid, col, row, "→", PALETTE.YELLOW_AMBER);
@@ -35,42 +32,12 @@ export function renderCombatHitVfx(ctx: VfxRenderCtx, grid: Grid): Grid | null {
       const cx = Math.floor(cols / 2);
       const amount = instance.payloadNum ?? 0;
       grid = setText(grid, cx - 8, 1, `+${amount} HP`, PALETTE.GREEN_NEON);
-      grid = setText(
-        grid,
-        cx - 4,
-        Math.floor(rows / 2),
-        "+",
-        PALETTE.GREEN_NEON,
-      );
-      grid = setText(
-        grid,
-        cx - 6,
-        Math.floor(rows / 2) - 1,
-        "·",
-        PALETTE.GREEN_NEON,
-      );
-      grid = setText(
-        grid,
-        cx - 2,
-        Math.floor(rows / 2) - 1,
-        "·",
-        PALETTE.GREEN_NEON,
-      );
-      grid = setText(
-        grid,
-        cx,
-        Math.floor(rows / 2) - 1,
-        "+",
-        PALETTE.GREEN_NEON,
-      );
+      grid = setText(grid, cx - 4, Math.floor(rows / 2), "+", PALETTE.GREEN_NEON);
+      grid = setText(grid, cx - 6, Math.floor(rows / 2) - 1, "·", PALETTE.GREEN_NEON);
+      grid = setText(grid, cx - 2, Math.floor(rows / 2) - 1, "·", PALETTE.GREEN_NEON);
+      grid = setText(grid, cx, Math.floor(rows / 2) - 1, "+", PALETTE.GREEN_NEON);
       if (t === dur - 1) {
-        grid = setText(
-          grid,
-          cx - 5,
-          Math.floor(rows / 2) - 2,
-          "♥",
-          PALETTE.GREEN_NEON,
-        );
+        grid = setText(grid, cx - 5, Math.floor(rows / 2) - 2, "♥", PALETTE.GREEN_NEON);
       }
       return grid;
     }
@@ -84,13 +51,7 @@ export function renderCombatHitVfx(ctx: VfxRenderCtx, grid: Grid): Grid | null {
     case "buff": {
       const cx = Math.floor(cols / 2);
       const cy = Math.floor(rows / 2);
-      grid = setText(
-        grid,
-        cx - 4,
-        cy,
-        `↑ ${instance.payload} ↑`,
-        PALETTE.GREEN_NEON,
-      );
+      grid = setText(grid, cx - 4, cy, `↑ ${instance.payload} ↑`, PALETTE.GREEN_NEON);
       if (t === Math.floor(dur / 2)) {
         grid = setText(grid, cx - 1, cy - 1, "▲", PALETTE.GREEN_NEON);
       }
@@ -99,13 +60,7 @@ export function renderCombatHitVfx(ctx: VfxRenderCtx, grid: Grid): Grid | null {
     case "debuff": {
       const cx = Math.floor(cols / 2);
       const cy = Math.floor(rows / 2);
-      grid = setText(
-        grid,
-        cx - 4,
-        cy,
-        `↓ ${instance.payload} ↓`,
-        PALETTE.RED_BRIGHT,
-      );
+      grid = setText(grid, cx - 4, cy, `↓ ${instance.payload} ↓`, PALETTE.RED_BRIGHT);
       if (t === Math.floor(dur / 2)) {
         grid = setText(grid, cx - 1, cy - 1, "▼", PALETTE.RED_BRIGHT);
       }
@@ -116,13 +71,7 @@ export function renderCombatHitVfx(ctx: VfxRenderCtx, grid: Grid): Grid | null {
       const cy = Math.floor(rows / 2);
       grid = setText(grid, cx - 2, cy, "✦ STUN ✦", PALETTE.YELLOW_AMBER);
       const stars = ["✦", "✧", "✶", "✷"];
-      grid = setText(
-        grid,
-        cx - 6,
-        cy - 1,
-        stars[t % stars.length] ?? "✦",
-        PALETTE.YELLOW_AMBER,
-      );
+      grid = setText(grid, cx - 6, cy - 1, stars[t % stars.length] ?? "✦", PALETTE.YELLOW_AMBER);
       grid = setText(
         grid,
         cx + 5,
@@ -151,25 +100,13 @@ export function renderCombatHitVfx(ctx: VfxRenderCtx, grid: Grid): Grid | null {
         grid = setText(grid, x, flashRow, flashChar, flashColor);
         grid = setText(grid, x, flashRow + 1, flashChar, flashColor);
       }
-      grid = setText(
-        grid,
-        2,
-        1,
-        `HIT! -${instance.payload}`,
-        PALETTE.RED_BRIGHT,
-      );
+      grid = setText(grid, 2, 1, `HIT! -${instance.payload}`, PALETTE.RED_BRIGHT);
       return grid;
     }
     case "player_hit": {
       const shakeRow = Math.floor(rows * 0.6);
       const shakeCol = t % 2;
-      grid = setText(
-        grid,
-        2 + shakeCol,
-        shakeRow,
-        "█▒▒▒[HP CRIT]▒▒▒█",
-        PALETTE.RED_BRIGHT,
-      );
+      grid = setText(grid, 2 + shakeCol, shakeRow, "█▒▒▒[HP CRIT]▒▒▒█", PALETTE.RED_BRIGHT);
       grid = setText(grid, 2, 1, "!! DAMAGE !!", PALETTE.RED_BRIGHT);
       return grid;
     }
@@ -177,13 +114,7 @@ export function renderCombatHitVfx(ctx: VfxRenderCtx, grid: Grid): Grid | null {
       const cx = Math.floor(cols / 2);
       const cy = Math.floor(rows / 2);
       const damage = instance.payloadNum ?? 0;
-      grid = setText(
-        grid,
-        cx - 8,
-        1,
-        `* CRIT! -${damage} *`,
-        PALETTE.YELLOW_AMBER,
-      );
+      grid = setText(grid, cx - 8, 1, `* CRIT! -${damage} *`, PALETTE.YELLOW_AMBER);
       grid = setText(grid, cx, cy, "✦", PALETTE.YELLOW_AMBER);
       grid = setText(grid, cx - 1, cy, "✶", PALETTE.YELLOW_AMBER);
       grid = setText(grid, cx + 1, cy, "✶", PALETTE.YELLOW_AMBER);
@@ -207,13 +138,7 @@ export function renderCombatHitVfx(ctx: VfxRenderCtx, grid: Grid): Grid | null {
         `[${instance.payload} applied]`,
         PALETTE.YELLOW_AMBER,
       );
-      grid = setText(
-        grid,
-        statusCol,
-        statusRow + 1,
-        "▒▒▒▒▒▒▒▒▒▒▒▒▒▒",
-        PALETTE.YELLOW_AMBER,
-      );
+      grid = setText(grid, statusCol, statusRow + 1, "▒▒▒▒▒▒▒▒▒▒▒▒▒▒", PALETTE.YELLOW_AMBER);
       return grid;
     }
     case "heavy_attack": {
@@ -231,13 +156,7 @@ export function renderCombatHitVfx(ctx: VfxRenderCtx, grid: Grid): Grid | null {
           grid = setText(grid, x, cy + 2, "·", PALETTE.MAGENTA_NEON);
         }
       }
-      grid = setText(
-        grid,
-        2,
-        1,
-        `HEAVY -${instance.payloadNum ?? 0}`,
-        PALETTE.ORANGE,
-      );
+      grid = setText(grid, 2, 1, `HEAVY -${instance.payloadNum ?? 0}`, PALETTE.ORANGE);
       return grid;
     }
     case "pierce": {
@@ -247,13 +166,7 @@ export function renderCombatHitVfx(ctx: VfxRenderCtx, grid: Grid): Grid | null {
       grid = setText(grid, col, cy, "====>", PALETTE.WARM);
       grid = setText(grid, col - 6, cy, "----", PALETTE.GRAY_DARK);
       if (t === Math.floor(dur / 2)) {
-        grid = setText(
-          grid,
-          2,
-          1,
-          `PIERCE -${instance.payloadNum ?? 0}`,
-          PALETTE.YELLOW_AMBER,
-        );
+        grid = setText(grid, 2, 1, `PIERCE -${instance.payloadNum ?? 0}`, PALETTE.YELLOW_AMBER);
       }
       return grid;
     }
@@ -271,13 +184,7 @@ export function renderCombatHitVfx(ctx: VfxRenderCtx, grid: Grid): Grid | null {
         strikes[Math.min(hit, 2)] ?? "[>",
         PALETTE.DAMAGE_COLOR,
       );
-      grid = setText(
-        grid,
-        cx - 3 + colOffset,
-        cy - 1,
-        "✦",
-        PALETTE.YELLOW_AMBER,
-      );
+      grid = setText(grid, cx - 3 + colOffset, cy - 1, "✦", PALETTE.YELLOW_AMBER);
       if (t === dur - 1) {
         grid = setText(
           grid,
@@ -305,13 +212,7 @@ export function renderCombatHitVfx(ctx: VfxRenderCtx, grid: Grid): Grid | null {
         }
       }
       grid = setText(grid, cx - 2, cy, "(•)", PALETTE.ICE_FADE_PURPLE);
-      grid = setText(
-        grid,
-        2,
-        1,
-        `DOT -${instance.payloadNum ?? 0}`,
-        PALETTE.ICE_FADE_PURPLE,
-      );
+      grid = setText(grid, 2, 1, `DOT -${instance.payloadNum ?? 0}`, PALETTE.ICE_FADE_PURPLE);
       return grid;
     }
     case "regen": {
@@ -336,13 +237,7 @@ export function renderCombatHitVfx(ctx: VfxRenderCtx, grid: Grid): Grid | null {
       } else {
         grid = setText(grid, cx - 3, cy, ">>❖", PALETTE.DAMAGE_COLOR);
       }
-      grid = setText(
-        grid,
-        2,
-        1,
-        `COUNTER -${instance.payloadNum ?? 0}`,
-        PALETTE.SHIELD_COLOR,
-      );
+      grid = setText(grid, 2, 1, `COUNTER -${instance.payloadNum ?? 0}`, PALETTE.SHIELD_COLOR);
       return grid;
     }
     case "lifesteal": {
@@ -357,13 +252,7 @@ export function renderCombatHitVfx(ctx: VfxRenderCtx, grid: Grid): Grid | null {
         grid = setText(grid, cx, cy, "+", PALETTE.HEAL_COLOR);
         grid = setText(grid, cx - 2, cy, "·+·", PALETTE.HEAL_COLOR);
       }
-      grid = setText(
-        grid,
-        2,
-        1,
-        `LIFESTEAL +${instance.payloadNum ?? 0}`,
-        PALETTE.MAGENTA_NEON,
-      );
+      grid = setText(grid, 2, 1, `LIFESTEAL +${instance.payloadNum ?? 0}`, PALETTE.MAGENTA_NEON);
       return grid;
     }
     case "detect": {

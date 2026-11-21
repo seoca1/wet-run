@@ -11,8 +11,7 @@
  */
 
 // Type exports
-export type AchievementCategory =
-  "combat" | "exploration" | "story" | "mastery" | "hidden";
+export type AchievementCategory = "combat" | "exploration" | "story" | "mastery" | "hidden";
 
 export type AchievementTier = "bronze" | "silver" | "gold" | "platinum";
 
@@ -409,10 +408,7 @@ export function checkMasteryEvent(
 }
 
 // Meta-achievement helpers
-export function checkTrueHacker(
-  state: AchievementState,
-  currentMs = 0,
-): Achievement | null {
+export function checkTrueHacker(state: AchievementState, currentMs = 0): Achievement | null {
   if (state.getTotalUnlocked() >= ALL_ACHIEVEMENTS.length - 1) {
     return state.unlock("true_hacker", currentMs);
   }

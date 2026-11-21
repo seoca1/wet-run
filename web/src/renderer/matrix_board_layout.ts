@@ -34,9 +34,7 @@ interface Unit {
 }
 
 /** Undirected, de-duplicated edge list in ascending pair order. */
-export function matrixEdges(
-  matrix: Matrix,
-): ReadonlyArray<readonly [number, number]> {
+export function matrixEdges(matrix: Matrix): ReadonlyArray<readonly [number, number]> {
   const seen = new Set<string>();
   const edges: Array<readonly [number, number]> = [];
   matrix.nodes.forEach((node, a) => {
@@ -138,12 +136,7 @@ export function boardSize(
 }
 
 /** Largest scale (capped) whose board fits the budget; never below 1. */
-function fitScale(
-  extent: number,
-  budget: number,
-  fixed: number,
-  cap: number,
-): number {
+function fitScale(extent: number, budget: number, fixed: number, cap: number): number {
   if (extent <= 0) return cap;
   return Math.max(1, Math.min(cap, Math.floor((budget - fixed) / extent)));
 }

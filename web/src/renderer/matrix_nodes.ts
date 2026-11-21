@@ -47,8 +47,7 @@ export const MATRIX_ROUTE_PROMPT = "▸ PRESS ↓ OR ↑ TO PICK A ROUTE";
  * presses count on from it. */
 function pressesTo(position: MatrixPosition, node: number): number {
   const adjacent = position.matrix.nodes[position.current]?.adjacent ?? [];
-  const from =
-    position.selected === null ? -1 : adjacent.indexOf(position.selected);
+  const from = position.selected === null ? -1 : adjacent.indexOf(position.selected);
   const to = adjacent.indexOf(node);
   return from < 0 ? to + 1 : (to - from + adjacent.length) % adjacent.length;
 }
@@ -80,10 +79,7 @@ function routeRows(
 }
 
 /** Card rows, each clipped to `width` columns. */
-export function matrixCardLines(
-  position: MatrixPosition,
-  width: number,
-): readonly MatrixLine[] {
+export function matrixCardLines(position: MatrixPosition, width: number): readonly MatrixLine[] {
   const { matrix, current, selected } = position;
   const frontier = frontierOf(position);
   const name = (node: MatrixNode, i: number): string =>
@@ -98,13 +94,8 @@ export function matrixCardLines(
   // First line = what to do next: the prompt at rest, the target once one is
   // chosen. The node it details sits directly under it (ADR-0249 affordance).
   const here = matrix.nodes[current];
-  const atHere = here
-    ? `@ ${name(here, current)}`
-    : "@ No node here — ESC: back";
-  const target =
-    selected !== null && selected !== current
-      ? matrix.nodes[selected]
-      : undefined;
+  const atHere = here ? `@ ${name(here, current)}` : "@ No node here — ESC: back";
+  const target = selected !== null && selected !== current ? matrix.nodes[selected] : undefined;
   const shown = target ?? here;
   if (target && selected !== null) {
     add(`> ${name(target, selected)}`, PALETTE.GREEN_NEON);
@@ -132,8 +123,7 @@ export function matrixCardLines(
   add(shown ? detail(shown) : "");
   add(shown?.site?.label ? `  ${shown.site.label}` : "");
   if (target) add(atHere, PALETTE.GREEN_NEON);
-  for (const row of routeRows(position, frontier, width))
-    add(row, PALETTE.CYAN_LIGHT);
+  for (const row of routeRows(position, frontier, width)) add(row, PALETTE.CYAN_LIGHT);
   const boss = matrix.nodes[matrix.bossNode];
   if (boss) {
     const where =
@@ -142,10 +132,7 @@ export function matrixCardLines(
         : frontier.includes(matrix.bossNode)
           ? "REACHABLE NOW"
           : "NOT ADJACENT";
-    add(
-      `◆ OBJECTIVE: BOSS · ${nodeState(position, matrix.bossNode)}`,
-      PALETTE.MAGENTA_LIGHT,
-    );
+    add(`◆ OBJECTIVE: BOSS · ${nodeState(position, matrix.bossNode)}`, PALETTE.MAGENTA_LIGHT);
     add(
       `  ${matrixNodeId(matrix.bossNode)} ${boss.zone.toUpperCase()} · ${where}`,
       PALETTE.MAGENTA_LIGHT,

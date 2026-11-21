@@ -131,9 +131,7 @@ export function readWalletMaterials(): Readonly<Record<string, number>> {
 }
 
 /** Persist the hoard. Storage is a convenience, so failure is silent. */
-export function writeWalletMaterials(
-  materials: Readonly<Record<string, number>>,
-): void {
+export function writeWalletMaterials(materials: Readonly<Record<string, number>>): void {
   if (typeof localStorage === "undefined") return;
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(addStacks(materials, {})));

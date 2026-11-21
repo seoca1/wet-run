@@ -24,11 +24,9 @@ export function renderEncounterDecision(
    * Null for silent ICE, which is most of them, and for an already-heard one. */
   iceVoice: DialogueBeat | null = null,
 ): ScreenView {
-  const panel = drawPanel(
-    makeGrid(cols, rows),
-    screenFrameRect({ width: cols, height: rows }),
-    { title: "ENCOUNTER" },
-  );
+  const panel = drawPanel(makeGrid(cols, rows), screenFrameRect({ width: cols, height: rows }), {
+    title: "ENCOUNTER",
+  });
   let grid = panel.grid;
   const inner = panel.inner;
   const x = inner.x + 1;
@@ -36,14 +34,7 @@ export function renderEncounterDecision(
   const width = inner.width - 2;
   const write = (text: string, color = PALETTE.GRAY_LIGHT): void => {
     for (let offset = 0; offset < Math.max(1, text.length); offset += width) {
-      grid = setInnerText(
-        grid,
-        inner,
-        x,
-        y++,
-        text.slice(offset, offset + width),
-        color,
-      );
+      grid = setInnerText(grid, inner, x, y++, text.slice(offset, offset + width), color);
     }
   };
   const node = state.matrix?.nodes[state.currentNodeIndex];
@@ -55,15 +46,10 @@ export function renderEncounterDecision(
     PALETTE.GREEN_NEON,
   );
   write("ICE blocks travel until resolved", PALETTE.YELLOW_AMBER);
-  write(
-    `HP ${state.player.hp}/${state.player.maxHp} · COST ${state.player.alarm}/${costs.limit}`,
-  );
+  write(`HP ${state.player.hp}/${state.player.maxHp} · COST ${state.player.alarm}/${costs.limit}`);
   write(`Reward: ${node?.reward.credits ?? 0}cr`);
-  const bypassBlocked =
-    bypassReason !== null || state.player.alarm + costs.bypass > costs.limit;
-  const exits = EXIT_VERBS.filter(
-    (verb) => verb !== "BYPASS" || !bypassBlocked,
-  );
+  const bypassBlocked = bypassReason !== null || state.player.alarm + costs.bypass > costs.limit;
+  const exits = EXIT_VERBS.filter((verb) => verb !== "BYPASS" || !bypassBlocked);
   write(`EXITS: ${exits.join(" · ")}`, PALETTE.CYAN_LIGHT);
   y += 1;
   const details = {
@@ -87,8 +73,7 @@ export function renderEncounterDecision(
           ? costs.bypass
           : 0;
     const blocked =
-      (verb === "BYPASS" && bypassReason !== null) ||
-      state.player.alarm + price > costs.limit;
+      (verb === "BYPASS" && bypassReason !== null) || state.player.alarm + price > costs.limit;
     const suffix =
       (verb === "PROBE" || verb === "SCAN") && state.encounterDecision?.probed
         ? "REVEALED"
@@ -103,11 +88,7 @@ export function renderEncounterDecision(
     const exit = EXIT_VERBS.includes(verb);
     write(
       `${selected ? ">" : " "} ${verb.padEnd(8)} ${exit ? "EXIT" : "INFO"} ${suffix}`.trimEnd(),
-      selected
-        ? PALETTE.GREEN_NEON
-        : exit
-          ? PALETTE.CYAN_LIGHT
-          : PALETTE.GRAY_LIGHT,
+      selected ? PALETTE.GREEN_NEON : exit ? PALETTE.CYAN_LIGHT : PALETTE.GRAY_LIGHT,
     );
     write(`  ${details[verb]}`);
     if (verb === "SCAN") write("  Reveal ICE; lose combat card");
@@ -115,8 +96,7 @@ export function renderEncounterDecision(
   }
   if (state.encounterDecision?.probed) {
     write("EXACT THREAT", PALETTE.GREEN_NEON);
-    for (const ice of encounterRoster(state))
-      write(`${ice.id} HP ${ice.hp}/${ice.maxHp}`);
+    for (const ice of encounterRoster(state)) write(`${ice.id} HP ${ice.hp}/${ice.maxHp}`);
   } else {
     write("Threat hidden — PROBE or SCAN");
   }
@@ -137,8 +117,7 @@ export function renderEncounterDecision(
     const bodyRows = Math.max(0, hasSpeaker ? capacity - 1 : capacity);
     if (bodyRows >= 1) {
       if (hasSpeaker) write(iceVoice.speaker, PALETTE.YELLOW_AMBER);
-      for (const row of body.slice(0, bodyRows))
-        write(row, PALETTE.CYAN_LIGHT);
+      for (const row of body.slice(0, bodyRows)) write(row, PALETTE.CYAN_LIGHT);
       y += 1;
     }
   }

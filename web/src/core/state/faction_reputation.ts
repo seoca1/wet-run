@@ -7,13 +7,7 @@
 export type FactionId = "hosaka" | "maas" | "sense_net" | "ta";
 
 export type ReputationTier =
-  | "ALLIED"
-  | "FRIENDLY"
-  | "TRUSTED"
-  | "NEUTRAL"
-  | "HOSTILE"
-  | "ENEMY"
-  | "OUTCAST";
+  "ALLIED" | "FRIENDLY" | "TRUSTED" | "NEUTRAL" | "HOSTILE" | "ENEMY" | "OUTCAST";
 
 export const TIER_THRESHOLDS: ReadonlyArray<{
   readonly tier: ReputationTier;
@@ -28,16 +22,15 @@ export const TIER_THRESHOLDS: ReadonlyArray<{
   { tier: "OUTCAST", min: -100 },
 ]);
 
-export const TIER_MULTIPLIERS: Readonly<Record<ReputationTier, number>> =
-  Object.freeze({
-    ALLIED: 0.5,
-    FRIENDLY: 0.65,
-    TRUSTED: 0.85,
-    NEUTRAL: 1.0,
-    HOSTILE: 1.15,
-    ENEMY: 1.35,
-    OUTCAST: 1.5,
-  });
+export const TIER_MULTIPLIERS: Readonly<Record<ReputationTier, number>> = Object.freeze({
+  ALLIED: 0.5,
+  FRIENDLY: 0.65,
+  TRUSTED: 0.85,
+  NEUTRAL: 1.0,
+  HOSTILE: 1.15,
+  ENEMY: 1.35,
+  OUTCAST: 1.5,
+});
 
 export type FactionScores = Readonly<Record<FactionId, number>>;
 
@@ -73,34 +66,26 @@ export function applyScoreChange(
   return { ...scores, [faction]: newScore };
 }
 
-export const MISSION_REWARD_MAP: Readonly<Record<FactionId, number>> =
-  Object.freeze({
-    hosaka: 10,
-    maas: 10,
-    sense_net: 10,
-    ta: 10,
-  });
+export const MISSION_REWARD_MAP: Readonly<Record<FactionId, number>> = Object.freeze({
+  hosaka: 10,
+  maas: 10,
+  sense_net: 10,
+  ta: 10,
+});
 
-export const KILL_PENALTY_MAP: Readonly<Record<FactionId, number>> =
-  Object.freeze({
-    hosaka: -5,
-    maas: -5,
-    sense_net: -5,
-    ta: -5,
-  });
+export const KILL_PENALTY_MAP: Readonly<Record<FactionId, number>> = Object.freeze({
+  hosaka: -5,
+  maas: -5,
+  sense_net: -5,
+  ta: -5,
+});
 
-export function onMissionComplete(
-  scores: FactionScores,
-  faction: FactionId,
-): FactionScores {
+export function onMissionComplete(scores: FactionScores, faction: FactionId): FactionScores {
   const change = MISSION_REWARD_MAP[faction] ?? 10;
   return applyScoreChange(scores, faction, change);
 }
 
-export function onIceKill(
-  scores: FactionScores,
-  faction: FactionId,
-): FactionScores {
+export function onIceKill(scores: FactionScores, faction: FactionId): FactionScores {
   const change = KILL_PENALTY_MAP[faction] ?? -5;
   return applyScoreChange(scores, faction, change);
 }

@@ -14,14 +14,13 @@ import { makeMulberry32 } from "../dungeon/dungeon";
 import type { GameState } from "../types";
 
 /** Which piece each grade can drop. A grade without an entry drops nothing. */
-export const EQUIPMENT_DROP_BY_GRADE: Readonly<Record<number, string>> =
-  Object.freeze({
-    1: "eyes_militech",
-    2: "bodysuit_subdermal",
-    3: "deck_militech",
-    5: "deck_ghost",
-    6: "deck_master",
-  });
+export const EQUIPMENT_DROP_BY_GRADE: Readonly<Record<number, string>> = Object.freeze({
+  1: "eyes_militech",
+  2: "bodysuit_subdermal",
+  3: "deck_militech",
+  5: "deck_ghost",
+  6: "deck_master",
+});
 
 /** Chance a mission of the drop's grade offers it. Placeholder — measured. */
 export const EQUIPMENT_DROP_CHANCE = 0.4;

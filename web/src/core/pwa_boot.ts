@@ -41,10 +41,7 @@ function hasNavigator(): boolean {
 }
 
 function hasServiceWorkerApi(): boolean {
-  return (
-    hasNavigator() &&
-    "serviceWorker" in (navigator as { serviceWorker?: unknown })
-  );
+  return hasNavigator() && "serviceWorker" in (navigator as { serviceWorker?: unknown });
 }
 
 /** Wrap hasWaitingWorker in a try/catch — jsdom + partial stubs can throw. */
@@ -72,12 +69,8 @@ export interface PwaController {
 
 /** Build a fresh frozen `PwaState` with the runtime-probed values. */
 function buildInitialState(): PwaState {
-  const offline = hasNavigator()
-    ? !getOnlineStatus()
-    : INITIAL_PWA_STATE.isOffline;
-  const installed = hasWindow()
-    ? isStandalone()
-    : INITIAL_PWA_STATE.isInstalled;
+  const offline = hasNavigator() ? !getOnlineStatus() : INITIAL_PWA_STATE.isOffline;
+  const installed = hasWindow() ? isStandalone() : INITIAL_PWA_STATE.isInstalled;
   return Object.freeze({
     canInstall: INITIAL_PWA_STATE.canInstall,
     isInstalled: installed,
@@ -217,14 +210,8 @@ export function bootPwaController(): PwaController {
         "controllerchange",
         onControllerChange as unknown as (ev: Event) => void,
       );
-      w.removeEventListener(
-        "online",
-        onOnline as unknown as (ev: Event) => void,
-      );
-      w.removeEventListener(
-        "offline",
-        onOffline as unknown as (ev: Event) => void,
-      );
+      w.removeEventListener("online", onOnline as unknown as (ev: Event) => void);
+      w.removeEventListener("offline", onOffline as unknown as (ev: Event) => void);
       listeners.clear();
     },
   };

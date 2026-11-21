@@ -30,11 +30,7 @@ export function getCell(
 }
 
 /** Build an empty grid filled with background cells. */
-export function makeGrid(
-  width: number,
-  height: number,
-  bgColor = PALETTE.BACKGROUND,
-): Grid {
+export function makeGrid(width: number, height: number, bgColor = PALETTE.BACKGROUND): Grid {
   const cells: Cell[][] = [];
   for (let y = 0; y < height; y++) {
     const row: Cell[] = [];

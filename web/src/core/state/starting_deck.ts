@@ -69,19 +69,17 @@ export const STARTING_DECK_SIZE = 5;
  * drift from a played one, and `npm run balance -- --deck veteran` measures
  * exactly what a SIL run plays.
  */
-export const JOCKEY_DECK_IDS: Readonly<Record<string, readonly string[]>> =
-  Object.freeze({
-    novice: STARTING_DECK_IDS,
-    veteran: ["strike", "backdoor", "exploit", "barrier", "decoy"],
-    heretic: ["strike", "exploit", "virus", "surge", "decoy"],
-  });
+export const JOCKEY_DECK_IDS: Readonly<Record<string, readonly string[]>> = Object.freeze({
+  novice: STARTING_DECK_IDS,
+  veteran: ["strike", "backdoor", "exploit", "barrier", "decoy"],
+  heretic: ["strike", "exploit", "virus", "surge", "decoy"],
+});
 
 /** The deck ids for a jockey, falling back to the curated opening. */
 export function startingDeckIds(jockeyId?: string | null): readonly string[] {
   return (
-    (jockeyId !== null && jockeyId !== undefined
-      ? JOCKEY_DECK_IDS[jockeyId]
-      : undefined) ?? STARTING_DECK_IDS
+    (jockeyId !== null && jockeyId !== undefined ? JOCKEY_DECK_IDS[jockeyId] : undefined) ??
+    STARTING_DECK_IDS
   );
 }
 

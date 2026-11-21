@@ -20,11 +20,7 @@ import { alarmDamage } from "./idle_alarm";
 import { iceAttackBonus, tickIceEffects } from "./ice_combat_effects";
 import { applyPlayerMitigation } from "./player_mitigation";
 import { playerEvasionPct } from "./player_mitigation";
-import {
-  NANO_REGEN_HP,
-  REVIVE_HP_PCT,
-  loadoutHasEffect,
-} from "../state/extra_effects";
+import { NANO_REGEN_HP, REVIVE_HP_PCT, loadoutHasEffect } from "../state/extra_effects";
 import {
   applyCase,
   caseNote,
@@ -36,10 +32,7 @@ import { applyIceNonDamageEffect } from "./ice_combat_effect_apply";
 import { endedStatuses, statusEventLines } from "../status";
 import { iceDmgBonusPctForGrade, missionGradeOf } from "./ice_scaling";
 import { isMutatorActive, type MutableRunState } from "../state/run_mutators";
-import {
-  createDeceasedJockey,
-  generateDeathSummary,
-} from "../state/death_cycle";
+import { createDeceasedJockey, generateDeathSummary } from "../state/death_cycle";
 import {
   COMBAT_LOG_CAP,
   import_vfx_deterministic,
@@ -74,10 +67,7 @@ export function dixieDamage(combo: number): number {
   return DIXIE_BASE_DAMAGE + Math.min(combo, MAX_COMBO) * DIXIE_SYNERGY_BONUS;
 }
 
-export function applyCombatAction(
-  state: GameState,
-  action: GameAction,
-): GameState {
+export function applyCombatAction(state: GameState, action: GameAction): GameState {
   if (action.type === "cycle_target") {
     return cycleTarget(state);
   }
@@ -149,17 +139,9 @@ function finishPlayerTurn(state: GameState): GameState {
   // ADR-0278: a kill that lands in the enemy phase (Dixie, a DoT) owes the
   // player the same loot and the same achievements as a program kill. The
   // loot belongs to the kill, so it is credited where the kill happened.
-  const { state: withLoot, drops } = creditKills(
-    ready,
-    state.iceRoster,
-    ready.iceRoster,
-  );
+  const { state: withLoot, drops } = creditKills(ready, state.iceRoster, ready.iceRoster);
   const allDefeated = withLoot.iceRoster.every((ice) => ice.hp === 0);
-  if (
-    allDefeated &&
-    withLoot.iceRoster.length > 0 &&
-    withLoot.runPhase === "combat"
-  ) {
+  if (allDefeated && withLoot.iceRoster.length > 0 && withLoot.runPhase === "combat") {
     return resolveVictory(withLoot, {
       defeated: killedBetween(state.iceRoster, withLoot.iceRoster),
       drops,
@@ -245,16 +227,11 @@ function resolveIncomingHit(
   // therefore every recorded balance curve — is unchanged until a card or the
   // owner's table gives the cases something to do.
   const attackCase: AttackCase =
-    odds.missPct <= 0 && odds.guardPct <= 0
-      ? "hit"
-      : resolveAttackCase(rng(), odds);
+    odds.missPct <= 0 && odds.guardPct <= 0 ? "hit" : resolveAttackCase(rng(), odds);
   // ADR-0161 `aggressive` archetype: +5% crit chance. Rolled after the case so
   // the sequence is the same whatever the archetype.
   const crit = rollIceCrit(enemy, rawDamage, rng);
-  const cased = applyCase(
-    alarmDamage(crit.damage, state.alarmLevel),
-    attackCase,
-  );
+  const cased = applyCase(alarmDamage(crit.damage, state.alarmLevel), attackCase);
   const mitigated = applyPlayerMitigation(state, cased);
   return {
     state: mitigated.state,
@@ -292,10 +269,7 @@ function processEnemyTurns(state: GameState): GameState {
   const enemyTurnVfx: CombatVfxInstance[] = [];
 
   for (const key of Object.keys(newCooldowns)) {
-    newCooldowns[key] = Math.max(
-      0,
-      (newCooldowns[key] ?? 0) - AUTO_ATTACK_INTERVAL_MS,
-    );
+    newCooldowns[key] = Math.max(0, (newCooldowns[key] ?? 0) - AUTO_ATTACK_INTERVAL_MS);
   }
 
   let newBossPhase = state.bossPhase;
@@ -370,17 +344,12 @@ function processEnemyTurns(state: GameState): GameState {
 
     if (isMutatorActive(state as unknown as MutableRunState, "stealth_only")) {
       const stealthEffects = ["dot", "poison", "debuff", "silence", "slow"];
-      enemySkills = enemySkills.filter((s) =>
-        stealthEffects.includes(s.effect),
-      );
+      enemySkills = enemySkills.filter((s) => stealthEffects.includes(s.effect));
     }
 
     let usedSkill = false;
 
-    if (
-      enemySkills.length > 0 &&
-      enemyShouldUseSkill(enemy, Math.random, state.alarmLevel)
-    ) {
+    if (enemySkills.length > 0 && enemyShouldUseSkill(enemy, Math.random, state.alarmLevel)) {
       const selectedSkill = selectSkillByPersonality(enemy, enemySkills);
 
       if (selectedSkill) {
@@ -389,30 +358,18 @@ function processEnemyTurns(state: GameState): GameState {
 
         if (remaining <= 0 && selectedSkill.damage > 0) {
           const rawSkillDmg =
-            selectedSkill.damage +
-            enemy.tier * 2 +
-            iceAttackBonus(working, iceIndex);
-          const baseSkillDmg = Math.max(
-            1,
-            Number.isFinite(rawSkillDmg) ? rawSkillDmg : 1,
-          );
+            selectedSkill.damage + enemy.tier * 2 + iceAttackBonus(working, iceIndex);
+          const baseSkillDmg = Math.max(1, Number.isFinite(rawSkillDmg) ? rawSkillDmg : 1);
           // ADR-0161 `aggressive` archetype: +5% crit chance on the ICE's
           // outgoing damage. The roll is a pure function of the injected RNG
           // and consumes the same `Math.random` the balance harness controls,
           // so the simulation stays deterministic.
           // ADR-0321: the case, then the crit, then the shield.
-          const mitigated = resolveIncomingHit(
-            working,
-            enemy,
-            baseSkillDmg,
-            Math.random,
-          );
+          const mitigated = resolveIncomingHit(working, enemy, baseSkillDmg, Math.random);
           working = mitigated.state;
           playerHp = Math.max(0, playerHp - mitigated.damage);
           if (mitigated.absorbed > 0) {
-            logMessages.push(
-              `>>> shield absorbed ${mitigated.absorbed}`,
-            );
+            logMessages.push(`>>> shield absorbed ${mitigated.absorbed}`);
           }
           enemyTurnVfx.push(
             import_vfx_deterministic(
@@ -434,12 +391,7 @@ function processEnemyTurns(state: GameState): GameState {
           // ADR-0219 Option A: a non-damaging skill now fires as an effect
           // instead of being blocked by the `damage > 0` gate. The skill
           // still consumes the ICE's action.
-          const outcome = applyIceNonDamageEffect(
-            working,
-            iceIndex,
-            enemy,
-            selectedSkill,
-          );
+          const outcome = applyIceNonDamageEffect(working, iceIndex, enemy, selectedSkill);
           working = outcome.state;
           if (outcome.message !== null) {
             logMessages.push(outcome.message);
@@ -488,19 +440,12 @@ function processEnemyTurns(state: GameState): GameState {
       // and consumes the same `Math.random` the balance harness controls, so
       // the simulation stays deterministic.
       // ADR-0321: the case, then the crit, then the shield pool (ADR-0255).
-      const autoMitigated = resolveIncomingHit(
-        working,
-        enemy,
-        autoDmg,
-        Math.random,
-      );
+      const autoMitigated = resolveIncomingHit(working, enemy, autoDmg, Math.random);
       working = autoMitigated.state;
       playerHp = Math.max(0, playerHp - autoMitigated.damage);
       const autoCase = autoMitigated.attackCase;
       if (autoMitigated.absorbed > 0) {
-        logMessages.push(
-          `>>> shield absorbed ${autoMitigated.absorbed}`,
-        );
+        logMessages.push(`>>> shield absorbed ${autoMitigated.absorbed}`);
       }
       enemyTurnVfx.push(
         import_vfx_deterministic(
@@ -541,18 +486,12 @@ function processEnemyTurns(state: GameState): GameState {
   // minion is appended after it, so merge positionally (roster ids are not
   // unique — the encounter band repeats ids when a node has fewer ids than
   // the roster needs).
-  rosterForReturn = [
-    ...working.iceRoster,
-    ...rosterForReturn.slice(working.iceRoster.length),
-  ];
+  rosterForReturn = [...working.iceRoster, ...rosterForReturn.slice(working.iceRoster.length)];
 
   if (playerHp <= 0) {
     // ADR-0332: a piece can refuse the flatline once per run (MASTER_BODY).
     if (loadoutHasEffect(state, "revive_once") && state.reviveUsed !== true) {
-      const hp = Math.max(
-        1,
-        Math.floor((state.player.maxHp * REVIVE_HP_PCT) / 100),
-      );
+      const hp = Math.max(1, Math.floor((state.player.maxHp * REVIVE_HP_PCT) / 100));
       return {
         ...working,
         skillCooldowns: newCooldowns,
@@ -635,17 +574,13 @@ function processEnemyTurns(state: GameState): GameState {
     player: { ...state.player, hp: playerHp },
     lastEnemyAttackMs: state.lastEnemyAttackMs,
     counterWindowOpenMs: state.counterWindowOpenMs,
-    message:
-      logMessages.length > 0
-        ? logMessages[logMessages.length - 1]
-        : state.message,
+    message: logMessages.length > 0 ? logMessages[logMessages.length - 1] : state.message,
     combatLog:
       logMessages.length > 0 || endedIceEffectLines.length > 0
-        ? [
-            ...logMessages.slice().reverse(),
-            ...endedIceEffectLines,
-            ...state.combatLog,
-          ].slice(0, COMBAT_LOG_CAP)
+        ? [...logMessages.slice().reverse(), ...endedIceEffectLines, ...state.combatLog].slice(
+            0,
+            COMBAT_LOG_CAP,
+          )
         : state.combatLog,
     vfxInstances:
       bossPhaseVfx.length > 0 || enemyTurnVfx.length > 0

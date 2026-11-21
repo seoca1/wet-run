@@ -33,11 +33,7 @@ function wrap(text: string, width: number, maxLines: number): string[] {
   return lines.slice(0, maxLines);
 }
 
-export function renderJockeySelect(
-  selected: number,
-  cols: number,
-  rows: number,
-): Grid {
+export function renderJockeySelect(selected: number, cols: number, rows: number): Grid {
   let grid = makeGrid(cols, rows);
   const title = "WHO IS JACKING IN";
   grid = setText(
@@ -66,13 +62,7 @@ export function renderJockeySelect(
     const x = Math.max(2, Math.floor((cols - textWidth) / 2));
     for (const line of wrap(jockey.tagline, textWidth, 2)) {
       y += 1;
-      grid = setText(
-        grid,
-        x,
-        y,
-        line,
-        isSelected ? PALETTE.GRAY_LIGHT : PALETTE.GRAY_DARK,
-      );
+      grid = setText(grid, x, y, line, isSelected ? PALETTE.GRAY_LIGHT : PALETTE.GRAY_DARK);
     }
     y += 1;
     const deck = `deck: ${startingDeckIds(jockey.id).join(" ")}`;

@@ -7,10 +7,7 @@
  * stable public entry point for the dungeon system.
  */
 import type { Matrix, MatrixNode, ZoneDepth } from "../types";
-import {
-  bossIceIdForGrade,
-  encounterIceIdForGrade,
-} from "../combat/ice_scaling";
+import { bossIceIdForGrade, encounterIceIdForGrade } from "../combat/ice_scaling";
 
 // ============================================================================
 //  Public type definitions
@@ -18,15 +15,7 @@ import {
 
 /** Visual type of room (mirrors Python `RoomType` StrEnum). */
 export type RoomType =
-  | "empty"
-  | "entry"
-  | "exit"
-  | "data"
-  | "ice"
-  | "npc"
-  | "router"
-  | "core"
-  | "dead_end";
+  "empty" | "entry" | "exit" | "data" | "ice" | "npc" | "router" | "core" | "dead_end";
 
 /** A placed room in the dungeon grid. */
 export interface Room {
@@ -99,9 +88,7 @@ export class DungeonGenerator {
   generate(seed: number, _missionGrade = 1): DungeonGraph {
     void seed;
 
-    const layout: ReadonlyArray<
-      readonly [string, number, number, RoomType, string]
-    > = [
+    const layout: ReadonlyArray<readonly [string, number, number, RoomType, string]> = [
       ["r00", 0, 0, "router", "Comms Relay"],
       ["r10", 1, 0, "router", "Router"],
       ["ice", 2, 0, "ice", "ICE Barrier"],
@@ -177,12 +164,7 @@ export class DungeonGenerator {
 // ============================================================================
 
 // BSP primitives
-export {
-  BspNode,
-  bspPartition,
-  collectLeaves,
-  placeRooms,
-} from "./dungeon_bsp";
+export { BspNode, bspPartition, collectLeaves, placeRooms } from "./dungeon_bsp";
 export type { BspRoom } from "./dungeon_bsp";
 
 // Layout helpers + procedural generator
@@ -219,24 +201,16 @@ export type {
  * yields the same ICE ids. Omitting `seed` pins the band to index 0, which
  * preserves the legacy fixed-id behavior for older callers.
  */
-export function dungeonToMatrix(
-  graph: DungeonGraph,
-  grade = 1,
-  seed?: number,
-): Matrix {
-  const sorted = [...graph.rooms].sort((a, b) =>
-    a.id < b.id ? -1 : a.id > b.id ? 1 : 0,
-  );
+export function dungeonToMatrix(graph: DungeonGraph, grade = 1, seed?: number): Matrix {
+  const sorted = [...graph.rooms].sort((a, b) => (a.id < b.id ? -1 : a.id > b.id ? 1 : 0));
   const idToIndex = new Map<string, number>();
   for (let i = 0; i < sorted.length; i += 1) {
     const r = sorted[i] as Room;
     idToIndex.set(r.id, i);
   }
 
-  const bossRoom =
-    sorted.find((r) => r.roomType === "exit") ?? sorted[sorted.length - 1];
-  const bossIndex =
-    bossRoom !== undefined ? (idToIndex.get(bossRoom.id) ?? 0) : 0;
+  const bossRoom = sorted.find((r) => r.roomType === "exit") ?? sorted[sorted.length - 1];
+  const bossIndex = bossRoom !== undefined ? (idToIndex.get(bossRoom.id) ?? 0) : 0;
 
   const needsIcePromotion = (nodes: MatrixNode[]): boolean => {
     return !nodes.some((n) => n.iceIds.length > 0 && !n.isBoss);

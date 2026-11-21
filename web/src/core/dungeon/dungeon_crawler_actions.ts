@@ -9,26 +9,13 @@
 
 import type { Rng, RngInt } from "./dungeon";
 import { ProceduralDungeonGenerator } from "./dungeon";
-import {
-  TileType,
-  EntityType,
-  ItemType,
-  MonsterType,
-} from "./dungeon_crawler_types";
+import { TileType, EntityType, ItemType, MonsterType } from "./dungeon_crawler_types";
 import type { DungeonState, DungeonEntity } from "./dungeon_crawler_types";
 import { generateLevel } from "./dungeon_crawler_generation";
-import {
-  addItem,
-  addMonster,
-  getRandomFloorPosition,
-  updateFov,
-} from "./dungeon_crawler_entities";
+import { addItem, addMonster, getRandomFloorPosition, updateFov } from "./dungeon_crawler_entities";
 
 /** Get damage for a monster type */
-export function getMonsterDamage(
-  state: DungeonState,
-  type: MonsterType | undefined,
-): number {
+export function getMonsterDamage(state: DungeonState, type: MonsterType | undefined): number {
   if (!type) return 5;
   switch (type) {
     case MonsterType.ICE_WATCHDOG:
@@ -52,11 +39,7 @@ export function playerTakeDamage(state: DungeonState, damage: number): void {
 }
 
 /** Attack an entity (typically a monster) */
-export function attackEntity(
-  state: DungeonState,
-  rng: Rng,
-  entity: DungeonEntity,
-): void {
+export function attackEntity(state: DungeonState, rng: Rng, entity: DungeonEntity): void {
   if (!entity.hostile) return;
 
   // Player attack damage (based on level and equipment)
@@ -81,10 +64,7 @@ export function attackEntity(
   // Monster gets to attack back if still alive
   if (entity.hp > 0 && rng() < 0.5) {
     // 50% chance to retaliate
-    playerTakeDamage(
-      state,
-      getMonsterDamage(state, entity.subtype as MonsterType),
-    );
+    playerTakeDamage(state, getMonsterDamage(state, entity.subtype as MonsterType));
   }
 }
 
@@ -105,18 +85,13 @@ export function pickUpItem(state: DungeonState, item: DungeonEntity): void {
 }
 
 /** Teleport player to a random safe location */
-export function teleportPlayerRandomly(
-  state: DungeonState,
-  rngInt: RngInt,
-): void {
+export function teleportPlayerRandomly(state: DungeonState, rngInt: RngInt): void {
   const floorPositions: { x: number; y: number }[] = [];
   for (let y = 0; y < state.height; y++) {
     for (let x = 0; x < state.width; x++) {
       if (state.tiles[y][x].type === TileType.FLOOR) {
         // Check if not occupied by hostile entity
-        const occupied = state.entities.some(
-          (e) => e.x === x && e.y === y && e.hostile === true,
-        );
+        const occupied = state.entities.some((e) => e.x === x && e.y === y && e.hostile === true);
         if (!occupied) {
           floorPositions.push({ x, y });
         }
@@ -183,17 +158,10 @@ export function triggerTrap(
 }
 
 /** Check for entity interactions (pick up items, trigger traps) */
-export function checkForEntityInteractions(
-  state: DungeonState,
-  rng: Rng,
-  rngInt: RngInt,
-): void {
+export function checkForEntityInteractions(state: DungeonState, rng: Rng, rngInt: RngInt): void {
   // Check for items at player position
   const itemIndex = state.entities.findIndex(
-    (e) =>
-      e.x === state.playerX &&
-      e.y === state.playerY &&
-      e.type === EntityType.ITEM,
+    (e) => e.x === state.playerX && e.y === state.playerY && e.type === EntityType.ITEM,
   );
 
   if (itemIndex !== -1) {
@@ -204,10 +172,7 @@ export function checkForEntityInteractions(
 
   // Check for traps at player position
   const trapIndex = state.entities.findIndex(
-    (e) =>
-      e.x === state.playerX &&
-      e.y === state.playerY &&
-      e.type === EntityType.TRAP,
+    (e) => e.x === state.playerX && e.y === state.playerY && e.type === EntityType.TRAP,
   );
 
   if (trapIndex !== -1) {
@@ -261,15 +226,8 @@ export function checkForStairs(
 ): void {
   const tile = state.tiles[state.playerY][state.playerX];
 
-  if (
-    tile.type === TileType.STAIRS_UP &&
-    state.stairsUpX !== null &&
-    state.stairsUpY !== null
-  ) {
-    if (
-      state.playerX === state.stairsUpX &&
-      state.playerY === state.stairsUpY
-    ) {
+  if (tile.type === TileType.STAIRS_UP && state.stairsUpX !== null && state.stairsUpY !== null) {
+    if (state.playerX === state.stairsUpX && state.playerY === state.stairsUpY) {
       // Go up a level
       changeLevel(state, generator, rng, rngInt, -1);
     }
@@ -280,10 +238,7 @@ export function checkForStairs(
     state.stairsDownX !== null &&
     state.stairsDownY !== null
   ) {
-    if (
-      state.playerX === state.stairsDownX &&
-      state.playerY === state.stairsDownY
-    ) {
+    if (state.playerX === state.stairsDownX && state.playerY === state.stairsDownY) {
       // Go down a level
       changeLevel(state, generator, rng, rngInt, 1);
     }

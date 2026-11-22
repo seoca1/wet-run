@@ -11,7 +11,7 @@
 
 ## 0. 왜 이 문서가 있는가
 
-이 게임의 주장 — *"테스트 4456개"*, *"게이트 7종 CLEAN"*, *"balance byte-identical"* — 은
+이 게임의 주장 — *"테스트 4457개"*, *"게이트 7종 CLEAN"*, *"balance byte-identical"* — 은
 **검증 도구가 진짜일 때만** 의미가 있다. 2026-11-18 에 도구를 실측한 결과 **절반이 검증을 하지
 않는 연극**이었고(ADR-0333), 그래서 도구를 **신뢰 등급별로 분류**한다. 새 도구를 추가하면 여기에
 등급과 함께 등록한다.
@@ -54,7 +54,7 @@ python3 scripts/wet_run_verify.py --full --log    # log.md 에 한 줄 기록
 | 서사 원장 | `python3 scripts/tools/import_briefings.py --check` (`Game/wet_run`) | 브리핑 원장 vs 게임 데이터·재현성 | 불일치 → exit 1 |
 | 프로젝트 링크 | `python3 scripts/tools/find_broken_links.py` (`Game/wet_run`) | wet_run docs 링크 (cross-project Fiction 포함) | broken > 0 → **exit 1** |
 | 혼용 감사 | `python3 scripts/mixed_language_audit.py` (루트) | **`*.md`** CJK 혼용 | 위반 > 0 — ⚠ 범위가 md 한정(§3-4) |
-| 단위/통합 | `cd web && npm test` | 리듀서·상태·데이터 계약 (4456) | 실패 > 0 |
+| 단위/통합 | `cd web && npm test` | 리듀서·상태·데이터 계약 (4457) | 실패 > 0 |
 | 밸런스 하네스 | `cd web && npm run balance` | **결정론적** 등급 곡선 (실 리듀서 구동) | 값 자체가 아니라 회귀는 §B 가 판정 |
 | 브라우저 e2e | `cd web && PLAYWRIGHT_BASE_URL=… npx playwright test` (+ `SOAK=1`/`STORY=1`) | 화면·조작·세이브·연출·VFX·터치 (desktop 54 · mobile 58) · soak 프리즈 0 · story | 수동 — smoke 는 배포 전용, soak/story 는 수동 트리거 (ADR-0340) |
 

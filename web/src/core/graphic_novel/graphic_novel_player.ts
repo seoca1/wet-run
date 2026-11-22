@@ -203,22 +203,22 @@ export function skipCurrentScene(p: GraphicNovelPlayer): boolean {
   const scene = currentScene(p);
   if (scene === null) return false;
   skipCurrentDialogue(p);
-  while (!p.done) {
+  // Walk the scene's lines and leave it. Bounded AND progress-guaranteed: the
+  // old `while (!p.done)` only advanced when `typed >= text length` after
+  // setting `elapsed_ms = duration_ms`, so a line whose authored `duration_ms`
+  // is too short to type its text at MS_PER_CHAR never advanced and the loop
+  // spun forever (found by mutating MS_PER_CHAR, ADR-0351 — it HUNG the suite
+  // instead of failing). Skipping must not depend on the typing math.
+  let safety = 0;
+  while (!p.done && safety++ < 10_000) {
     const s = currentScene(p);
     if (s === null || s.id !== scene.id) break;
-    const dlgs = s.dialogue;
-    if (p.dialogue_index >= dlgs.length) break;
-    const d = dlgs[p.dialogue_index];
-    if (d === undefined) break;
-    p.elapsed_ms = d.duration_ms;
-    const typed = dialogueTypedChars(d.duration_ms, p.elapsed_ms, d.text_en.length);
-    if (typed >= d.text_en.length) {
-      p.dialogue_index += 1;
-      if (p.dialogue_index >= dlgs.length) {
-        advanceSceneInternal(p);
-        break;
-      }
+    p.dialogue_index += 1;
+    if (p.dialogue_index >= s.dialogue.length) {
+      advanceSceneInternal(p);
+      break;
     }
+    p.elapsed_ms = 0;
   }
   return true;
 }

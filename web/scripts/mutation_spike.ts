@@ -38,6 +38,8 @@ const STORAGE = "src/save/storage.ts";
 const AUDIO = "src/audio/manager.ts";
 const I18N = "src/core/i18n.ts";
 const PWA = "src/core/pwa_manager.ts";
+const GN_TEXT = "src/core/graphic_novel/graphic_novel_text.ts";
+const GN_PLAYER = "src/core/graphic_novel/graphic_novel_player.ts";
 
 interface Mutation {
   readonly id: string;
@@ -86,6 +88,10 @@ const MUTATIONS: readonly Mutation[] = [
   { id: "bgm-duck-factor", file: AUDIO, find: "export const BGM_DUCK_FACTOR = 0.8;", replace: "export const BGM_DUCK_FACTOR = 0.5;" },
   { id: "i18n-default-lang", file: I18N, find: "language: \"en\",", replace: "language: \"ko\"," },
   { id: "pwa-can-install", file: PWA, find: "canInstall: false,", replace: "canInstall: true," },
+  // Graphic novel: pagination, typing speed, save version.
+  { id: "gn-lines-per-page", file: GN_TEXT, find: "export const DEFAULT_LINES_PER_PAGE = 20;", replace: "export const DEFAULT_LINES_PER_PAGE = 15;" },
+  { id: "gn-ms-per-char", file: GN_TEXT, find: "export const MS_PER_CHAR = 30;", replace: "export const MS_PER_CHAR = 60;" },
+  { id: "gn-save-version", file: GN_PLAYER, find: "export const GN_SAVE_VERSION = \"1.2.0\";", replace: "export const GN_SAVE_VERSION = \"9.9.9\";" },
 ];
 
 const DEFAULT_TESTS = [
@@ -106,6 +112,10 @@ const DEFAULT_TESTS = [
   "tests/audio_ducking.test.ts",
   "tests/i18n.test.ts",
   "tests/pwa_manager.test.ts",
+  "tests/graphic_novel_text.test.ts",
+  "tests/graphic_novel_player.test.ts",
+  "tests/graphic_novel_save.test.ts",
+  "tests/graphic_novel.test.ts",
   "tests/matrix_structure.test.ts",
   "tests/matrix.test.ts",
   "tests/matrix_navigation.test.ts",
@@ -149,6 +159,12 @@ function runTests(tests: readonly string[]): { failed: number; total: number; ra
   }
 }
 
+/** The mutation currently written to disk, so an interrupted run can restore it.
+ *  A SIGINT/SIGPIPE/SIGKILL otherwise leaves a source file mutated — on
+ *  2026-11-22 a killed run left `combat_engine.ts` and `graphic_novel_text.ts`
+ *  mutated and we had to `git checkout` them. */
+let active: { readonly abs: string; readonly original: string } | null = null;
+
 function applyMutation(m: Mutation): string {
   const abs = path.join(WEB_ROOT, m.file);
   const original = fs.readFileSync(abs, "utf8");
@@ -156,8 +172,29 @@ function applyMutation(m: Mutation): string {
   if (occurrences !== 1) {
     throw new Error(`mutation ${m.id}: pattern occurs ${occurrences}x in ${m.file} (want 1)`);
   }
-  fs.writeFileSync(abs, original.replace(m.find, m.replace));
+  const mutated = original.replace(m.find, m.replace);
+  active = { abs, original };
+  fs.writeFileSync(abs, mutated);
   return original;
+}
+
+/** Restore whatever file is currently mutated, if any. Idempotent. */
+function revertActive(): void {
+  if (active !== null) {
+    fs.writeFileSync(active.abs, active.original);
+    active = null;
+  }
+}
+
+for (const sig of ["SIGINT", "SIGTERM", "SIGHUP", "SIGPIPE"] as const) {
+  try {
+    process.on(sig, () => {
+      revertActive();
+      process.exit(130);
+    });
+  } catch {
+    // Signal not supported on this platform; the finally path still covers throws.
+  }
 }
 
 function main(): number {
@@ -170,15 +207,31 @@ function main(): number {
   }
 
   console.log(`Mutation spike — ${MUTATIONS.length} mutations, tests: ${tests.join(" ")}\n`);
+
+  // Preflight: every pattern must be present and unique BEFORE any file is
+  // written, so a tree left mutated by an interrupted run fails fast (with the
+  // fix) instead of half-applying.
+  const stale = MUTATIONS.filter((m) => {
+    const text = fs.readFileSync(path.join(WEB_ROOT, m.file), "utf8");
+    return text.split(m.find).length - 1 !== 1;
+  }).map((m) => m.id);
+  if (stale.length > 0) {
+    console.error(
+      `mutation_spike: tree is not at the expected baseline — pattern missing for: ${stale.join(", ")}`,
+    );
+    console.error("A previous run was interrupted and left a file mutated. Restore: git checkout -- web/src");
+    return 2;
+  }
+
   console.log("mutation                    failed  total  verdict");
   let survived = 0;
   for (const m of MUTATIONS) {
-    const original = applyMutation(m);
+    applyMutation(m);
     let result: { failed: number; total: number; ran: boolean };
     try {
       result = runTests(tests);
     } finally {
-      fs.writeFileSync(path.join(WEB_ROOT, m.file), original);
+      revertActive();
     }
     let verdict: string;
     if (!result.ran) {
@@ -206,6 +259,7 @@ function main(): number {
 try {
   process.exit(main());
 } catch (exc) {
+  revertActive();
   console.error(`mutation_spike error: ${exc instanceof Error ? exc.message : String(exc)}`);
   process.exit(2);
 }

@@ -410,4 +410,11 @@ describe("constants", () => {
     expect(typeof DEFAULT_LINES_PER_PAGE).toBe("number");
     expect(DEFAULT_LINES_PER_PAGE).toBeGreaterThan(0);
   });
+
+  it("pins the layout/speed values — a change is a design decision (ADR-0351)", () => {
+    // Every other test imports these, so it moves with the value and cannot
+    // catch a change to it. This pins the contract.
+    expect(MS_PER_CHAR).toBe(30);
+    expect(DEFAULT_LINES_PER_PAGE).toBe(20);
+  });
 });

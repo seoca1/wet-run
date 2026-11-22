@@ -1,6 +1,8 @@
 # Wet Run — Session Index
 
-> **Latest session**: 2026-11-18 (경제·장비 배선, 이어서 — ADR-0324~0332) — [SESSION_SUMMARY_2026-11-18_economy.md](./SESSION_SUMMARY_2026-11-18_economy.md)
+> **Latest session**: 2026-11-22 (검증 도구 전면 정비 + 게임 버그 발굴 — ADR-0333~0353) — [SESSION_SUMMARY_2026-11-22_verification.md](./SESSION_SUMMARY_2026-11-22_verification.md)
+>
+> Previous: 2026-11-18 (경제·장비 배선, 이어서 — ADR-0324~0332) — [SESSION_SUMMARY_2026-11-18_economy.md](./SESSION_SUMMARY_2026-11-18_economy.md)
 >
 > Previous: 2026-11-18 (성장·전투 피드백·SRW 케이스·시스템 감사·Manus 설계·재료 보존, ADR-0319~0323) — [SESSION_SUMMARY_2026-11-18.md](./SESSION_SUMMARY_2026-11-18.md)
 >
@@ -22,6 +24,7 @@ This is an **index** file pointing to the most recent dated session snapshot. Pe
 
 | Date | File | Summary |
 |---|---|---|
+| **2026-11-22 (검증 도구 전면 정비 + 게임 버그 발굴 — ADR-0333~0353)** | [SESSION_SUMMARY_2026-11-22_verification.md](./SESSION_SUMMARY_2026-11-22_verification.md) | **LATEST.** 검증 도구 감사(절반이 연극) → 단일 러틴 + 골든 + mutation + 실 Jev → 그 도구로 게임 재검증(엔딩 control 복원·경제 T2 병목·씬 스킵 무한 루프 수정). mutation 10→39. |
 | **2026-11-18 (경제·장비 배선, 이어서 — ADR-0324~0332)** | [SESSION_SUMMARY_2026-11-18_economy.md](./SESSION_SUMMARY_2026-11-18_economy.md) | **LATEST.** 비용표 2판(판정 풀 수정) · 장비 소유·데이터 · 플레이어 방어 단계 · programPower armor bypass · 장비 재조정 · 장비 drop · 소비 아이템(+hoard 지출 버그) · 재료 시장 · extraEffect whitelist. 9개 슬라이스, balance byte-identical 유지. |
 | **2026-11-18 (성장·피드백·SRW 케이스·시스템 감사·Manus·재료 보존)** | [SESSION_SUMMARY_2026-11-18.md](./SESSION_SUMMARY_2026-11-18.md) | ADR-0319~0323. 회복 자동화 · 실피해 공개 · SRW 확률 케이스(기본 0) · EQUIPMENT 배선 · 재료 보존. 설계도(`system-map`)로 **빈 출구**(크래프팅·아이템·장비) 발견 → Manus 제안 → **실측 verdict(18종 도달률 0%)**. |
 | 2026-09-21 (Boss phases + dungeon alarm + jack_out fixes) | `log.md` (2026-09-21 entries) | Boss phases test coverage added + 3 critical fixes (dungeon alarm cue, boss defeat ending, jack_out runPhase). |

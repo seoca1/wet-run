@@ -29,6 +29,7 @@ const STATE = "src/core/state/state.ts";
 const MATRIX = "src/core/dungeon/matrix.ts";
 const MATRIX_NAV = "src/core/dungeon/matrix_navigation.ts";
 const LAYOUT = "src/core/dungeon/dungeon_layout.ts";
+const OWNED = "src/core/state/owned_equipment.ts";
 
 interface Mutation {
   readonly id: string;
@@ -62,6 +63,8 @@ const MUTATIONS: readonly Mutation[] = [
   { id: "grid-g4-shrunk", file: LAYOUT, find: "4: [13, 8],", replace: "4: [9, 6]," },
   // The run seed (ADR-0338), now a pure function (`contractSeedMaterials`).
   { id: "seed-ignores-contract", file: WALLET, find: "(acc, leg) => addStacks(acc, leg.mission.rewards.materials),", replace: "(acc, _leg) => acc," },
+  // The run-end gear merge (ADR-0329), now a pure function (ADR-0347).
+  { id: "drops-ignored", file: OWNED, find: "for (const id of droppedIds) next = ownEquipment(next, id);", replace: "for (const id of droppedIds) next = next;" },
 ];
 
 const DEFAULT_TESTS = [
@@ -70,6 +73,7 @@ const DEFAULT_TESTS = [
   "tests/adr0315_campaign_chain.test.ts",
   "tests/adr0323_the_hoard_outlives_the_run.test.ts",
   "tests/adr0338_run_seed.test.ts",
+  "tests/owned_equipment.test.ts",
   "tests/matrix_structure.test.ts",
   "tests/matrix.test.ts",
   "tests/matrix_navigation.test.ts",

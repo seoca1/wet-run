@@ -68,9 +68,22 @@ export function ownEquipment(owned: OwnedSet, id: string): OwnedSet {
   return Object.freeze({ ...owned, [id]: true });
 }
 
+/** Ownership after a run: the gear it salvaged becomes owned (ADR-0329).
+ *
+ * Extracted from `endRun` (app-loop, no unit test — ADR-0346): the pure "fold
+ * the run's drops into the owned set" step. Returns the SAME record when nothing
+ * new was added, so the caller can skip the write. */
+export function mergeDroppedEquipment(
+  owned: OwnedSet,
+  droppedIds: ReadonlyArray<string>,
+): OwnedSet {
+  let next = owned;
+  for (const id of droppedIds) next = ownEquipment(next, id);
+  return next;
+}
+
 /** Every owned id, starters first. Stable order for deterministic UI. */
-export function ownedIds(owned: OwnedSet): ReadonlyArray<string> {
-  const crafted = Object.keys(owned)
+export function ownedIds(owned: OwnedSet): ReadonlyArray<string> {  const crafted = Object.keys(owned)
     .filter((id) => !STARTING_OWNED.includes(id))
     .sort();
   return Object.freeze([...STARTING_OWNED, ...crafted]);

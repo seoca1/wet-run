@@ -157,6 +157,7 @@ import { equipOn, DEFAULT_REGISTRY, EQUIP_SLOTS } from "./core/state/equipment";
 import { hydrateLoadout, readEquippedIds, writeEquippedIds } from "./core/state/equipment_store";
 import {
   isOwned,
+  mergeDroppedEquipment,
   ownEquipment,
   readOwnedIds,
   writeOwnedIds,
@@ -1643,11 +1644,13 @@ class Game {
     this.inventory = mergeRunIntoWallet(this.inventory, run, this.runWalletSeed);
     this.runWalletSeed = null;
     writeWalletMaterials(this.inventory.materials);
-    // ADR-0329: gear salvaged during the run becomes owned when it ends.
-    let owned = this.ownedEquipment;
-    for (const id of this.state?.droppedEquipment ?? []) {
-      owned = ownEquipment(owned, id);
-    }
+    // ADR-0329 / ADR-0346: gear salvaged during the run becomes owned when it
+    // ends. The fold lives in `owned_equipment.ts` (tested); the same record is
+    // returned when nothing was added, so the write is skipped then.
+    const owned = mergeDroppedEquipment(
+      this.ownedEquipment,
+      this.state?.droppedEquipment ?? [],
+    );
     if (owned !== this.ownedEquipment) {
       this.ownedEquipment = owned;
       writeOwnedIds(owned);

@@ -9,6 +9,7 @@ import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import {
   STARTING_OWNED,
   isOwned,
+  mergeDroppedEquipment,
   ownEquipment,
   ownedIds,
   readOwnedIds,
@@ -80,5 +81,27 @@ describe("owned_equipment", () => {
       localStorage.setItem(KEY, JSON.stringify({ a: false, b: true, c: 1 }));
       expect(readOwnedIds()).toEqual({ b: true });
     });
+  });
+});
+
+describe("ADR-0346 · merging a run's salvaged gear", () => {
+  it("makes every dropped piece owned", () => {
+    const owned = mergeDroppedEquipment({}, ["eyes_militech", "deck_militech"]);
+    expect(isOwned(owned, "eyes_militech")).toBe(true);
+    expect(isOwned(owned, "deck_militech")).toBe(true);
+  });
+
+  it("returns the SAME record when nothing new is dropped (so the write is skipped)", () => {
+    const before = ownEquipment({}, "eyes_militech");
+    expect(mergeDroppedEquipment(before, ["eyes_militech"])).toBe(before);
+    expect(mergeDroppedEquipment(before, [])).toBe(before);
+    // A starter is already owned, so dropping it changes nothing.
+    expect(mergeDroppedEquipment(before, [STARTING_OWNED[0] as string])).toBe(before);
+  });
+
+  it("does not depend on the order the drops were picked up", () => {
+    const ab = mergeDroppedEquipment({}, ["eyes_militech", "deck_militech"]);
+    const ba = mergeDroppedEquipment({}, ["deck_militech", "eyes_militech"]);
+    expect(ownedIds(ab)).toEqual(ownedIds(ba));
   });
 });

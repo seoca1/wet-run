@@ -4261,3 +4261,15 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **조치(rule4)**: 커밋을 논리 단위로 분리 — wet_run `chore(format)` **137**(기계적 prettier) + `feat(verify)` **40**(의미) · workspace `feat(verify)` **3**.
 - **도구 정합**: `jev-difficulty.sh` 가 참조 정책(`--cards best --loot value`)을 쓰도록 수정 — `npm run survival` 기본(`first`/`card`)은 훨씬 어려운 다른 곡선이라 잘못된 것을 채점하고 있었다.
 - 검증: vitest 236/4446 · 러틴 9/9 · 워킹트리 clean.
+
+## [2026-11-22] fix(economy) | T2가 가장 어려웠다 — 도달률을 진짜 지갑으로 재고 비용표 재조정 (ADR-0342)
+
+- 오너 "판단대로 진행". 가장 중한 것 = 성장(경제) 축. 파고드니 "T2+ 0%"는 **측정 결함 3건** 위에 있었다.
+- **⑴ probe 주조 모델**: `final.inventory.materials`(보상+드롭)를 합산 = 실 지갑(`earnedMaterials`)보다 관대.
+- **⑵ `--runs 3`**: T2 의 지평(~8런)을 못 봄.
+- **⑶ 복사본 검사**: `crafting-recipes-candidate.json`(실데이터와 값은 같았으나 드리프트 위험).
+- **정정**: probe = `earnedMaterials` + 실 `recipes.json` + 지평 명시 · 복사본 삭제.
+- **측정(8런, earned-only)**: T2 **0~3.3%**(병목: 비용 df12-18 > g2 산출 df10) · T5 79% — **역전**(첫 업그레이드 등급이 최난).
+- **결정**: T2/T3 비용을 자기 등급 산출에 맞춤(T2 df16→8 등 7건) + `equipment_catalog.ts` 동기화.
+- **결과**: 8런 T1 58 · **T2 47~58** · T3 48~50 · T4 55 · T5 79 · T6 64 — 역전 해소.
+- 검증: vitest **236/4446** · typecheck 0 · lint 0 · 러틴 9/9 · 골든 byte-identical · audit_vault CLEAN.

@@ -137,7 +137,7 @@ export const CORPORATE_DECK: Equipment = Object.freeze({
   asciiGlyph: "[D]",
   asciiColor: [200, 0, 100],
   upgradeSlots: 3,
-  requiredMaterials: { data_fragment: 16, ice_shard: 4 },
+  requiredMaterials: { data_fragment: 8, ice_shard: 3 },
   setId: "ono_sendai",
 } as Equipment);
 
@@ -152,7 +152,7 @@ export const SUBDERMAL: Equipment = Object.freeze({
   asciiGlyph: "[B]",
   asciiColor: [100, 150, 100],
   upgradeSlots: 2,
-  requiredMaterials: { data_fragment: 12, ice_shard: 4 },
+  requiredMaterials: { data_fragment: 6, ice_shard: 3 },
   setId: null,
 } as Equipment);
 
@@ -167,7 +167,7 @@ export const MILITECH_DECK: Equipment = Object.freeze({
   asciiGlyph: "[D]",
   asciiColor: [0, 200, 0],
   upgradeSlots: 3,
-  requiredMaterials: { data_fragment: 20, combat_module: 1 },
+  requiredMaterials: { data_fragment: 13, combat_module: 1 },
   setId: "militech",
 } as Equipment);
 
@@ -182,7 +182,7 @@ export const TACTICAL_BODY: Equipment = Object.freeze({
   asciiGlyph: "[B]",
   asciiColor: [150, 150, 150],
   upgradeSlots: 3,
-  requiredMaterials: { data_fragment: 16, combat_module: 1 },
+  requiredMaterials: { data_fragment: 12, combat_module: 1 },
   setId: null,
 } as Equipment);
 
@@ -306,7 +306,7 @@ export const NANO_HIVE: Equipment = Object.freeze({
   asciiGlyph: "[N]",
   asciiColor: [0, 255, 100],
   upgradeSlots: 2,
-  requiredMaterials: { data_fragment: 22, combat_module: 1 },
+  requiredMaterials: { data_fragment: 14, combat_module: 1 },
   setId: null,
 } as Equipment);
 
@@ -321,7 +321,7 @@ export const TRODES_NINJA: Equipment = Object.freeze({
   asciiGlyph: "[~]",
   asciiColor: [150, 100, 200],
   upgradeSlots: 1,
-  requiredMaterials: { data_fragment: 18, ice_shard: 3 },
+  requiredMaterials: { data_fragment: 8, ice_shard: 3 },
   setId: null,
 } as Equipment);
 
@@ -336,7 +336,7 @@ export const BOOTS_GHOST: Equipment = Object.freeze({
   asciiGlyph: "[B]",
   asciiColor: [100, 100, 150],
   upgradeSlots: 0,
-  requiredMaterials: { data_fragment: 15, ice_shard: 4 },
+  requiredMaterials: { data_fragment: 7, ice_shard: 3 },
   setId: null,
 } as Equipment);
 

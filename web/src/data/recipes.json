@@ -1,5 +1,5 @@
 {
-  "_comment": "Craft recipes (ADR-0324/0325). 16 craftable equipment pieces (T1..T6); the two T0 starters are given, not crafted. Costs are the measured v2 table from docs/design/crafting-and-equipment-proposal-2026-11-18.md (appendix) — each one clears craftableAtTier >= 0.50 at its own grade. Every material id exists in materials.json. `ready` marks hub availability.",
+  "_comment": "Craft recipes (ADR-0324/0325, re-tuned ADR-0342). 16 craftable equipment pieces (T1..T6); the two T0 starters are given, not crafted. Costs are tuned so each recipe clears craftableAtTier >= ~0.45 at its own grade after 8 runs of the REAL earned-only wallet (npm run crafting): T2/T3 were re-cut down (T2 16->8, T3 20->13 etc.) because their old cost exceeded a grade-2/3 run's yield, which made the early upgrade tier the hardest to reach. Every material id exists in materials.json. `ready` marks hub availability.",
   "recipes": [
     {
       "item_id": "deck_street",
@@ -31,7 +31,7 @@
       "tier_level": 2,
       "glyph": "[D]",
       "ready": true,
-      "materials": { "data_fragment": 16, "ice_shard": 4 }
+      "materials": { "data_fragment": 8, "ice_shard": 3 }
     },
     {
       "item_id": "bodysuit_subdermal",
@@ -39,7 +39,7 @@
       "tier_level": 2,
       "glyph": "[B]",
       "ready": true,
-      "materials": { "data_fragment": 12, "ice_shard": 4 }
+      "materials": { "data_fragment": 6, "ice_shard": 3 }
     },
     {
       "item_id": "trodes_ninja",
@@ -47,7 +47,7 @@
       "tier_level": 2,
       "glyph": "[~]",
       "ready": true,
-      "materials": { "data_fragment": 18, "ice_shard": 3 }
+      "materials": { "data_fragment": 8, "ice_shard": 3 }
     },
     {
       "item_id": "boots_ghost",
@@ -55,7 +55,7 @@
       "tier_level": 2,
       "glyph": "[B]",
       "ready": true,
-      "materials": { "data_fragment": 15, "ice_shard": 4 }
+      "materials": { "data_fragment": 7, "ice_shard": 3 }
     },
     {
       "item_id": "deck_militech",
@@ -63,7 +63,7 @@
       "tier_level": 3,
       "glyph": "[D]",
       "ready": true,
-      "materials": { "data_fragment": 20, "combat_module": 1 }
+      "materials": { "data_fragment": 13, "combat_module": 1 }
     },
     {
       "item_id": "bodysuit_tactical",
@@ -71,7 +71,7 @@
       "tier_level": 3,
       "glyph": "[B]",
       "ready": true,
-      "materials": { "data_fragment": 16, "combat_module": 1 }
+      "materials": { "data_fragment": 12, "combat_module": 1 }
     },
     {
       "item_id": "implant_nanohive",
@@ -79,7 +79,7 @@
       "tier_level": 3,
       "glyph": "[N]",
       "ready": true,
-      "materials": { "data_fragment": 22, "combat_module": 1 }
+      "materials": { "data_fragment": 14, "combat_module": 1 }
     },
     {
       "item_id": "deck_arasaka",

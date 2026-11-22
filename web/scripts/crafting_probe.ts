@@ -1,11 +1,10 @@
-/** Crafting probe — does the drop economy support Manus's candidate recipes?
+/** Crafting probe — does the shipped drop economy support the shipped recipes?
  *
- * `crafting-recipes-candidate.json` holds the cost table under test. The Manus
- * v1 table (lifted from `docs/design/crafting-and-equipment-proposal-2026-11-18.md`
- * with its equipment names mapped to the real catalog ids) was falsified by
- * measurement — 18/18 recipes at 0.0%. The file now holds the **v2** table
- * (ADR-0324), which this probe passes. It is still a CANDIDATE list: re-running
- * it after any economy change is the point.
+ * Reads the SHIPPED tables: `src/data/recipes.json` (cost) and the run yield
+ * measured through the real reducer. The Manus v1 table was falsified by
+ * measurement — 18/18 recipes at 0.0%; the v2 table (ADR-0324) is what ships.
+ *
+ *   npx tsx scripts/crafting_probe.ts [--seeds 16] [--runs 3]
  *
  * ADR-0322 / the Manus proposal (`docs/design/crafting-and-equipment-
  * proposal-2026-11-18.md`). Manus could not see the repo, so its recipe costs
@@ -24,11 +23,12 @@
  */
 import { loadIceCatalog, loadMissionsCatalog, loadProgramsCatalog } from "../src/core/data_loaders";
 import { missionGradeOf } from "../src/core/combat/ice_scaling";
+import { earnedMaterials } from "../src/core/state/wallet";
 import { mulberry32, playRun } from "./play_policy";
 import iceJson from "../src/data/ice_types.json" with { type: "json" };
 import missionsJson from "../src/data/missions.json" with { type: "json" };
 import programsJson from "../src/data/programs.json" with { type: "json" };
-import recipesJson from "./crafting-recipes-candidate.json" with { type: "json" };
+import recipesJson from "../src/data/recipes.json" with { type: "json" };
 
 const arg = (name: string, dflt: number): number => {
   const i = process.argv.indexOf(name);
@@ -45,17 +45,17 @@ const ALL = Object.values(missions) as Array<{ id: string; source_universe?: str
 const BASE = 20261106;
 const clockRef = { now: 1_700_000_000_000 };
 
-type Recipe = {
-  readonly id: string;
-  readonly manusId: string;
-  readonly tier: number;
-  readonly path: string;
-  readonly cost: Readonly<Record<string, number>>;
-  readonly cost_?: Readonly<Record<string, number>>;
+type RecipeRow = {
+  readonly item_id: string;
+  readonly tier_level: number;
+  readonly materials: Readonly<Record<string, number>>;
 };
-const RECIPES = (recipesJson as unknown as Recipe[]).filter((r) =>
-  Object.keys(r.cost).length > 0,
-);
+/** The SHIPPED table (`src/data/recipes.json`, ADR-0324/0325) — not a copy.
+ *  A candidate copy used to live in this folder; probing a copy let the shipped
+ *  and tested tables drift (they happened to match, but nothing enforced it). */
+const RECIPES = ((recipesJson as unknown as { recipes: RecipeRow[] }).recipes)
+  .filter((r) => Object.keys(r.materials).length > 0)
+  .map((r) => ({ id: r.item_id, tier: r.tier_level, cost: r.materials }));
 
 /** One run's outcome: what it banked. */
 interface Yield {
@@ -87,9 +87,15 @@ function playOne(mission: unknown, seed: number): Yield {
     false,
   );
   if (!final) return { credits: 0, materials: {}, won: false };
+  const reward = (mission as { rewards: { materials: Readonly<Record<string, number>> } })
+    .rewards.materials;
   return {
     credits: final.player.credits,
-    materials: final.inventory.materials as Readonly<Record<string, number>>,
+    // ADR-0323/0338: the hoard keeps what the run EARNED, not the reward it was
+    // seeded with. The old probe summed `final.inventory.materials` (reward +
+    // drops), which MINTS the reward — the real merge (and `startNextLeg`'s
+    // carry) subtracts the seed. `earnedMaterials` is that real subtractor.
+    materials: earnedMaterials(final.inventory.materials, reward),
     won: final.runPhase === "ending",
   };
 }
@@ -194,9 +200,10 @@ function main(): void {
     );
   }
   console.log("");
-  console.log("NOTE: materials reset every mission today (`startNextLeg` rebuilds the");
-  console.log("inventory from the leg's reward) and never reach the menu wallet. This");
-  console.log("model assumes the Manus proposal — a preserved wallet across runs.");
+  console.log("NOTE: this measures what a run EARNS (ADR-0323/0338: `earnedMaterials`,");
+  console.log("the seed reward subtracted) summed over k runs — the real hoard, not a");
+  console.log("model that mints the reward. It excludes the loot-stop market (ADR-0331),");
+  console.log("so the true reach is slightly higher than shown.");
 }
 
 main();

@@ -23,6 +23,7 @@ import { fileURLToPath } from "node:url";
 const WEB_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 
 const COMBAT = "src/core/combat/combat_engine.ts";
+const ENDING = "src/core/combat/ending_resolver.ts";
 
 interface Mutation {
   readonly id: string;
@@ -42,10 +43,16 @@ const MUTATIONS: readonly Mutation[] = [
   { id: "armor-bypass-off", file: COMBAT, find: "PROGRAM_POWER_ARMOR_BYPASS_CAP_PCT = 60;", replace: "PROGRAM_POWER_ARMOR_BYPASS_CAP_PCT = 0;" },
   { id: "stagger-zero", file: COMBAT, find: "STAGGER_DURATION_MS = 1500;", replace: "STAGGER_DURATION_MS = 0;" },
   { id: "alarm-tick-fast", file: COMBAT, find: "ALARM_TICK_INTERVAL_MS = 10000;", replace: "ALARM_TICK_INTERVAL_MS = 1000;" },
+  // ADR-0337 (endings): the control gate. These were added THIS session, so a
+  // survivor here means the fix is untested.
+  { id: "control-wealth-zero", file: ENDING, find: "export const CONTROL_WEALTH = 18000;", replace: "export const CONTROL_WEALTH = 0;" },
+  { id: "liberation-never", file: ENDING, find: "if (ctx.missionsCompleted >= 3) {", replace: "if (ctx.missionsCompleted >= 4) {" },
 ];
 
 const DEFAULT_TESTS = [
   "tests/combat_engine.test.ts",
+  "tests/ending_resolver.test.ts",
+  "tests/adr0315_campaign_chain.test.ts",
   "tests/ice_crit.test.ts",
   "tests/ice_alarm_multiplier.test.ts",
   "tests/crit_vfx_link.test.ts",

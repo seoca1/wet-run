@@ -4304,3 +4304,11 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **교훈**: 첫 실행서 `matrix-nodes-short` 가 **SURVIVED** — 상수는 살아 있었고(`bossNode = NUM_NODES-1`) 그 값을 고정하는 `matrix.test.ts` 가 **내 셋에 없었다**. 추가하니 **17개**가 잡음. 즉 SURVIVED 가 항상 구멍은 아니고 **셋 누락**일 수 있다(mutation 측정의 함정 — 이 세션의 반복 주제: 도구가 오도).
 - 남음: `main.ts`(런 시작 seed)는 단위 테스트가 없어 변이 시 SURVIVED = **진짜 구멍**.
 - 검증: mutation 18/18 · vitest 236/4447 · typecheck 0 · 러틴 8/8.
+
+## [2026-11-22] test(economy) | 런 seed 호출부를 순수 함수로 빼서 테스트했다 (ADR-0346)
+
+- 오너 "응" = ADR-0345 가 지목한 **진짜 구멍**(`main.ts` 인라인 seed → 변이 시 SURVIVED) 봉합.
+- **결정**: `wallet.ts` 에 `contractSeedMaterials(legs, missionReward)` 추출(계약=모든 leg 보상 합, 없으면 미션 보상) → `main.ts` 가 호출.
+- **추가**: `tests/adr0338_run_seed.test.ts`(4: span · 잭아웃 1프레임 주조 0 · 번 것만 적립) + 변이 `seed-ignores-contract`.
+- **결과: mutation 19/19** — `seed-ignores-contract` KILLED → 이제 seed 호출부가 테스트된다.
+- 검증: vitest 237 files/4451 · typecheck 0 · lint 0 · 러틴 8/8.

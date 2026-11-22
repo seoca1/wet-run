@@ -40,6 +40,7 @@ const I18N = "src/core/i18n.ts";
 const PWA = "src/core/pwa_manager.ts";
 const GN_TEXT = "src/core/graphic_novel/graphic_novel_text.ts";
 const GN_PLAYER = "src/core/graphic_novel/graphic_novel_player.ts";
+const CRAWLER_TYPES = "src/core/dungeon/dungeon_crawler_types.ts";
 
 interface Mutation {
   readonly id: string;
@@ -92,6 +93,10 @@ const MUTATIONS: readonly Mutation[] = [
   { id: "gn-lines-per-page", file: GN_TEXT, find: "export const DEFAULT_LINES_PER_PAGE = 20;", replace: "export const DEFAULT_LINES_PER_PAGE = 15;" },
   { id: "gn-ms-per-char", file: GN_TEXT, find: "export const MS_PER_CHAR = 30;", replace: "export const MS_PER_CHAR = 60;" },
   { id: "gn-save-version", file: GN_PLAYER, find: "export const GN_SAVE_VERSION = \"1.2.0\";", replace: "export const GN_SAVE_VERSION = \"9.9.9\";" },
+  // Dungeon crawler glyphs (string enums) — a rendering contract.
+  { id: "crawler-floor", file: CRAWLER_TYPES, find: "FLOOR = \".\",", replace: "FLOOR = \",\"," },
+  { id: "crawler-monster", file: CRAWLER_TYPES, find: "MONSTER = \"M\",", replace: "MONSTER = \"m\"," },
+  { id: "crawler-goliath", file: CRAWLER_TYPES, find: "ICE_GOLIATH = \"g\",", replace: "ICE_GOLIATH = \"G\"," },
 ];
 
 const DEFAULT_TESTS = [
@@ -116,6 +121,8 @@ const DEFAULT_TESTS = [
   "tests/graphic_novel_player.test.ts",
   "tests/graphic_novel_save.test.ts",
   "tests/graphic_novel.test.ts",
+  "tests/dungeon_crawler_wiring.test.ts",
+  "tests/dungeon_crawler_types.test.ts",
   "tests/matrix_structure.test.ts",
   "tests/matrix.test.ts",
   "tests/matrix_navigation.test.ts",

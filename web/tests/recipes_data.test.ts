@@ -92,4 +92,35 @@ describe("craft recipes data", () => {
       }
     }
   });
+
+  it("ADR-0343: ICE loot rises by tier (per-ICE expected yield is non-decreasing)", () => {
+    // The per-GRADE yield wobbles (composition-driven), but the LOOT TABLES
+    // themselves must ramp: a tier-N ICE should not be worth less than a
+    // tier-(N-1) one. This guards the tables, not the mission rosters.
+    const catalog = iceData as unknown as Record<
+      string,
+      { tier?: number; loot_table?: ReadonlyArray<{ chance?: number; quantity?: number }> }
+    >;
+    const byTier = new Map<number, number[]>();
+    for (const [id, ice] of Object.entries(catalog)) {
+      if (id === "skill_defs" || typeof ice.tier !== "number") continue;
+      const total = (ice.loot_table ?? []).reduce(
+        (sum, e) => sum + (e.chance ?? 0) * (e.quantity ?? 0),
+        0,
+      );
+      const bucket = byTier.get(ice.tier);
+      if (bucket === undefined) byTier.set(ice.tier, [total]);
+      else bucket.push(total);
+    }
+    const mean = (xs: number[]): number => xs.reduce((a, b) => a + b, 0) / xs.length;
+    const tiers = [...byTier.keys()].sort((a, b) => a - b);
+    for (let i = 1; i < tiers.length; i += 1) {
+      const prev = mean(byTier.get(tiers[i - 1] as number) as number[]);
+      const cur = mean(byTier.get(tiers[i] as number) as number[]);
+      expect(
+        cur,
+        `tier ${tiers[i]} mean ${cur.toFixed(2)} < tier ${tiers[i - 1]} mean ${prev.toFixed(2)}`,
+      ).toBeGreaterThanOrEqual(prev);
+    }
+  });
 });

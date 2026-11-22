@@ -164,6 +164,27 @@ function main(): void {
   }
   console.log("");
 
+  // Yield ramp (ADR-0343): a run at a higher grade should yield at least as much
+  // as a lower one. The ICE LOOT TABLES rise by tier (a unit test guards that),
+  // but the per-GRADE yield is composition-driven — it depends on which ICE a
+  // grade's missions meet and how many — so it can wobble. Report the breaks as
+  // a signal; do NOT chase them in the data without a design reason.
+  console.log("yield ramp — per-grade earned (median), non-decreasing per material");
+  for (const k of ["data_fragment", "ice_shard", "combat_module", "construct_shard"]) {
+    const vals = [1, 2, 3, 4, 5, 6].map((g) =>
+      median((byGrade.get(g) ?? []).map((t) => t.materials[k] ?? 0)),
+    );
+    const breaks: string[] = [];
+    for (let i = 1; i < vals.length; i += 1) {
+      if ((vals[i] ?? 0) < (vals[i - 1] ?? 0)) breaks.push(`g${i}->g${i + 1}`);
+    }
+    console.log(
+      `  ${k.padEnd(16)} ${vals.map((v) => v.toFixed(0).padStart(4)).join(" ")}  ` +
+        `${breaks.length ? "BREAK " + breaks.join(",") : "ok"}`,
+    );
+  }
+  console.log("");
+
   // 2. reach: can a run at this grade (or below) afford the recipe?
   console.log("recipe reach — P(afford) after this many runs at the recipe's own tier");
   console.log("item                    tier  P@runs  n  (cost)");

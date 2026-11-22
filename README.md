@@ -13,7 +13,7 @@ Python 프로토타입에서 TypeScript Web으로 완전 마이그레이션 완�
 
 - **Frontend**: TypeScript, Canvas2D
 - **Build**: Vite
-- **Test**: Vitest (4446 tests)
+- **Test**: Vitest (4447 tests)
 - **PWA**: 서비스워커 (오프라인 플레이 지원)
 
 ## 빌드 및 실행

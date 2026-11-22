@@ -30,6 +30,8 @@ const MATRIX = "src/core/dungeon/matrix.ts";
 const MATRIX_NAV = "src/core/dungeon/matrix_navigation.ts";
 const LAYOUT = "src/core/dungeon/dungeon_layout.ts";
 const OWNED = "src/core/state/owned_equipment.ts";
+const EFFECTS = "src/core/combat/program_effects.ts";
+const FACTION = "src/core/state/faction_reputation.ts";
 
 interface Mutation {
   readonly id: string;
@@ -65,6 +67,10 @@ const MUTATIONS: readonly Mutation[] = [
   { id: "seed-ignores-contract", file: WALLET, find: "(acc, leg) => addStacks(acc, leg.mission.rewards.materials),", replace: "(acc, _leg) => acc," },
   // The run-end gear merge (ADR-0329), now a pure function (ADR-0347).
   { id: "drops-ignored", file: OWNED, find: "for (const id of droppedIds) next = ownEquipment(next, id);", replace: "for (const id of droppedIds) next = next;" },
+  // Card value and faction reputation (wider gameplay surface).
+  { id: "base-damage-4", file: EFFECTS, find: "return program.tier * 5;", replace: "return program.tier * 4;" },
+  { id: "allied-threshold", file: FACTION, find: "{ tier: \"ALLIED\", min: 80 },", replace: "{ tier: \"ALLIED\", min: 70 }," },
+  { id: "allied-multiplier", file: FACTION, find: "ALLIED: 0.5,", replace: "ALLIED: 0.9," },
 ];
 
 const DEFAULT_TESTS = [
@@ -74,6 +80,9 @@ const DEFAULT_TESTS = [
   "tests/adr0323_the_hoard_outlives_the_run.test.ts",
   "tests/adr0338_run_seed.test.ts",
   "tests/owned_equipment.test.ts",
+  "tests/program_effects.test.ts",
+  "tests/program_catalog_text.test.ts",
+  "tests/faction_reputation.test.ts",
   "tests/matrix_structure.test.ts",
   "tests/matrix.test.ts",
   "tests/matrix_navigation.test.ts",

@@ -4281,3 +4281,10 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **원인**: 비단조는 테이블이 아니라 **미션 구성** — g5 는 `neuromancer`(df 5/kill) 등 고부가 ICE 를 만나고, g6 는 3미션뿐이라 만남이 적다.
 - **결정**: 테이블 무변경(평탄화는 디자인 훼손 + ADR-0342 무효화). 대신 ⑴ `crafting_probe` 에 **yield ramp** 모니터(`ok`/`BREAK g3->g4,…`) ⑵ `recipes_data.test.ts` 에 **tier 단조성 가드**.
 - 검증: vitest **236/4447** · typecheck 0 · 러틴 9/9 · doc_claims 263 ADR OK.
+
+## [2026-11-22] test(verify) | 내 수정이 테스트되는가 — mutation 셋을 엔딩으로 확대 (ADR-0344)
+
+- 오너 "응. 위임할게". 판단: 미션 wobble 은 ADR-0343 에서 구성상 정상(무조치) · 오너 결정은 취향 · 엔딩 리졸버는 이미 단위 테스트됨 → 대신 **"바꾼 코드가 실제로 테스트되는가"** 를 mutation 으로 검증.
+- mutation spike 는 전투 상수만 흔들었다. **추가**: `ending_resolver` 변이 2건(`CONTROL_WEALTH 18000→0`, `missionsCompleted>=3→>=4`) + 엔딩/경제 테스트 2파일.
+- **결과: 12/12 KILLED** — `control-wealth-zero` 를 **7개**, `liberation-never` 를 **4개** 테스트가 잡음 → ADR-0337 엔딩 수정이 실제로 테스트됨을 확인.
+- 검증: mutation 12/12 · vitest 236/4447 · typecheck 0 · 러틴 8/8.

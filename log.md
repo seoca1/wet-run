@@ -4296,3 +4296,11 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **결과: 15/15 KILLED** — `merge-mints-seed` 2 · `earned-keeps-seed` 2 · `carry-drops-materials` 1 테스트가 잡음 → ADR-0323/0338 경제 수정이 실제로 테스트됨.
 - 남음: 매트릭스 모듈 · `main.ts`(단위 테스트 없음 → 변이 시 SURVIVED 예상).
 - 검증: mutation 15/15 · vitest 236/4447 · typecheck 0 · 러틴 8/8.
+
+## [2026-11-22] test(verify) | mutation 을 매트릭스까지 — 18/18 KILLED (ADR-0345)
+
+- 오너 "매트릭스 확대로 진행". 변이 3건: `matrix.ts` `NUM_NODES 5→4` · `matrix_navigation.ts` `NO_HOP -1→0` · `dungeon_layout.ts` `GRID_BY_GRADE[4] [13,8]→[9,6]` + 매트릭스 테스트 5파일.
+- **결과: 18/18 KILLED**(전투10 · 엔딩2 · 경제3 · 매트릭스3).
+- **교훈**: 첫 실행서 `matrix-nodes-short` 가 **SURVIVED** — 상수는 살아 있었고(`bossNode = NUM_NODES-1`) 그 값을 고정하는 `matrix.test.ts` 가 **내 셋에 없었다**. 추가하니 **17개**가 잡음. 즉 SURVIVED 가 항상 구멍은 아니고 **셋 누락**일 수 있다(mutation 측정의 함정 — 이 세션의 반복 주제: 도구가 오도).
+- 남음: `main.ts`(런 시작 seed)는 단위 테스트가 없어 변이 시 SURVIVED = **진짜 구멍**.
+- 검증: mutation 18/18 · vitest 236/4447 · typecheck 0 · 러틴 8/8.

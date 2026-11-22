@@ -4320,3 +4320,10 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **추가**: `owned_equipment.test.ts` 3 테스트(모두 소유·같은 참조·순서 무관) + 변이 `drops-ignored`.
 - **결과: mutation 20/20** — `drops-ignored` KILLED.
 - 검증: vitest 237 files/4454 · typecheck 0 · 러틴 8/8.
+
+## [2026-11-22] test(verify) | mutation 을 카드·팩션까지 — 23/23 KILLED (ADR-0348)
+
+- 오너 "응 후속 진행". 게임플레이 표면 확대. 변이 3: `program_effects` `programBaseDamage` `tier*5→*4` · `faction_reputation` `ALLIED min 80→70`·`multiplier 0.5→0.9` + 카드/팩션 테스트 3파일.
+- **결과: 23/23 KILLED.**
+- **교훈(ADR-0345 와 동일)**: `base-damage-4` 가 첫 실행 SURVIVED — 설명 문자열을 고정하는 `program_catalog_text.test.ts` 가 **내 셋에 없었을 뿐**. 추가하니 KILLED. 매트릭스에 이어 **두 번째**로 "생존 변이 = 누락된 테스트 파일".
+- 검증: mutation 23/23 · vitest 237 files/4454 · typecheck 0 · 러틴 8/8.

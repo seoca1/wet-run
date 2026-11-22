@@ -4288,3 +4288,11 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - mutation spike 는 전투 상수만 흔들었다. **추가**: `ending_resolver` 변이 2건(`CONTROL_WEALTH 18000→0`, `missionsCompleted>=3→>=4`) + 엔딩/경제 테스트 2파일.
 - **결과: 12/12 KILLED** — `control-wealth-zero` 를 **7개**, `liberation-never` 를 **4개** 테스트가 잡음 → ADR-0337 엔딩 수정이 실제로 테스트됨을 확인.
 - 검증: mutation 12/12 · vitest 236/4447 · typecheck 0 · 러틴 8/8.
+
+## [2026-11-22] test(verify) | mutation 을 경제 모듈로 확대 — 15/15 KILLED (ADR-0344 갱신)
+
+- 오너 "후속 진행". ADR-0344 의 "남은 것"(경제 모듈) 처리.
+- **추가 변이 3건**: `wallet.ts` merge seed 감산→덧셈(주조) · `wallet.ts` earnedMaterials seed 감산 제거(보상=획득) · `state.ts` startNextLeg 재료 carry 제거. + `adr0323_the_hoard_outlives_the_run.test.ts`.
+- **결과: 15/15 KILLED** — `merge-mints-seed` 2 · `earned-keeps-seed` 2 · `carry-drops-materials` 1 테스트가 잡음 → ADR-0323/0338 경제 수정이 실제로 테스트됨.
+- 남음: 매트릭스 모듈 · `main.ts`(단위 테스트 없음 → 변이 시 SURVIVED 예상).
+- 검증: mutation 15/15 · vitest 236/4447 · typecheck 0 · 러틴 8/8.

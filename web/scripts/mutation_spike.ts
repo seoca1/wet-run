@@ -41,6 +41,7 @@ const PWA = "src/core/pwa_manager.ts";
 const GN_TEXT = "src/core/graphic_novel/graphic_novel_text.ts";
 const GN_PLAYER = "src/core/graphic_novel/graphic_novel_player.ts";
 const CRAWLER_TYPES = "src/core/dungeon/dungeon_crawler_types.ts";
+const ACHIEVEMENTS = "src/core/state/achievements.ts";
 
 interface Mutation {
   readonly id: string;
@@ -97,6 +98,10 @@ const MUTATIONS: readonly Mutation[] = [
   { id: "crawler-floor", file: CRAWLER_TYPES, find: "FLOOR = \".\",", replace: "FLOOR = \",\"," },
   { id: "crawler-monster", file: CRAWLER_TYPES, find: "MONSTER = \"M\",", replace: "MONSTER = \"m\"," },
   { id: "crawler-goliath", file: CRAWLER_TYPES, find: "ICE_GOLIATH = \"g\",", replace: "ICE_GOLIATH = \"G\"," },
+  // Achievement thresholds (functional module).
+  { id: "ach-centurion-101", file: ACHIEVEMENTS, find: "getProgress(\"centurion_progress\") >= 100", replace: "getProgress(\"centurion_progress\") >= 101" },
+  { id: "ach-flawless-51", file: ACHIEVEMENTS, find: "getProgress(\"flawless_progress\") >= 50", replace: "getProgress(\"flawless_progress\") >= 51" },
+  { id: "ach-undefeated-11", file: ACHIEVEMENTS, find: "getProgress(\"undefeated_progress\") >= 10", replace: "getProgress(\"undefeated_progress\") >= 11" },
 ];
 
 const DEFAULT_TESTS = [
@@ -123,6 +128,7 @@ const DEFAULT_TESTS = [
   "tests/graphic_novel.test.ts",
   "tests/dungeon_crawler_wiring.test.ts",
   "tests/dungeon_crawler_types.test.ts",
+  "tests/achievements.test.ts",
   "tests/matrix_structure.test.ts",
   "tests/matrix.test.ts",
   "tests/matrix_navigation.test.ts",

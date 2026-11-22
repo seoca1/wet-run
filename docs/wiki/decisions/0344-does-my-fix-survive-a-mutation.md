@@ -19,29 +19,32 @@
 1. `ending_resolver.ts` 변이 2건 추가:
    - `CONTROL_WEALTH = 18000 → 0` (모든 완주가 control 이 됨)
    - `missionsCompleted >= 3 → >= 4` (liberation 이 3다리 계약에서 안 뜸)
-2. 기본 테스트 셋에 `ending_resolver.test.ts` · `adr0315_campaign_chain.test.ts` 추가 (경제/엔딩).
-   기존 combat 셋(10) + 신규 3 = **13 파일**.
+2. 기본 테스트 셋에 `ending_resolver.test.ts` · `adr0315_campaign_chain.test.ts` · `adr0323_the_hoard_outlives_the_run.test.ts` 추가.
+3. **경제 모듈 변이 3건 추가**(같은 세션의 ADR-0323/0338):
+   - `wallet.ts` `mergeRunIntoWallet`: seed 감산을 덧셈으로 (`-` → `+`, 주조)
+   - `wallet.ts` `earnedMaterials`: seed 감산 제거 (`- 0`, 보상을 획득으로)
+   - `state.ts` `startNextLeg`: 재료 carry 제거(다음 leg 가 이전 재료를 버림)
 
 ## 결과 (Consequences)
 
-- **12/12 KILLED.** 엔딩 변이 2건 모두 잡혔다 — `control-wealth-zero` 는 **7개** 테스트가, `liberation-never`
-  는 **4개**가 실패. 즉 ADR-0337 의 엔딩 수정은 **실제로 테스트로 지켜진다**(내가 "테스트 추가했다"고 한 것이
-  mutation 으로 확인됨).
-- **커버리지 신호가 넓어졌다**: `npm run mutation` 이 이제 전투 + 엔딩을 함께 흔든다. 생존 변이가 나오면
-  그 모듈의 테스트 구멍이다.
-- **남은 것**: 경제(`wallet.ts`/`state.ts`)와 매트릭스는 아직 변이 대상이 아니며, 문자열 anchor 가 까다로운
-  곳(다중행 함수)은 별도 처리 필요. mission 로스터 wobble(ADR-0343)과 오너 결정 4건은 무관.
-- 검증: mutation 12/12 · vitest 236/4447(변경 없음) · typecheck 0.
+- **15/15 KILLED.** 엔딩 변이 2건과 경제 변이 3건이 모두 잡혔다 — `control-wealth-zero` **7개**,
+  `liberation-never` **4개**, `merge-mints-seed` **2개**, `earned-keeps-seed` **2개**,
+  `carry-drops-materials` **1개** 테스트가 실패. 즉 ADR-0337(엔딩)·ADR-0323/0338(경제)의 수정이
+  **실제로 테스트로 지켜진다**.
+- **커버리지 신호가 넓어졌다**: `npm run mutation` 이 이제 전투 + 엔딩 + 경제를 함께 흔든다.
+- **남은 것**: 매트릭스 모듈은 아직 변이 대상이 아니다. `main.ts`(런 시작 seed)는 앱 루프라 단위 테스트가
+  없어 변이하면 SURVIVED 로 나올 것이다(별도 계측 필요). mission 로스터 wobble(ADR-0343)과 오너 결정 4건은 무관.
+- 검증: mutation **15/15** · vitest 236/4447(변경 없음) · typecheck 0.
 
 ## Implementation Status (2026-11-22)
 
 **Status**: ✅ Implemented
 
 **Evidence**:
-- `web/scripts/mutation_spike.ts` — `ENDING` 변이 2건 + 기본 테스트 3파일 추가
-- 실행: `npm run mutation` → **12/12 KILLED**(control-wealth-zero 7, liberation-never 4)
+- `web/scripts/mutation_spike.ts` — `ENDING` 변이 2 + `WALLET`/`STATE` 변이 3, 기본 테스트 4파일 추가
+- 실행: `npm run mutation` → **15/15 KILLED**(ending 7·4, economy 2·2·1)
 
-**Notes**: 경제/매트릭스 모듈로의 확대는 후속(anchor 설계 필요).
+**Notes**: 매트릭스 모듈 확대는 후속. `main.ts` 는 단위 테스트가 없어 변이 시 SURVIVED 예상(별도 계측).
 
 ## 영향 받는 항목
 

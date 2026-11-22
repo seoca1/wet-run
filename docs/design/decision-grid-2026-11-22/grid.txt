@@ -1,0 +1,42 @@
+decision grid — 5 cells x (survival 32 seeds + gear + campaign 20 seeds)
+base hp=[95, 95, 95, 95, 95, 95] dmg=[50, 30, -32, 0, -10, -10]
+  done g4 dmg  +0 · P0 current
+  done g4 dmg  +0 · P2 g56=135
+  done g4 dmg  +0 · R g4=125
+  done g4 dmg  +0 · R g4=130
+  done g4 dmg  +0 · P3 +40
+source restored: yes
+
+### bare mission (recorded baseline, cards best / loot value)
+cap                g4dmg |    g1    g2    g3    g4    g5    g6
+P0 current            +0 | 100.0 100.0  83.0  85.6  28.5  43.8
+P2 g56=135            +0 | 100.0 100.0  83.0  87.5   8.7  18.8
+R g4=125              +0 | 100.0 100.0  83.0  76.3   8.7  18.8
+R g4=130              +0 | 100.0 100.0  83.0  70.0   8.7  18.8
+P3 +40                +0 | 100.0 100.0  83.0  65.6   8.7  18.8
+
+### gear T6 — ADR-0328 band is g5 65 / g6 70 (±8)
+cap                g4dmg |    g1    g2    g3    g4    g5    g6
+P0 current            +0 | 100.0 100.0 100.0 100.0  94.6  99.0
+P2 g56=135            +0 | 100.0 100.0 100.0 100.0  72.7  70.3
+R g4=125              +0 | 100.0 100.0 100.0 100.0  72.7  70.3
+R g4=130              +0 | 100.0 100.0 100.0 100.0  72.7  70.3
+P3 +40                +0 | 100.0 100.0 100.0 100.0  72.7  70.3
+
+### campaign by start grade — pass criterion 1 is g3 >= g4
+cap                g4dmg |    g1    g2    g3    g4    g5    g6
+P0 current            +0 | 100.0  90.0  50.0  64.3   4.4  23.3
+P2 g56=135            +0 | 100.0  90.0  47.9  54.3   1.1   0.0
+R g4=125              +0 | 100.0  90.0  47.9  41.4   1.1   0.0
+R g4=130              +0 | 100.0  90.0  47.9  26.4   1.1   0.0
+P3 +40                +0 | 100.0  90.0  47.9  25.7   1.1   0.0
+
+### verdicts
+cap                g4dmg | g3>=g4 | T6 in band | gear mono | bare g5,g6 vs 25,30
+P0 current            +0 | NO      | NO         | yes       |  28.5 /  43.8
+P2 g56=135            +0 | NO      | yes        | yes       |   8.7 /  18.8
+R g4=125              +0 | yes     | yes        | yes       |   8.7 /  18.8
+R g4=130              +0 | yes     | yes        | yes       |   8.7 /  18.8
+P3 +40                +0 | yes     | yes        | yes       |   8.7 /  18.8
+
+csv: ../docs/design/decision-grid-2026-11-22/grid.csv

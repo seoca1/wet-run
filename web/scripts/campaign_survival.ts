@@ -47,6 +47,10 @@ const LOOT_POLICY =
  * checked against the metric it extends. */
 const BASE_SEED = 20261106;
 
+/** Thresholds reported for ADR-0337's control gate. `CONTROL_WEALTH` lives in
+ * `ending_resolver.ts`; this table only says what each threshold WOULD produce. */
+const CONTROL_THRESHOLDS = [12000, 14000, 15000, 16000, 17000, 18000, 20000, 22000];
+
 /** The recorded contract curve, by the START mission's grade (2026-11-17).
  *
  * These are **measured**, not chosen: the first run of this harness produced
@@ -305,6 +309,18 @@ function main(): void {
     `credits at a finished contract's end — p50 ${quantile(finals, 0.5)} · p75 ${quantile(finals, 0.75)} · ` +
       `p90 ${quantile(finals, 0.9)} · p95 ${quantile(finals, 0.95)} · max ${finals.length ? Math.max(...finals) : 0}`,
   );
+  // ADR-0337's control gate is a credit threshold, so the decision needs the whole
+  // curve (threshold -> shown rate), not just p90. The denominator is every
+  // displayed ending (= contracts), so these numbers are comparable with the
+  // ending table below; control also requires finishing the contract.
+  console.log("");
+  console.log("control threshold sweep (ADR-0337) — shown control rate by CONTROL_WEALTH");
+  for (const threshold of CONTROL_THRESHOLDS) {
+    const n = finals.filter((c) => c > threshold).length;
+    console.log(
+      `  ${String(threshold).padStart(6)}   ${pct(n, totals.contracts)}   (${n}/${totals.contracts} displayed endings)`,
+    );
+  }
   // ADR-0318 moved the campaign's ending ahead of wealth. This is how many
   // finished contracts the old order would have read as "you got rich".
   console.log(

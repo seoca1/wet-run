@@ -1,8 +1,8 @@
 # Wet-Run 검증 보고
 
-**시간**: 2026-11-22T16:58:14Z  
+**시간**: 2026-11-22T22:13:03Z  
 **버전**: 3.1.0 (ADR-0335/0336)  
-**게이트**: 9/9 pass  
+**게이트**: 8/8 pass  
 
 ## 1_balance
 {
@@ -34,22 +34,6 @@
   ]
 }
 
-## 2_tests
-{
-  "status": "pass",
-  "exit": 0,
-  "tail": [
-    "    at HTMLAudioElement.load (/Users/emilio/projects/opencodework/Game/wet_run/web/node_modules/jsdom/lib/jsdom/living/generated/HTMLMediaElement.js:111:34)",
-    "    at Sound.create (/Users/emilio/projects/opencodework/Game/wet_run/web/node_modules/howler/dist/howler.js:2278:20)",
-    "    at Sound.init (/Users/emilio/projects/opencodework/Game/wet_run/web/node_modules/howler/dist/howler.js:2235:12)",
-    "    at Sound.init (/Users/emilio/projects/opencodework/Game/wet_run/web/node_modules/howler/dist/howler.js:3154:14)",
-    "    at new Sound (/Users/emilio/projects/opencodework/Game/wet_run/web/node_modules/howler/dist/howler.js:2207:10)",
-    "    at Howl._inactiveSound (/Users/emilio/projects/opencodework/Game/wet_run/web/node_modules/howler/dist/howler.js:2068:14)",
-    "    at Howl.play (/Users/emilio/projects/opencodework/Game/wet_run/web/node_modules/howler/dist/howler.js:776:51)",
-    "    at AudioManager.playSfx (/Users/emilio/projects/opencodework/Game/wet_run/web/src/audio/manager.ts:654:12) undefined"
-  ]
-}
-
 ## 3_audit
 {
   "status": "pass",
@@ -77,7 +61,7 @@
     "  0048: 2 ADRs share the number — 0048-gn-ending-menu-and-save-migration.md, 0048-wet-run-character-reflection-amendment.md",
     "  0049: 2 ADRs share the number — 0049-dashboard-verification-substats-amendment.md, 0049-graphic-novel-ending-c.md",
     "  4 evidence sidecar(s) live in the ADR namespace (e.g. 0266-evidence.md would read as a second ADR 0266)",
-    "ADR namespace: 261 ADR files, IDs 1-341, 87 unused numbers (gaps are allowed; they are not reuse of an ID)",
+    "ADR namespace: 273 ADR files, IDs 1-353, 87 unused numbers (gaps are allowed; they are not reuse of an ID)",
     "OK: 3 guide(s), 115 paths resolve; every checked count matches. (test count not checked: pass --tests)"
   ]
 }
@@ -87,7 +71,7 @@
   "status": "pass",
   "exit": 0,
   "tail": [
-    "OK: 2053 user-facing strings, no 8-word run matches the quoted prose in Fiction/wiki."
+    "OK: 2064 user-facing strings, no 8-word run matches the quoted prose in Fiction/wiki."
   ]
 }
 
@@ -121,16 +105,6 @@
     "Files with violations: 0",
     "Total violations: 0"
   ]
-}
-
-## 9_jev_advisory
-{
-  "status": "advisory",
-  "answer": null,
-  "p": 0.13,
-  "calibration": "primary",
-  "source": "jev-call.sh (real, calibrated)",
-  "note": "ADVISORY ONLY — never gates this routine."
 }
 
 > 규약 준수: raw/ 미수정 · Jev 는 advisory(미보정, 게이트 아님)

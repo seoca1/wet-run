@@ -4335,3 +4335,11 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **진짜 구멍 하나**: `quota-warn-band`(80→70)가 SURVIVED — `storage_quota.test.ts` 가 임계를 **import 한 상수로** 검사해 경계·값이 함께 움직임 → 상수 **값(80/95)을 아무도 고정 안 함**. 계약 테스트(`toBe(80)`/`toBe(95)`) 추가 → KILLED.
 - **생존 변이 2분류 확정**: (a) **누락된 테스트 파일**(매트릭스·카드) (b) **상수 값 미고정**(쿼터 밴드·초기 `AUTO_ATTACK_INTERVAL_MS`).
 - 검증: mutation 27/27 · vitest 237 files/4455 · typecheck 0 · 러틴 8/8.
+
+## [2026-11-22] test(verify) | mutation 을 오디오·i18n·PWA 까지 — 30/30 KILLED (ADR-0350)
+
+- 오너 "계속". 변이 3: `BGM_DUCK_FACTOR 0.8→0.5`·`DEFAULT_I18N_STATE.language "en"→"ko"`·`INITIAL_PWA_STATE.canInstall false→true` + 오디오/i18n/PWA 테스트 3파일 = 30 변이·20 파일.
+- **결과: 30/30 KILLED.**
+- **또 값 미고정 상수**: `bgm-duck-factor`가 SURVIVED — `audio_ducking.test.ts` 가 `BGM_DUCK_FACTOR` 를 import 해 검사해 경계·값이 함께 움직임 → 값(0.8) 미고정(쿼터 밴드 ADR-0349 와 동일). 계약 테스트 → KILLED. i18n·PWA 는 즉시 KILLED.
+- **생존 변이 2분류 확정**: (a) 누락 테스트 파일 (b) 값 미고정 상수.
+- 검증: mutation 30/30 · vitest 237 files/4456 · typecheck 0 · 러틴 8/8.

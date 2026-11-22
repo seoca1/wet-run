@@ -341,3 +341,9 @@ describe("AudioManager SFX rate + ducking state", () => {
     expect(audio.isDucking()).toBe(false);
   });
 });
+
+describe("ADR-0350 · the audio constants are pinned", () => {
+  it("pins the duck factor value — tests above import it, so a value change is invisible to them", () => {
+    expect(BGM_DUCK_FACTOR).toBe(0.8);
+  });
+});

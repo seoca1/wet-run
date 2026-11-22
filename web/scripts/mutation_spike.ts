@@ -35,6 +35,9 @@ const FACTION = "src/core/state/faction_reputation.ts";
 const COMPRESS = "src/save/compress.ts";
 const QUOTA = "src/save/storage_quota.ts";
 const STORAGE = "src/save/storage.ts";
+const AUDIO = "src/audio/manager.ts";
+const I18N = "src/core/i18n.ts";
+const PWA = "src/core/pwa_manager.ts";
 
 interface Mutation {
   readonly id: string;
@@ -79,6 +82,10 @@ const MUTATIONS: readonly Mutation[] = [
   { id: "quota-warn-band", file: QUOTA, find: "export const STORAGE_QUOTA_WARNING_PERCENT = 80;", replace: "export const STORAGE_QUOTA_WARNING_PERCENT = 70;" },
   { id: "slot-count", file: STORAGE, find: "const MANUAL_SLOT_COUNT = 3;", replace: "const MANUAL_SLOT_COUNT = 2;" },
   { id: "schema-version", file: STORAGE, find: "const CURRENT_SCHEMA_VERSION = 1;", replace: "const CURRENT_SCHEMA_VERSION = 2;" },
+  // Audio ducking, default language, PWA boot state.
+  { id: "bgm-duck-factor", file: AUDIO, find: "export const BGM_DUCK_FACTOR = 0.8;", replace: "export const BGM_DUCK_FACTOR = 0.5;" },
+  { id: "i18n-default-lang", file: I18N, find: "language: \"en\",", replace: "language: \"ko\"," },
+  { id: "pwa-can-install", file: PWA, find: "canInstall: false,", replace: "canInstall: true," },
 ];
 
 const DEFAULT_TESTS = [
@@ -96,6 +103,9 @@ const DEFAULT_TESTS = [
   "tests/storage_quota.test.ts",
   "tests/storage.test.ts",
   "tests/state_save.test.ts",
+  "tests/audio_ducking.test.ts",
+  "tests/i18n.test.ts",
+  "tests/pwa_manager.test.ts",
   "tests/matrix_structure.test.ts",
   "tests/matrix.test.ts",
   "tests/matrix_navigation.test.ts",

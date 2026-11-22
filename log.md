@@ -4273,3 +4273,11 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **결정**: T2/T3 비용을 자기 등급 산출에 맞춤(T2 df16→8 등 7건) + `equipment_catalog.ts` 동기화.
 - **결과**: 8런 T1 58 · **T2 47~58** · T3 48~50 · T4 55 · T5 79 · T6 64 — 역전 해소.
 - 검증: vitest **236/4446** · typecheck 0 · lint 0 · 러틴 9/9 · 골든 byte-identical · audit_vault CLEAN.
+
+## [2026-11-22] test(economy) | 교정할 대상이 아니었다 — 드롭 테이블은 이미 단조 (ADR-0343)
+
+- 오너 "교정해줘" = 드롭 테이블 비단조성. 파고드니 **교정 대상이 아니었다**.
+- **측정**: 등급별 df `5·10·13·10·87·44`(비단조)지만, **ICE `loot_table` 은 tier에 단조**(ICE당 0.85→1.27→2.69→3.01→4.14→6.65), 이상치·빈 loot 없음(`skill_defs` 는 로더가 스킵).
+- **원인**: 비단조는 테이블이 아니라 **미션 구성** — g5 는 `neuromancer`(df 5/kill) 등 고부가 ICE 를 만나고, g6 는 3미션뿐이라 만남이 적다.
+- **결정**: 테이블 무변경(평탄화는 디자인 훼손 + ADR-0342 무효화). 대신 ⑴ `crafting_probe` 에 **yield ramp** 모니터(`ok`/`BREAK g3->g4,…`) ⑵ `recipes_data.test.ts` 에 **tier 단조성 가드**.
+- 검증: vitest **236/4447** · typecheck 0 · 러틴 9/9 · doc_claims 263 ADR OK.

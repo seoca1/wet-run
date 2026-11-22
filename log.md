@@ -4359,3 +4359,10 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **결과: 36/36 KILLED.**
 - **값 미고정(또)**: 글리프 enum 값을 고정하는 테스트가 없었음(wiring 테스트는 존재/이동만). 계약 테스트가 각 1개로 잡음.
 - 검증: mutation 36/36 · vitest 238 files/4459 · typecheck 0 · 러틴 8/8.
+
+## [2026-11-22] test(verify) | mutation 을 achievements(함수형)까지 — 39/39, 여긴 구멍 없음 (ADR-0353)
+
+- 오너 "계속". 함수형 모듈. 변이 3: `centurion_progress >= 100→101`·`flawless_progress >= 50→51`·`undefeated_progress >= 10→11` + `achievements.test.ts` 셋 추가.
+- **결과: 39/39 KILLED.**
+- **여긴 구멍이 없었다**: 테스트가 임계를 **동작으로** 고정(90→false, 100→true) → 값 변이를 즉시 잡음. 앞선 값-미고정(쿼터 밴드 등)과 대조 — **상수 import 검사는 면역, 경계 동작 검사는 값을 잡는다**.
+- 검증: mutation 39/39 · vitest 238 files/4459 · typecheck 0 · 러틴 8/8.

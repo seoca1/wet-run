@@ -4343,3 +4343,12 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **또 값 미고정 상수**: `bgm-duck-factor`가 SURVIVED — `audio_ducking.test.ts` 가 `BGM_DUCK_FACTOR` 를 import 해 검사해 경계·값이 함께 움직임 → 값(0.8) 미고정(쿼터 밴드 ADR-0349 와 동일). 계약 테스트 → KILLED. i18n·PWA 는 즉시 KILLED.
 - **생존 변이 2분류 확정**: (a) 누락 테스트 파일 (b) 값 미고정 상수.
 - 검증: mutation 30/30 · vitest 237 files/4456 · typecheck 0 · 러틴 8/8.
+
+## [2026-11-22] fix(graphic-novel) | mutation 이 진짜 무한 루프를 찾았다 — 씬 스킵이 게임을 멈출 수 있었다 (ADR-0351)
+
+- 오너 "세부 모듈 좋아". 변이 `MS_PER_CHAR 30→60` 이 **KILLED 아니고 스위트를 HANG**.
+- **원인**: `skipCurrentScene` 의 `while (!p.done)` 이 "duration 이 텍스트를 다 칠 만큼 길다"는 가정에 의존 → 깨지면 **동기 무한 루프**(씬 스킵이 게임을 멈출 수 있던 잠복 버그). `tick`·테스트엔 safety 카운터가 있었지만 여기만 없었다.
+- **수정**: 유계·진행-보장 루프. + `MS_PER_CHAR`/`DEFAULT_LINES_PER_PAGE` 값 계약 테스트 + `graphic_novel.test.ts`(GN_SAVE_VERSION 고정) 셋 추가.
+- **도구 경화(중요)**: 중단된 spike 실행이 **소스 3파일을 변이된 채 남겼다**(커밋 직전까지 갔다) → 시그널(SIGINT/TERM/HUP/PIPE) 복구 + 프리플라이트(낡은 트리면 `git checkout` 안내 후 중단).
+- **결과: 33/33 KILLED, exit 0**. mutation 결과 3종 확정: KILLED / SURVIVED / **HANG**(세 번째가 더 나쁘다).
+- 검증: vitest 237 files/4457 · typecheck 0 · 러틴 8/8.

@@ -4327,3 +4327,11 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **결과: 23/23 KILLED.**
 - **교훈(ADR-0345 와 동일)**: `base-damage-4` 가 첫 실행 SURVIVED — 설명 문자열을 고정하는 `program_catalog_text.test.ts` 가 **내 셋에 없었을 뿐**. 추가하니 KILLED. 매트릭스에 이어 **두 번째**로 "생존 변이 = 누락된 테스트 파일".
 - 검증: mutation 23/23 · vitest 237 files/4454 · typecheck 0 · 러틴 8/8.
+
+## [2026-11-22] test(verify) | mutation 을 세이브 파이프라인까지 — 27/27 KILLED (ADR-0349)
+
+- 오너 "응 진행해". 변이 4: `COMPRESSION_THRESHOLD_BYTES`·`STORAGE_QUOTA_WARNING_PERCENT`·`MANUAL_SLOT_COUNT`·`CURRENT_SCHEMA_VERSION` + 세이브 테스트 5파일.
+- **결과: 27/27 KILLED.**
+- **진짜 구멍 하나**: `quota-warn-band`(80→70)가 SURVIVED — `storage_quota.test.ts` 가 임계를 **import 한 상수로** 검사해 경계·값이 함께 움직임 → 상수 **값(80/95)을 아무도 고정 안 함**. 계약 테스트(`toBe(80)`/`toBe(95)`) 추가 → KILLED.
+- **생존 변이 2분류 확정**: (a) **누락된 테스트 파일**(매트릭스·카드) (b) **상수 값 미고정**(쿼터 밴드·초기 `AUTO_ATTACK_INTERVAL_MS`).
+- 검증: mutation 27/27 · vitest 237 files/4455 · typecheck 0 · 러틴 8/8.

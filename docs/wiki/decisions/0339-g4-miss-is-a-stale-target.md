@@ -1,6 +1,6 @@
 # ADR-0339: g4의 "+33.1pp MISS"는 낡은 목표다 — 난이도 신호인가, 목표 초과인가
 
-**상태**: Draft (오너 결정 대기)
+**상태**: Accepted (2026-11-22 — 오너: **Option B′**, HP cap `[95,95,95,125,135,135]`)
 **날짜**: 2026-11-19
 **결정자**: 사용자
 **우선순위**: P1 (난이도 · 설계)
@@ -104,22 +104,40 @@ dmg bonus 만 0/+10/+20 으로 올려도 캠페인 g4 는 **64.3 → 65.0 → 60
 
 [ ] Option A — 재기록
 [ ] Option B — 난이도 복원(dmg bonus) — **측정으로 기각 (효과 없음)**
-[ ] **Option B′ — HP cap `[95,95,95,125,135,135]` (네 기준 통과 유일 해)**
+[x] **Option B′ — HP cap `[95,95,95,125,135,135]` (네 기준 통과 유일 해)**
 [ ] Option C — 유지(신호)
 [ ] 기타: ___
 
+**오너 확정 (2026-11-22)**: B′. 지시는 "결정 지점을 선택지로 검증해서 결정" 이었고,
+선택은 측정표를 본 뒤에 이뤄졌다. ADR-0341 과 **같은 셀**이므로 두 ADR 은 함께 Accepted. 
+
 ## 결과 (Consequences)
 
-(결정 후 작성)
+- `ENCOUNTER_HP_BY_GRADE = [95, 95, 95, 125, 135, 135]` (dmg bonus 는 현행 유지).
+- **캠페인 역전 해소**: g4 계약 완주 **64.3% → 41.4%** (g3 47.9%) — g4 가 다시 g3 아래다.
+- **기준선 이동(중요)**: bare opener 의 per-encounter 곡선이 97.1/70.6/47.0 →
+  **68.5/43.7/1.3** 으로 내려간다. 이것은 ADR-0290 이 기각했던 "g6 는 이길 수 없는 벽"
+  상태의 복원이며, **의도된 것**이다: g5/g6 의 기준 러너는 이제 **장비를 착용한 러너**이고
+  `npm run gear` 가 그 곡선(T6 g5 73 · g6 70)을 읽는다. ADR-0290 의 "opener" 원칙은
+  ADR-0341 이 명시적으로 대체한다.
+- 골든 재기록: `balance.golden.json` · `gear.golden.json`. 회귀 테스트
+  `balance_sim.test.ts` 의 두 행이 재기록됨(주석에 근거).
+- **남은 것**: T6 장비를 착용하면 g3/g4 가 여전히 100% (cap 을 145 까지 올려도 그대로) —
+  중반 등급의 난이도는 encounter cap 으로는 못 되돌린다. 별도 결정.
 
-## Implementation Status (2026-11-19)
+## Implementation Status (2026-11-22)
 
-**Status**: 🟡 Partial (도구 caveat 적용 · 난이도 결정 미정)
+**Status**: ✅ Implemented
 
 **Evidence**:
-- `web/scripts/mission_survival.ts` — ADR-0229 caveat 출력("목표가 아니라 기준선; delta 는 신호")
+- `web/src/core/combat/ice_scaling.ts` — `ENCOUNTER_HP_BY_GRADE = [95,95,95,125,135,135]`
+- `web/scripts/decision_grid.py` — 결정 셀 측정 드라이버(소스 패치 → probe → 복원)
+- `web/scripts/campaign_survival.ts` — control 임계값 표 + `--gear` 로드아웃
+- `web/tests/balance_sim.test.ts` — 재기록된 두 행 + ADR 근거 주석
+- 측정: 캠페인 g4 41.4% (g3 47.9%) · gear T6 g5/g6 73/70 · vitest 238/4459
 
-**Notes**: 난이도 자체는 미변경. P4(장비↔난이도)와 동시 설계 권장.
+**Notes**: bare 기준선 하락은 의도된 기준 이동(ADR-0341). 중반 등급(gear T6 g3/g4 100%)은
+열린 문제.
 
 ## 영향 받는 항목
 
@@ -134,3 +152,4 @@ dmg bonus 만 0/+10/+20 으로 올려도 캠페인 g4 는 **64.3 → 65.0 → 60
 ## 변경 이력
 
 - 2026-11-19: Draft 작성 (P2 측정 + 선택지, 오너 결정 대기)
+- 2026-11-22: 그리드 실측 → Accepted (Option B′), 구현·골든 재기록

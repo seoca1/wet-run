@@ -24,6 +24,7 @@ import { resolveEnding } from "../src/core/combat/ending_resolver";
 import { contractFor } from "../src/core/state/campaign";
 import { missionIce } from "../src/core/state/mission_ice";
 import { mulberry32, playRun } from "./play_policy";
+import { gearSetByPrefix } from "./gear_sets";
 import type { Ice, Mission, Program } from "../src/core/types";
 import iceJson from "../src/data/ice_types.json" with { type: "json" };
 import missionsJson from "../src/data/missions.json" with { type: "json" };
@@ -47,6 +48,15 @@ const LOOT_POLICY =
  * checked against the metric it extends. */
 const BASE_SEED = 20261106;
 
+/** The runner the contract is played by.
+ *
+ * ADR-0341 raised the late-grade ICE to the gear the crafting system hands out;
+ * a harness that plays a bare runner then measures someone who no longer exists
+ * in the late game (its g6 contracts go to 0%). `--gear T6` is that runner, and
+ * bare stays the default so the recorded table is unchanged unless asked. */
+const gearIdx = process.argv.indexOf("--gear");
+const GEAR = gearSetByPrefix(gearIdx >= 0 ? (process.argv[gearIdx + 1] ?? "") : "");
+
 /** Thresholds reported for ADR-0337's control gate. `CONTROL_WEALTH` lives in
  * `ending_resolver.ts`; this table only says what each threshold WOULD produce. */
 const CONTROL_THRESHOLDS = [12000, 14000, 15000, 16000, 17000, 18000, 20000, 22000];
@@ -64,6 +74,11 @@ const CONTROL_THRESHOLDS = [12000, 14000, 15000, 16000, 17000, 18000, 20000, 220
  * grade is not a difficulty band": solo completion inside g4 spanned 1.6%
  * (`ta_heist`) to 100% (`mollys_razor`), because each mission's map is fixed by
  * its `matrix_seed`.
+ *
+ * ADR-0339/0341 (2026-11-22) moved the late encounter HP cap, so this table is
+ * now the **bare** runner's record only. It is a reference, not a gate: the routine
+ * does not run `campaign`. Pass `--gear T6` to measure the runner the late grades
+ * are tuned against.
  *
  * ADR-0319 (a won fight heals the body to a floor) then split that finding in
  * two. Inside g4 the spread collapsed to 59%..100% — g4's difficulty was
@@ -169,6 +184,7 @@ function playContract(start: Mission, sweepSeed: number, index: number): Result 
             ...(carry.credits !== undefined ? { credits: carry.credits } : {}),
             ...(carry.uniquePickDone ? { uniquePickDone: true } : {}),
           },
+      GEAR.loadout,
     );
     if (!final || final.runPhase !== "ending") {
       // Died mid-contract — the shown ending is `sacrifice`.
@@ -281,7 +297,8 @@ function main(): void {
 
   console.log(
     `campaign survival — ${CONTRACT}-mission contracts, ${SEEDS} seeds x ${SPRAWL.length} start missions, ` +
-      `carry ${FRESH ? "OFF (--fresh)" : "on"}, cards "${CARD_POLICY}", loot "${LOOT_POLICY}"`,
+      `carry ${FRESH ? "OFF (--fresh)" : "on"}, cards "${CARD_POLICY}", loot "${LOOT_POLICY}", ` +
+      `gear "${GEAR.name}"`,
   );
   console.log("");
   console.log("leg   reached   completed    of those reached");
@@ -378,11 +395,24 @@ function main(): void {
     byGrade.get(g) === undefined
       ? "n/a"
       : pct(byGrade.get(g)!.finished, byGrade.get(g)!.contracts).trim();
-  console.log(`NOTE (see ADR-0318 (e)/(f), ADR-0319, ADR-0321): g4 contracts complete ${rateOf(4)}`);
-  console.log(` and g5 ${rateOf(5)}, while g3 completes ${rateOf(3)}. ADR-0319's recovery moved g4 —`);
-  console.log(" its difficulty was attrition, and a floor removes it. g5 barely moves,");
-  console.log(" because it loses a single fight. The top of the ladder is therefore an OPEN");
-  console.log(" question: g4 reads easier than g3, and g5 is untouched.");
+  console.log(`NOTE (see ADR-0318 (e)/(f), ADR-0319, ADR-0339/0341): g4 contracts complete ${rateOf(4)}`);
+  console.log(` and g5 ${rateOf(5)}, while g3 completes ${rateOf(3)}.`);
+  // The verdict is read, not asserted: ADR-0339 raised g4's ICE to put the grade
+  // back under g3, so the old hard-coded "g4 reads easier" line would lie.
+  const g4UnderG3 =
+    (byGrade.get(4)?.finished ?? 0) / Math.max(1, byGrade.get(4)?.contracts ?? 1) <=
+    (byGrade.get(3)?.finished ?? 0) / Math.max(1, byGrade.get(3)?.contracts ?? 1);
+  if (GEAR.name.startsWith("bare")) {
+    console.log(
+      g4UnderG3
+        ? " g4 now sits under g3, but the top still collapses (g5/g6): the bare runner is no"
+        : " g4 still reads easier than g3: the encounter cap did not bite at that grade.",
+    );
+    console.log(" longer the reference at the top — run with `--gear T6` for the intended runner.");
+  } else {
+    console.log(" This row wears gear, so it is the runner ADR-0341 tuned against; the bare row is");
+    console.log(" the historical baseline and reads worse at the top by design.");
+  }
 }
 
 main();

@@ -4377,3 +4377,14 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **P3a(control)**: `campaign_survival.ts` 에 임계값 표 추가 — 12000→20.9 · 16000→14.2 · 17000→7.6 · 18000→2.9%. ADR-0337 표 재현 = 결정은 실험이 아니라 목표치 선택.
 - 근거: `docs/design/decision-grid-2026-11-22/` (README + grid.txt/csv). ADR-0339·0341 에 검증 절 + B′ 추가.
 - 검증: 러틴 8/8 pass · typecheck 0 · lint 0 error · balance/gear golden 불변(소스 복원 확인).
+
+## [2026-11-22] balance(wet_run) | 오너 결정 3건 구현 — late ICE cap 125/135/135 (ADR-0339·0341 Accepted)
+
+- 오너: 측정표를 보고 **B′ 채택**(cap `[95,95,95,125,135,135]`) · control **18000 유지**.
+- **구현**: `ENCOUNTER_HP_BY_GRADE` 3개 항 상향(`BOSS_HP_BY_GRADE` 무변경 — climax 예산 유지).
+  `web/scripts/gear_sets.ts` 신설(로드아웃 단일 정의, `gear` probe 와 공유), `campaign_survival.ts` 에 `--gear T1|T2|T4|T6`(기본 bare).
+- **결과**: gear T6 **g5 94.6→73 · g6 99.0→70**(ADR-0328 밴드) · 티어 단조 유지 · 캠페인 bare **g4 64.3→41.4**(g3 47.9, 역전 해소) · 캠페인 T6 = 100/100/100/100/33.9/21.7.
+- **기준 이동(의도)**: `balance` per-encounter 가 97.1/70.6/47.0 → **68.5/43.7/1.3**. ADR-0290 의 "opener 가 g6 를 이겨야 한다" 원칙을 ADR-0341 이 **대체** — g5/g6 의 기준 러너는 geared runner. 두 ADR 에 근거 기재.
+- **열린 문제**: T6 착용 시 **g3/g4 가 여전히 100%**(cap 145 까지 올려도 동일) → 중반 난이도는 encounter cap 으로 못 되돌린다.
+- 재기록: `balance.golden.json` · `gear.golden.json` · `balance_sim.test.ts` 두 행(근거 주석).
+- 검증: **vitest 238/4459 pass** · typecheck 0 · lint 0 error · 러틴 **8/8 pass**.

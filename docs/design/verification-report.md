@@ -1,6 +1,6 @@
 # Wet-Run 검증 보고
 
-**시간**: 2026-11-22T22:13:03Z  
+**시간**: 2026-11-22T22:22:47Z  
 **버전**: 3.1.0 (ADR-0335/0336)  
 **게이트**: 8/8 pass  
 
@@ -11,9 +11,9 @@
   "tail": [
     "> wetrun-web@0.1.0 balance:check",
     "> tsx scripts/balance_baseline.ts --check",
-    "  opening: g1=100.0% g2=100.0% g3=100.0% g4=97.1% g5=70.6% g6=47.0%",
-    "  veteran: g1=100.0% g2=100.0% g3=100.0% g4=96.0% g5=69.4% g6=46.3%",
-    "  heretic: g1=100.0% g2=100.0% g3=100.0% g4=95.2% g5=66.1% g6=42.3%",
+    "  opening: g1=100.0% g2=100.0% g3=100.0% g4=68.5% g5=43.7% g6=1.3%",
+    "  veteran: g1=100.0% g2=100.0% g3=100.0% g4=63.0% g5=43.7% g6=1.3%",
+    "  heretic: g1=100.0% g2=100.0% g3=100.0% g4=61.4% g5=43.7% g6=0.0%",
     "OK: balance matches golden (3 decks)."
   ]
 }
@@ -23,13 +23,13 @@
   "status": "pass",
   "exit": 0,
   "tail": [
-    "  enc T4 arasaka+body                  100 100 100 100 99 99",
+    "  enc T4 arasaka+body                  100 100 100 100 89 77",
     "  enc T6 master+zion                   100 100 100 100 100 100",
-    "  mis bare (recorded baseline)         100 100 83 83 26 42",
-    "  mis T1 street+eyes+gloves            100 100 85 85 28 49",
-    "  mis T2 corp+subdermal+ninja+boots    100 100 98 97 40 64",
-    "  mis T4 arasaka+body                  100 100 100 100 60 77",
-    "  mis T6 master+zion                   100 100 100 100 95 99",
+    "  mis bare (recorded baseline)         100 100 83 76 10 19",
+    "  mis T1 street+eyes+gloves            100 100 85 76 10 20",
+    "  mis T2 corp+subdermal+ninja+boots    100 100 98 95 20 34",
+    "  mis T4 arasaka+body                  100 100 100 99 36 57",
+    "  mis T6 master+zion                   100 100 100 100 73 70",
     "OK: gear curve matches golden."
   ]
 }

@@ -156,8 +156,16 @@ describe("balance sim — grade scaling", () => {
     // a roll does not) while g6 52.3 -> 57.0 (one dodged lethal hit is a run
     // that lives). The alphabetical five hold `cloak`; `INCOMING_BASE_ODDS` is
     // still 0/0, so nothing else moved.
-    { mode: "opening", expected: [100.0, 100.0, 100.0, 98.2, 72.8, 57.0] },
-    { mode: "ppl", expected: [100.0, 100.0, 100.0, 98.8, 86.1, 83.7] },
+    // ADR-0339 · ADR-0341 (2026-11-22) re-baseline the LATE rungs. The grid in
+    // `docs/design/decision-grid-2026-11-22/` measured that the gear the
+    // crafting system hands out made the top free (T6 gear: g5 94.6 / g6 99.0)
+    // and that g4 contracts finished above g3. The encounter HP cap for g4-g6
+    // rose to 125/135/135, which moves this BARE curve down at the top — the
+    // reference runner for g5/g6 is now a geared one, and `npm run gear` is the
+    // curve that reads it (T6: g5 73 / g6 70). The g6 assertion below still
+    // holds: the opener's g6 is the hardest rung, not a free one.
+    { mode: "opening", expected: [100.0, 100.0, 100.0, 81.7, 45.8, 9.7] },
+    { mode: "ppl", expected: [100.0, 100.0, 100.0, 96.1, 46.1, 8.3] },
   ])(
     "reproduces the ADR-0256 baseline exactly with idle disabled ($mode)",
     ({ mode, expected }) => {

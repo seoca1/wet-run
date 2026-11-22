@@ -19,21 +19,7 @@
  */
 import { pathToFileURL } from "node:url";
 import { missionGradeOf } from "../src/core/combat/ice_scaling";
-import { EMPTY_LOADOUT, equipOn, makeLoadout } from "../src/core/state/loadout";
-import {
-  ARASAKA_DECK,
-  BOOTS_GHOST,
-  CHROME_GLOVES,
-  CORPORATE_DECK,
-  MASTER_BODY,
-  MILITECH_EYES,
-  STREET_DECK,
-  SUBDERMAL,
-  TACTICAL_BODY,
-  TRODES_NINJA,
-  ZION_TRODES,
-  type Equipment,
-} from "../src/core/state/equipment";
+import { GEAR_SETS } from "./gear_sets";
 import { loadIceCatalog, loadMissionsCatalog, loadProgramsCatalog } from "../src/core/data_loaders";
 import { deckForGrade, mulberry32, simulateCombat } from "./balance_sim";
 import { playRun } from "./play_policy";
@@ -47,16 +33,8 @@ const missions = loadMissionsCatalog(missionsJson);
 const programs = loadProgramsCatalog(programsJson);
 const ALL = Object.values(missions) as Array<Mission & { source_universe?: string }>;
 
-const gear = (...items: Equipment[]) =>
-  items.reduce((l, e) => equipOn(l, e).loadout, makeLoadout());
-
-const SETS: ReadonlyArray<{ name: string; loadout: ReturnType<typeof makeLoadout> }> = [
-  { name: "bare (recorded baseline)", loadout: EMPTY_LOADOUT },
-  { name: "T1 street+eyes+gloves", loadout: gear(STREET_DECK, MILITECH_EYES, CHROME_GLOVES) },
-  { name: "T2 corp+subdermal+ninja+boots", loadout: gear(CORPORATE_DECK, SUBDERMAL, TRODES_NINJA, BOOTS_GHOST) },
-  { name: "T4 arasaka+body", loadout: gear(ARASAKA_DECK, TACTICAL_BODY) },
-  { name: "T6 master+zion", loadout: gear(MASTER_BODY, ZION_TRODES) },
-];
+/** One definition, shared with `campaign --gear` (ADR-0341). */
+const SETS = GEAR_SETS;
 
 const GRADES = [1, 2, 3, 4, 5, 6];
 const pad = (n: number, w = 3): string => n.toFixed(0).padStart(w);

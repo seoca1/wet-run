@@ -25,24 +25,24 @@
       },
       {
         "grade": 4,
-        "winRate": 97.1,
+        "winRate": 68.5,
         "stalled": 0,
-        "meanTurns": 5.2,
-        "meanHpEnd": 48.9
+        "meanTurns": 6.4,
+        "meanHpEnd": 34.3
       },
       {
         "grade": 5,
-        "winRate": 70.6,
+        "winRate": 43.7,
         "stalled": 0,
-        "meanTurns": 5,
-        "meanHpEnd": 37.4
+        "meanTurns": 5.9,
+        "meanHpEnd": 22.5
       },
       {
         "grade": 6,
-        "winRate": 47,
+        "winRate": 1.3,
         "stalled": 0,
-        "meanTurns": 4.9,
-        "meanHpEnd": 23.5
+        "meanTurns": 5.3,
+        "meanHpEnd": 0.7
       }
     ],
     "veteran": [
@@ -69,24 +69,24 @@
       },
       {
         "grade": 4,
-        "winRate": 96,
+        "winRate": 63,
         "stalled": 0,
-        "meanTurns": 5.2,
-        "meanHpEnd": 48.4
+        "meanTurns": 6.5,
+        "meanHpEnd": 31.6
       },
       {
         "grade": 5,
-        "winRate": 69.4,
+        "winRate": 43.7,
         "stalled": 0,
-        "meanTurns": 5,
-        "meanHpEnd": 36.8
+        "meanTurns": 5.9,
+        "meanHpEnd": 22.5
       },
       {
         "grade": 6,
-        "winRate": 46.3,
+        "winRate": 1.3,
         "stalled": 0,
-        "meanTurns": 4.9,
-        "meanHpEnd": 23.2
+        "meanTurns": 5.3,
+        "meanHpEnd": 0.7
       }
     ],
     "heretic": [
@@ -113,24 +113,24 @@
       },
       {
         "grade": 4,
-        "winRate": 95.2,
+        "winRate": 61.4,
         "stalled": 0,
-        "meanTurns": 5.3,
-        "meanHpEnd": 47.7
+        "meanTurns": 6.5,
+        "meanHpEnd": 30.7
       },
       {
         "grade": 5,
-        "winRate": 66.1,
+        "winRate": 43.7,
         "stalled": 0,
-        "meanTurns": 5,
-        "meanHpEnd": 34.4
+        "meanTurns": 5.9,
+        "meanHpEnd": 22.2
       },
       {
         "grade": 6,
-        "winRate": 42.3,
+        "winRate": 0,
         "stalled": 0,
-        "meanTurns": 5,
-        "meanHpEnd": 21.2
+        "meanTurns": 5.3,
+        "meanHpEnd": 0
       }
     ]
   }

@@ -1,6 +1,6 @@
 # ADR-0341: 장비는 난이도를 넘어선다 — T6가 g5/g6를 95/99로 만든다
 
-**상태**: Draft (오너 결정 대기)
+**상태**: Accepted (2026-11-22 — 오너: **Option B**, cap `[95,95,95,125,135,135]`)
 **날짜**: 2026-11-19
 **결정자**: 사용자
 **우선순위**: P1 (장비 · 난이도)
@@ -109,23 +109,42 @@ g4 항(125)은 ADR-0339 의 몫이고, g5/g6(135)은 이 ADR 의 몫이다. 장�
 ## 사용자 결정 (Decision)
 
 [ ] Option A — 장비 더 낮춤
-[ ] **Option B — ICE 상향 `[95,95,95,125,135,135]` (측정 통과)**
+[x] **Option B — ICE 상향 `[95,95,95,125,135,135]` (측정 통과)**
 [ ] Option C — 수용(파워 판타지)
 [ ] Option D — gear effect cap
 [ ] 기타: ___
 
+**오너 확정 (2026-11-22)**: B. ADR-0339(Option B′)와 **같은 셀**이므로 두 ADR 은 함께
+Accepted — 한 번의 구현·한 번의 골든 재기록.
+
 ## 결과 (Consequences)
 
-(결정 후 작성)
+- `ENCOUNTER_HP_BY_GRADE = [95,95,95,125,135,135]` — `BOSS_HP_BY_GRADE` 는 무변경
+  (climax 는 자기 예산 유지, ADR-0290).
+- **T6 장비 곡선이 밴드에 들어온다**: g5 **94.6 → 73** · g6 **99.0 → 70**, 그리고
+  장비 티어가 단조하다 (T2 → T4 → T6 = g5 20 → 36 → 73).
+- **캠페인 하네스에 로드아웃 옵션 추가** (`campaign_survival.ts --gear T1|T2|T4|T6`).
+  기본은 bare 로 두어 기록 표가 저절로 움직이지 않는다. 장비 세트 정의는
+  `web/scripts/gear_sets.ts` 로 옮겨 `gear` probe 와 공유(같은 정의가 두 곳에서 갈라지지 않게).
+- **기준선 이동**: g5/g6 의 기준 러너는 이제 geared runner 다. bare opener 곡선은
+  `balance` 골든에서 68.5/43.7/1.3 으로 재기록 — ADR-0290 의 "opener 가 g6 를 이겨야
+  한다"는 원칙을 **이 ADR 이 대체**한다(장비가 전제가 되면 opening 덱은 g6 의 기준이 아니다).
+- **남은 열린 질문**: T6 를 착용하면 g3/g4 가 여전히 **100%** (cap 145 까지 올려도 동일).
+  중반 등급의 난이도는 encounter cap 으로 되돌릴 수 없다 — 별도 결정.
 
-## Implementation Status (2026-11-19)
+## Implementation Status (2026-11-22)
 
-**Status**: ❌ Not started (측정·브리프만)
+**Status**: ✅ Implemented
 
 **Evidence**:
-- 측정: `npm run gear` (bare g5/g6 26/42 → T6 95/99)
+- `web/src/core/combat/ice_scaling.ts` — cap `[95,95,95,125,135,135]`
+- `web/scripts/gear_sets.ts` — gear 세트 단일 정의 (`gear` probe + `campaign --gear` 공유)
+- `web/scripts/campaign_survival.ts` — `--gear` 로드아웃 (기본 bare)
+- 측정: T6 g5/g6 **73/70** · 캠페인 T6 100/100/100/100/33.9/21.7 · bare 100/90/47.9/41.4/1.1/0.0
+- 골든: `gear.golden.json` · `balance.golden.json` 재기록
 
-**Notes**: P2(ADR-0339 Option B)와 동시 설계 권장. bare 골든·survival target 재기록이 따른다.
+**Notes**: `CONTRACT_TARGETS` 는 2026-11-17 bare 측정값 그대로다(러틴 게이트 아님).
+geared 기준 표는 `--gear T6` 로 별도 기록할 수 있다.
 
 ## 영향 받는 항목
 
@@ -140,3 +159,4 @@ g4 항(125)은 ADR-0339 의 몫이고, g5/g6(135)은 이 ADR 의 몫이다. 장�
 ## 변경 이력
 
 - 2026-11-19: Draft 작성 (P4 측정 + 선택지, 오너 결정 대기)
+- 2026-11-22: 그리드 실측 → Accepted (Option B), 구현·골든 재기록·campaign `--gear` 추가

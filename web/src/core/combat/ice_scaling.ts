@@ -385,7 +385,21 @@ export function encounterIceIdForGrade(grade: number, seed?: number): string {
  * The per-grade discussion below is kept for the mechanism (why the cap is a
  * step function), not as a description of the current numbers.
  */
-const ENCOUNTER_HP_BY_GRADE: ReadonlyArray<number> = [95, 95, 95, 95, 95, 95];
+/** **ADR-0339 · ADR-0341 (2026-11-22): the late rungs.** The cap was flat 95 at
+ * every grade. Measured against the gear the crafting system now hands out, that
+ * made the top of the ladder free: T6 gear won 94.6% of g5 and 99.0% of g6
+ * missions, and g4 read easier than g3 at contract level (64.3% vs 50.0%).
+ *
+ * Raising the last three rungs to 125/135/135 is the only cell that passes all
+ * four criteria at once (campaign g3 >= g4, T6 back inside ADR-0328's 65/70
+ * band, gear tiers still monotone, goldens re-recordable) — `ENCOUNTER_HP_BY_GRADE`
+ * stays monotonic non-decreasing, and `BOSS_HP_BY_GRADE` is a separate table so
+ * the climax keeps its budget (ADR-0290). Evidence:
+ * `docs/design/decision-grid-2026-11-22/`.
+ *
+ * The damage bonus is untouched: the grid measured that the g4 bonus is a no-op
+ * in this range (campaign g4 64.3 -> 65.0 -> 60.0 at +0/+10/+20). */
+const ENCOUNTER_HP_BY_GRADE: ReadonlyArray<number> = [95, 95, 95, 125, 135, 135];
 
 /** Per-grade ICE auto-attack bonus (percentage added to the base `tier * 3 +
  * armor` formula). Index = grade - 1.

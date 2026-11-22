@@ -4352,3 +4352,10 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **도구 경화(중요)**: 중단된 spike 실행이 **소스 3파일을 변이된 채 남겼다**(커밋 직전까지 갔다) → 시그널(SIGINT/TERM/HUP/PIPE) 복구 + 프리플라이트(낡은 트리면 `git checkout` 안내 후 중단).
 - **결과: 33/33 KILLED, exit 0**. mutation 결과 3종 확정: KILLED / SURVIVED / **HANG**(세 번째가 더 나쁘다).
 - 검증: vitest 237 files/4457 · typecheck 0 · 러틴 8/8.
+
+## [2026-11-22] test(verify) | mutation 을 던전 크롤러까지 — 36/36 KILLED (ADR-0352)
+
+- 오너 "응 진행해". 세부 모듈(던전 크롤러). 변이 3: `TileType.FLOOR "."→","`·`EntityType.MONSTER "M"→"m"`·`MonsterType.ICE_GOLIATH "g"→"G"` + 신규 `dungeon_crawler_types.test.ts`.
+- **결과: 36/36 KILLED.**
+- **값 미고정(또)**: 글리프 enum 값을 고정하는 테스트가 없었음(wiring 테스트는 존재/이동만). 계약 테스트가 각 1개로 잡음.
+- 검증: mutation 36/36 · vitest 238 files/4459 · typecheck 0 · 러틴 8/8.

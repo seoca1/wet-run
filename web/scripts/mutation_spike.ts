@@ -26,6 +26,9 @@ const COMBAT = "src/core/combat/combat_engine.ts";
 const ENDING = "src/core/combat/ending_resolver.ts";
 const WALLET = "src/core/state/wallet.ts";
 const STATE = "src/core/state/state.ts";
+const MATRIX = "src/core/dungeon/matrix.ts";
+const MATRIX_NAV = "src/core/dungeon/matrix_navigation.ts";
+const LAYOUT = "src/core/dungeon/dungeon_layout.ts";
 
 interface Mutation {
   readonly id: string;
@@ -53,6 +56,10 @@ const MUTATIONS: readonly Mutation[] = [
   { id: "merge-mints-seed", file: WALLET, find: "Math.floor(Number(run.materials[k] ?? 0)) -", replace: "Math.floor(Number(run.materials[k] ?? 0)) +" },
   { id: "earned-keeps-seed", file: WALLET, find: "const gained = Math.floor(Number(v)) - Math.floor(Number(seed[k] ?? 0));", replace: "const gained = Math.floor(Number(v)) - 0;" },
   { id: "carry-drops-materials", file: STATE, find: "materials: addStacks(previous.inventory.materials, fresh.inventory.materials),", replace: "materials: fresh.inventory.materials," },
+  // Matrix / dungeon topology (ADR-0333 rubric: does the suite see the board?).
+  { id: "matrix-nodes-short", file: MATRIX, find: "export const NUM_NODES = 5;", replace: "export const NUM_NODES = 4;" },
+  { id: "nohop-zero", file: MATRIX_NAV, find: "export const NO_HOP = -1;", replace: "export const NO_HOP = 0;" },
+  { id: "grid-g4-shrunk", file: LAYOUT, find: "4: [13, 8],", replace: "4: [9, 6]," },
 ];
 
 const DEFAULT_TESTS = [
@@ -60,6 +67,11 @@ const DEFAULT_TESTS = [
   "tests/ending_resolver.test.ts",
   "tests/adr0315_campaign_chain.test.ts",
   "tests/adr0323_the_hoard_outlives_the_run.test.ts",
+  "tests/matrix_structure.test.ts",
+  "tests/matrix.test.ts",
+  "tests/matrix_navigation.test.ts",
+  "tests/dungeon_layout.test.ts",
+  "tests/exploration.test.ts",
   "tests/ice_crit.test.ts",
   "tests/ice_alarm_multiplier.test.ts",
   "tests/crit_vfx_link.test.ts",

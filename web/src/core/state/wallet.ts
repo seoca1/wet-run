@@ -53,6 +53,31 @@ export function seedRunWallet(
   };
 }
 
+/** What a run's seed spans (ADR-0338): the sum of EVERY contract leg's reward,
+ *  or the single mission's reward when there is no contract.
+ *
+ *  This lived inline in `main.ts` and was the one piece of the wallet math with
+ *  no unit test — a mutation of the seed sum would have SURVIVED. Pulled out as
+ *  a pure function so `tests/adr0338_run_seed.test.ts` can pin it. */
+export function contractSeedMaterials(
+  legs:
+    | ReadonlyArray<{
+        readonly mission: {
+          readonly rewards: { readonly materials: Readonly<Record<string, number>> };
+        };
+      }>
+    | undefined,
+  missionRewardMaterials: Readonly<Record<string, number>>,
+): Record<string, number> {
+  if (legs === undefined || legs.length === 0) {
+    return addStacks({}, missionRewardMaterials);
+  }
+  return legs.reduce<Record<string, number>>(
+    (acc, leg) => addStacks(acc, leg.mission.rewards.materials),
+    {},
+  );
+}
+
 /** What a run EARNED, never negative: the run's stacks minus the seed's. */
 export function earnedMaterials(
   run: Readonly<Record<string, number>>,

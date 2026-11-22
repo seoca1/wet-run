@@ -60,6 +60,8 @@ const MUTATIONS: readonly Mutation[] = [
   { id: "matrix-nodes-short", file: MATRIX, find: "export const NUM_NODES = 5;", replace: "export const NUM_NODES = 4;" },
   { id: "nohop-zero", file: MATRIX_NAV, find: "export const NO_HOP = -1;", replace: "export const NO_HOP = 0;" },
   { id: "grid-g4-shrunk", file: LAYOUT, find: "4: [13, 8],", replace: "4: [9, 6]," },
+  // The run seed (ADR-0338), now a pure function (`contractSeedMaterials`).
+  { id: "seed-ignores-contract", file: WALLET, find: "(acc, leg) => addStacks(acc, leg.mission.rewards.materials),", replace: "(acc, _leg) => acc," },
 ];
 
 const DEFAULT_TESTS = [
@@ -67,6 +69,7 @@ const DEFAULT_TESTS = [
   "tests/ending_resolver.test.ts",
   "tests/adr0315_campaign_chain.test.ts",
   "tests/adr0323_the_hoard_outlives_the_run.test.ts",
+  "tests/adr0338_run_seed.test.ts",
   "tests/matrix_structure.test.ts",
   "tests/matrix.test.ts",
   "tests/matrix_navigation.test.ts",

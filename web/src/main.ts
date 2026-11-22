@@ -164,7 +164,7 @@ import {
 } from "./core/state/owned_equipment";
 import { applyEquipmentSurvival } from "./core/state/equipment_stats";
 import {
-  addStacks,
+  contractSeedMaterials,
   mergeRunIntoWallet,
   readWalletMaterials,
   seedRunWallet,
@@ -1611,15 +1611,12 @@ class Game {
     // ADR-0323 / ADR-0338: the run is seeded from the HOARD, and the seed spans
     // the WHOLE contract's rewards (the run accumulates every leg's reward, see
     // `startNextLeg`), so `mergeRunIntoWallet` banks only what the run EARNED —
-    // jacking out on frame one mints nothing.
-    const contractRewardMaterials = (this.state.campaign?.legs ?? []).reduce(
-      (acc: Record<string, number>, l) => addStacks(acc, l.mission.rewards.materials),
-      {},
+    // jacking out on frame one mints nothing. The span lives in `wallet.ts` now
+    // (`contractSeedMaterials`), where a unit test pins it.
+    const seedRewards = contractSeedMaterials(
+      this.state.campaign?.legs,
+      this.state.mission.rewards.materials,
     );
-    const seedRewards =
-      this.state.campaign === undefined
-        ? this.state.mission.rewards.materials
-        : contractRewardMaterials;
     this.runWalletSeed = seedRunWallet(this.inventory, { credits: 0, materials: seedRewards });
     // ADR-0322: the run reads `state.equipmentLoadout`, so the menu's gear has
     // to be ON the state — not merely next to it. `makeInitialState` builds it

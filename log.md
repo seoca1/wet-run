@@ -4312,3 +4312,11 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **추가**: `tests/adr0338_run_seed.test.ts`(4: span · 잭아웃 1프레임 주조 0 · 번 것만 적립) + 변이 `seed-ignores-contract`.
 - **결과: mutation 19/19** — `seed-ignores-contract` KILLED → 이제 seed 호출부가 테스트된다.
 - 검증: vitest 237 files/4451 · typecheck 0 · lint 0 · 러틴 8/8.
+
+## [2026-11-22] test(economy) | 런 종료 장비 병합도 순수 함수로 빼서 테스트 (ADR-0347)
+
+- 오너 "응" = ADR-0346 후속(앱-루프 잔여 로직).
+- **결정**: `owned_equipment.ts` 에 `mergeDroppedEquipment(owned, droppedIds)` 추출(새 게 없으면 **같은 레코드** → 쓰기 skip) → `endRun` 이 호출.
+- **추가**: `owned_equipment.test.ts` 3 테스트(모두 소유·같은 참조·순서 무관) + 변이 `drops-ignored`.
+- **결과: mutation 20/20** — `drops-ignored` KILLED.
+- 검증: vitest 237 files/4454 · typecheck 0 · 러틴 8/8.

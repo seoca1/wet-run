@@ -81,6 +81,13 @@ describe("quotaLevel", () => {
     expect(quotaLevel(STORAGE_QUOTA_CRITICAL_PERCENT)).toBe("critical");
     expect(quotaLevel(100)).toBe("critical");
   });
+
+  it("pins the band values — a change to them is a design decision (ADR-0349)", () => {
+    // The tests above import these constants, so they move together and can
+    // never catch a change to the VALUE. This pins the contract.
+    expect(STORAGE_QUOTA_WARNING_PERCENT).toBe(80);
+    expect(STORAGE_QUOTA_CRITICAL_PERCENT).toBe(95);
+  });
 });
 
 describe("summarizeQuota", () => {

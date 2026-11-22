@@ -32,6 +32,9 @@ const LAYOUT = "src/core/dungeon/dungeon_layout.ts";
 const OWNED = "src/core/state/owned_equipment.ts";
 const EFFECTS = "src/core/combat/program_effects.ts";
 const FACTION = "src/core/state/faction_reputation.ts";
+const COMPRESS = "src/save/compress.ts";
+const QUOTA = "src/save/storage_quota.ts";
+const STORAGE = "src/save/storage.ts";
 
 interface Mutation {
   readonly id: string;
@@ -71,6 +74,11 @@ const MUTATIONS: readonly Mutation[] = [
   { id: "base-damage-4", file: EFFECTS, find: "return program.tier * 5;", replace: "return program.tier * 4;" },
   { id: "allied-threshold", file: FACTION, find: "{ tier: \"ALLIED\", min: 80 },", replace: "{ tier: \"ALLIED\", min: 70 }," },
   { id: "allied-multiplier", file: FACTION, find: "ALLIED: 0.5,", replace: "ALLIED: 0.9," },
+  // Save pipeline: compression threshold, quota bands, slot count, schema.
+  { id: "compress-threshold", file: COMPRESS, find: "export const COMPRESSION_THRESHOLD_BYTES = 512;", replace: "export const COMPRESSION_THRESHOLD_BYTES = 1024;" },
+  { id: "quota-warn-band", file: QUOTA, find: "export const STORAGE_QUOTA_WARNING_PERCENT = 80;", replace: "export const STORAGE_QUOTA_WARNING_PERCENT = 70;" },
+  { id: "slot-count", file: STORAGE, find: "const MANUAL_SLOT_COUNT = 3;", replace: "const MANUAL_SLOT_COUNT = 2;" },
+  { id: "schema-version", file: STORAGE, find: "const CURRENT_SCHEMA_VERSION = 1;", replace: "const CURRENT_SCHEMA_VERSION = 2;" },
 ];
 
 const DEFAULT_TESTS = [
@@ -83,6 +91,11 @@ const DEFAULT_TESTS = [
   "tests/program_effects.test.ts",
   "tests/program_catalog_text.test.ts",
   "tests/faction_reputation.test.ts",
+  "tests/compress.test.ts",
+  "tests/save_compression_size.test.ts",
+  "tests/storage_quota.test.ts",
+  "tests/storage.test.ts",
+  "tests/state_save.test.ts",
   "tests/matrix_structure.test.ts",
   "tests/matrix.test.ts",
   "tests/matrix_navigation.test.ts",

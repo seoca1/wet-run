@@ -12,9 +12,9 @@
  * them together is `tests/save_slot_schema.test.ts`: it holds the writer's
  * output to these keys and holds this table to `keyof SaveSlot`.
  *
- * `check` is `undefined` for the fields the old validator never inspected. That
- * is a pre-existing gap, kept as data here rather than silently tightened — the
- * tests assert the unchecked set, so narrowing it is a visible decision.
+ * Every field is checked now. The four that the old validator skipped
+ * (`campaignMissionIds`, `campaignCompleted`, `uniquePickDone`, `intelNodes`)
+ * were closed on 2026-11-24 — a malformed one reaches `slotToGameState`.
  */
 import type { SaveSlot } from "../core/types";
 
@@ -37,6 +37,13 @@ const isOptionalNodeList = (v: unknown): boolean =>
   v === undefined ||
   (Array.isArray(v) &&
     v.every((i: unknown) => typeof i === "number" && Number.isInteger(i) && i >= 0));
+/** Optional: absent, or a list of strings (a campaign's mission ids). */
+const isOptionalStringList = (v: unknown): boolean => v === undefined || isStringArray(v);
+/** Optional: absent, or a non-negative integer (how many legs are done). */
+const isOptionalCount = (v: unknown): boolean =>
+  v === undefined || (typeof v === "number" && Number.isInteger(v) && v >= 0);
+/** Optional: absent, or a boolean. */
+const isOptionalBoolean = (v: unknown): boolean => v === undefined || typeof v === "boolean";
 /** Optional: absent, or a non-empty string (ADR-0261). */
 const isOptionalId = (v: unknown): boolean =>
   v === undefined || (typeof v === "string" && v.length > 0);
@@ -63,12 +70,13 @@ export const SLOT_FIELDS: ReadonlyArray<SlotFieldSpec> = Object.freeze([
   { key: "savedAt", required: true, check: isString },
   { key: "graphicNovelProgress", required: false, check: isGraphicNovelProgress },
   { key: "currentNodeIndex", required: false, check: (v) => v === undefined || isFiniteNumber(v) },
-  // The four below are written by `stateToSaveSlot` and read by
-  // `slotToGameState`, but the old validator never looked at them.
-  { key: "campaignMissionIds", required: false },
-  { key: "campaignCompleted", required: false },
-  { key: "uniquePickDone", required: false },
-  { key: "intelNodes", required: false },
+  // The four below used to be written and read without ever being checked. A
+  // malformed value reaches `slotToGameState` — `campaignMissionIds.map` would
+  // throw on a non-array — so they are checked now (2026-11-24).
+  { key: "campaignMissionIds", required: false, check: isOptionalStringList },
+  { key: "campaignCompleted", required: false, check: isOptionalCount },
+  { key: "uniquePickDone", required: false, check: isOptionalBoolean },
+  { key: "intelNodes", required: false, check: isOptionalNodeList },
   { key: "clearedEncounterNodes", required: false, check: isOptionalNodeList },
   { key: "bypassedEncounterNodes", required: false, check: isOptionalNodeList },
   { key: "cardRewardTaken", required: false, check: isOptionalId },

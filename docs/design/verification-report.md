@@ -1,6 +1,6 @@
 # Wet-Run 검증 보고
 
-**시간**: 2026-11-24T22:56:26Z  
+**시간**: 2026-11-24T22:57:52Z  
 **버전**: 3.1.0 (ADR-0335/0336)  
 **게이트**: 9/9 pass  
 
@@ -87,7 +87,7 @@
   "status": "pass",
   "exit": 0,
   "tail": [
-    "OK: 2067 user-facing strings, no 8-word run matches the quoted prose in Fiction/wiki."
+    "OK: 2069 user-facing strings, no 8-word run matches the quoted prose in Fiction/wiki."
   ]
 }
 

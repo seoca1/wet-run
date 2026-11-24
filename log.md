@@ -4476,3 +4476,10 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **결합**: `tests/save_slot_schema.test.ts` 가 (1) `Record<keyof SaveSlot, true>` 리터럴로 **타입에 필드 추가 시 컴파일 실패**, (2) 스키마 키 집합과 일치, (3) 작성자 출력 키 ⊆ 스키마 & required 전부 포함, (4) **미검증 4필드를 데이터로 노출**(좁히면 의도적 편집).
 - **문서 주장**: 테스트 수가 늘어(238→239 파일, 4459→4464) `doc_claims` 게이트가 실패 → README/ROADMAP 을 **하한 표기**(`4400+`, `238+`)로 전환(규약 §3.1).
 - 검증: 러틴 **9/9** · vitest **239/4464** · typecheck 0 · lint 0 error · balance/gear 골든 byte-identical · 저장 관련 테스트 34 pass.
+
+## [2026-11-24] fix(save) | 검증되지 않던 슬롯 필드 4개에 검사 추가 (동작 변경 — 버그 수정)
+
+- **왜 별도 커밋인가**: 3b 는 **동작 보존**(기존 검사 규칙을 그대로 스키마로 옮김). 이 커밋은 **규칙을 강화**하므로 성격이 다르다.
+- **닫은 구멍**: `campaignMissionIds`(문자열 배열) · `campaignCompleted`(0 이상 정수) · `uniquePickDone`(불리언) · `intelNodes`(노드 목록). 이전에는 손상된 값이 `slotToGameState` 까지 도달했다 — `campaignMissionIds.map` 은 배열이 아니면 **throw**.
+- **근거**: 작성자가 쓰고 복원 경로가 읽는 필드인데 검증만 없었다. 정상 저장은 영향 없음(작성자는 항상 올바른 타입을 쓴다).
+- 검증: 러틴 **9/9** · vitest **239/4465** · 새 테스트 8케이스(비정상 거부 + 정상 통과) · 저장 관련 테스트 35 pass.

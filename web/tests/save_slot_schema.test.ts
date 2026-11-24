@@ -13,7 +13,13 @@
  */
 import { describe, it, expect } from "vitest";
 import type { SaveSlot } from "../src/core/types";
-import { SLOT_FIELDS, SLOT_KEYS, REQUIRED_SLOT_KEYS, UNCHECKED_SLOT_KEYS } from "../src/save/slot_schema";
+import {
+  SLOT_FIELDS,
+  SLOT_KEYS,
+  REQUIRED_SLOT_KEYS,
+  UNCHECKED_SLOT_KEYS,
+  validateSlot,
+} from "../src/save/slot_schema";
 import { stateToSaveSlot, makeInitialState } from "../src/core/state/state";
 import { loadIceCatalog, loadMissionsCatalog, loadProgramsCatalog } from "../src/core/data_loaders";
 import { startingDeck } from "../src/core/state/starting_deck";
@@ -94,15 +100,39 @@ describe("save slot schema", () => {
     expect(missing, "writer skipped a required key — the save would not load").toEqual([]);
   });
 
-  it("keeps the unchecked set visible", () => {
-    // These four are written and read, but the validator never inspected them.
-    // Listing them here means narrowing the gap is a deliberate edit.
-    expect([...UNCHECKED_SLOT_KEYS].sort()).toEqual([
-      "campaignCompleted",
-      "campaignMissionIds",
-      "intelNodes",
-      "uniquePickDone",
-    ]);
+  it("checks every field (the old gap is closed)", () => {
+    // These four used to be written and read without a check; a malformed value
+    // reached slotToGameState. Empty here means the gap stayed closed.
+    expect([...UNCHECKED_SLOT_KEYS]).toEqual([]);
+  });
+
+  it("rejects malformed values for the fields that were unchecked", () => {
+    const base = stateToSaveSlot(freshState());
+    const cases: ReadonlyArray<[string, unknown]> = [
+      ["campaignMissionIds", "not-an-array"],
+      ["campaignMissionIds", [1, 2]],
+      ["campaignCompleted", "2"],
+      ["campaignCompleted", -1],
+      ["campaignCompleted", 1.5],
+      ["uniquePickDone", "yes"],
+      ["intelNodes", ["north"]],
+      ["intelNodes", [-3]],
+    ];
+    for (const [key, value] of cases) {
+      expect(validateSlot({ ...base, [key]: value }), `${key} = ${JSON.stringify(value)}`).toBe(
+        false,
+      );
+    }
+    // And the well-formed shapes still pass.
+    expect(
+      validateSlot({
+        ...base,
+        campaignMissionIds: ["a", "b"],
+        campaignCompleted: 1,
+        uniquePickDone: true,
+        intelNodes: [3, 7],
+      }),
+    ).toBe(true);
   });
 
   it("has a check for every field it claims to check", () => {

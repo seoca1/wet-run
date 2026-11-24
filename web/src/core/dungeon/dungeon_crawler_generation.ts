@@ -16,7 +16,12 @@ import type { DungeonState, DungeonTile } from "./dungeon_crawler_types";
 import { placeEntities, placePlayerAtEntry } from "./dungeon_crawler_entities";
 import { mulberry32 } from "../rng";
 
-/** Create a seeded RNG (mirrors Python hash(id) % 7919) */
+/** Create the crawler's RNG. The mission id is folded INTO the seed
+ * (`h = seed`, then `h * 31 + char`), then offset by `abs(h) % 7919`.
+ *
+ * NOT the same as `applyMissionIdSeed` in `dungeon_layout.ts`, which starts the
+ * hash at 0 and ADDS the offset to the seed — the two agree on nothing but the
+ * multiplier and the modulus. Kept apart on purpose (refactor 2026-11-24). */
 export function createRng(seed: number, missionId: string | null): Rng {
   let h = seed;
   if (missionId !== null) {

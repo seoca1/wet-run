@@ -33,7 +33,11 @@ export function equipmentDropForGrade(grade: number): string | null {
 type DropSource = Pick<GameState, "mission" | "droppedEquipment">;
 
 /** FNV-1a over the mission id — mixes in a value that varies per mission, so
- *  the roll does not inherit `matrix_seed`'s clustering. */
+ *  the roll does not inherit `matrix_seed`'s clustering.
+ *
+ *  A third, deliberately unrelated hash: the dungeon seeds use `h * 31 + char`
+ *  (`applyMissionIdSeed`, `createRng`) and this one is FNV-1a. Do not merge them
+ *  — the value IS the design (refactor 2026-11-24). */
 function hashString(s: string): number {
   let h = 2166136261 >>> 0;
   for (let i = 0; i < s.length; i += 1) {

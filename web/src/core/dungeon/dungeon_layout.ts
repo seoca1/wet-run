@@ -436,7 +436,13 @@ export class ProceduralDungeonGenerator {
   }
 }
 
-/** Stable string-hash seed offset (mirrors Python `hash(id) % 7919`). */
+/** Stable string-hash seed offset for the MATRIX layout (mirrors Python
+ * `hash(id) % 7919`): `seed + abs(hash(id)) % 7919`.
+ *
+ * Deliberately NOT shared with the crawler's `createRng`, which folds the id
+ * INTO the seed instead of adding an offset — the two produce different values,
+ * and `tests/dungeon_pool_separation.test.ts` pins this one. Refactor 2026-11-24
+ * looked at merging them and stopped: same shape, different numbers. */
 function applyMissionIdSeed(seed: number, missionId: string | null): number {
   if (missionId === null) return seed;
   let h = 0;

@@ -4418,3 +4418,14 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **원인**: `equipment.ts` 가 카탈로그를 **값으로** import 하므로, 카탈로그·set_bonus 가 `makeEquipStats` 를 가져오면 런타임 사이클. 그래서 **같은 12필드 병합이 3벌**(`makeEquipStats` · 카탈로그의 `s()` · set_bonus 의 `makeStats`), `addStats` 도 2벌.
 - **수정**: `src/core/state/equip_stats.ts`(리프, import 없음)로 `EquipStats` + `makeEquipStats` + `addStats` 이동 → **사이클 자체를 제거**. `equipment.ts` 는 재수출로 기존 import 경로 보존(loadout·테스트 무수정).
 - **검증**: `gear:check` · `balance:check` **byte-identical** · vitest 238/4459 · 러틴 8/8 · 남은 병합 구현은 `equip_stats.ts` 한 곳(확인).
+
+## [2026-11-24] refactor(stage1c) | 미션 id 해시 5벌 — **합치지 않음**, 이유를 각 지점에 기록
+
+- **측정 결과 "중복처럼 보이지만 아니다"**: 5벌이 전부 값이 다르다.
+  1. `dungeon_layout.applyMissionIdSeed` — `seed + abs(hash(id)) % 7919` (해시를 0에서 시작) → **매트릭스 레이아웃 시드**
+  2. `dungeon_crawler_generation.createRng` — 해시를 **시드에 접어넣음**(`h = seed`) → 값이 다름. 주석이 "mirrors Python hash(id) % 7919" 라고 **거짓 주장**하고 있었음 → 실제 동작으로 정정
+  3. `dungeon_crawler_core.stringHashCode` — **시드 없는 폴백 경로**(`Date.now()`)에서만 사용
+  4. `equipment_drops.hashString` — FNV-1a, "matrix_seed 의 군집을 물려받지 않기 위해" 의도적으로 다름
+  5. `state_helpers` — 이벤트 id 생성용 FNV-1a 복합 키
+- **결정**: 통일하면 기록 곡선이 이동한다(ADR-0321 전례) → **주석 4곳에 "무엇과 다르고 왜 다른가"를 명시**. 코드 변경 0.
+- 검증: vitest 238/4459 · 러틴 8/8 (주석만 변경).

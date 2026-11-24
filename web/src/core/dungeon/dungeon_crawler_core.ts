@@ -35,7 +35,10 @@ import {
   getMonsterDamage,
 } from "./dungeon_crawler_actions";
 
-/** String hashCode function for mission-based seeding (mirrors Python's hash) */
+/** String hashCode for the NO-SEED fallback path below: when the caller
+ * passes no seed the dungeon is seeded from `Date.now()`, so this only has to
+ * make two missions in the same millisecond differ. That is why it returns a
+ * bare `abs(hash)` and does not fold in a seed the way `createRng` does. */
 function stringHashCode(str: string): number {
   let hash = 0;
   for (let i = 0; i < str.length; i++) {

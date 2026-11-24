@@ -123,7 +123,7 @@
 
 | 슬라이스 | 옮길 것 | 줄 수(대략) | 비고 |
 |---|---|---|---|
-| 3a-1 | 입력 사다리 — `handlePreGameInput`(351줄) + `handle{Crafting,Equipment,Dungeon,Settings,Pause,Stub,GraphicNovel}Input` | ~700 | `if (this.screen === …)` 사다리. **가장 큰 단일 덩어리** |
+| 3a-1 | 입력 사다리 — `handlePreGameInput`(351줄) + `handle{Crafting,Equipment,Dungeon,Settings,Pause,Stub,GraphicNovel}Input` | ~700 | `if (this.screen === …)` 사다리. **가장 큰 단일 덩어리**. → **3a-1a(설정 분기 187줄) 완료**, 나머지는 3a-1b |
 | 3a-2 | `draw`(259줄) + `drawPrep` | ~300 | 화면 라우팅 |
 | 3a-3 | 런 수명주기 — `launchSelected`·`handleContinue`·`endRun`·`startDungeonCrawl`·`autosave`·`noteRunFinished`·`refreshSaveCache` | ~250 | 저장과 얽힘 → 3b(스키마) 이후가 안전 |
 | 3a-4 | 루프 — `startLoop`·`start`·`stop`·`syncPhase`·`resizeRenderer`·`applyAccessibilitySettings` | ~200 | |
@@ -186,7 +186,7 @@ export function handlePreGameInput(host: PreGameHost, action: GameAction): boole
 | Stage 4 테스트 fixture | 240 파일 중 ~40 | 낮음 | vitest | Stage 별 분산 |
 
 **각 단계의 완료 정의**: `npm run balance:check` + `npm run gear:check` byte-identical ·
-`npm test` 238/4459 green · 러틴 9/9 · (Stage 2+) `npm run mutation` 39/39 유지.
+`npm test` 239/4465 green · 러틴 9/9 · (Stage 2+) `npm run mutation` 39/39 유지.
 
 ## 6. 진행 상황
 
@@ -198,7 +198,9 @@ export function handlePreGameInput(host: PreGameHost, action: GameAction): boole
 | 1c 해시 주석화 | ✅ `095fc56c` | **합치지 않음**: 5벌이 전부 값이 다르고, 그중 하나는 자기 주석이 **거짓**이었다(정정). 코드 변경 0. |
 | 1d crit 롤 | ✅ | `rollCritMultiplier(rng)` 하나로 — 소비 순서(rng 1회) 보존. |
 | 2 god 함수 | ✅ `11697f9a` `72e3ffaf` `e3d10ad6` `8411b5e6` `b4c8714d` | **`processEnemyTurns` 327 → 218줄** (`applyEnemyHit` · `bossDamageMultiplierForPhase` · `resolvePlayerDeath` · `runEnemySkill`) · **`useProgram` 310 → 181줄** (`rollProgramDamage` · `effectiveArmorFor` · `rollProgramProcs` · `consumeMark` · `applyProgramOwnEffect` · `programStatusLines` · `buildProgramVfx`). **rng 소비 순서·단축 평가를 슬라이스마다 보존**(골든이 판정). |
-| 3 main.ts · 저장 필드 | 🟡 진행 | 3b 완료: 저장 슬롯 **3벌 → 단일 스키마**(`save/slot_schema.ts`) + 작성자가 쓰지만 검증되지 않던 **4필드 검사 추가**. e2e 게이트(`wet_run_verify.py --e2e`) 추가 = `main.ts` 분해의 선행 조건. **남은 것**: `main.ts` 2,568줄 분해. |
+| 3 main.ts · 저장 필드 | 🟡 진행 | 3b 완료: 저장 슬롯 **3벌 → 단일 스키마**(`save/slot_schema.ts`) + 작성자가 쓰지만 검증되지 않던 **4필드 검사 추가**. e2e 게이트(`wet_run_verify.py --e2e`) 추가 = `main.ts` 분해의 선행 조건. |
+| 3a-1a 설정 입력 | ✅ `4a469645` | `handlePreGameInput` 의 `screen === "settings"` 분기(**187줄**) → `src/app/settings_input.ts` (host 인터페이스 `SettingsInputHost`, 248줄). `main.ts` **2,568 → 2,377줄**. 가드: e2e **106 pass** · vitest **239/4465** · 게이트 **9/9** · mutation **39/39**. **정규화 diff 로 이동만 확인**(바이트 동일 — 재작성 없음). `Game` 의 10개 멤버를 `private` → 공개(계획대로 "좁혀 연다"). |
+| 3a 남은 것 | ⬜ | 입력 사다리 나머지(화면별 핸들러 7종 ~165줄) · `draw`(~259줄) · 런 수명주기 · 루프. |
 | 4 테스트 fixture | ⬜ | |
 
 **Stage 1 종료 시점 확인**: 러틴 8/8 · vitest 238/4459 · typecheck 0 · lint 0 error ·

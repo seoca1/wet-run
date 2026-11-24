@@ -4491,3 +4491,13 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **함정 2**: `python3 … | tail` 로 감싸면 `$?` 가 `tail` 의 종료 코드가 되어 **게이트 실패가 EXIT=0 으로 보인다**(첫 시도에서 실제로 속았다). 파이프 없이 실행해 확인.
 - **결과**: 러틴 **9/9 pass**, e2e **112**(desktop 54 + mobile 58) 전부 통과.
 - 문서: `docs/design/verification-framework.md` 의 e2e 행을 러틴 플래그로 갱신.
+
+## [2026-11-25] refactor | Stage 3a-1a — 설정 화면 입력을 main.ts 밖으로 (e2e 가드)
+
+- **배경**: `main.ts` 는 밸런스 하네스 import 그래프 **밖** — 골든이 볼 수 없다. 그래서 Stage 3a 의 유일한 가드가 e2e(`--e2e`, 2026-11-24 편입).
+- **슬라이스**: `handlePreGameInput` 안의 `screen === "settings"` 분기(**187줄** — 사다리에서 가장 큰 단일 덩어리) → `src/app/settings_input.ts`. `SettingsInputHost` 구조적 인터페이스 — `Game` 이 `this` 를 넘기고, 10개 멤버를 `private` → 공개(`loadAudio` 는 오디오 게이트 공유용 필드).
+- **동등성**: `git show HEAD:web/src/main.ts` 의 원본과 **정규화 diff** → `this.`/`host.` 와 옮겨간 early `return` 외 **바이트 동일**. 재작성이 아니라 이동임을 기계적으로 확인.
+- **증거**: e2e **106 pass**(desktop 54 + mobile 58, 6 skip) · vitest **239/4465** · typecheck 0 · lint 0 error · 게이트 **9/9** · mutation **39/39 KILLED** · balance/gear 골든 byte-identical.
+- **수치**: `main.ts` **2,568 → 2,377줄**(−191) · 신규 1파일(`src/app/settings_input.ts`, 248줄).
+- **기준선 정정**: vitest 현행은 2026-11-24 의 238/4459 가 아니라 **239/4465** — 그날 3b 가 추가한 `save_slot_schema.test.ts` 6케이스가 빠져 있던 수치. 계획 §5/§6 수치 갱신.
+- 커밋 `4a469645` · 다음: 3a-1b(입력 사다리 나머지 화면별 핸들러 7종) → 3a-2(`draw`).

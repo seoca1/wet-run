@@ -292,6 +292,81 @@ function bossDamageMultiplierForPhase(phase: number): number {
   return 1.0;
 }
 
+/** The runner's HP hit 0 during the enemy phase.
+ *
+ * Two outcomes, in order:
+ *   - a `revive_once` piece refuses the flatline (ADR-0332) — the run continues
+ *     from `working`, with the HP floor at `REVIVE_HP_PCT` of max
+ *   - otherwise the run ends: a deceased jockey is recorded, the death summary
+ *     is generated, and the phase becomes `dead`/`defeat` with the defeat VFX
+ *
+ * Extracted from `processEnemyTurns` (refactor 2026-11-24). It is the one branch
+ * there that ends the run, and it reads nothing the enemy loop computed except
+ * the values passed in.
+ */
+function resolvePlayerDeath(
+  state: GameState,
+  working: GameState,
+  newCooldowns: Record<string, number>,
+  rosterForReturn: ReadonlyArray<Ice>,
+  newBossPhase: BossPhase,
+  enemyTurnVfx: ReadonlyArray<CombatVfxInstance>,
+): GameState {
+  // ADR-0332: a piece can refuse the flatline once per run (MASTER_BODY).
+  if (loadoutHasEffect(state, "revive_once") && state.reviveUsed !== true) {
+    const hp = Math.max(1, Math.floor((state.player.maxHp * REVIVE_HP_PCT) / 100));
+    return {
+      ...working,
+      skillCooldowns: newCooldowns,
+      iceRoster: rosterForReturn,
+      reviveUsed: true,
+      player: { ...working.player, hp },
+      message: "The body refuses to quit — one revive spent.",
+    };
+  }
+  const jockey = createDeceasedJockey({
+    name: state.mission.title,
+    characterId: "novice",
+    grade: state.mission.grade ?? 1,
+    missionId: state.mission.id,
+    inventory: state.inventory.programs.map((p) => p.id),
+    missionsCompleted: 0,
+    dataRecovered: 0,
+    playtimeMinutes: Math.floor(state.turnCount * 0.5),
+  });
+  const summary = generateDeathSummary(
+    jockey,
+    state.totalRuns,
+    state.totalDeaths + 1,
+    Math.max(state.longestRunMinutes, Math.floor(state.turnCount * 0.5)),
+  );
+  return {
+    ...state,
+    runPhase: "dead",
+    phase: "defeat",
+    message: "FLATLINE",
+    player: { ...state.player, hp: 0 },
+    lastDeathSummary: summary,
+    totalDeaths: state.totalDeaths + 1,
+    deceasedJockeys: [...state.deceasedJockeys, jockey],
+    skillCooldowns: newCooldowns,
+    iceRoster: rosterForReturn,
+    statusEffects: working.statusEffects,
+    bossPhase: newBossPhase,
+    vfxInstances: [
+      ...state.vfxInstances,
+      ...enemyTurnVfx,
+      import_vfx_deterministic("defeat", "", durationForKind("defeat")),
+    ],
+    // ADR-0280: `lastEnemyAttackMs` / `counterWindowOpenMs` were wall-clock
+    // stamps written here and read nowhere (the gate that read the first one
+    // is gone). Left untouched rather than re-stamped with a clock the
+    // reducer no longer reads.
+    lastEnemyAttackMs: state.lastEnemyAttackMs,
+    counterWindowOpenMs: state.counterWindowOpenMs,
+  };
+}
+
 /** One enemy phase. The caller decides *when* — the turn, not a clock.
  *
  * ADR-0280. This used to open with a wall-clock gate:
@@ -518,59 +593,14 @@ function processEnemyTurns(state: GameState): GameState {
   rosterForReturn = [...working.iceRoster, ...rosterForReturn.slice(working.iceRoster.length)];
 
   if (playerHp <= 0) {
-    // ADR-0332: a piece can refuse the flatline once per run (MASTER_BODY).
-    if (loadoutHasEffect(state, "revive_once") && state.reviveUsed !== true) {
-      const hp = Math.max(1, Math.floor((state.player.maxHp * REVIVE_HP_PCT) / 100));
-      return {
-        ...working,
-        skillCooldowns: newCooldowns,
-        iceRoster: rosterForReturn,
-        reviveUsed: true,
-        player: { ...working.player, hp },
-        message: "The body refuses to quit — one revive spent.",
-      };
-    }
-    const jockey = createDeceasedJockey({
-      name: state.mission.title,
-      characterId: "novice",
-      grade: state.mission.grade ?? 1,
-      missionId: state.mission.id,
-      inventory: state.inventory.programs.map((p) => p.id),
-      missionsCompleted: 0,
-      dataRecovered: 0,
-      playtimeMinutes: Math.floor(state.turnCount * 0.5),
-    });
-    const summary = generateDeathSummary(
-      jockey,
-      state.totalRuns,
-      state.totalDeaths + 1,
-      Math.max(state.longestRunMinutes, Math.floor(state.turnCount * 0.5)),
+    return resolvePlayerDeath(
+      state,
+      working,
+      newCooldowns,
+      rosterForReturn,
+      newBossPhase,
+      enemyTurnVfx,
     );
-    return {
-      ...state,
-      runPhase: "dead",
-      phase: "defeat",
-      message: "FLATLINE",
-      player: { ...state.player, hp: 0 },
-      lastDeathSummary: summary,
-      totalDeaths: state.totalDeaths + 1,
-      deceasedJockeys: [...state.deceasedJockeys, jockey],
-      skillCooldowns: newCooldowns,
-      iceRoster: rosterForReturn,
-      statusEffects: working.statusEffects,
-      bossPhase: newBossPhase,
-      vfxInstances: [
-        ...state.vfxInstances,
-        ...enemyTurnVfx,
-        import_vfx_deterministic("defeat", "", durationForKind("defeat")),
-      ],
-      // ADR-0280: `lastEnemyAttackMs` / `counterWindowOpenMs` were wall-clock
-      // stamps written here and read nowhere (the gate that read the first one
-      // is gone). Left untouched rather than re-stamped with a clock the
-      // reducer no longer reads.
-      lastEnemyAttackMs: state.lastEnemyAttackMs,
-      counterWindowOpenMs: state.counterWindowOpenMs,
-    };
   }
 
   const bossPhaseChangedInEnemyTurn = newBossPhase > state.bossPhase;

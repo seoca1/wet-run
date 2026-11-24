@@ -4443,3 +4443,9 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **타입**: 인라인 반환 타입 → `ResolvedHit` 인터페이스.
 - **검증**: balance/gear 골든 **byte-identical** · vitest 238/4459 · 러틴 8/8 · **mutation 39/39 KILLED**(커버리지 무손실).
 - **남은 Stage 2**: 스킬 선택 단계 · 사망/부활 분기 추출 · `useProgram` 308줄 분해.
+
+## [2026-11-24] refactor(stage2c) | 사망/부활 분기 추출 — `processEnemyTurns` 307 → 262줄
+
+- **추출**: HP 0 도달 시의 두 결과(ADR-0332 `revive_once` 로 버티기 / FLATLINE — 사망 자키 기록 + 사망 요약 + defeat VFX)를 `resolvePlayerDeath(...)` 로. 루프가 계산한 값만 인자로 받고, `working`/`state` 스프레드 차이(부활은 `working`, 사망은 `state`)를 그대로 보존.
+- **검증**: balance/gear 골든 **byte-identical** · vitest 238/4459 · 러틴 8/8 · **mutation 39/39 KILLED**.
+- **누적**: `processEnemyTurns` 327 → **262줄**(-65). 남은 Stage 2: 스킬 선택 단계 추출 · `useProgram`(308줄) 분해.

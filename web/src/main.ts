@@ -78,25 +78,12 @@ import {
   type PressFeedbackState,
 } from "./core/state/touch_feedback";
 import { DungeonCrawler, createDungeonCrawlerFromMission } from "./core/dungeon/dungeon_crawler";
-import {
-  getInitialSettingsState,
-  persistLanguage,
-  cycleLanguage,
-  adjustVolume,
-  type SettingsField,
-} from "./renderer/settings";
+import { getInitialSettingsState } from "./renderer/settings";
 import {
   loadColorblindMode,
   loadHighContrastOverride,
   loadReducedMotionOverride,
   loadTextScale,
-  nextColorblindMode,
-  nextTextScale,
-  previousTextScale,
-  persistColorblindMode,
-  persistHighContrastOverride,
-  persistReducedMotionOverride,
-  persistTextScale,
   resolveHighContrast,
   resolveReducedMotion,
   textScaleFactor,
@@ -174,6 +161,7 @@ import {
 import type { InfoMarket } from "./core/info_market";
 import { loadPersistedLanguage } from "./renderer/settings";
 import { formatNavIndex } from "./renderer/nav_index";
+import { handleSettingsInput } from "./app/settings_input";
 
 function fallbackSettingsState(): import("./renderer/settings.ts").SettingsState {
   return {
@@ -300,7 +288,7 @@ interface BeatCard {
 
 class Game {
   private state: GameState | null = null;
-  private screen: ScreenKind = "menu";
+  screen: ScreenKind = "menu";
   private selectedMenuIndex = 0;
   /** ADR-0315: the cursor is normalized once per visit, not per frame. */
   private menuSelectionNormalized = false;
@@ -316,7 +304,11 @@ class Game {
   private prepChoice: PrepChoice = "stim";
   /** ADR-0284: what the stockpile will pay for the run about to start. */
   private prepWalletOutlay = 0;
-  private renderer: AsciiRenderer;
+  renderer: AsciiRenderer;
+  /** Lazy audio loader, gated on the audio-off flag. Exposed as a field so the
+   * settings handler (app/settings_input.ts) takes the same gate everything
+   * else does. */
+  loadAudio = loadAudioSystem;
   private input: KeyboardInput;
   private gamepad: GamepadInput;
   private iceTypes: Readonly<Record<string, Ice>>;
@@ -389,13 +381,13 @@ class Game {
   private lastPersistedState: GameState | null = null;
   /** P10 — effective reduced-motion state. True suppresses the P1 canvas
    * shake and the hit-stop hold. */
-  private reducedMotion = false;
+  reducedMotion = false;
   /** P10 — effective high-contrast state. */
-  private highContrast = false;
+  highContrast = false;
   /** P10 — the active colorblind palette mode (ADR-0196). */
-  private colorblindMode: ColorblindMode = "none";
+  colorblindMode: ColorblindMode = "none";
   /** P10 — the active text-scale step. */
-  private textScale: TextScaleStep = "medium";
+  textScale: TextScaleStep = "medium";
   /** P12 — the in-game acknowledgement of a touch program-button press. */
   private pressFeedback: PressFeedbackState = IDLE_PRESS_FEEDBACK;
   /** ADR-0251 — name of the program the acknowledged tap played. */
@@ -407,8 +399,8 @@ class Game {
   private gnLanguage: import("./core/graphic_novel/graphic_novel_types.ts").Language = "en";
   private graphicNovelState: import("./core/types.ts").GraphicNovelState | null = null;
 
-  private settingsState: import("./renderer/settings.ts").SettingsState | null = null;
-  private pwaController: PwaController | null = null;
+  settingsState: import("./renderer/settings.ts").SettingsState | null = null;
+  pwaController: PwaController | null = null;
   private dungeonCrawler: DungeonCrawler | null = null;
   private _message: string = "";
   private farGridUnlockedCache: boolean = false;
@@ -1226,190 +1218,7 @@ class Game {
       return;
     }
     if (this.screen === "settings") {
-      void loadAudioSystem().then(async (audio) => {
-        if (!audio) return;
-        const manager = audio.AudioManager.getInstance();
-        // Ensure defaults are persisted
-        if (localStorage.getItem("wetrun_audio_bgm_volume") === null) {
-          manager.setBgmVolume(manager.getBgmVolume());
-        }
-        if (localStorage.getItem("wetrun_audio_sfx_volume") === null) {
-          manager.setSfxVolume(manager.getSfxVolume());
-        }
-        if (this.settingsState === null) {
-          this.settingsState = getInitialSettingsState();
-        }
-        if (this.settingsState.audioEnabled === undefined) {
-          this.settingsState = {
-            ...this.settingsState,
-            audioEnabled: !isAudioOff(),
-          };
-        }
-        const fields: ReadonlyArray<SettingsField> = [
-          "audio",
-          "master",
-          "bgm",
-          "sfx",
-          "mute",
-          "language",
-          "pwa_install",
-          "pwa_update",
-          "reduced_motion",
-          "high_contrast",
-          "colorblind",
-          "text_scale",
-        ];
-        const idx = fields.indexOf(this.settingsState.selectedField);
-        if (
-          action.type === "cycle_target" ||
-          action.type === "move_south" ||
-          action.type === "move_north"
-        ) {
-          const direction = action.type === "move_north" ? -1 : 1;
-          const nextIdx = (idx + direction + fields.length) % fields.length;
-          const nextField = fields[nextIdx] ?? fields[0];
-          if (nextField)
-            this.settingsState = {
-              ...this.settingsState,
-              selectedField: nextField,
-            };
-          this.draw();
-        } else if (action.type === "move_east") {
-          if (this.settingsState.selectedField === "master") {
-            const v = adjustVolume(this.settingsState.masterVolume ?? 1, "inc");
-            this.settingsState = { ...this.settingsState, masterVolume: v };
-            manager.setMasterVolume(v);
-          } else if (this.settingsState.selectedField === "bgm") {
-            const v =
-              this.settingsState.bgmVolume + 0.1 > 1
-                ? 1
-                : Math.round((this.settingsState.bgmVolume + 0.1) * 10) / 10;
-            this.settingsState = { ...this.settingsState, bgmVolume: v };
-            manager.setBgmVolume(v);
-          } else if (this.settingsState.selectedField === "sfx") {
-            const v =
-              this.settingsState.sfxVolume + 0.1 > 1
-                ? 1
-                : Math.round((this.settingsState.sfxVolume + 0.1) * 10) / 10;
-            this.settingsState = { ...this.settingsState, sfxVolume: v };
-            manager.setSfxVolume(v);
-          } else if (this.settingsState.selectedField === "text_scale") {
-            const next = nextTextScale(this.textScale);
-            persistTextScale(next);
-            this.textScale = next;
-            this.renderer.setTextScale(textScaleFactor(next));
-            this.resizeRenderer();
-            this.settingsState = { ...this.settingsState, textScale: next };
-          }
-          this.draw();
-        } else if (action.type === "move_west") {
-          if (this.settingsState.selectedField === "master") {
-            const v = adjustVolume(this.settingsState.masterVolume ?? 1, "dec");
-            this.settingsState = { ...this.settingsState, masterVolume: v };
-            manager.setMasterVolume(v);
-          } else if (this.settingsState.selectedField === "bgm") {
-            const v =
-              this.settingsState.bgmVolume - 0.1 < 0
-                ? 0
-                : Math.round((this.settingsState.bgmVolume - 0.1) * 10) / 10;
-            this.settingsState = { ...this.settingsState, bgmVolume: v };
-            manager.setBgmVolume(v);
-          } else if (this.settingsState.selectedField === "sfx") {
-            const v =
-              this.settingsState.sfxVolume - 0.1 < 0
-                ? 0
-                : Math.round((this.settingsState.sfxVolume - 0.1) * 10) / 10;
-            this.settingsState = { ...this.settingsState, sfxVolume: v };
-            manager.setSfxVolume(v);
-          } else if (this.settingsState.selectedField === "text_scale") {
-            const next = previousTextScale(this.textScale);
-            persistTextScale(next);
-            this.textScale = next;
-            this.renderer.setTextScale(textScaleFactor(next));
-            this.resizeRenderer();
-            this.settingsState = { ...this.settingsState, textScale: next };
-          }
-          this.draw();
-        } else if (action.type === "confirm") {
-          if (this.settingsState.selectedField === "audio") {
-            const newEnabled = !this.settingsState.audioEnabled;
-            if (newEnabled) {
-              localStorage.removeItem("wetrun_audio_off");
-            } else {
-              localStorage.setItem("wetrun_audio_off", "1");
-            }
-            this.settingsState = {
-              ...this.settingsState,
-              audioEnabled: newEnabled,
-            };
-          } else if (this.settingsState.selectedField === "mute") {
-            const muted = manager.toggleMute();
-            this.settingsState = { ...this.settingsState, muted };
-          } else if (this.settingsState.selectedField === "language") {
-            const next = cycleLanguage(this.settingsState.language);
-            persistLanguage(next);
-            this.settingsState = { ...this.settingsState, language: next };
-          } else if (this.settingsState.selectedField === "pwa_install") {
-            // ENTER fires the install prompt (user gesture). Only effective
-            // when canInstall is true; the controller also clears the
-            // deferredPrompt after a successful install.
-            if (this.pwaController) {
-              void this.pwaController.tryPromptInstall();
-            }
-          } else if (this.settingsState.selectedField === "pwa_update") {
-            // ENTER triggers SKIP_WAITING. Controller sets hasUpdate=false on
-            // success; the page should be reloaded to activate the new worker.
-            if (this.pwaController) {
-              void this.pwaController.tryApplyUpdate();
-            }
-          } else if (this.settingsState.selectedField === "reduced_motion") {
-            // P10 — toggle reduced motion. The override wins over the OS
-            // media query in both directions.
-            const next = !this.reducedMotion;
-            persistReducedMotionOverride(next);
-            this.reducedMotion = next;
-            this.settingsState = {
-              ...this.settingsState,
-              reducedMotion: next,
-            };
-          } else if (this.settingsState.selectedField === "high_contrast") {
-            // P10 — toggle the high-contrast palette overrides.
-            const next = !this.highContrast;
-            persistHighContrastOverride(next);
-            this.highContrast = next;
-            applyPaletteMode(this.colorblindMode, next);
-            this.settingsState = {
-              ...this.settingsState,
-              highContrast: next,
-            };
-          } else if (this.settingsState.selectedField === "colorblind") {
-            // P10 — cycle the ADR-0196 4-mode colorblind palette.
-            const next = nextColorblindMode(this.colorblindMode);
-            persistColorblindMode(next);
-            this.colorblindMode = next;
-            applyPaletteMode(next, this.highContrast);
-            this.settingsState = {
-              ...this.settingsState,
-              colorblindMode: next,
-            };
-          } else if (this.settingsState.selectedField === "text_scale") {
-            // P10 — cycle the text scale and re-derive the cell geometry.
-            const next = nextTextScale(this.textScale);
-            persistTextScale(next);
-            this.textScale = next;
-            this.renderer.setTextScale(textScaleFactor(next));
-            this.resizeRenderer();
-            this.settingsState = {
-              ...this.settingsState,
-              textScale: next,
-            };
-          }
-          this.draw();
-        } else if (action.type === "jack_out") {
-          this.screen = "menu";
-          this.draw();
-        }
-      });
+      handleSettingsInput(this, action);
       return;
     }
   }
@@ -1815,7 +1624,7 @@ class Game {
 
   /** Render the current state. `persist` is false for render-loop frames:
    * a redraw must not trigger the autosave side effect. */
-  private draw(persist: boolean = true): void {
+  draw(persist: boolean = true): void {
     // ADR-0317 (3b): a mid-run beat card owns the screen until a key, the same
     // way the run's opening beat does.
     if (this.beatCard !== null) {
@@ -2074,7 +1883,7 @@ class Game {
   }
 
   /** Re-derive the canvas surface from the current layout + text scale. */
-  private resizeRenderer(): void {
+  resizeRenderer(): void {
     const base = getLayout();
     this.layout = this.renderer.resizeGrid(
       base.cols,

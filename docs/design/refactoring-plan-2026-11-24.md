@@ -168,7 +168,7 @@
 | 1b 스탯 헬퍼 | ✅ `2fe6406d` | **3벌 → 1벌** (`equip_stats.ts` 리프) + `addStats` 2벌 → 1벌. import 사이클을 회피가 아니라 **제거**. |
 | 1c 해시 주석화 | ✅ `095fc56c` | **합치지 않음**: 5벌이 전부 값이 다르고, 그중 하나는 자기 주석이 **거짓**이었다(정정). 코드 변경 0. |
 | 1d crit 롤 | ✅ | `rollCritMultiplier(rng)` 하나로 — 소비 순서(rng 1회) 보존. |
-| 2 god 함수 | 🟡 진행 | 완료: 2a `applyEnemyHit`(스킬·자동공격이 복사하던 피격 처리 통합) · 2b `bossDamageMultiplierForPhase`(5단 삼항) · 2c `resolvePlayerDeath`(사망/부활 분기) · 2d `runEnemySkill`(스킬 판단·선택·적용). **`processEnemyTurns` 327 → 218줄**. **남은 것**: `useProgram`(308줄) 분해. |
+| 2 god 함수 | ✅ `11697f9a` `72e3ffaf` `e3d10ad6` `8411b5e6` `b4c8714d` | **`processEnemyTurns` 327 → 218줄** (`applyEnemyHit` · `bossDamageMultiplierForPhase` · `resolvePlayerDeath` · `runEnemySkill`) · **`useProgram` 310 → 181줄** (`rollProgramDamage` · `effectiveArmorFor` · `rollProgramProcs` · `consumeMark` · `applyProgramOwnEffect` · `programStatusLines` · `buildProgramVfx`). **rng 소비 순서·단축 평가를 슬라이스마다 보존**(골든이 판정). |
 | 3 main.ts · 저장 필드 | ⬜ | |
 | 4 테스트 fixture | ⬜ | |
 

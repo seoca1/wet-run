@@ -9,7 +9,8 @@
  * Re-exported from `state_actions.ts` so existing imports keep working.
  */
 
-import type { GameState, Program } from "../types";
+import type { GameState, Program, StatusEffectInstance } from "../types";
+import type { CombatVfxInstance } from "../../renderer/combat_vfx";
 import {
   applyStatus,
   applyTickEffects,
@@ -42,6 +43,113 @@ export function advanceDeadTarget(state: GameState): GameState {
   const aliveIdx = state.iceRoster.findIndex((ice) => ice.hp > 0);
   if (aliveIdx === -1) return state;
   return { ...state, activeIceIndex: aliveIdx };
+}
+
+/** Apply the program's own effect to the player (ADR-0255).
+ *
+ * Runs AFTER the status tick so the effect starts at its full duration: a
+ * 3-turn shield must not be born at 2, and a 1-turn decoy must not expire in
+ * the same turn it was played. `evade` and `decoy` grant the same status — the
+ * decoy just reads as taking part of the next hit.
+ */
+function applyProgramOwnEffect(state: GameState, effect: ProgramEffect): GameState {
+  switch (effect.kind) {
+    case "shield":
+      return applyStatus(state, "player", "shield", effect.turns, effect.amount);
+    case "empower":
+      return applyStatus(state, "player", "powered", effect.turns, effect.amount, {
+        attackBonus: effect.amount,
+      });
+    case "evade":
+    case "decoy":
+      return applyStatus(state, "player", "evasive", effect.turns, effect.amount);
+    default:
+      return state;
+  }
+}
+
+/** Name every status this play started or ended (ADR-0251 slice B).
+ *
+ * Between the input and `finalState`, effects are only added by the procs, so
+ * the before/after difference is exactly what a shield break, a spent
+ * slow/vulnerable or the tick removed. Display only; no RNG.
+ */
+function programStatusLines(
+  state: GameState,
+  finalState: GameState,
+  appliedStatuses: ReadonlyArray<StatusEffectInstance>,
+): string[] {
+  const rosterSize = state.iceRoster.length;
+  return [
+    ...statusEventLines(appliedStatuses, "on", rosterSize),
+    ...statusEventLines(
+      endedStatuses([...state.statusEffects, ...appliedStatuses], finalState.statusEffects),
+      "off",
+      rosterSize,
+    ),
+  ];
+}
+
+/** The VFX this play spawns. Pure assembly — no rng (ADR-0239/ADR-0241). */
+function buildProgramVfx(args: {
+  readonly finalState: GameState;
+  readonly program: Program;
+  readonly damage: number;
+  readonly isCrit: boolean;
+  readonly programVfxKind: ReturnType<typeof pickProgramVfxKind>;
+  readonly statusApplyVfx: ReadonlyArray<CombatVfxInstance>;
+  readonly dotOrRegenVfx: ReadonlyArray<CombatVfxInstance>;
+  readonly bossPhaseChanged: boolean;
+}): ReadonlyArray<CombatVfxInstance> {
+  const { finalState, program, damage, programVfxKind } = args;
+  const programVfxInstances: ReadonlyArray<CombatVfxInstance> =
+    programVfxKind === "attack"
+      ? []
+      : [
+          import_vfx(
+            programVfxKind,
+            program.name,
+            durationForKind(programVfxKind),
+            undefined,
+            undefined,
+            damage,
+          ),
+        ];
+  return [
+    ...finalState.vfxInstances,
+    import_vfx(programVfxKind, program.name, 3),
+    import_vfx("ice_hit", `${damage}`, 2),
+    ...programVfxInstances,
+    ...args.statusApplyVfx,
+    ...args.dotOrRegenVfx,
+    // ADR-0241: the CRIT flash tracks the real crit roll, not a damage
+    // threshold. Spawning draws no Math.random (ADR-0239), so this condition
+    // cannot shift the seeded gameplay stream.
+    ...(args.isCrit
+      ? [
+          import_vfx_ms(
+            "critical_hit",
+            "",
+            durationMsForKind("critical_hit"),
+            undefined,
+            undefined,
+            damage,
+          ),
+        ]
+      : []),
+    ...(args.bossPhaseChanged && finalState.bossPhase >= 1 && finalState.bossPhase <= 4
+      ? [
+          import_vfx_ms(
+            "boss_phase_transition",
+            "",
+            durationMsForKind("boss_phase_transition"),
+            undefined,
+            undefined,
+            finalState.bossPhase,
+          ),
+        ]
+      : []),
+  ];
 }
 
 /** The two status procs a played program can roll on its target.
@@ -226,37 +334,11 @@ export function useProgram(state: GameState, programId: string): GameState {
     tickResult.healIce,
   );
 
-  // ADR-0255: the program's own effect. Applied AFTER the status tick so it
-  // starts at its full duration — a 3-turn shield must not be born at 2, and
-  // a 1-turn decoy must not expire in the same turn it was played.
-  if (effect.kind === "shield") {
-    finalState = applyStatus(finalState, "player", "shield", effect.turns, effect.amount);
-  } else if (effect.kind === "empower") {
-    finalState = applyStatus(finalState, "player", "powered", effect.turns, effect.amount, {
-      attackBonus: effect.amount,
-    });
-  } else if (effect.kind === "evade") {
-    finalState = applyStatus(finalState, "player", "evasive", effect.turns, effect.amount);
-  } else if (effect.kind === "decoy") {
-    // The decoy takes part of the next hit meant for the player.
-    finalState = applyStatus(finalState, "player", "evasive", effect.turns, effect.amount);
-  }
+  finalState = applyProgramOwnEffect(finalState, effect);
 
   // ADR-0251 slice B: procs append, so what this play applied is the tail.
   const appliedStatuses = finalState.statusEffects.slice(statusCountBeforeProcs);
-  // ADR-0251 slice B: name every status this play started or ended. Between
-  // the input and `finalState` effects are only added by the procs above, so
-  // the before/after difference is exactly what a shield break, a spent
-  // slow / vulnerable or the tick removed. Display only; no RNG.
-  const rosterSize = state.iceRoster.length;
-  const statusLines = [
-    ...statusEventLines(appliedStatuses, "on", rosterSize),
-    ...statusEventLines(
-      endedStatuses([...state.statusEffects, ...appliedStatuses], finalState.statusEffects),
-      "off",
-      rosterSize,
-    ),
-  ];
+  const statusLines = programStatusLines(state, finalState, appliedStatuses);
   const statusApplyVfx =
     appliedStatuses.length > 0
       ? [
@@ -283,56 +365,16 @@ export function useProgram(state: GameState, programId: string): GameState {
   const allDefeated = finalState.iceRoster.every((ice) => ice.hp === 0);
   const bossPhaseChanged = state.bossPhase > 0 && finalState.bossPhase !== state.bossPhase;
   const programVfxKind = pickProgramVfxKind(program, damage);
-  const programVfxInstances: ReadonlyArray<
-    import("../../renderer/combat_vfx.ts").CombatVfxInstance
-  > =
-    programVfxKind === "attack"
-      ? []
-      : [
-          import_vfx(
-            programVfxKind,
-            program.name,
-            durationForKind(programVfxKind),
-            undefined,
-            undefined,
-            damage,
-          ),
-        ];
-  const vfxNew: ReadonlyArray<import("../../renderer/combat_vfx.ts").CombatVfxInstance> = [
-    ...finalState.vfxInstances,
-    import_vfx(programVfxKind, program.name, 3),
-    import_vfx("ice_hit", `${damage}`, 2),
-    ...programVfxInstances,
-    ...statusApplyVfx,
-    ...dotOrRegenVfx,
-    // ADR-0241: the CRIT flash tracks the real crit roll, not a damage
-    // threshold. Spawning draws no Math.random (ADR-0239), so this condition
-    // cannot shift the seeded gameplay stream.
-    ...(roll.isCrit
-      ? [
-          import_vfx_ms(
-            "critical_hit",
-            "",
-            durationMsForKind("critical_hit"),
-            undefined,
-            undefined,
-            damage,
-          ),
-        ]
-      : []),
-    ...(bossPhaseChanged && finalState.bossPhase >= 1 && finalState.bossPhase <= 4
-      ? [
-          import_vfx_ms(
-            "boss_phase_transition",
-            "",
-            durationMsForKind("boss_phase_transition"),
-            undefined,
-            undefined,
-            finalState.bossPhase,
-          ),
-        ]
-      : []),
-  ];
+  const vfxNew = buildProgramVfx({
+    finalState,
+    program,
+    damage,
+    isCrit: roll.isCrit,
+    programVfxKind,
+    statusApplyVfx,
+    dotOrRegenVfx,
+    bossPhaseChanged,
+  });
 
   // ADR-0278: the loot and the faction credit belong to the kill, not to the
   // victory — so they are credited here for a program kill, and in

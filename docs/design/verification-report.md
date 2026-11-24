@@ -1,8 +1,8 @@
 # Wet-Run 검증 보고
 
-**시간**: 2026-11-24T20:11:06Z  
+**시간**: 2026-11-24T20:20:23Z  
 **버전**: 3.1.0 (ADR-0335/0336)  
-**게이트**: 8/8 pass  
+**게이트**: 9/9 pass  
 
 ## 1_balance
 {
@@ -31,6 +31,22 @@
     "  mis T4 arasaka+body                  100 100 100 99 36 57",
     "  mis T6 master+zion                   100 100 100 100 73 70",
     "OK: gear curve matches golden."
+  ]
+}
+
+## 2_tests
+{
+  "status": "pass",
+  "exit": 0,
+  "tail": [
+    "    at HTMLAudioElement.load (/Users/emilio/projects/opencodework/Game/wet_run/web/node_modules/jsdom/lib/jsdom/living/generated/HTMLMediaElement.js:111:34)",
+    "    at Sound.create (/Users/emilio/projects/opencodework/Game/wet_run/web/node_modules/howler/dist/howler.js:2278:20)",
+    "    at Sound.init (/Users/emilio/projects/opencodework/Game/wet_run/web/node_modules/howler/dist/howler.js:2235:12)",
+    "    at Sound.init (/Users/emilio/projects/opencodework/Game/wet_run/web/node_modules/howler/dist/howler.js:3154:14)",
+    "    at new Sound (/Users/emilio/projects/opencodework/Game/wet_run/web/node_modules/howler/dist/howler.js:2207:10)",
+    "    at Howl._inactiveSound (/Users/emilio/projects/opencodework/Game/wet_run/web/node_modules/howler/dist/howler.js:2068:14)",
+    "    at Howl.play (/Users/emilio/projects/opencodework/Game/wet_run/web/node_modules/howler/dist/howler.js:776:51)",
+    "    at AudioManager.playSfx (/Users/emilio/projects/opencodework/Game/wet_run/web/src/audio/manager.ts:654:12) undefined"
   ]
 }
 

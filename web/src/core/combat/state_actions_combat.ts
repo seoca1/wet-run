@@ -292,6 +292,73 @@ function bossDamageMultiplierForPhase(phase: number): number {
   return 1.0;
 }
 
+/** Let one ICE take its action as a SKILL, if it has one to use.
+ *
+ * Returns `usedSkill: false` without touching the rng when the ICE has no
+ * skills at all — the same short-circuit the inline version had, which is why
+ * the seeded stream does not move. Otherwise it rolls once
+ * (`enemyShouldUseSkill`), picks by archetype, and either lands a damaging skill
+ * through `applyEnemyHit` or fires a non-damaging effect (ADR-0219 Option A).
+ *
+ * `newCooldowns` is mutated in place; the log and VFX arrays are appended to.
+ * Extracted from `processEnemyTurns` (refactor 2026-11-24).
+ */
+function runEnemySkill(
+  state: GameState,
+  working: GameState,
+  iceIndex: number,
+  enemy: Ice,
+  playerHp: number,
+  newCooldowns: Record<string, number>,
+  logMessages: string[],
+  vfx: CombatVfxInstance[],
+): { readonly state: GameState; readonly playerHp: number; readonly usedSkill: boolean } {
+  let enemySkills = enemy.skills ?? [];
+
+  if (isMutatorActive(state as unknown as MutableRunState, "stealth_only")) {
+    const stealthEffects = ["dot", "poison", "debuff", "silence", "slow"];
+    enemySkills = enemySkills.filter((s) => stealthEffects.includes(s.effect));
+  }
+
+  if (enemySkills.length === 0) return { state: working, playerHp, usedSkill: false };
+  if (!enemyShouldUseSkill(enemy, Math.random, state.alarmLevel)) {
+    return { state: working, playerHp, usedSkill: false };
+  }
+
+  const selectedSkill = selectSkillByPersonality(enemy, enemySkills);
+  if (!selectedSkill) return { state: working, playerHp, usedSkill: false };
+
+  const cooldownKey = `${enemy.id}_${selectedSkill.id}`;
+  const remaining = newCooldowns[cooldownKey] ?? 0;
+  if (remaining > 0) return { state: working, playerHp, usedSkill: false };
+
+  if (selectedSkill.damage > 0) {
+    const rawSkillDmg = selectedSkill.damage + enemy.tier * 2 + iceAttackBonus(working, iceIndex);
+    const baseSkillDmg = Math.max(1, Number.isFinite(rawSkillDmg) ? rawSkillDmg : 1);
+    // ADR-0161 `aggressive` archetype: +5% crit chance on the ICE's outgoing
+    // damage. The roll is a pure function of the injected RNG and consumes the
+    // same `Math.random` the balance harness controls, so the simulation stays
+    // deterministic. ADR-0321: the case, then the crit, then the shield.
+    const hit = applyEnemyHit(working, enemy, baseSkillDmg, playerHp, Math.random, logMessages, vfx);
+    logMessages.push(
+      `>>> ${enemy.name} uses ${selectedSkill.name}: ${hit.hit.damage} dmg${caseNote(hit.hit.attackCase)}${hit.hit.isCrit ? " CRITICAL" : ""}`,
+    );
+    newCooldowns[cooldownKey] = selectedSkill.cooldownMs;
+    return { state: hit.state, playerHp: hit.playerHp, usedSkill: true };
+  }
+
+  // ADR-0219 Option A: a non-damaging skill fires as an effect instead of being
+  // blocked by the `damage > 0` gate. It still consumes the ICE's action.
+  const outcome = applyIceNonDamageEffect(working, iceIndex, enemy, selectedSkill);
+  // `working` takes the outcome's state even when there is no message to log —
+  // the effect may have moved `statusEffects` without saying anything.
+  if (outcome.message === null) return { state: outcome.state, playerHp, usedSkill: false };
+  logMessages.push(outcome.message);
+  vfx.push(...outcome.vfx);
+  newCooldowns[cooldownKey] = selectedSkill.cooldownMs;
+  return { state: outcome.state, playerHp, usedSkill: true };
+}
+
 /** The runner's HP hit 0 during the enemy phase.
  *
  * Two outcomes, in order:
@@ -456,64 +523,20 @@ function processEnemyTurns(state: GameState): GameState {
     const enemy = working.iceRoster[iceIndex];
     if (!enemy || enemy.hp <= 0) continue;
 
-    let enemySkills = enemy.skills ?? [];
+    const skill = runEnemySkill(
+      state,
+      working,
+      iceIndex,
+      enemy,
+      playerHp,
+      newCooldowns,
+      logMessages,
+      enemyTurnVfx,
+    );
+    working = skill.state;
+    playerHp = skill.playerHp;
 
-    if (isMutatorActive(state as unknown as MutableRunState, "stealth_only")) {
-      const stealthEffects = ["dot", "poison", "debuff", "silence", "slow"];
-      enemySkills = enemySkills.filter((s) => stealthEffects.includes(s.effect));
-    }
-
-    let usedSkill = false;
-
-    if (enemySkills.length > 0 && enemyShouldUseSkill(enemy, Math.random, state.alarmLevel)) {
-      const selectedSkill = selectSkillByPersonality(enemy, enemySkills);
-
-      if (selectedSkill) {
-        const cooldownKey = `${enemy.id}_${selectedSkill.id}`;
-        const remaining = newCooldowns[cooldownKey] ?? 0;
-
-        if (remaining <= 0 && selectedSkill.damage > 0) {
-          const rawSkillDmg =
-            selectedSkill.damage + enemy.tier * 2 + iceAttackBonus(working, iceIndex);
-          const baseSkillDmg = Math.max(1, Number.isFinite(rawSkillDmg) ? rawSkillDmg : 1);
-          // ADR-0161 `aggressive` archetype: +5% crit chance on the ICE's
-          // outgoing damage. The roll is a pure function of the injected RNG
-          // and consumes the same `Math.random` the balance harness controls,
-          // so the simulation stays deterministic.
-          // ADR-0321: the case, then the crit, then the shield.
-          const hit = applyEnemyHit(
-            working,
-            enemy,
-            baseSkillDmg,
-            playerHp,
-            Math.random,
-            logMessages,
-            enemyTurnVfx,
-          );
-          working = hit.state;
-          playerHp = hit.playerHp;
-          logMessages.push(
-            `>>> ${enemy.name} uses ${selectedSkill.name}: ${hit.hit.damage} dmg${caseNote(hit.hit.attackCase)}${hit.hit.isCrit ? " CRITICAL" : ""}`,
-          );
-          newCooldowns[cooldownKey] = selectedSkill.cooldownMs;
-          usedSkill = true;
-        } else if (remaining <= 0) {
-          // ADR-0219 Option A: a non-damaging skill now fires as an effect
-          // instead of being blocked by the `damage > 0` gate. The skill
-          // still consumes the ICE's action.
-          const outcome = applyIceNonDamageEffect(working, iceIndex, enemy, selectedSkill);
-          working = outcome.state;
-          if (outcome.message !== null) {
-            logMessages.push(outcome.message);
-            enemyTurnVfx.push(...outcome.vfx);
-            newCooldowns[cooldownKey] = selectedSkill.cooldownMs;
-            usedSkill = true;
-          }
-        }
-      }
-    }
-
-    if (!usedSkill) {
+    if (!skill.usedSkill) {
       const rawAutoDmg = enemy.tier * 3 + (enemy.armor ?? 0);
       let autoDmg = Math.max(1, Number.isFinite(rawAutoDmg) ? rawAutoDmg : 1);
       // ADR-0211 fun-fix: per-grade ICE dmg modifier. Pairs with the HP cap in

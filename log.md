@@ -4449,3 +4449,10 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **추출**: HP 0 도달 시의 두 결과(ADR-0332 `revive_once` 로 버티기 / FLATLINE — 사망 자키 기록 + 사망 요약 + defeat VFX)를 `resolvePlayerDeath(...)` 로. 루프가 계산한 값만 인자로 받고, `working`/`state` 스프레드 차이(부활은 `working`, 사망은 `state`)를 그대로 보존.
 - **검증**: balance/gear 골든 **byte-identical** · vitest 238/4459 · 러틴 8/8 · **mutation 39/39 KILLED**.
 - **누적**: `processEnemyTurns` 327 → **262줄**(-65). 남은 Stage 2: 스킬 선택 단계 추출 · `useProgram`(308줄) 분해.
+
+## [2026-11-24] refactor(stage2d) | 스킬 단계 추출 — `processEnemyTurns` 262 → 218줄 (누적 327→218, -109)
+
+- **추출**: 루프 안의 스킬 판단·선택·적용(변이 필터 → 사용 판정 → 아키타입 선택 → 쿨다운 → 데미지/비데미지 분기)을 `runEnemySkill(...)` 로. **rng 단축 평가 보존이 핵심**: 스킬이 없으면 rng 를 소비하지 않는다(인라인 `&&` 와 동일).
+- **주의해서 보존한 미묘한 동작**: 비데미지 스킬이 **메시지 없이** 끝나도 `working` 은 `outcome.state` 로 갱신된다(원본도 그랬다) — 상태만 움직이고 로그가 없는 경우를 놓치면 조용한 회귀.
+- **검증**: balance/gear 골든 **byte-identical** · vitest 238/4459 · 러틴 8/8 · **mutation 39/39 KILLED**.
+- 함수 크기: `processEnemyTurns` 218 · `runEnemySkill` 55 · `resolvePlayerDeath` 62 · `applyEnemyHit` 26.

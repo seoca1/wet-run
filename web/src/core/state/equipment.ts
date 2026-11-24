@@ -47,44 +47,12 @@ export type EquipCategory =
 /** Quality / rarity tiers. T0 = starting gear, T6 = master-tier finale. */
 export type EquipTier = "T0" | "T1" | "T2" | "T3" | "T4" | "T5" | "T6";
 
-/** Stats provided by an equipment piece.
- *
- * Numeric fields default to 0. `grantsSkillId` and `extraEffect`
- * are semantic strings — they describe side effects the renderer
- * or combat engine reads; the port treats them as opaque payloads.
- */
-export interface EquipStats {
-  readonly attackBonus: number;
-  readonly critBonusPct: number;
-  readonly damageBonusPct: number;
-  readonly defense: number;
-  readonly hpBonus: number;
-  readonly shieldBonus: number;
-  readonly apBonus: number;
-  readonly apRegenBonusPct: number;
-  readonly programPower: number;
-  readonly iceResistance: number;
-  readonly grantsSkillId: string | null;
-  readonly extraEffect: string;
-}
-
-/** Construct an `EquipStats` record with sensible zero defaults. */
-export function makeEquipStats(partial: Partial<EquipStats> = {}): EquipStats {
-  return Object.freeze({
-    attackBonus: partial.attackBonus ?? 0,
-    critBonusPct: partial.critBonusPct ?? 0,
-    damageBonusPct: partial.damageBonusPct ?? 0,
-    defense: partial.defense ?? 0,
-    hpBonus: partial.hpBonus ?? 0,
-    shieldBonus: partial.shieldBonus ?? 0,
-    apBonus: partial.apBonus ?? 0,
-    apRegenBonusPct: partial.apRegenBonusPct ?? 0,
-    programPower: partial.programPower ?? 0,
-    iceResistance: partial.iceResistance ?? 0,
-    grantsSkillId: partial.grantsSkillId ?? null,
-    extraEffect: partial.extraEffect ?? "",
-  });
-}
+// `EquipStats` + its combinators live in the leaf module `equip_stats.ts` so the
+// catalog and set-bonus data can build stats without a runtime cycle. Re-exported
+// here because this is the equipment system's public entry point.
+import type { EquipStats } from "./equip_stats";
+export type { EquipStats } from "./equip_stats";
+export { addStats, makeEquipStats } from "./equip_stats";
 
 /** A piece of cyberpunk gear.
  *
@@ -138,29 +106,6 @@ export function isT1OrBetter(equip: Equipment): boolean {
   return equip.tier !== "T0";
 }
 
-/** Add two `EquipStats`. Port of Python `_add_stats`.
- *
- * `grantsSkillId` follows the OR-semantics from the Python source
- * (the first non-null id wins). `extraEffect` joins both fields
- * with ", " when both are non-empty.
- */
-export function addStats(a: EquipStats, b: EquipStats): EquipStats {
-  const effect = [a.extraEffect, b.extraEffect].filter((e) => e.length > 0).join(", ");
-  return makeEquipStats({
-    attackBonus: a.attackBonus + b.attackBonus,
-    critBonusPct: a.critBonusPct + b.critBonusPct,
-    damageBonusPct: a.damageBonusPct + b.damageBonusPct,
-    defense: a.defense + b.defense,
-    hpBonus: a.hpBonus + b.hpBonus,
-    shieldBonus: a.shieldBonus + b.shieldBonus,
-    apBonus: a.apBonus + b.apBonus,
-    apRegenBonusPct: a.apRegenBonusPct + b.apRegenBonusPct,
-    programPower: a.programPower + b.programPower,
-    iceResistance: a.iceResistance + b.iceResistance,
-    grantsSkillId: a.grantsSkillId ?? b.grantsSkillId,
-    extraEffect: effect,
-  });
-}
 
 // =============================================================================
 // Default catalog import

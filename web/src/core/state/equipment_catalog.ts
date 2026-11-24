@@ -7,13 +7,12 @@
  * Split from `equipment.ts` so the core types + registry + loadout
  * logic stays under the 250 LOC ceiling. SIZE_OK (data table).
  *
- * Note: stats are constructed inline (via the local `s()` helper)
- * rather than importing `makeEquipStats` from equipment.ts — that
- * would create an import cycle since equipment.ts re-exports from
- * this file. The inline construction is pure data and the helper
- * produces the same frozen shape as `makeEquipStats`.
+ * Note: stats come from `makeEquipStats` in the leaf module `equip_stats.ts`.
+ * They used to be built by a local copy of it, to dodge an import cycle with
+ * equipment.ts (refactor 2026-11-24).
  */
-import type { EquipStats, Equipment } from "./equipment";
+import type { Equipment } from "./equipment";
+import { makeEquipStats } from "./equip_stats";
 
 // =============================================================================
 // Default Equipment Catalog
@@ -21,35 +20,6 @@ import type { EquipStats, Equipment } from "./equipment";
 //
 // All values copied verbatim from equipment.py so combat stats match exactly.
 
-function s(p: {
-  attackBonus?: number;
-  critBonusPct?: number;
-  damageBonusPct?: number;
-  defense?: number;
-  hpBonus?: number;
-  shieldBonus?: number;
-  apBonus?: number;
-  apRegenBonusPct?: number;
-  programPower?: number;
-  iceResistance?: number;
-  grantsSkillId?: string | null;
-  extraEffect?: string;
-}): EquipStats {
-  return Object.freeze({
-    attackBonus: p.attackBonus ?? 0,
-    critBonusPct: p.critBonusPct ?? 0,
-    damageBonusPct: p.damageBonusPct ?? 0,
-    defense: p.defense ?? 0,
-    hpBonus: p.hpBonus ?? 0,
-    shieldBonus: p.shieldBonus ?? 0,
-    apBonus: p.apBonus ?? 0,
-    apRegenBonusPct: p.apRegenBonusPct ?? 0,
-    programPower: p.programPower ?? 0,
-    iceResistance: p.iceResistance ?? 0,
-    grantsSkillId: p.grantsSkillId ?? null,
-    extraEffect: p.extraEffect ?? "",
-  });
-}
 
 export const STARTER_DECK: Equipment = Object.freeze({
   id: "deck_basic",
@@ -57,7 +27,7 @@ export const STARTER_DECK: Equipment = Object.freeze({
   slot: "deck",
   category: "hardware",
   tier: "T0",
-  stats: s({ programPower: 2 }),
+  stats: makeEquipStats({ programPower: 2 }),
   description: "A battered Ono-Sendai 7 cyberdeck. The jack plate is worn smooth.",
   asciiGlyph: "[D]",
   asciiColor: [100, 100, 150],
@@ -72,7 +42,7 @@ export const STARTER_HEADWARE: Equipment = Object.freeze({
   slot: "headware",
   category: "wetware",
   tier: "T0",
-  stats: s({ apBonus: 1 }),
+  stats: makeEquipStats({ apBonus: 1 }),
   description: "Basic trodes. Brings the Matrix into focus, mostly.",
   asciiGlyph: "^H^",
   asciiColor: [180, 180, 200],
@@ -87,7 +57,7 @@ export const STREET_DECK: Equipment = Object.freeze({
   slot: "deck",
   category: "hardware",
   tier: "T1",
-  stats: s({ critBonusPct: 1 }),
+  stats: makeEquipStats({ critBonusPct: 1 }),
   description: "Hot-rodded Ono-Sendai with custom cooling. Burns through ICE like butter.",
   asciiGlyph: "[D+]",
   asciiColor: [200, 100, 0],
@@ -102,7 +72,7 @@ export const MILITECH_EYES: Equipment = Object.freeze({
   slot: "eyeware",
   category: "cybernetic",
   tier: "T1",
-  stats: s({ critBonusPct: 1 }),
+  stats: makeEquipStats({ critBonusPct: 1 }),
   description: "Targeting reticle overlays. Highlights weak points in red.",
   asciiGlyph: "[E]",
   asciiColor: [255, 50, 50],
@@ -117,7 +87,7 @@ export const CHROME_GLOVES: Equipment = Object.freeze({
   slot: "gloves",
   category: "cybernetic",
   tier: "T1",
-  stats: s({ critBonusPct: 1 }),
+  stats: makeEquipStats({ critBonusPct: 1 }),
   description: "Fingers reinforced with chrome. Plug-compatible.",
   asciiGlyph: "[G]",
   asciiColor: [180, 180, 200],
@@ -132,7 +102,7 @@ export const CORPORATE_DECK: Equipment = Object.freeze({
   slot: "deck",
   category: "cybernetic",
   tier: "T2",
-  stats: s({ defense: 1, apRegenBonusPct: 20 }),
+  stats: makeEquipStats({ defense: 1, apRegenBonusPct: 20 }),
   description: "Japanese craftsmanship meets cutting-edge cybernetics.",
   asciiGlyph: "[D]",
   asciiColor: [200, 0, 100],
@@ -147,7 +117,7 @@ export const SUBDERMAL: Equipment = Object.freeze({
   slot: "bodysuit",
   category: "bioware",
   tier: "T2",
-  stats: s({ defense: 1, hpBonus: 2 }),
+  stats: makeEquipStats({ defense: 1, hpBonus: 2 }),
   description: "Kevlar subdermal layer. Stops most small-caliber rounds.",
   asciiGlyph: "[B]",
   asciiColor: [100, 150, 100],
@@ -162,7 +132,7 @@ export const MILITECH_DECK: Equipment = Object.freeze({
   slot: "deck",
   category: "hardware",
   tier: "T3",
-  stats: s({ defense: 1, programPower: 1, grantsSkillId: "jackhammer" }),
+  stats: makeEquipStats({ defense: 1, programPower: 1, grantsSkillId: "jackhammer" }),
   description: "Military-grade hardware. Comes pre-loaded with combat programs.",
   asciiGlyph: "[D]",
   asciiColor: [0, 200, 0],
@@ -177,7 +147,7 @@ export const TACTICAL_BODY: Equipment = Object.freeze({
   slot: "bodysuit",
   category: "hardware",
   tier: "T3",
-  stats: s({ defense: 2, hpBonus: 2, shieldBonus: 1, iceResistance: 1 }),
+  stats: makeEquipStats({ defense: 2, hpBonus: 2, shieldBonus: 1, iceResistance: 1 }),
   description: "Full ballistic plating. Made the Arasaka tremble.",
   asciiGlyph: "[B]",
   asciiColor: [150, 150, 150],
@@ -192,7 +162,7 @@ export const ARASAKA_DECK: Equipment = Object.freeze({
   slot: "deck",
   category: "cybernetic",
   tier: "T4",
-  stats: s({ defense: 1, programPower: 1, grantsSkillId: "viral" }),
+  stats: makeEquipStats({ defense: 1, programPower: 1, grantsSkillId: "viral" }),
   description: "Top-tier Arasaka deck. Sleek, deadly, expensive.",
   asciiGlyph: "[D]",
   asciiColor: [255, 0, 0],
@@ -207,7 +177,7 @@ export const KEREZNIKOV: Equipment = Object.freeze({
   slot: "headware",
   category: "cybernetic",
   tier: "T4",
-  stats: s({ hpBonus: 1, programPower: 1, apBonus: 3, apRegenBonusPct: 50 }),
+  stats: makeEquipStats({ hpBonus: 1, programPower: 1, apBonus: 3, apRegenBonusPct: 50 }),
   description: "Russian implant. AP regenerates like you mainline stims.",
   asciiGlyph: "[K]",
   asciiColor: [200, 0, 0],
@@ -222,7 +192,7 @@ export const GHOST_DECK: Equipment = Object.freeze({
   slot: "deck",
   category: "daemon",
   tier: "T5",
-  stats: s({ critBonusPct: 1, defense: 1, programPower: 2, grantsSkillId: "bloodlust" }),
+  stats: makeEquipStats({ critBonusPct: 1, defense: 1, programPower: 2, grantsSkillId: "bloodlust" }),
   description: "Experimental AI-assisted deck. Thinks for itself.",
   asciiGlyph: "[G]",
   asciiColor: [100, 255, 200],
@@ -237,7 +207,7 @@ export const MASTER_DECK: Equipment = Object.freeze({
   slot: "deck",
   category: "daemon",
   tier: "T6",
-  stats: s({
+  stats: makeEquipStats({
     critBonusPct: 2,
     defense: 2,
     programPower: 3,
@@ -259,7 +229,7 @@ export const MASTER_BODY: Equipment = Object.freeze({
   slot: "bodysuit",
   category: "nanoware",
   tier: "T6",
-  stats: s({
+  stats: makeEquipStats({
     defense: 4,
     hpBonus: 8,
     shieldBonus: 2,
@@ -281,7 +251,7 @@ export const ZION_TRODES: Equipment = Object.freeze({
   slot: "trodes",
   category: "wetware",
   tier: "T6",
-  stats: s({
+  stats: makeEquipStats({
     hpBonus: 2,
     apBonus: 5,
     apRegenBonusPct: 100,
@@ -301,7 +271,7 @@ export const NANO_HIVE: Equipment = Object.freeze({
   slot: "implant",
   category: "nanoware",
   tier: "T3",
-  stats: s({ extraEffect: "Heals 2 HP per turn (poison immune)" }),
+  stats: makeEquipStats({ extraEffect: "Heals 2 HP per turn (poison immune)" }),
   description: "Billions of nanobots in your bloodstream. Maintenance nightmare.",
   asciiGlyph: "[N]",
   asciiColor: [0, 255, 100],
@@ -316,7 +286,7 @@ export const TRODES_NINJA: Equipment = Object.freeze({
   slot: "trodes",
   category: "wetware",
   tier: "T2",
-  stats: s({ critBonusPct: 1, extraEffect: "+Stealth in Matrix" }),
+  stats: makeEquipStats({ critBonusPct: 1, extraEffect: "+Stealth in Matrix" }),
   description: "Silent connection. ICE can't trace you.",
   asciiGlyph: "[~]",
   asciiColor: [150, 100, 200],
@@ -331,7 +301,7 @@ export const BOOTS_GHOST: Equipment = Object.freeze({
   slot: "boots",
   category: "cybernetic",
   tier: "T2",
-  stats: s({ hpBonus: 1, extraEffect: "+Movement speed (Matrix)" }),
+  stats: makeEquipStats({ hpBonus: 1, extraEffect: "+Movement speed (Matrix)" }),
   description: "Adaptive camouflage. Silent when you want to be.",
   asciiGlyph: "[B]",
   asciiColor: [100, 100, 150],

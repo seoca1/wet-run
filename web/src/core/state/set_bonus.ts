@@ -5,62 +5,34 @@
  * the loadout owns its slot state, this module provides aggregation.
  */
 
-import { type EquipStats } from "./equipment";
+import type { EquipStats } from "./equip_stats";
+import { addStats, makeEquipStats } from "./equip_stats";
 
 /** Map of set_id → { threshold → bonus stats }. */
 export type SetBonusesByThreshold = Readonly<Record<number, EquipStats>>;
 
-function makeStats(p: {
-  attackBonus?: number;
-  critBonusPct?: number;
-  damageBonusPct?: number;
-  defense?: number;
-  hpBonus?: number;
-  shieldBonus?: number;
-  apBonus?: number;
-  apRegenBonusPct?: number;
-  programPower?: number;
-  iceResistance?: number;
-  grantsSkillId?: string | null;
-  extraEffect?: string;
-}): EquipStats {
-  return Object.freeze({
-    attackBonus: p.attackBonus ?? 0,
-    critBonusPct: p.critBonusPct ?? 0,
-    damageBonusPct: p.damageBonusPct ?? 0,
-    defense: p.defense ?? 0,
-    hpBonus: p.hpBonus ?? 0,
-    shieldBonus: p.shieldBonus ?? 0,
-    apBonus: p.apBonus ?? 0,
-    apRegenBonusPct: p.apRegenBonusPct ?? 0,
-    programPower: p.programPower ?? 0,
-    iceResistance: p.iceResistance ?? 0,
-    grantsSkillId: p.grantsSkillId ?? null,
-    extraEffect: p.extraEffect ?? "",
-  });
-}
 
 /** Direct port of Python `SET_BONUSES`. */
 export const SET_BONUSES: Readonly<Record<string, SetBonusesByThreshold>> = Object.freeze({
   ono_sendai: Object.freeze({
-    2: makeStats({ critBonusPct: 1, extraEffect: "Ono-Sendai resonance (2pc): deck runs cooler" }),
-    3: makeStats({
+    2: makeEquipStats({ critBonusPct: 1, extraEffect: "Ono-Sendai resonance (2pc): deck runs cooler" }),
+    3: makeEquipStats({
       programPower: 1,
       apRegenBonusPct: 10,
       extraEffect: "Ono-Sendai sync (3pc): jack in 1 turn faster",
     }),
   }),
   militech: Object.freeze({
-    2: makeStats({ critBonusPct: 1, extraEffect: "Militech targeting (2pc): +hit chance" }),
-    3: makeStats({ critBonusPct: 1, extraEffect: "Militech apex (3pc): sharper targeting" }),
+    2: makeEquipStats({ critBonusPct: 1, extraEffect: "Militech targeting (2pc): +hit chance" }),
+    3: makeEquipStats({ critBonusPct: 1, extraEffect: "Militech apex (3pc): sharper targeting" }),
   }),
   arasaka: Object.freeze({
-    2: makeStats({
+    2: makeEquipStats({
       defense: 1,
       iceResistance: 1,
       extraEffect: "Arasaka wards (2pc): corporate-grade shields",
     }),
-    3: makeStats({
+    3: makeEquipStats({
       defense: 1,
       hpBonus: 1,
       iceResistance: 1,
@@ -97,25 +69,8 @@ export function getSetBonusDefinitions(): Readonly<Record<string, SetBonusesByTh
 
 import type { EquipmentLoadout } from "./equipment";
 
-function addStatsLocal(a: EquipStats, b: EquipStats): EquipStats {
-  const effect = [a.extraEffect, b.extraEffect].filter((e) => e.length > 0).join(", ");
-  return Object.freeze({
-    attackBonus: a.attackBonus + b.attackBonus,
-    critBonusPct: a.critBonusPct + b.critBonusPct,
-    damageBonusPct: a.damageBonusPct + b.damageBonusPct,
-    defense: a.defense + b.defense,
-    hpBonus: a.hpBonus + b.hpBonus,
-    shieldBonus: a.shieldBonus + b.shieldBonus,
-    apBonus: a.apBonus + b.apBonus,
-    apRegenBonusPct: a.apRegenBonusPct + b.apRegenBonusPct,
-    programPower: a.programPower + b.programPower,
-    iceResistance: a.iceResistance + b.iceResistance,
-    grantsSkillId: a.grantsSkillId ?? b.grantsSkillId,
-    extraEffect: effect,
-  });
-}
 
-const zeroStats: EquipStats = makeStats({});
+const zeroStats: EquipStats = makeEquipStats({});
 
 /** Summary of active set bonuses on a loadout. */
 export interface SetBonusSummary {
@@ -129,7 +84,7 @@ export function calculateSetBonus(loadout: EquipmentLoadout): SetBonusSummary {
   let total: EquipStats = zeroStats;
   for (const [setId, count] of Object.entries(counts)) {
     const bonus = getSetBonus(setId, count);
-    if (bonus !== null) total = addStatsLocal(total, bonus);
+    if (bonus !== null) total = addStats(total, bonus);
   }
   return Object.freeze({
     activeSetIds: Object.freeze(Object.keys(counts)),
@@ -160,7 +115,7 @@ export function getAllSetBonuses(loadout: EquipmentLoadout): ReadonlyArray<Equip
 export function applySetBonusesToStats(base: EquipStats, loadout: EquipmentLoadout): EquipStats {
   let result = base;
   for (const bonus of loadout.setBonuses()) {
-    result = addStatsLocal(result, bonus);
+    result = addStats(result, bonus);
   }
   return result;
 }

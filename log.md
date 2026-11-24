@@ -4412,3 +4412,9 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **왜 안전한가(측정 전 예측, 측정 후 확인)**: `seed | 0` 과 `seed >>> 0` 은 **모든 시드에서 같은 스트림**이다 — 상태는 항상 비트 연산을 거치므로 32비트 재해석만 다르다. 그래서 통일이 곡선을 움직이지 않는다.
 - **증거**: `balance:check` · `gear:check` **byte-identical** · vitest 238/4459 · 러틴 8/8. 남은 `0x6d2b79f5` 는 `rng.ts` 한 곳뿐(확인).
 - **남긴 것**: `dungeon.ts` 는 하위 호환 re-export 유지(던전 모듈들이 타입을 여기서 가져온다) · 미션 id 해시는 Stage 1c(값이 다르므로 통일 금지).
+
+## [2026-11-24] refactor(stage1b) | 장비 스탯 병합 3벌 → 1벌 (`equip_stats.ts` 리프 모듈)
+
+- **원인**: `equipment.ts` 가 카탈로그를 **값으로** import 하므로, 카탈로그·set_bonus 가 `makeEquipStats` 를 가져오면 런타임 사이클. 그래서 **같은 12필드 병합이 3벌**(`makeEquipStats` · 카탈로그의 `s()` · set_bonus 의 `makeStats`), `addStats` 도 2벌.
+- **수정**: `src/core/state/equip_stats.ts`(리프, import 없음)로 `EquipStats` + `makeEquipStats` + `addStats` 이동 → **사이클 자체를 제거**. `equipment.ts` 는 재수출로 기존 import 경로 보존(loadout·테스트 무수정).
+- **검증**: `gear:check` · `balance:check` **byte-identical** · vitest 238/4459 · 러틴 8/8 · 남은 병합 구현은 `equip_stats.ts` 한 곳(확인).

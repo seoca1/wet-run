@@ -4456,3 +4456,9 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **주의해서 보존한 미묘한 동작**: 비데미지 스킬이 **메시지 없이** 끝나도 `working` 은 `outcome.state` 로 갱신된다(원본도 그랬다) — 상태만 움직이고 로그가 없는 경우를 놓치면 조용한 회귀.
 - **검증**: balance/gear 골든 **byte-identical** · vitest 238/4459 · 러틴 8/8 · **mutation 39/39 KILLED**.
 - 함수 크기: `processEnemyTurns` 218 · `runEnemySkill` 55 · `resolvePlayerDeath` 62 · `applyEnemyHit` 26.
+
+## [2026-11-24] refactor(stage2e-2f) | `useProgram` 분해 시작 — 310 → 247줄
+
+- **2e**: 데미지 산출(상태·장비 보너스 → 유효 방어도 → `calculateDamage`) → `rollProgramDamage(...)` + `effectiveArmorFor(...)`. **rng 소비 순서(케이스 → 크릿)와 "슬로우 감소는 SFX 선택 뒤"라는 순서를 그대로 보존**.
+- **2f**: 상태이상 프로시저 2종 → `rollProgramProcs(...)` (**타깃이 죽어도 롤은 먼저 굴린다** — 인라인 `&&` 순서가 시드 스트림의 일부), 마크 소비 2벌(취약·슬로우) → `consumeMark(...)`.
+- 검증: balance/gear 골든 **byte-identical** · vitest 238/4459 · 러틴 8/8 · **mutation 39/39 KILLED**.

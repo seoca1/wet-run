@@ -9,7 +9,7 @@
  * Re-exported from `state_actions.ts` so existing imports keep working.
  */
 
-import type { GameState } from "../types";
+import type { GameState, Program } from "../types";
 import {
   applyStatus,
   applyTickEffects,
@@ -22,7 +22,7 @@ import {
 import { AudioManager } from "../../audio/manager";
 import { calculateDamage, countRoleSynergy, programPowerArmorBypassPct } from "./combat_engine";
 import { absorbIceDamage } from "./ice_combat_effects";
-import { programEffect } from "./program_effects";
+import { programEffect, type ProgramEffect } from "./program_effects";
 import { COST_LIMIT, programAlarmCost, programHitsAllIce } from "./program_affordance";
 import { creditKills, killedBetween, resolveVictory } from "./victory";
 import {
@@ -44,6 +44,96 @@ export function advanceDeadTarget(state: GameState): GameState {
   return { ...state, activeIceIndex: aliveIdx };
 }
 
+/** The two status procs a played program can roll on its target.
+ *
+ * Both rolls happen whether or not the target survived the hit — the inline
+ * version rolled first and checked the HP afterwards, and the draw order is
+ * part of the seeded stream. A roll that lands on a dead ICE applies nothing.
+ */
+function rollProgramProcs(state: GameState, targetIdx: number): GameState {
+  const target = state.iceRoster[targetIdx];
+  let next = state;
+  if (rollStatusProc("burn") && target && target.hp > 0) {
+    next = applyStatus(next, "ice", "burn", 2, 3);
+  }
+  // 20% chance to slow the ICE for 2 turns, at 30% damage reduction.
+  if (rollStatusProc("slow") && target && target.hp > 0) {
+    next = applyStatus(next, "ice", "slow", 2, 30, { slowPct: 30 });
+  }
+  return next;
+}
+
+/** Remove the first `kind`/`ice` status — a mark is spent once it has paid. */
+function consumeMark(state: GameState, kind: "vulnerable" | "slow"): GameState {
+  const idx = state.statusEffects.findIndex((e) => e.kind === kind && e.target === "ice");
+  if (idx < 0) return state;
+  const updated = [...state.statusEffects];
+  updated.splice(idx, 1);
+  return { ...state, statusEffects: updated };
+}
+
+/**
+ * The armor the program actually has to get through.
+ *
+ * ADR-0255/ADR-0277: the card's own pierce removes points, `armor_ignore`
+ * keeps a share. ADR-0327: the deck's `programPower` then eats into whatever
+ * survives — a share, so it scales with the ICE's plate instead of flattening
+ * the damage curve.
+ */
+function effectiveArmorFor(effect: ProgramEffect, defenderArmor: number, programPower: number): number {
+  const piercePoints = effect.kind === "pierce" ? effect.amount : 0;
+  const armorKeptPct = effect.kind === "armor_ignore" ? 100 - effect.amount : 100;
+  const powerBypassPct = programPowerArmorBypassPct(programPower);
+  const keptAfterPower = Math.floor((armorKeptPct * (100 - powerBypassPct)) / 100);
+  return Math.floor((Math.max(0, defenderArmor - piercePoints) * keptAfterPower) / 100);
+}
+
+/** Roll the damage one played program deals.
+ *
+ * Reads the same bonuses the inline block did (powered-status attack bonus,
+ * deck attack/crit, vulnerable mark, combo, role synergy) and consumes the rng
+ * in `calculateDamage`'s order — case, then crit. Extracted from `useProgram`
+ * (refactor 2026-11-24); the slow reduction happens after this, on purpose, so
+ * the SFX pick still sees the pre-slow number.
+ */
+function rollProgramDamage(
+  state: GameState,
+  program: Program,
+  effect: ProgramEffect,
+  vulnerableBonus: number,
+  newCombo: number,
+): { readonly damage: number; readonly isCrit: boolean } {
+  const statusAttackBonus = state.statusEffects
+    .filter((e) => e.kind === "powered" && e.target === "player")
+    .reduce((sum, e) => sum + (e.attackBonus ?? 0), 0);
+
+  const equipStats = state.equipmentLoadout.totalStats();
+  const defenderIce = state.iceRoster[state.activeIceIndex] ?? state.ice;
+  const role = (program as { role?: string }).role ?? null;
+
+  const dmgResult = calculateDamage({
+    baseDamage: program.tier * 5,
+    attackerTeam: "player" as const,
+    attackerAttackBonus: statusAttackBonus + equipStats.attackBonus,
+    attackerCritBonusPct: equipStats.critBonusPct,
+    defenderDefenseBonus: effectiveArmorFor(
+      effect,
+      defenderIce.armor ?? 0,
+      equipStats.programPower,
+    ),
+    defenderIceResistance: 0,
+    defenderIceKind: null,
+    lastSkillRole: role,
+    lastSkillCritBonus: 0,
+    playerCombo: newCombo,
+    roleSynergyCount: countRoleSynergy(role, []),
+    defenderVulnerabilityPct: vulnerableBonus + equipStats.damageBonusPct,
+    defenderSlowReductionPct: 0,
+    rng: Math.random,
+  });
+  return { damage: dmgResult.damage, isCrit: dmgResult.isCrit };
+}
+
 export function useProgram(state: GameState, programId: string): GameState {
   state = advanceDeadTarget(state);
   const program = state.deck.find((p) => p.id === programId);
@@ -63,13 +153,6 @@ export function useProgram(state: GameState, programId: string): GameState {
     .filter((e) => e.kind === "vulnerable" && e.target === "ice")
     .reduce((sum, e) => sum + e.magnitude, 0);
 
-  const statusAttackBonus = state.statusEffects
-    .filter((e) => e.kind === "powered" && e.target === "player")
-    .reduce((sum, e) => sum + (e.attackBonus ?? 0), 0);
-
-  const equipStats = state.equipmentLoadout.totalStats();
-  const attackerAttackBonus = statusAttackBonus + equipStats.attackBonus;
-
   const newCombo = state.playerCombo + 1;
   // ADR-0280: no clock in the reducer. `comboLastHitMs` was stamped with
   // `Date.now()` and read only by `tickCombo`, which has no caller — the
@@ -79,45 +162,15 @@ export function useProgram(state: GameState, programId: string): GameState {
   // a turn-based fight (ADR-0280), so it would need a turn-based form.
   const currentMs = 0;
 
-  const defenderIce = state.iceRoster[state.activeIceIndex] ?? state.ice;
-
   // ADR-0255: Backdoor ignores N points of the ICE's armor. Armor is a flat
   // subtraction, so a pierce has to remove points from it — a share of the
   // armor would round away to nothing on the lightly armored ICEs.
   // ADR-0277: `exploit` is the other direction — it keeps a share of the
   // armor, so it is worth nothing on a bare ICE and a lot on a plated one.
   const effect = programEffect(program);
-  const piercePoints = effect.kind === "pierce" ? effect.amount : 0;
-  const armorKeptPct = effect.kind === "armor_ignore" ? 100 - effect.amount : 100;
-  // ADR-0327: the deck's programPower eats into whatever armor survives the
-  // card's own pierce / armor_ignore — a share, so it scales with the ICE's
-  // plate instead of flattening the damage curve.
-  const powerBypassPct = programPowerArmorBypassPct(equipStats.programPower);
-  const keptAfterPower = Math.floor((armorKeptPct * (100 - powerBypassPct)) / 100);
-  const defenderArmor = defenderIce.armor ?? 0;
-  const effectiveArmor = Math.floor(
-    (Math.max(0, defenderArmor - piercePoints) * keptAfterPower) / 100,
-  );
 
-  const damageCtx = {
-    baseDamage: program.tier * 5,
-    attackerTeam: "player" as const,
-    attackerAttackBonus,
-    attackerCritBonusPct: equipStats.critBonusPct,
-    defenderDefenseBonus: effectiveArmor,
-    defenderIceResistance: 0,
-    defenderIceKind: null,
-    lastSkillRole: (program as { role?: string }).role ?? null,
-    lastSkillCritBonus: 0,
-    playerCombo: newCombo,
-    roleSynergyCount: countRoleSynergy((program as { role?: string }).role ?? null, []),
-    defenderVulnerabilityPct: vulnerableBonus + equipStats.damageBonusPct,
-    defenderSlowReductionPct: 0,
-    rng: Math.random,
-  };
-
-  const dmgResult = calculateDamage(damageCtx);
-  let damage = dmgResult.damage;
+  const roll = rollProgramDamage(state, program, effect, vulnerableBonus, newCombo);
+  let damage = roll.damage;
 
   // Tier 5 SFX dispatch: pick role-specific SFX (combat_block /
   // combat_skill_*) based on the actual damage the program delivered.
@@ -156,38 +209,12 @@ export function useProgram(state: GameState, programId: string): GameState {
     comboLastHitMs: currentMs,
   };
   const statusCountBeforeProcs = stateWithDamage.statusEffects.length;
-  if (rollStatusProc("burn") && damagedRoster[targetIdx] && damagedRoster[targetIdx].hp > 0) {
-    stateWithDamage = applyStatus(stateWithDamage, "ice", "burn", 2, 3);
-  }
+  stateWithDamage = rollProgramProcs(stateWithDamage, targetIdx);
 
-  // Apply slow effect 20% chance to slow ice for 2 turns with 30% damage reduction
-  if (rollStatusProc("slow") && damagedRoster[targetIdx] && damagedRoster[targetIdx].hp > 0) {
-    stateWithDamage = applyStatus(stateWithDamage, "ice", "slow", 2, 30, {
-      slowPct: 30,
-    });
-  }
-
-  if (vulnerableBonus > 0) {
-    const vulnerableIdx = stateWithDamage.statusEffects.findIndex(
-      (e) => e.kind === "vulnerable" && e.target === "ice",
-    );
-    if (vulnerableIdx >= 0) {
-      const updated = [...stateWithDamage.statusEffects];
-      updated.splice(vulnerableIdx, 1);
-      stateWithDamage = { ...stateWithDamage, statusEffects: updated };
-    }
-  }
-
-  if (slowReduction > 0) {
-    const slowAbsIdx = stateWithDamage.statusEffects.findIndex(
-      (e) => e.kind === "slow" && e.target === "ice",
-    );
-    if (slowAbsIdx >= 0) {
-      const updated = [...stateWithDamage.statusEffects];
-      updated.splice(slowAbsIdx, 1);
-      stateWithDamage = { ...stateWithDamage, statusEffects: updated };
-    }
-  }
+  // A mark is spent by the attack it was placed for: the vulnerable stack and
+  // the ice slow are both consumed here, whatever they did to the damage.
+  if (vulnerableBonus > 0) stateWithDamage = consumeMark(stateWithDamage, "vulnerable");
+  if (slowReduction > 0) stateWithDamage = consumeMark(stateWithDamage, "slow");
 
   stateWithDamage = tickStatus(stateWithDamage);
   const tickResult = applyTickEffects(stateWithDamage);
@@ -281,7 +308,7 @@ export function useProgram(state: GameState, programId: string): GameState {
     // ADR-0241: the CRIT flash tracks the real crit roll, not a damage
     // threshold. Spawning draws no Math.random (ADR-0239), so this condition
     // cannot shift the seeded gameplay stream.
-    ...(dmgResult.isCrit
+    ...(roll.isCrit
       ? [
           import_vfx_ms(
             "critical_hit",

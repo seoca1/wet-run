@@ -4468,3 +4468,11 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **추출 3종**: `applyProgramOwnEffect`(shield/empower/evade/decoy 4분기, evade·decoy 는 같은 상태) · `programStatusLines`(시작/종료 상태 이름 — 표시 전용, rng 없음) · `buildProgramVfx`(VFX 배열 조립, 순서 보존).
 - 검증: balance/gear 골든 **byte-identical** · vitest 238/4459 · 러틴 8/8 · **mutation 39/39 KILLED**.
 - 최종 함수 크기: `useProgram` 181 · `buildProgramVfx` 60 · `rollProgramDamage` 37 · `programStatusLines` 15 · `applyProgramOwnEffect` 15 · `rollProgramProcs` 12.
+
+## [2026-11-24] refactor(stage3b) | 저장 슬롯 3벌 → 단일 스키마 (`save/slot_schema.ts`)
+
+- **문제**: 슬롯 필드 목록이 **3곳**(`types.SaveSlot` · `state.stateToSaveSlot` · `storage.isSaveSlot`)에 손으로 유지됐고, **작성자가 쓰지만 검증자가 안 보는 필드 4개**(`campaignMissionIds`·`campaignCompleted`·`uniquePickDone`·`intelNodes`)가 이미 존재.
+- **수정**: `src/save/slot_schema.ts` — 필드별 row(`required` + `check`)가 **검증자의 단일 공급원**. `storage.isSaveSlot` 은 `validateSlot` 위임, 지역 predicate 5개 삭제.
+- **결합**: `tests/save_slot_schema.test.ts` 가 (1) `Record<keyof SaveSlot, true>` 리터럴로 **타입에 필드 추가 시 컴파일 실패**, (2) 스키마 키 집합과 일치, (3) 작성자 출력 키 ⊆ 스키마 & required 전부 포함, (4) **미검증 4필드를 데이터로 노출**(좁히면 의도적 편집).
+- **문서 주장**: 테스트 수가 늘어(238→239 파일, 4459→4464) `doc_claims` 게이트가 실패 → README/ROADMAP 을 **하한 표기**(`4400+`, `238+`)로 전환(규약 §3.1).
+- 검증: 러틴 **9/9** · vitest **239/4464** · typecheck 0 · lint 0 error · balance/gear 골든 byte-identical · 저장 관련 테스트 34 pass.

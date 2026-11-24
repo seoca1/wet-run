@@ -15,6 +15,7 @@
 import type { SaveSlot } from "../core/types";
 import { idbGet, idbPut, idbDelete, idbIsAvailable } from "./storage_idb";
 import { encodeEnvelope, decodeEnvelope } from "./compress";
+import { validateSlot } from "./slot_schema";
 
 const CURRENT_SCHEMA_VERSION = 1;
 const MANUAL_SLOT_COUNT = 3;
@@ -196,70 +197,11 @@ function parseSlot(raw: string): SaveSlot | null {
   }
 }
 
-/** Every element of a card-id array must be a string (`ReadonlyArray<string>`). */
-function isStringArray(value: unknown): value is ReadonlyArray<string> {
-  return Array.isArray(value) && value.every((e) => typeof e === "string");
-}
-
-/** `graphicNovelProgress` is optional and nullable; when present it must be a
- *  well-formed object (string `chainId`, numeric indices) — a malformed value
- *  would crash `slotToGameState` on `chainId.split("_")`. */
-function isGraphicNovelProgress(value: unknown): boolean {
-  if (value === undefined || value === null) return true;
-  if (typeof value !== "object" || Array.isArray(value)) return false;
-  const g = value as Record<string, unknown>;
-  return (
-    typeof g.chainId === "string" &&
-    typeof g.sceneIndex === "number" &&
-    typeof g.dialogueIndex === "number"
-  );
-}
-
-/** `currentNodeIndex` is optional; when present it must be a finite number.
- *
- *  A non-finite value would poison the restored matrix position, so such a
- *  slot is rejected outright (same policy as the other numeric fields). */
-function isCurrentNodeIndex(value: unknown): boolean {
-  return value === undefined || (typeof value === "number" && Number.isFinite(value));
-}
-
+/** The slot shape is validated from `save/slot_schema.ts` — one row per field,
+ *  shared with the test that holds the writer to it (refactor 2026-11-24). The
+ *  per-field predicates that used to live here are `SLOT_FIELDS` rows now. */
 function isSaveSlot(value: unknown): value is SaveSlot {
-  if (typeof value !== "object" || value === null) return false;
-  const v = value as Record<string, unknown>;
-  return (
-    typeof v.version === "number" &&
-    typeof v.missionId === "string" &&
-    typeof v.playerHp === "number" &&
-    typeof v.playerMaxHp === "number" &&
-    typeof v.playerAlarm === "number" &&
-    typeof v.playerCredits === "number" &&
-    typeof v.turnCount === "number" &&
-    isStringArray(v.deckIds) &&
-    isStringArray(v.discardIds) &&
-    isStringArray(v.drawIds) &&
-    typeof v.savedAt === "string" &&
-    isGraphicNovelProgress(v.graphicNovelProgress) &&
-    isCurrentNodeIndex(v.currentNodeIndex) &&
-    isOptionalNodeList(v.clearedEncounterNodes) &&
-    isOptionalNodeList(v.bypassedEncounterNodes) &&
-    isOptionalId(v.cardRewardTaken) &&
-    isOptionalId(v.jockeyId)
-  );
-}
-
-/** ADR-0261: the taken reward id is a non-empty string when present. */
-function isOptionalId(value: unknown): boolean {
-  return value === undefined || (typeof value === "string" && value.length > 0);
-}
-
-function isOptionalNodeList(value: unknown): boolean {
-  return (
-    value === undefined ||
-    (Array.isArray(value) &&
-      value.every(
-        (index: unknown) => typeof index === "number" && Number.isInteger(index) && index >= 0,
-      ))
-  );
+  return validateSlot(value);
 }
 
 export const SAVE_SLOT_LABELS: Readonly<Record<number, string>> = Object.freeze({

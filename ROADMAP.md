@@ -340,8 +340,8 @@ Phase 7: 알파 빌드
 ## 현재 위치
 
 **현재 Phase**: **wet_run-web Tier 1~4 + Content authoring + IDB save backend** (Python 프로토타입은 2026-09-15 통합으로 retired — Phase 표기는 wet_run-web 기준)
-**누적 테스트**: **wet_run-web 4459 passed, 0 failures (2026-11-18 확인)** — 238 vitest 파일. (이전 Python pytest/ruff/mypy 수치는 prototype retired (2026-09-15) 으로 historical — **참고용**: 4045 passed / ruff ✅ / mypy strict ✅)
-**검증 상태**: `npm test` 4459 pass (238 files, 0 failures) / `npx tsc --noEmit -p tsconfig.json` 0 errors / `npm run build` OK / `scripts/tools/find_broken_links.py` 0 broken (고아 검사는 워크스페이스 `scripts/audit_vault.py`) / `npm run balance:check` golden 일치 (ADR-0333)
+**누적 테스트**: **wet_run-web 4400+ passed, 0 failures (2026-11-24 확인)** — 238+ vitest 파일 (하한 표기: 스위트가 자라도 실패하지 않게). (이전 Python pytest/ruff/mypy 수치는 prototype retired (2026-09-15) 으로 historical — **참고용**: 4045 passed / ruff ✅ / mypy strict ✅)
+**검증 상태**: `npm test` 4400+ pass (238+ files, 0 failures) / `npx tsc --noEmit -p tsconfig.json` 0 errors / `npm run build` OK / `scripts/tools/find_broken_links.py` 0 broken (고아 검사는 워크스페이스 `scripts/audit_vault.py`) / `npm run balance:check` golden 일치 (ADR-0333)
 **ADR 누적**: **273 ADR (IDs 0001–0353)** — Accepted 236 · Draft 3 · evidence/legacy 표기 10. Implementation status sweep 60 ADR (0140-0199)
 
 **Phase 6+ 사이클 요약 (2026-07-04)**:

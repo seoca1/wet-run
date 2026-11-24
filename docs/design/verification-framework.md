@@ -56,7 +56,7 @@ python3 scripts/wet_run_verify.py --full --log    # log.md 에 한 줄 기록
 | 혼용 감사 | `python3 scripts/mixed_language_audit.py` (루트) | **`*.md`** CJK 혼용 | 위반 > 0 — ⚠ 범위가 md 한정(§3-4) |
 | 단위/통합 | `cd web && npm test` | 리듀서·상태·데이터 계약 (4459) | 실패 > 0 |
 | 밸런스 하네스 | `cd web && npm run balance` | **결정론적** 등급 곡선 (실 리듀서 구동) | 값 자체가 아니라 회귀는 §B 가 판정 |
-| 브라우저 e2e | `cd web && PLAYWRIGHT_BASE_URL=… npx playwright test` (+ `SOAK=1`/`STORY=1`) | 화면·조작·세이브·연출·VFX·터치 (desktop 54 · mobile 58) · soak 프리즈 0 · story | 수동 — smoke 는 배포 전용, soak/story 는 수동 트리거 (ADR-0340) |
+| 브라우저 e2e | `python3 scripts/wet_run_verify.py --e2e` (빌드 → `vite preview --host 127.0.0.1 :5195` → Playwright) 또는 `cd web && PLAYWRIGHT_BASE_URL=… npx playwright test` (+ `SOAK=1`/`STORY=1`) | 화면·조작·세이브·연출·VFX·터치 (**112 = desktop 54 + mobile 58, 2026-11-24 확인**) · soak 프리즈 0 · story | **러틴 플래그로 실행 가능**(`--e2e`, `--full` 포함) — 기본값은 여전히 수동(ADR-0340), smoke 는 배포 전용 |
 
 ### B. 게이트 — 자동 회귀 감지 (gate)
 

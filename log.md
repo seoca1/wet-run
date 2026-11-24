@@ -4483,3 +4483,11 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **닫은 구멍**: `campaignMissionIds`(문자열 배열) · `campaignCompleted`(0 이상 정수) · `uniquePickDone`(불리언) · `intelNodes`(노드 목록). 이전에는 손상된 값이 `slotToGameState` 까지 도달했다 — `campaignMissionIds.map` 은 배열이 아니면 **throw**.
 - **근거**: 작성자가 쓰고 복원 경로가 읽는 필드인데 검증만 없었다. 정상 저장은 영향 없음(작성자는 항상 올바른 타입을 쓴다).
 - 검증: 러틴 **9/9** · vitest **239/4465** · 새 테스트 8케이스(비정상 거부 + 정상 통과) · 저장 관련 테스트 35 pass.
+
+## [2026-11-24] test(verify) | e2e 를 러틴에 (`--e2e`) — main.ts 분해의 선행 조건 (112 pass)
+
+- **추가**: `wet_run_verify.py --e2e` — `npm run build` → `vite preview :5195` → Playwright(스냅샷·데모 스크린샷 제외). `--full` 은 e2e 를 포함. **기본값은 여전히 수동**(ADR-0340) — 브라우저가 필요한 게이트라 opt-in.
+- **함정 1(실패로 발견)**: `vite preview` 는 기본적으로 **IPv6 `::1`** 에 바인딩된다(macOS). 하네스·`PLAYWRIGHT_BASE_URL` 은 `127.0.0.1` 이므로 **`--host 127.0.0.1` 이 필수**. 첫 실행이 `preview server never came up` 으로 실패했고, 서버 로그 tail 을 보고서에 포함하도록 고쳤다.
+- **함정 2**: `python3 … | tail` 로 감싸면 `$?` 가 `tail` 의 종료 코드가 되어 **게이트 실패가 EXIT=0 으로 보인다**(첫 시도에서 실제로 속았다). 파이프 없이 실행해 확인.
+- **결과**: 러틴 **9/9 pass**, e2e **112**(desktop 54 + mobile 58) 전부 통과.
+- 문서: `docs/design/verification-framework.md` 의 e2e 행을 러틴 플래그로 갱신.

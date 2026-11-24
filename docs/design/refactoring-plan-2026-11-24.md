@@ -112,13 +112,42 @@
   `draw` 1818–2076 (~259줄) · `boot()` 2484–2567.
 - **주의**: `main.ts` 는 골든 하네스 import 그래프 **밖**이다(오케스트레이션 전용).
   그래서 밸런스 가드가 잡아주지 못한다 → **e2e(desktop 54 · mobile 58 · soak)가 유일한 가드**.
+  **선행 조건(2026-11-24 완료)**: `python3 scripts/wet_run_verify.py --e2e` — 빌드 → `vite preview :5195`
+  → Playwright(스냅샷·데모 스크린샷 제외). ADR-0340 이 남겨둔 "수동" 기본값은 유지하고
+  플래그로만 돈다. `--full` 은 e2e 를 포함한다.
 - 순서: 화면별 컨트롤러로 분리(입력 → 화면 → 액션), 상태 필드는 그대로 유지.
 
-#### 3b. 저장 필드 단일 공급원
-- 필드 목록이 3벌: `types.ts:450-493`(SaveSlot) · `state.ts:326-364`(쓰기) ·
-  `save/storage.ts:226-248`(`isSaveSlot`) + `loadLegacy`/`parseSlot`.
-- 제안: **필드 기술자(descriptor) 한 벌**에서 읽기/쓰기/검증을 파생 → 새 필드 추가가 한 곳.
-- 가드: `tests/run_end_save.test.ts` + e2e `run_end_save` 드라이버.
+**3a 설계 (다음 세션용 — 2026-11-24 조사)**
+
+`class Game` = **2,182줄(301–2482) · 53 메서드 · 68 필드**. 슬라이스 순서와 근거:
+
+| 슬라이스 | 옮길 것 | 줄 수(대략) | 비고 |
+|---|---|---|---|
+| 3a-1 | 입력 사다리 — `handlePreGameInput`(351줄) + `handle{Crafting,Equipment,Dungeon,Settings,Pause,Stub,GraphicNovel}Input` | ~700 | `if (this.screen === …)` 사다리. **가장 큰 단일 덩어리** |
+| 3a-2 | `draw`(259줄) + `drawPrep` | ~300 | 화면 라우팅 |
+| 3a-3 | 런 수명주기 — `launchSelected`·`handleContinue`·`endRun`·`startDungeonCrawl`·`autosave`·`noteRunFinished`·`refreshSaveCache` | ~250 | 저장과 얽힘 → 3b(스키마) 이후가 안전 |
+| 3a-4 | 루프 — `startLoop`·`start`·`stop`·`syncPhase`·`resizeRenderer`·`applyAccessibilitySettings` | ~200 | |
+| 3a-5 | 접근자·버튼 핸들러(2266–2460) | ~200 | 남겨도 무방 |
+
+**방법**: 메서드가 `this.<private field>` 를 광범위하게 쓰므로, 옮길 함수는 **host 인터페이스**를 받는다:
+
+```ts
+export interface PreGameHost { screen: ScreenKind; selectedMenuIndex: number; /* … */ launchSelected(): void }
+export function handlePreGameInput(host: PreGameHost, action: GameAction): boolean
+```
+`Game` 이 구조적으로 이 인터페이스를 만족하면 되고, 필요한 필드는 `private` → `readonly`/`public` 로 좁혀 연다(한 번에 하나씩).
+**하지 말 것**: 한 슬라이스에 파일 10개 이상 변경(AGENTS §6). 슬라이스마다 `--e2e` 를 돌린다(회당 ~6분).
+
+#### 3b. 저장 필드 단일 공급원 ✅ (2026-11-24)
+- 필드 목록이 3벌: `types.ts`(SaveSlot) · `state.ts`(쓰기) ·
+  `save/storage.ts`(`isSaveSlot`).
+- **구현**: 검증자의 단일 공급원 = `src/save/slot_schema.ts` (필드별 row: `required` + `check`).
+  타입과 작성자는 각자의 자리에 남았다 — 작성자는 상태→슬롯 **매핑**이라 표로 파생할 수 없다.
+  대신 `tests/save_slot_schema.test.ts` 가 셋을 묶는다: `Record<keyof SaveSlot, true>` 리터럴로
+  타입에 필드가 늘면 **컴파일 실패**, 스키마 키와 일치 강제, 작성자 출력 키 ⊆ 스키마.
+- **덤**: 작성자가 쓰지만 검증되지 않던 4필드(`campaignMissionIds`·`campaignCompleted`·
+  `uniquePickDone`·`intelNodes`)를 별도 커밋으로 검사 추가 — 손상된 값이 `slotToGameState` 까지 갔다.
+- 가드: `tests/run_end_save.test.ts` · `property_save_fuzz.test.ts` · 새 스키마 테스트.
 
 ---
 
@@ -169,7 +198,7 @@
 | 1c 해시 주석화 | ✅ `095fc56c` | **합치지 않음**: 5벌이 전부 값이 다르고, 그중 하나는 자기 주석이 **거짓**이었다(정정). 코드 변경 0. |
 | 1d crit 롤 | ✅ | `rollCritMultiplier(rng)` 하나로 — 소비 순서(rng 1회) 보존. |
 | 2 god 함수 | ✅ `11697f9a` `72e3ffaf` `e3d10ad6` `8411b5e6` `b4c8714d` | **`processEnemyTurns` 327 → 218줄** (`applyEnemyHit` · `bossDamageMultiplierForPhase` · `resolvePlayerDeath` · `runEnemySkill`) · **`useProgram` 310 → 181줄** (`rollProgramDamage` · `effectiveArmorFor` · `rollProgramProcs` · `consumeMark` · `applyProgramOwnEffect` · `programStatusLines` · `buildProgramVfx`). **rng 소비 순서·단축 평가를 슬라이스마다 보존**(골든이 판정). |
-| 3 main.ts · 저장 필드 | ⬜ | |
+| 3 main.ts · 저장 필드 | 🟡 진행 | 3b 완료: 저장 슬롯 **3벌 → 단일 스키마**(`save/slot_schema.ts`) + 작성자가 쓰지만 검증되지 않던 **4필드 검사 추가**. e2e 게이트(`wet_run_verify.py --e2e`) 추가 = `main.ts` 분해의 선행 조건. **남은 것**: `main.ts` 2,568줄 분해. |
 | 4 테스트 fixture | ⬜ | |
 
 **Stage 1 종료 시점 확인**: 러틴 8/8 · vitest 238/4459 · typecheck 0 · lint 0 error ·

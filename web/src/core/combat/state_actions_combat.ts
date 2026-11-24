@@ -210,18 +210,21 @@ function processDixieTurn(state: GameState): GameState {
  * did not need it) and so the draw order does not depend on which archetype is
  * attacking — a positional mock in a test can pin the ICE's rolls.
  */
-function resolveIncomingHit(
-  state: GameState,
-  enemy: Ice,
-  rawDamage: number,
-  rng: () => number,
-): {
+/** What one resolved incoming attack did, before it reaches the player's HP. */
+interface ResolvedHit {
   readonly state: GameState;
   readonly damage: number;
   readonly absorbed: number;
   readonly attackCase: AttackCase;
   readonly isCrit: boolean;
-} {
+}
+
+function resolveIncomingHit(
+  state: GameState,
+  enemy: Ice,
+  rawDamage: number,
+  rng: () => number,
+): ResolvedHit {
   const odds = incomingOddsFor(playerEvasionPct(state));
   // ADR-0321: with nothing to roll there is no draw, so the seeded stream — and
   // therefore every recorded balance curve — is unchanged until a card or the
@@ -240,6 +243,53 @@ function resolveIncomingHit(
     attackCase,
     isCrit: crit.isCrit,
   };
+}
+
+/** Carry one resolved enemy hit into the turn.
+ *
+ * Both enemy paths — the skill and the auto-attack — did this identically:
+ * spend the shield, take the damage off the player's HP, log what the shield
+ * absorbed, and push the number the player sees (ADR-0321). Only the attack
+ * LINE differs, so the caller writes that.
+ *
+ * The rng is consumed in the same order as the inline copies (case → crit →
+ * shield), so the seeded stream and every recorded curve are unchanged.
+ */
+function applyEnemyHit(
+  working: GameState,
+  enemy: Ice,
+  rawDamage: number,
+  playerHp: number,
+  rng: () => number,
+  logMessages: string[],
+  vfx: CombatVfxInstance[],
+): { readonly state: GameState; readonly playerHp: number; readonly hit: ResolvedHit } {
+  const hit = resolveIncomingHit(working, enemy, rawDamage, rng);
+  if (hit.absorbed > 0) {
+    logMessages.push(`>>> shield absorbed ${hit.absorbed}`);
+  }
+  vfx.push(
+    import_vfx_deterministic(
+      "player_hit",
+      "",
+      durationForKind("player_hit"),
+      undefined,
+      undefined,
+      // ADR-0321: the number the player sees is what reached their HP.
+      hit.damage,
+    ),
+  );
+  return { state: hit.state, playerHp: Math.max(0, playerHp - hit.damage), hit };
+}
+
+/** Boss phase → outgoing damage multiplier (ADR-0280 F.4). Phase 1 is the
+ *  baseline and 4+ is the enraged ceiling; the chain was a five-deep ternary. */
+function bossDamageMultiplierForPhase(phase: number): number {
+  if (phase <= 0) return 1.0;
+  if (phase === 2) return 1.25;
+  if (phase === 3) return 1.5;
+  if (phase >= 4) return 2.0;
+  return 1.0;
 }
 
 /** One enemy phase. The caller decides *when* — the turn, not a clock.
@@ -300,16 +350,7 @@ function processEnemyTurns(state: GameState): GameState {
     }
   }
 
-  const bossDamageMultiplier =
-    state.bossPhase > 0
-      ? state.bossPhase === 2
-        ? 1.25
-        : state.bossPhase === 3
-          ? 1.5
-          : state.bossPhase >= 4
-            ? 2.0
-            : 1.0
-      : 1.0;
+  const bossDamageMultiplier = bossDamageMultiplierForPhase(state.bossPhase);
 
   let rosterForReturn = state.iceRoster;
   if (state.bossPhase >= 4 && state.iceRoster.length < 3) {
@@ -365,25 +406,19 @@ function processEnemyTurns(state: GameState): GameState {
           // and consumes the same `Math.random` the balance harness controls,
           // so the simulation stays deterministic.
           // ADR-0321: the case, then the crit, then the shield.
-          const mitigated = resolveIncomingHit(working, enemy, baseSkillDmg, Math.random);
-          working = mitigated.state;
-          playerHp = Math.max(0, playerHp - mitigated.damage);
-          if (mitigated.absorbed > 0) {
-            logMessages.push(`>>> shield absorbed ${mitigated.absorbed}`);
-          }
-          enemyTurnVfx.push(
-            import_vfx_deterministic(
-              "player_hit",
-              "",
-              durationForKind("player_hit"),
-              undefined,
-              undefined,
-              // ADR-0321: the number the player sees is what reached their HP.
-              mitigated.damage,
-            ),
+          const hit = applyEnemyHit(
+            working,
+            enemy,
+            baseSkillDmg,
+            playerHp,
+            Math.random,
+            logMessages,
+            enemyTurnVfx,
           );
+          working = hit.state;
+          playerHp = hit.playerHp;
           logMessages.push(
-            `>>> ${enemy.name} uses ${selectedSkill.name}: ${mitigated.damage} dmg${caseNote(mitigated.attackCase)}${mitigated.isCrit ? " CRITICAL" : ""}`,
+            `>>> ${enemy.name} uses ${selectedSkill.name}: ${hit.hit.damage} dmg${caseNote(hit.hit.attackCase)}${hit.hit.isCrit ? " CRITICAL" : ""}`,
           );
           newCooldowns[cooldownKey] = selectedSkill.cooldownMs;
           usedSkill = true;
@@ -440,32 +475,26 @@ function processEnemyTurns(state: GameState): GameState {
       // and consumes the same `Math.random` the balance harness controls, so
       // the simulation stays deterministic.
       // ADR-0321: the case, then the crit, then the shield pool (ADR-0255).
-      const autoMitigated = resolveIncomingHit(working, enemy, autoDmg, Math.random);
-      working = autoMitigated.state;
-      playerHp = Math.max(0, playerHp - autoMitigated.damage);
-      const autoCase = autoMitigated.attackCase;
-      if (autoMitigated.absorbed > 0) {
-        logMessages.push(`>>> shield absorbed ${autoMitigated.absorbed}`);
-      }
-      enemyTurnVfx.push(
-        import_vfx_deterministic(
-          "player_hit",
-          "",
-          durationForKind("player_hit"),
-          undefined,
-          undefined,
-          // ADR-0321: the number the player sees is what reached their HP.
-          autoMitigated.damage,
-        ),
+      const hit = applyEnemyHit(
+        working,
+        enemy,
+        autoDmg,
+        playerHp,
+        Math.random,
+        logMessages,
+        enemyTurnVfx,
       );
+      working = hit.state;
+      playerHp = hit.playerHp;
+      const autoCase = hit.hit.attackCase;
 
       if (enemy.tier >= 3 && state.bossPhase >= 3) {
         logMessages.push(
-          `>>> ${enemy.name} AoE: ${autoMitigated.damage} dmg (hits all!) ${caseNote(autoCase)}${autoMitigated.isCrit ? " CRITICAL" : ""}`,
+          `>>> ${enemy.name} AoE: ${hit.hit.damage} dmg (hits all!) ${caseNote(autoCase)}${hit.hit.isCrit ? " CRITICAL" : ""}`,
         );
       } else {
         logMessages.push(
-          `>>> ${enemy.name} attacks: ${autoMitigated.damage} dmg${caseNote(autoCase)}${autoMitigated.isCrit ? " CRITICAL" : ""}`,
+          `>>> ${enemy.name} attacks: ${hit.hit.damage} dmg${caseNote(autoCase)}${hit.hit.isCrit ? " CRITICAL" : ""}`,
         );
       }
     }

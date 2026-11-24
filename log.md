@@ -4397,3 +4397,10 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **죽은 코드 확인**: 렌더러 스텁 9개 인바운드 import 0(직접 확인). `tickCombo` 는 죽은 코드가 아니라 **ADR-0280 (c) 미해결 결정** → 계획에서 제외.
 - **주의**: `src/data/effects.d.ts` 는 조사에서 죽은 후보로 올라왔으나 `EFFECT_*` 가 VFX 모듈에서 실제 사용됨 → 제외(확인 후 제외).
 - **계획**: `docs/design/refactoring-plan-2026-11-24.md` — Stage 0(죽은 코드) → 1(중복) → 2(god 함수) → 3(main.ts·저장 필드) → 4(테스트 fixture). 각 단계 가드 = **balance/gear 골든 byte-identical + vitest + 러틴 9/9**, Stage 2+ 는 mutation 39/39 유지.
+
+## [2026-11-24] refactor(stage0) | 죽은 코드 — 스텁 9개 + 무계보 헬퍼 3개 삭제
+
+- **삭제**: 렌더러 스텁 9개(63 LOC, `inventory/credits/shop/briefing/debug/pause/codex/journal/loading`) · `grid.ts` 의 `drawRect`/`drawLine` · `equipment_store.ts` 의 `LOADOUT_SLOTS`(EQUIP_SLOTS 재수출).
+- **export 축소**: `ice_scaling.ts` 의 `BOSS_GATE_CLEARS_BY_GRADE`·`BOSS_ICE_BY_GRADE` — 접근자로만 읽히므로 export 제거.
+- **삭제하지 않은 것(중요)**: 조사에서 "죽은 export"로 올라온 11개 중 **8개는 계보가 있어 제외** — `prepAmountFor`(ADR-0283) · `campaignMission`(ADR-0318) · `boss_phases` 4종(ADR-0313 (a) 의 `BossPhaseTracker` 후보) · `renderStorageQuota`(PWA Tier 7 UI) · `tickCombo`(ADR-0280 (c)). **미배선 설계 자산**이라 삭제는 오너 결정.
+- **검증**: typecheck 0 · lint 0 error · vitest **238/4459 pass** · 러틴 **8/8** (골든 무이동).

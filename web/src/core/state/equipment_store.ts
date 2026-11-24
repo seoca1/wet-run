@@ -14,7 +14,7 @@
  * a single key, tolerant reads (a malformed value is treated as empty rather
  * than thrown), and no save-schema change.
  */
-import type { EquipSlot, Equipment } from "./equipment";
+import type { Equipment } from "./equipment";
 import { EQUIP_SLOTS } from "./equipment";
 import { makeLoadout, equipOn, type EquipmentLoadout } from "./loadout";
 
@@ -79,6 +79,3 @@ export function hydrateLoadout(
 export function isEmptyLoadout(loadout: EquipmentLoadout): boolean {
   return EQUIP_SLOTS.every((slot) => loadout.get(slot) === null);
 }
-
-/** Every slot the loadout can hold, for callers that iterate it. */
-export const LOADOUT_SLOTS: ReadonlyArray<EquipSlot> = EQUIP_SLOTS;

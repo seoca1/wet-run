@@ -152,7 +152,7 @@ export const ENCOUNTER_ICE_BY_GRADE: Readonly<Record<number, ReadonlyArray<strin
  * Kept as low as the curve allows: one clear is enough to make the mission about
  * the path, and the numbers are re-measured per grade (ADR-0290).
  */
-export const BOSS_GATE_CLEARS_BY_GRADE: ReadonlyArray<number> = [0, 1, 1, 1, 1, 1];
+const BOSS_GATE_CLEARS_BY_GRADE: ReadonlyArray<number> = [0, 1, 1, 1, 1, 1];
 
 /** Clears the apex demands at a grade. */
 export function bossGateClears(grade: number): number {
@@ -216,7 +216,7 @@ export function clampGrade(grade: number): number {
  * elite rather than a boss that outclasses the deck. Every boss-aggression ICE
  * in the catalog is tier 4 or higher, so there was no lower-tier boss to pick.
  */
-export const BOSS_ICE_BY_GRADE: Readonly<Record<number, string>> = {
+const BOSS_ICE_BY_GRADE: Readonly<Record<number, string>> = {
   1: "hosaka_courier",
   2: "corporate_guard",
   3: "hosaka_defender",

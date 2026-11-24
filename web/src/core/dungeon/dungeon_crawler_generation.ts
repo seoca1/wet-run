@@ -14,6 +14,7 @@ import type { Mission } from "../types";
 import { TileType } from "./dungeon_crawler_types";
 import type { DungeonState, DungeonTile } from "./dungeon_crawler_types";
 import { placeEntities, placePlayerAtEntry } from "./dungeon_crawler_entities";
+import { mulberry32 } from "../rng";
 
 /** Create a seeded RNG (mirrors Python hash(id) % 7919) */
 export function createRng(seed: number, missionId: string | null): Rng {
@@ -24,24 +25,7 @@ export function createRng(seed: number, missionId: string | null): Rng {
     }
     h = h + (Math.abs(h) % 7919);
   }
-  let a = h | 0;
-  return () => {
-    a = (a + 0x6d2b79f5) | 0;
-    let t = a;
-    t = Math.imul(t ^ (t >>> 15), t | 1);
-    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-  };
-}
-
-/** Build a paired (rng, int) helper from a base rng. */
-export function withInt(rng: Rng): RngInt {
-  return (min: number, max: number): number => {
-    if (max < min) {
-      throw new RangeError(`rngInt: max (${max}) < min (${min})`);
-    }
-    return min + Math.floor(rng() * (max - min + 1));
-  };
+  return mulberry32(h);
 }
 
 /** Initialize the dungeon state with empty values */

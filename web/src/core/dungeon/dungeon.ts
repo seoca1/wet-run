@@ -50,33 +50,11 @@ export type CharacterRef = "novice" | "veteran" | "heretic";
 //  Seeded RNG
 // ============================================================================
 
-/** A function returning a float in [0, 1). */
-export type Rng = () => number;
-
-/** A function returning an int in [min, max] (inclusive). */
-export type RngInt = (min: number, max: number) => number;
-
-/** Mulberry32 — small, fast, deterministic 32-bit RNG. */
-export function makeMulberry32(seed: number): Rng {
-  let a = seed | 0;
-  return () => {
-    a = (a + 0x6d2b79f5) | 0;
-    let t = a;
-    t = Math.imul(t ^ (t >>> 15), t | 1);
-    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-  };
-}
-
-/** Build a paired (rng, int) helper from a base rng. */
-export function withInt(rng: Rng): RngInt {
-  return (min, max) => {
-    if (max < min) {
-      throw new RangeError(`rngInt: max (${max}) < min (${min})`);
-    }
-    return min + Math.floor(rng() * (max - min + 1));
-  };
-}
+// The PRNG lives in `core/rng.ts` now (one implementation, refactor 2026-11-24).
+// Re-exported here because this module is the dungeon system's stable entry point
+// and every dungeon caller imports the types and helpers from it.
+export type { Rng, RngInt } from "../rng";
+export { mulberry32 as makeMulberry32, withInt } from "../rng";
 
 // ============================================================================
 //  Phase 1 handcrafted generator (ADR-0060 Phase 1)

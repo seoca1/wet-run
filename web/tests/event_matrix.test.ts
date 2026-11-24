@@ -3,10 +3,10 @@ import { describe, it, expect } from "vitest";
 import {
   buildEventMatrix,
   pickEventKind,
-  makeRng,
   EVENT_GLYPHS,
   EVENT_LABELS,
 } from "../src/core/event_matrix";
+import { mulberry32 } from "../src/core/rng";
 import type { Ice, Program } from "../src/core/types";
 
 const iceCatalog: Readonly<Record<string, Ice>> = Object.freeze({
@@ -89,16 +89,16 @@ describe("event_matrix (Tier 5.5)", () => {
 
 describe("makeRng (deterministic)", () => {
   it("same seed produces same sequence", () => {
-    const a = makeRng(42);
-    const b = makeRng(42);
+    const a = mulberry32(42);
+    const b = mulberry32(42);
     for (let i = 0; i < 5; i++) {
       expect(a()).toBe(b());
     }
   });
 
   it("different seeds diverge", () => {
-    const a = makeRng(42);
-    const b = makeRng(43);
+    const a = mulberry32(42);
+    const b = mulberry32(43);
     expect(a()).not.toBe(b());
   });
 });
@@ -106,19 +106,19 @@ describe("makeRng (deterministic)", () => {
 describe("pickEventKind (zone-distribution)", () => {
   it("surface: combat or discovery", () => {
     for (let i = 0; i < 20; i++) {
-      const r = pickEventKind("surface", makeRng(i));
+      const r = pickEventKind("surface", mulberry32(i));
       expect(["combat", "discovery"]).toContain(r);
     }
   });
   it("mid: combat, trap, or discovery", () => {
     for (let i = 0; i < 20; i++) {
-      const r = pickEventKind("mid", makeRng(i));
+      const r = pickEventKind("mid", mulberry32(i));
       expect(["combat", "trap", "discovery"]).toContain(r);
     }
   });
   it("core-deep: always combat (boss)", () => {
     for (let i = 0; i < 20; i++) {
-      const r = pickEventKind("core-deep", makeRng(i));
+      const r = pickEventKind("core-deep", mulberry32(i));
       expect(r).toBe("combat");
     }
   });

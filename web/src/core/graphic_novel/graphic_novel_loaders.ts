@@ -9,6 +9,7 @@
  * catalog with the same seed always produces the same order.
  */
 
+import { mulberry32 } from "../rng";
 import scenesJson from "../../data/scenes.json" with { type: "json" };
 import type { CharacterId, Ending, SceneData, ScenesFile } from "./graphic_novel_types";
 
@@ -98,18 +99,12 @@ function seededShuffle<T>(items: ReadonlyArray<T>, seed?: number): T[] {
   return arr;
 }
 
-/** Mulberry32 PRNG seeded by number; falls back to Math.random when seed is undefined. */
+/** An int-in-range view of the shared PRNG; Math.random when no seed is given.
+ *  The stream and the mapping are unchanged from the local copy it replaces. */
 function makeRng(seed?: number): (min: number, maxExclusive: number) => number {
   if (seed === undefined) return (min, max) => Math.floor(Math.random() * (max - min)) + min;
-  let s = seed >>> 0;
-  return (min, max) => {
-    s = (s + 0x6d2b79f5) >>> 0;
-    let t = s;
-    t = Math.imul(t ^ (t >>> 15), t | 1);
-    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
-    const r = ((t ^ (t >>> 14)) >>> 0) / 0x100000000;
-    return Math.floor(r * (max - min)) + min;
-  };
+  const next = mulberry32(seed);
+  return (min, max) => Math.floor(next() * (max - min)) + min;
 }
 
 /** Sound id → logical sound key map. Mirrors graphic_novel_audio.SCENE_SOUND_MAP. */

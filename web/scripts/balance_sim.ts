@@ -26,20 +26,13 @@ import { iceHpForGrade, missionGradeOf } from "../src/core/combat/ice_scaling";
 import { resolveMatrixRoster } from "../src/core/dungeon/matrix";
 import { applyAction, makeInitialState } from "../src/core/state/state";
 import { applyEquipmentSurvival } from "../src/core/state/equipment_stats";
+import { mulberry32 } from "../src/core/rng";
+
+/** Re-exported: `gear_curve_probe` and the property fuzz already import it here. */
+export { mulberry32 };
 import { EMPTY_LOADOUT, type EquipmentLoadout } from "../src/core/state/loadout";
 import type { GameState, Ice, Mission, Program } from "../src/core/types";
 
-/** Deterministic PRNG (mulberry32) — same seed always yields the same stream. */
-export function mulberry32(seed: number): () => number {
-  let a = seed >>> 0;
-  return () => {
-    a = (a + 0x6d2b79f5) >>> 0;
-    let t = a;
-    t = Math.imul(t ^ (t >>> 15), t | 1);
-    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-  };
-}
 
 export interface SimConfig {
   readonly seed: number;

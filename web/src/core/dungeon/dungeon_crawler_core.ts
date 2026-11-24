@@ -23,10 +23,10 @@ import { TileType, EntityType, MonsterType } from "./dungeon_crawler_types";
 import type { DungeonState, DungeonEntity } from "./dungeon_crawler_types";
 import {
   createRng,
-  withInt,
   initializeDungeonState,
   generateLevel,
 } from "./dungeon_crawler_generation";
+import { withInt } from "../rng";
 import { updateFov } from "./dungeon_crawler_entities";
 import {
   tryMovePlayer,

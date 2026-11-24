@@ -4404,3 +4404,11 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **export 축소**: `ice_scaling.ts` 의 `BOSS_GATE_CLEARS_BY_GRADE`·`BOSS_ICE_BY_GRADE` — 접근자로만 읽히므로 export 제거.
 - **삭제하지 않은 것(중요)**: 조사에서 "죽은 export"로 올라온 11개 중 **8개는 계보가 있어 제외** — `prepAmountFor`(ADR-0283) · `campaignMission`(ADR-0318) · `boss_phases` 4종(ADR-0313 (a) 의 `BossPhaseTracker` 후보) · `renderStorageQuota`(PWA Tier 7 UI) · `tickCombo`(ADR-0280 (c)). **미배선 설계 자산**이라 삭제는 오너 결정.
 - **검증**: typecheck 0 · lint 0 error · vitest **238/4459 pass** · 러틴 **8/8** (골든 무이동).
+
+## [2026-11-24] refactor(stage1a) | RNG 6벌 → 1벌 (`src/core/rng.ts`) — 골든 byte-identical
+
+- **단일화**: `dungeon.ts makeMulberry32` · `event_matrix.ts makeRng` · `dungeon_crawler_generation.ts createRng`(내부 스트림) · `scripts/{play_policy,balance_sim,ending_distribution}.ts` · `graphic_novel_loaders.ts`(int-range 변형) → `src/core/rng.ts` 하나.
+- **중복 헬퍼**: `withInt` 2벌 → 1벌.
+- **왜 안전한가(측정 전 예측, 측정 후 확인)**: `seed | 0` 과 `seed >>> 0` 은 **모든 시드에서 같은 스트림**이다 — 상태는 항상 비트 연산을 거치므로 32비트 재해석만 다르다. 그래서 통일이 곡선을 움직이지 않는다.
+- **증거**: `balance:check` · `gear:check` **byte-identical** · vitest 238/4459 · 러틴 8/8. 남은 `0x6d2b79f5` 는 `rng.ts` 한 곳뿐(확인).
+- **남긴 것**: `dungeon.ts` 는 하위 호환 re-export 유지(던전 모듈들이 타입을 여기서 가져온다) · 미션 id 해시는 Stage 1c(값이 다르므로 통일 금지).

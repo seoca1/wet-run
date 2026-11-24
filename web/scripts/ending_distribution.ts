@@ -19,6 +19,7 @@
  * The policy is the soak's "expensive": the highest-tier affordable card,
  * BREACH over BYPASS, take the first offered reward. A plausible player.
  */
+import { mulberry32 } from "../src/core/rng";
 import { loadIceCatalog, loadMissionsCatalog, loadProgramsCatalog } from "../src/core/data_loaders";
 import { applyAction, makeInitialState } from "../src/core/state/state";
 import { startingDeck } from "../src/core/state/starting_deck";
@@ -59,16 +60,6 @@ const TICK_EVERY = (() => {
 const COST_LIMIT = 100;
 const MAX_STEPS = 600;
 
-function mulberry32(seed: number): () => number {
-  let a = seed >>> 0;
-  return () => {
-    a = (a + 0x6d2b79f5) >>> 0;
-    let t = a;
-    t = Math.imul(t ^ (t >>> 15), t | 1);
-    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-  };
-}
 
 /** Shortest-path first step from `from` to `to` on the matrix. */
 function nextStep(state: GameState, from: number, to: number): number | null {

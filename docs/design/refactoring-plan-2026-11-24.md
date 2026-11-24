@@ -159,7 +159,20 @@
 **각 단계의 완료 정의**: `npm run balance:check` + `npm run gear:check` byte-identical ·
 `npm test` 238/4459 green · 러틴 9/9 · (Stage 2+) `npm run mutation` 39/39 유지.
 
-## 5. 열린 질문 (오너)
+## 6. 진행 상황
+
+| Stage | 상태 | 결과 |
+|---|---|---|
+| 0 죽은 코드 | ✅ `60fd6b6b` | 스텁 9개 + 헬퍼 3개 삭제. 조사의 "죽은 export 11개" 중 **8개는 계보가 있어 보존**(ADR-0283·0318·0313(a)·PWA Tier7·0280(c)). |
+| 1a RNG | ✅ | **6벌 → 1벌** (`src/core/rng.ts`). `\| 0` 과 `>>> 0` 은 비트 연산 특성상 **모든 시드에서 스트림 동일** → 골든 byte-identical 로 확인. |
+| 1b 스탯 헬퍼 | ⬜ | |
+| 1c 해시 주석화 | ⬜ | |
+| 1d crit 롤 | ⬜ | |
+| 2 god 함수 | ⬜ | |
+| 3 main.ts · 저장 필드 | ⬜ | |
+| 4 테스트 fixture | ⬜ | |
+
+## 7. 열린 질문 (오너)
 
 1. Stage 3a(`main.ts`)는 e2e 만이 가드다 — 브라우저 e2e를 러틴에 넣을 것인가?
    (`NEXT_SESSION_TODO` 의 `--e2e` 플래그 항목과 같은 결정)

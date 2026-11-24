@@ -10,6 +10,7 @@
  * - core    (node 3): combat 60%, rest 20%, cache 20%
  * - boss    (node 4): combat 100% (boss)
  */
+import { mulberry32 } from "./rng";
 import type { Ice, MatrixNode, Program } from "./types";
 
 export type MatrixEventKind = "combat" | "discovery" | "trap" | "cache" | "rest" | "merchant";
@@ -96,17 +97,6 @@ function generateEventData(
   }
 }
 
-/** Simple seedable RNG (Mulberry32) for deterministic events. */
-export function makeRng(seed: number): () => number {
-  let a = seed | 0;
-  return () => {
-    a = (a + 0x6d2b79f5) | 0;
-    let t = a;
-    t = Math.imul(t ^ (t >>> 15), t | 1);
-    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-  };
-}
 
 /** Build a 5-node matrix with varied event kinds (combat-heavy, some non-combat). */
 export function buildEventMatrix(
@@ -114,7 +104,7 @@ export function buildEventMatrix(
   programCatalog: Readonly<Record<string, Program>>,
   seed: number = 42,
 ): EventedMatrixNode[] {
-  const rng = makeRng(seed);
+  const rng = mulberry32(seed);
   const zones: ReadonlyArray<MatrixNode["zone"]> = ["surface", "mid", "deep", "core", "core-deep"];
   const fallbackIce = Object.values(iceCatalog)[0];
   const nodes: EventedMatrixNode[] = [];

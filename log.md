@@ -4388,3 +4388,12 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **열린 문제**: T6 착용 시 **g3/g4 가 여전히 100%**(cap 145 까지 올려도 동일) → 중반 난이도는 encounter cap 으로 못 되돌린다.
 - 재기록: `balance.golden.json` · `gear.golden.json` · `balance_sim.test.ts` 두 행(근거 주석).
 - 검증: **vitest 238/4459 pass** · typecheck 0 · lint 0 error · 러틴 **8/8 pass**.
+
+## [2026-11-24] docs(plan) | 리팩토링 계획 — 중복·god 함수·저장 필드 3축
+
+- 계기: 오너 "wet-run 소스코드 검증하고 리팩토링 계획해줘".
+- **검증**: 러틴 **9/9 pass**(--tests 포함, 2026-11-24 19:51Z) · vitest 238/4459 · typecheck 0 · lint 0 error(경고 1, 기존).
+- **조사(측정)**: `src/` 33,365 LOC · 최대 `src/main.ts` 2,568 LOC(2위 763) · RNG 구현 5~6벌(`| 0` vs `>>> 0` 규약 차이) · 장비 스탯 병합 2벌 · 미션 id 해시 5벌 · god 함수 `processEnemyTurns` 327줄 · `useProgram` 308줄 · 저장 슬롯 필드 목록 3벌.
+- **죽은 코드 확인**: 렌더러 스텁 9개 인바운드 import 0(직접 확인). `tickCombo` 는 죽은 코드가 아니라 **ADR-0280 (c) 미해결 결정** → 계획에서 제외.
+- **주의**: `src/data/effects.d.ts` 는 조사에서 죽은 후보로 올라왔으나 `EFFECT_*` 가 VFX 모듈에서 실제 사용됨 → 제외(확인 후 제외).
+- **계획**: `docs/design/refactoring-plan-2026-11-24.md` — Stage 0(죽은 코드) → 1(중복) → 2(god 함수) → 3(main.ts·저장 필드) → 4(테스트 fixture). 각 단계 가드 = **balance/gear 골든 byte-identical + vitest + 러틴 9/9**, Stage 2+ 는 mutation 39/39 유지.

@@ -4429,3 +4429,9 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
   5. `state_helpers` — 이벤트 id 생성용 FNV-1a 복합 키
 - **결정**: 통일하면 기록 곡선이 이동한다(ADR-0321 전례) → **주석 4곳에 "무엇과 다르고 왜 다른가"를 명시**. 코드 변경 0.
 - 검증: vitest 238/4459 · 러틴 8/8 (주석만 변경).
+
+## [2026-11-24] refactor(stage1d) | crit 롤 중복 제거 + Stage 1 종료 검증(mutation 39/39)
+
+- `combat_engine.rollCritMultiplier(rng)` 하나로: 플레이어 경로(`calculateDamage`)와 ICE 경로(`rollIceCrit`)가 같은 밴드·같은 소비 순서(rng 1회)를 쓴다. 밴드 상수가 두 곳에서 각자 곱해지던 것을 제거.
+- **Stage 1 종료 검증**: 러틴 8/8 · vitest 238/4459 · typecheck 0 · lint 0 error · balance/gear 골든 **byte-identical** · **mutation 39/39 KILLED**.
+- 리팩토링이 커버리지를 약화시키지 않았음을 mutation 으로 확인 → **Stage 2 의 가드 기준선 확보**.

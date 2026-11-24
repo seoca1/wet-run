@@ -26,6 +26,13 @@ export const CRIT_CHANCE = 0.15;
 export const CRIT_MULTIPLIER = 2.0;
 export const CRIT_MULTIPLIER_MIN = 1.8;
 export const CRIT_MULTIPLIER_MAX = 2.2;
+
+/** Roll the crit multiplier from the band above. Consumes exactly ONE value
+ *  from the injected rng — the player path and the ICE path (`ice_crit.ts`)
+ *  share this so the two cannot drift apart on the band or the consumption. */
+export function rollCritMultiplier(rng: () => number): number {
+  return rng() * (CRIT_MULTIPLIER_MAX - CRIT_MULTIPLIER_MIN) + CRIT_MULTIPLIER_MIN;
+}
 export const STAGGER_DURATION_MS = 1500;
 export const COMBO_WINDOW_MS = 3500;
 export const ALARM_TICK_INTERVAL_MS = 10000;
@@ -169,7 +176,7 @@ export function calculateDamage(ctx: DamageContext): DamageResult {
   }
 
   if (ctx.rng() < critChance) {
-    const critMult = ctx.rng() * (CRIT_MULTIPLIER_MAX - CRIT_MULTIPLIER_MIN) + CRIT_MULTIPLIER_MIN;
+    const critMult = rollCritMultiplier(ctx.rng);
     dmg = Math.floor(dmg * critMult);
     isCrit = true;
   }

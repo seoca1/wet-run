@@ -4501,3 +4501,12 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **수치**: `main.ts` **2,568 → 2,377줄**(−191) · 신규 1파일(`src/app/settings_input.ts`, 248줄).
 - **기준선 정정**: vitest 현행은 2026-11-24 의 238/4459 가 아니라 **239/4465** — 그날 3b 가 추가한 `save_slot_schema.test.ts` 6케이스가 빠져 있던 수치. 계획 §5/§6 수치 갱신.
 - 커밋 `4a469645` · 다음: 3a-1b(입력 사다리 나머지 화면별 핸들러 7종) → 3a-2(`draw`).
+
+## [2026-11-25] refactor | Stage 3a-1b — 화면별 입력 핸들러 6종을 main.ts 밖으로
+
+- **슬라이스**: 크래프팅 · 장비 · 던전 · 런타임 설정 · 일시정지 · 스텁 입력(**6종 ~150줄**) → `src/app/screen_input.ts` (`ScreenInputHost`). 디스패처는 `main.ts` 에 남고 본문만 이동.
+- **개명**: 런타임 설정 스텁을 `handleSettingsStubInput` 으로 — 3a-1a 의 사전 설정 화면(`app/settings_input.ts`)과 같은 이름을 쓰던 것이 혼동의 원인이었다(전자는 토글 전부, 후자는 뒤로가기만).
+- **동등성**: 6종 전부 정규화 diff **동일**. 유일한 차이는 `handleStubInput` 의 선두 주석이 doc 주석으로 올라간 것(동작 무관).
+- **증거**: e2e **106 pass**(desktop 54 + mobile 58, 6 skip) · vitest **239/4465** · typecheck 0 · lint 0 error · 게이트 **9/9** · mutation **39/39 KILLED** · 골든 byte-identical.
+- **수치**: `main.ts` **2,377 → 2,227줄** (세션 누적 **2,568 → 2,227**, −341) · 신규 1파일(`src/app/screen_input.ts`, 193줄) · 미사용 import 5개 제거.
+- 커밋 `970dfa9b` · 다음: 3a-1c(`handlePreGameInput` 잔여 사다리 + 그래픽 노블 입력) → 3a-2(`draw`).

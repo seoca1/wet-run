@@ -1,6 +1,6 @@
 # Wet-Run 검증 보고
 
-**시간**: 2026-11-25T00:21:32Z  
+**시간**: 2026-11-25T18:07:29Z  
 **버전**: 3.1.0 (ADR-0335/0336)  
 **게이트**: 9/9 pass  
 
@@ -119,7 +119,7 @@
     "  ✓  111 [mobile-portrait-chromium] › e2e/touch_input.spec.ts:56:3 › mobile touch input › A button touch confirms NEW_RUN → jockey_select (1.6s)",
     "  ✓  112 [mobile-portrait-chromium] › e2e/touch_input.spec.ts:72:3 › mobile touch input › program row touch uses a program in combat (6.8s)",
     "  6 skipped",
-    "  106 passed (6.0m)"
+    "  106 passed (6.2m)"
   ]
 }
 

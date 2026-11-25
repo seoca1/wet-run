@@ -15,14 +15,11 @@ import { buildHudLines, makeInitialState } from "../src/core/state/state";
 import { PALETTE } from "../src/renderer/palette";
 import type { GameState, Ice, Mission, Program } from "../src/core/types";
 
+import { rowText } from "./view_fixtures";
 const FRAME_GLYPHS = new Set(["╔", "╗", "╚", "╝", "═", "║", "╠", "╣"]);
 
 function charAt(grid: Grid, x: number, y: number): string {
   return grid.cells[y]?.[x]?.char ?? "";
-}
-
-function rowText(grid: Grid, y: number): string {
-  return (grid.cells[y] ?? []).map((c) => c.char).join("");
 }
 
 /** Assert the inset frame: corners one cell in from each grid edge, unbroken

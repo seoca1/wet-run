@@ -211,9 +211,10 @@ export function handlePreGameInput(host: PreGameHost, action: GameAction): boole
 | 3a-4 입력 파이프라인 | ✅ `018cb754` | `constructor` 안의 `handler` 클로저(**289줄**) + `handleContractPrepInput`(27줄) + `SCREENS_WITH_INPUT` → `src/app/game_input.ts` (`GameInputHost`, 413줄). `main.ts` **1,634 → 1,265줄**. 정규화 diff **2/2 동일**(차이는 prettier 줄바꿈뿐). **남은 소스-텍스트 테스트 6건도 공용 헬퍼로 이관** → 이제 `src/main.ts` 를 직접 읽는 테스트는 **0건**. 유일한 명명된 차이: 생성자의 지역 `resetIdle()` → `host.idleSinceMs = Date.now()`(같은 문장). 가드: e2e **106 pass** · vitest **239/4465** · 게이트 **9/9** · mutation **39/39**. |
 | 3a-5 잔여 (루프·라우터) | ⬜ | `draw` 라우터(130줄) · `loop`/`start`/`stop`(113줄) · `syncPhase`/`resizeRenderer`/`applyAccessibilitySettings` · 접근자/E2E 훅 — **합성 루트 + 객체 수명주기**. 권고: 여기서 Stage 3a 종료(§7-6). |
 | 4a `gridText` | ✅ | 중복 `gridText` **10벌 → 1벌** (`tests/view_fixtures.ts` 에 공용 추가). 3가지 파라미터 표기(4+3+3 파일)가 **본문은 완전 동일**이었다 → 이동 전 각 지역 본문을 정규화 비교해 **10/10 동작 동일**을 기계적으로 확인(테스트 약화 없음의 근거). `nav_index.test.ts` 는 `grid.get(x,y)` + 공백 패딩이라 **다른 함수** → 잔류. **`src/` 변경 0**(`git diff --name-only \| grep web/src` = 0) → e2e·mutation 은 재실행 대상이 아님. 가드: vitest **239/4465** · 게이트 **9/9**(`--tests`). |
-| 4b `loadDeck` | ⬜ | **11벌** — 다음 슬라이스 |
-| 4c combat state | ⬜ | `makeCombatState`/`combatState`/`buildCombatState` **21벌** — 가장 큰 덩어리, `tests/encounter_test_helpers.ts` 채택률 올리기 |
-| 4 테스트 fixture | ⬜ | |
+| 4b `loadDeck` | ✅ | **11벌 → 1벌** (`tests/view_fixtures.ts`, `count = 5` 기본값). 4가지 표기의 차이는 **캐스트 표기**·**반환 타입**·**`count` 파라미터 여부**뿐 → 가장 넓은 표기가 전부 포괄. 정규화 비교 **9개 완전 동일, 2개는 trailing comma 하나 차이**. 테스트 12 파일 **−138줄**. `src/` 변경 0. 가드: vitest **239/4465** · 게이트 **9/9**(`--tests`). |
+| 4c combat state | ⚠️ 측정 후 **합치지 않음** | 계획은 "**21벌**"로 셌지만 **이름이 같을 뿐 중복이 아니다**. 23개 정의를 전부 추출해 비교 → **23개 모두 본문이 다름**. 차이가 **하중을 받는다**: ICE `hp` 1 vs 50 · `tier` 1 vs 2 · `personality`/`skills` 유무 · 추가 상태 필드(`lastEnemyAttackMs`·`dixieLastAttackMs`·`dixiePlayerTurnsSinceAttack`·`skillCooldowns`·`unlockedAchievements`) · 프로그램 `cost` 0 vs 5 · 미션 `rewards` 10 vs 100 · 파라미터 모양(`overrides` vs `mutators` vs 스칼라) · 반환 타입. 통일하려면 ~8개 파라미터짜리 빌더가 되고 **각 테스트가 실제로 검사하는 값이 바뀐다** → Stage 0 의 "죽은 export 8개는 계보가 있어 보존" 과 같은 판단. |
+| 4d `rowText` | ✅ | `screen_frames` 의 지역 `rowText` 가 `view_fixtures` 의 것과 **바이트 동일** → 공용으로. `combat_grid` 의 동명 함수는 `grid.width` 루프라 **다른 함수** → 잔류. |
+| 4 테스트 fixture | ✅ 종료 | 4a `gridText`(10→1) · 4b `loadDeck`(11→1) · 4d `rowText`(2→1) 완료, 4c 는 **측정으로 기각**. 총 테스트 24 파일, **−170줄**. |
 
 **Stage 1 종료 시점 확인**: 러틴 8/8 · vitest 238/4459 · typecheck 0 · lint 0 error ·
 balance/gear 골든 byte-identical · **mutation 39/39 KILLED**(리팩토링이 테스트 커버리지를

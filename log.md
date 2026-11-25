@@ -4580,3 +4580,12 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **증거**: vitest **239/4465** · 게이트 **9/9**(`--tests`) · typecheck 0.
 - **수치**: 테스트 12 파일, **−138줄**(36+/174−).
 - 다음: 4c combat state(`makeCombatState`/`combatState`/`buildCombatState` 21벌) — 가장 큰 덩어리.
+
+## [2026-11-25] test | Stage 4c — combat-state "21벌"은 **중복이 아니었다** (측정으로 기각) + `rowText` 병합
+
+- **계획의 전제가 틀렸다**: "`makeCombatState`/`combatState`/`buildCombatState` **21벌**" 은 **이름을 센 것**이었다. 23개 정의를 전부 추출해 본문을 비교하니 **23개 모두 서로 달랐다.**
+- **차이가 하중을 받는다**: ICE `hp` **1** vs 50(단일 타격 킬 테스트) · `tier` 1 vs 2 · `personality`/`skills` 유무 · 추가 상태 필드(`lastEnemyAttackMs`·`dixieLastAttackMs`·`dixiePlayerTurnsSinceAttack`·`skillCooldowns`·`unlockedAchievements`·`achievementCredits`) · 프로그램 `cost` 0 vs 5 · 미션 `rewards` 10 vs 100 · 파라미터 모양(`Partial<GameState>` vs `mutators` vs 스칼라) · 반환 타입(`GameState` vs `ReturnType<typeof makeInitialState>`).
+- **판단**: 통일하려면 ~8개 파라미터짜리 "kitchen-sink" 빌더가 되고 **각 테스트가 실제로 검사하는 값이 바뀐다**. Stage 0 에서 "죽은 export 11개 중 8개는 ADR 계보가 있어 보존" 과 같은 종류의 판단 → **합치지 않는다.** 계획 §6 에 측정 근거와 함께 기록.
+- **실제로 합쳐진 것**: `screen_frames` 의 지역 `rowText` 가 `view_fixtures` 의 것과 **바이트 동일** → 공용으로(1건). `combat_grid` 의 동명 함수는 `grid.width` 루프라 다른 함수 → 잔류.
+- **증거**: vitest **239/4465** · 게이트 **9/9**(`--tests`) · typecheck 0. `src/` 변경 0.
+- **Stage 4 결산**: 4a `gridText` 10→1 · 4b `loadDeck` 11→1 · 4d `rowText` 2→1 · 4c 기각. 테스트 **24 파일, −170줄**.

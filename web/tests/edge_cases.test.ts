@@ -6,16 +6,7 @@ import iceTypesData from "../src/data/ice_types.json";
 import programsData from "../src/data/programs.json";
 import type { Program, Ice } from "../src/core/types";
 
-function loadDeck(programs: Record<string, Program>): Program[] {
-  const ids = Object.keys(programs).sort().slice(0, 5);
-  return ids.map((id) => {
-    const p = programs[id];
-    if (!p) return undefined;
-    const apCost = (p as any).ap_cost;
-    return { ...p, id, ...(apCost !== undefined && p.cost === undefined ? { cost: apCost } : {}) } as Program;
-  }).filter((p): p is Program => p !== undefined);
-}
-
+import { loadDeck } from "./view_fixtures";
 describe("Bug #9: rapid input", () => {
   it("rapid key presses in combat don't break state (no race condition)", () => {
     const mission = Object.values(missionsData)[0]!;

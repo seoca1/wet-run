@@ -7,6 +7,7 @@ import iceTypesData from "../src/data/ice_types.json";
 import programsData from "../src/data/programs.json";
 import type { Program } from "../src/core/types";
 
+import { loadDeck } from "./view_fixtures";
 /** Place the runner directly on `target`.
  *
  * The matrix is a graph, so the number of `move_south` presses needed to
@@ -18,26 +19,6 @@ function steerToNode(state: GameState, target: number): GameState {
   return { ...state, currentNodeIndex: target };
 }
 
-/** Mirror of main.ts loadDeck — programs.json is keyed-by-id but values lack `id`,
- * and use the legacy `ap_cost` field where the TS Program type expects `cost`. */
-function loadDeck(
-  programs: Readonly<Record<string, Program>>,
-  count = 5,
-): ReadonlyArray<Program> {
-  const ids = Object.keys(programs).sort().slice(0, count);
-  return ids
-    .map((id) => {
-      const p = programs[id];
-      if (!p) return undefined;
-      const apCost = (p as { ap_cost?: number }).ap_cost;
-      return {
-        ...p,
-        id,
-        ...(apCost !== undefined && p.cost === undefined ? { cost: apCost } : {}),
-      } as Program;
-    })
-    .filter((p): p is Program => p !== undefined);
-}
 
 /** Mirror of main.ts loadIce normalization — ice_types.json uses `defense` where
  * the TS Ice type expects `armor`. Without this, combat math produces NaN HP. */

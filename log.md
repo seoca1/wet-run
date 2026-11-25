@@ -4571,3 +4571,12 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **증거**: vitest **239/4465** · 게이트 **9/9**(`--tests`) · typecheck 0.
 - **수치**: 테스트 11 파일, **−32줄**(25+/57−). `src/main.ts` 는 이 슬라이스에서 무변경(1,265줄).
 - 다음: 4b `loadDeck`(11벌) → 4c combat state(21벌).
+
+## [2026-11-25] test | Stage 4b — `loadDeck` 11벌 → 1벌
+
+- **슬라이스**: 11개 테스트가 각자 들고 있던 `loadDeck` → `tests/view_fixtures.ts` 공용 1벌(`count = 5` 기본값). 4가지 표기가 있었고 차이는 **캐스트 표기**(`as any` / `as {ap_cost?}` / `as unknown as {ap_cost?}`) · **반환 타입**(`Program[]` vs `ReadonlyArray<Program>`) · **`count` 가 파라미터인지**(하드코딩 5) 뿐이었다 → 가장 넓은 표기가 전부를 포괄.
+- **약화 방지**: 교체 전 11개 지역 본문을 정규화 비교 → **9개 완전 동일, 2개(`edge_cases`·`verify_edge`)는 prettier trailing comma 하나 차이**. 동작 차이 없음.
+- **범위**: `src/` 변경 **0** → e2e·mutation 재실행 대상 아님(직전 통과 리비전과 `src/` 바이트 동일).
+- **증거**: vitest **239/4465** · 게이트 **9/9**(`--tests`) · typecheck 0.
+- **수치**: 테스트 12 파일, **−138줄**(36+/174−).
+- 다음: 4c combat state(`makeCombatState`/`combatState`/`buildCombatState` 21벌) — 가장 큰 덩어리.

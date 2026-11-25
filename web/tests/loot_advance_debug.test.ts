@@ -6,22 +6,7 @@ import iceTypesData from "../src/data/ice_types.json";
 import programsData from "../src/data/programs.json";
 import type { Program, Ice } from "../src/core/types";
 
-function loadDeck(programs: Record<string, Program>, count = 5): Program[] {
-  const ids = Object.keys(programs).sort().slice(0, count);
-  return ids
-    .map((id) => {
-      const p = programs[id];
-      if (!p) return undefined;
-      const apCost = (p as unknown as { ap_cost?: number }).ap_cost;
-      return {
-        ...p,
-        id,
-        ...(apCost !== undefined && p.cost === undefined ? { cost: apCost } : {}),
-      } as Program;
-    })
-    .filter((p): p is Program => p !== undefined);
-}
-
+import { loadDeck } from "./view_fixtures";
 describe("LOOT advancement debug", () => {
   it("debug: trace transitions at node 1", () => {
     const mission = Object.values(missionsData)[0]!;

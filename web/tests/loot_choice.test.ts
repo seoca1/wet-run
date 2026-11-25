@@ -23,22 +23,7 @@ import {
 } from "../src/core/state/loot_choice";
 import { missionGradeOf } from "../src/core/combat/ice_scaling";
 
-function loadDeck(programs: Record<string, Program>): Program[] {
-  const ids = Object.keys(programs).sort().slice(0, 5);
-  return ids
-    .map((id) => {
-      const p = programs[id];
-      if (!p) return undefined;
-      const apCost = (p as unknown as { ap_cost?: number }).ap_cost;
-      return {
-        ...p,
-        id,
-        ...(apCost !== undefined && p.cost === undefined ? { cost: apCost } : {}),
-      } as Program;
-    })
-    .filter((p): p is Program => p !== undefined);
-}
-
+import { loadDeck } from "./view_fixtures";
 /** A run parked on a non-terminal loot screen, at `hp`. */
 function atLoot(hp: number): GameState {
   const mission = Object.values(missionsData)[0]!;

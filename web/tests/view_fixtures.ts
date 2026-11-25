@@ -85,6 +85,31 @@ export function rowText(grid: Grid, y: number): string {
   return (grid.cells[y] ?? []).map((c) => c.char).join("");
 }
 
+/** The first `count` programs by id, with the `ap_cost` alias normalized to
+ * `cost` — the shape `makeInitialState` expects.
+ *
+ * Eleven test files had their own copy. They differed only in the cast style
+ * (`as any`, `as { ap_cost?: number }`, `as unknown as { ap_cost?: number }`),
+ * the return type, and whether `count` was a parameter — so the widest spelling
+ * serves all of them. Checked behaviourally identical before substituting
+ * (stage 4b, 2026-11-25).
+ */
+export function loadDeck(programs: Record<string, Program>, count = 5): Program[] {
+  const ids = Object.keys(programs).sort().slice(0, count);
+  return ids
+    .map((id) => {
+      const p = programs[id];
+      if (!p) return undefined;
+      const apCost = (p as unknown as { ap_cost?: number }).ap_cost;
+      return {
+        ...p,
+        id,
+        ...(apCost !== undefined && p.cost === undefined ? { cost: apCost } : {}),
+      } as Program;
+    })
+    .filter((p): p is Program => p !== undefined);
+}
+
 /** Render a cells-based grid to text, one line per row.
  *
  * Ten test files had their own copy of this with identical bodies and three

@@ -47,7 +47,7 @@ import {
 } from "./core/state/event_beats";
 import { markIceIntrosSeen, seenIceIntros } from "./core/state/ice_intros";
 import { contractFor } from "./core/state/campaign";
-import { markPrologueSeen, seenPrologues } from "./core/state/prologue_seen";
+import { seenPrologues } from "./core/state/prologue_seen";
 import { hasHeardBeat, markBeatHeard } from "./core/state/story_flags";
 import { renderJockeySelect } from "./renderer/jockey_select";
 import { renderPrep } from "./renderer/prep";
@@ -166,6 +166,7 @@ import {
   handleStubInput,
 } from "./app/screen_input";
 import { handlePreGameInput } from "./app/pre_game_input";
+import { handleGraphicNovelInput } from "./app/graphic_novel_input";
 
 function fallbackSettingsState(): import("./renderer/settings.ts").SettingsState {
   return {
@@ -311,6 +312,8 @@ class Game {
    * settings handler (app/settings_input.ts) takes the same gate everything
    * else does. */
   loadAudio = loadAudioSystem;
+  /** Lazy story system, the same loader the graphic-novel screen uses. */
+  loadStory = loadStorySystem;
   private input: KeyboardInput;
   private gamepad: GamepadInput;
   private iceTypes: Readonly<Record<string, Ice>>;
@@ -396,10 +399,10 @@ class Game {
   private pressedProgramName: string | null = null;
   /** ADR-0251 — true while the touch overlay (and its program row) is up. */
   private touchOverlayMounted = false;
-  private graphicNovelPlayer:
+  graphicNovelPlayer:
     import("./core/graphic_novel/graphic_novel.ts").GraphicNovelPlayer | null = null;
-  private gnLanguage: import("./core/graphic_novel/graphic_novel_types.ts").Language = "en";
-  private graphicNovelState: import("./core/types.ts").GraphicNovelState | null = null;
+  gnLanguage: import("./core/graphic_novel/graphic_novel_types.ts").Language = "en";
+  graphicNovelState: import("./core/types.ts").GraphicNovelState | null = null;
 
   settingsState: import("./renderer/settings.ts").SettingsState | null = null;
   pwaController: PwaController | null = null;
@@ -540,7 +543,7 @@ class Game {
       // exit", but nothing routed them: the mode showed one frame and ENTER
       // fell through to the menu, so the prologue could not be read at all.
       if (this.screen === "graphic_novel") {
-        this.handleGraphicNovelInput(action);
+        handleGraphicNovelInput(this, action);
         return;
       }
       if (this.state === null) {
@@ -855,61 +858,8 @@ class Game {
   }
 
   /** ADR-0273 — the graphic novel's keys, as its own footer promises. */
-  private handleGraphicNovelInput(action: GameAction): void {
-    const player = this.graphicNovelPlayer;
-    if (!player) {
-      this.exitGraphicNovel();
-      return;
-    }
-    if (action.type === "jack_out" || action.type === "cancel") {
-      this.exitGraphicNovel();
-      return;
-    }
-    if (action.type === "cycle_target") {
-      void loadStorySystem().then((gn) => {
-        gn.togglePause(player);
-        this.graphicNovelState = this.graphicNovelState
-          ? { ...this.graphicNovelState, isPaused: player.paused }
-          : this.graphicNovelState;
-        this.draw();
-      });
-      return;
-    }
-    if (action.type !== "confirm") return;
-    void loadStorySystem().then((gn) => {
-      if (this.graphicNovelPlayer !== player) return;
-      if (player.done) {
-        // Watched to the end. A player who skips has not seen it, so the
-        // marker would be a lie — only a finish counts.
-        markPrologueSeen(this.storagePort(), player.mode);
-        this.startRunFromGraphicNovel();
-        return;
-      }
-      // First press finishes the typed page, the next moves the story on.
-      if (!gn.isDialogueComplete(player)) gn.skipCurrentDialogue(player);
-      else if (!gn.advanceDialogue(player)) gn.advanceScene(player);
-      this.draw();
-    });
-  }
-
-  private exitGraphicNovel(): void {
-    this.graphicNovelPlayer = null;
-    this.graphicNovelState = null;
-    // ADR-0317: the graphic novel is only reachable as the run's prologue, so
-    // leaving it (finished or skipped) skips the STORY, not the run.
-    this.startRunFromGraphicNovel();
-  }
-
   /** ADR-0273: the prologue's epilogue hands over to the run — "the next
    * jack" is the player. The arc intro (ADR-0272) then opens the run. */
-  private startRunFromGraphicNovel(): void {
-    this.graphicNovelPlayer = null;
-    this.graphicNovelState = null;
-    this.screen = "mission_select";
-    this.selectedMission = 0;
-    this.draw();
-  }
-
   async selectMenuOption(option: MenuOption | undefined): Promise<void> {
     if (!option) return Promise.resolve();
     switch (option) {
@@ -1215,7 +1165,7 @@ class Game {
   }
 
   /** The profile's storage, or null where there is none (tests, SSR). */
-  private storagePort(): Storage | null {
+  storagePort(): Storage | null {
     return typeof localStorage === "undefined" ? null : localStorage;
   }
 

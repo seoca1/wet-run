@@ -15,6 +15,7 @@
     "balance:compare": "tsx scripts/balance_baseline.ts --check --allow-improvement",
     "mutation": "tsx scripts/mutation_spike.ts",
     "endings": "tsx scripts/ending_distribution.ts",
+    "faction-reach": "tsx scripts/faction_reach_probe.ts",
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest",

@@ -110,25 +110,60 @@ The dead branches are dead for **three different reasons**, which is why one fix
   `liberation`; `3` must. This is what keeps gate 5's threshold honest.
 - `ending_resolver.ts:1-27` — the header states the tier scope and the ADR-0314/ADR-0337 history.
 
-## 7. Options (owner decides)
+## 7. The measurement the recommendation depended on (done 2026-11-26)
+
+Option B/D both said "wire `requiresFaction`, but measure first". **The measurement is in, and it
+says wiring alone cannot work.** Probe: `npm run faction-reach`
+(`scripts/faction_reach_probe.ts`, deterministic enumeration — faction deltas depend only on mission
+and ICE ids, not on play).
+
+| Fact | Value | Source |
+|---|---|---|
+| Gate 2 needs | score ≥ **50** (`FRIENDLY`) | `faction_reputation.ts:21` `TIER_THRESHOLDS`, read at `ending_resolver.ts:377` |
+| A completed mission of that faction gives | **+10** | `MISSION_REWARD_MAP` |
+| Killing that faction's ICE costs | **−5** | `KILL_PENALTY_MAP`, applied at `combat/victory.ts:87` |
+| A run is | **3** missions | `CONTRACT_LENGTH = 3` |
+| Theoretical maximum in one run (3 legs, one faction, no kills of it) | **30** | 10 × 3 |
+| **Observed maximum** over all 33 Sprawl contracts | **20** | `npm run faction-reach` |
+| Scores persist across runs? | **No** — `makeInitialState` and `slotToGameState` both set `DEFAULT_FACTION_SCORES` (all 0) | `state.ts:141`, `state.ts:533` |
+
+**So `requiresFaction` wiring is insufficient by construction**: the gate is a five-mission bar
+(50 ÷ 10) and a run is three missions. Adding the data would move the dead branch from *"declared but
+nothing names it"* to *"named but unreachable"* — no ending becomes visible.
+
+Two further things the probe surfaced, both worth their own line:
+
+- **`maas` scores 0** on the Sprawl board: no sprawl mission id contains `"maas"`.
+- **The mission-faction rule is substring-based and collides**: `getMissionFaction`
+  (`state_actions_phases.ts:757-763`) matches `"ta"` anywhere, so `vegas_stakeout` reads as `ta`
+  because *stakeout* contains `"ta"`. `first_trace` reads as `null` only because `"ta"` does not
+  appear in it. Any ending wired to a faction inherits that rule.
+
+## 8. Options (owner decides) — revised by the measurement
 
 | Option | What it means | Cost / consequence |
 |---|---|---|
-| **A. 유지 (leave as is)** | Keep the 32-ending catalog; the unreachable ones stay declared for later arcs | Nothing to do. The gap stays documented by the `it.fails` test. Cheapest, but 21 endings are player-invisible and the `it.fails` test keeps the suite "green with a known hole" |
-| **B. 게이트 (wire the reachable ones)** | Add `requiresFaction` to the endings whose arcs have factions, so gate 2 fires before gate 5 | **One data line per ending** + update the `it.fails` test into a real one. Revives `corruption`/`exile`/`transcendence` **only if** the arcs' faction scores can actually reach 50 in a 3-leg contract — that has to be measured first, and it would move the ending distribution (a balance-visible change) |
-| **C. 제거 (delete the unreachable ones)** | Drop the 21 unreachable endings from the catalog | Shrinks `ENDING_DATA` to what a player can see; must update `design_conformance.test.ts:108` ("ships 32 endings") and the 7/7/6/6/6 distribution test. Irreversible for the story skeleton (`docs/design/story_skeleton.md`), which ADR-0010 ports |
-| **D. 게이트 + 연기 (my recommendation)** | Do **B** only for the faction-declared subset *after* measuring whether a 3-leg contract can reach score 50; leave `status_quo`/`sacrifice` declared and add a comment at each that names why it is unreachable | Keeps the catalog honest without deleting authored content, and turns the `it.fails` test into a real assertion the day the data is wired. The measurement is a prerequisite, not a formality — wiring `requiresFaction` on an arc that cannot reach 50 would just move the dead branch from "not declared" to "declared but unreachable" |
+| **A. 유지 (leave as is)** | Keep the 32-ending catalog; unreachable endings stay declared for later arcs | Nothing to do. Cheapest. The gap stays visible via the `it.fails` test |
+| **B. 게이트 by wiring `requiresFaction`** | Add the data so gate 2 can fire | **Measured: does not work alone.** Max reachable is 30 vs a gate of 50 — nothing becomes visible. Only becomes viable together with **B′** |
+| **B′. Lower the gate and/or persist scores** | Either move the FRIENDLY gate down to what a run can reach (≤ 20 observed), or carry `factionScores` across runs (a hoard-like change) | Each is a **balance/design change**, not a data line: the gate is also the Info Market price tier (`TIER_MULTIPLIERS`), so lowering it changes shop prices too. Persisting scores changes the run-start shape the goldens pin |
+| **C. 제거 (delete the unreachable ones)** | Drop the 21 unreachable endings | Shrinks `ENDING_DATA`; must update `design_conformance.test.ts:108` (32 endings) and the 7/7/6/6/6 test. Irreversible against `docs/design/story_skeleton.md` (ADR-0010) |
+| **D. 유지 + 명시 (my revised recommendation)** | **A**, plus a comment at each unreachable ending naming *why* (no choice system / no faction named / out of a run's reach), and fix the two probe findings above | No gameplay change, no authored content deleted, and the next person does not re-derive this. The `it.fails` test becomes the tripwire: it fails the day someone wires a faction, which is exactly when the gate question must be re-answered |
 
-**Recommendation: D.** It is the only option that neither deletes authored story content nor claims a
-fix it has not measured. The prerequisite measurement (`can a 3-leg contract push a faction score to
-50?`) is small and uses the existing campaign harness.
+**Recommendation: D.** The measurement removed B and B′ from "cheap data change" territory — both are
+balance changes that would move shop prices or the run-start goldens, so they are yours, not a
+refactor. D leaves the catalog honest without spending a balance decision.
 
-## 8. Open questions (owner)
+## 9. Open questions (owner)
 
 1. Is the 32-ending catalog a **story promise** (keep declared, wire later) or **current content**
-   (only what ships)? Option C is only on the table if the former is false.
-2. `sacrifice` currently has no path to the ending screen at all — death shows the flatline screen
-   and returns to the title. Is that the intended death UX (ADR-0263), or should death resolve an
-   ending? This is a **design** question, not a bug.
-3. Should the `it.fails` test at `design_conformance.test.ts:188` stay as the tracked divergence, or
-   become a `it.todo` naming the measurement that would unblock it?
+   (only what ships)? C is only on the table if the former is false.
+2. **Is `FRIENDLY = 50` the right bar for a 3-mission run?** Measured reach is 20. If faction
+   endings are wanted, the gate and the run length have to be reconciled — and the gate is shared
+   with Info Market pricing.
+3. Should `factionScores` survive a run (like the hoard and the owned gear do), or reset? Today it
+   resets, which is what makes the gate unreachable.
+4. `sacrifice` currently has no path to the ending screen — death shows the flatline screen and
+   returns to the title. Intended (ADR-0263), or should death resolve an ending? **Design, not a bug.**
+5. Should the `it.fails` test at `design_conformance.test.ts:188` stay as the tracked divergence, or
+   become an `it.todo` naming the measurement that would unblock it?
+

@@ -124,7 +124,7 @@
 | 슬라이스 | 옮길 것 | 줄 수(대략) | 비고 |
 |---|---|---|---|
 | 3a-1 | 입력 사다리 — `handlePreGameInput`(351줄) + `handle{Crafting,Equipment,Dungeon,Settings,Pause,Stub,GraphicNovel}Input` | ~700 | `if (this.screen === …)` 사다리. **가장 큰 단일 덩어리**. → **완료**: 3a-1a(설정 187줄) · 3a-1b(핸들러 6종 ~150줄) · 3a-1c(사다리 167줄) · 3a-1d(그래픽 노블 44줄) — `src/app/{settings,screen,pre_game,graphic_novel}_input.ts` |
-| 3a-2 | `draw`(259줄) + `drawPrep` | ~300 | 화면 라우팅 |
+| 3a-2 | `draw`(259줄) + `drawPrep` | ~300 | 화면 라우팅 | → **3a-2 사전 화면 분기(129줄) + `drawPrep` 완료**; 라우터 본체는 상태 변이/저장 때문에 컨트롤러 잔류 검토 |
 | 3a-3 | 런 수명주기 — `launchSelected`·`handleContinue`·`endRun`·`startDungeonCrawl`·`autosave`·`noteRunFinished`·`refreshSaveCache` | ~250 | 저장과 얽힘 → 3b(스키마) 이후가 안전 |
 | 3a-4 | 루프 — `startLoop`·`start`·`stop`·`syncPhase`·`resizeRenderer`·`applyAccessibilitySettings` | ~200 | |
 | 3a-5 | 접근자·버튼 핸들러(2266–2460) | ~200 | 남겨도 무방 |
@@ -203,7 +203,8 @@ export function handlePreGameInput(host: PreGameHost, action: GameAction): boole
 | 3a-1b 화면 핸들러 | ✅ `970dfa9b` | 크래프팅·장비·던전·런타임 설정·일시정지·스텁 입력 **6종(~150줄)** → `src/app/screen_input.ts` (`ScreenInputHost`). `main.ts` **2,377 → 2,227줄**. 정규화 diff 로 6종 **전부 동일**(유일한 차이: `handleStubInput` 의 선두 주석이 doc 주석으로 이동). 런타임 설정 스텁은 `handleSettingsStubInput` 으로 개명(사전 설정 화면과의 혼동 방지). 가드: e2e **106 pass** · vitest **239/4465** · 게이트 **9/9** · mutation **39/39**. |
 | 3a-1c 사전 입력 사다리 | ✅ `e23d459f` | `handlePreGameInput`(**167줄** — menu · jockey_select · briefing · prep · mission_select · far_grid_hub · 설정 분기) → `src/app/pre_game_input.ts` (`PreGameInputHost extends SettingsInputHost` — 설정 화면 멤버를 다시 선언하지 않는다). `BeatCard` 도 모듈로 이동. `main.ts` **2,227 → 2,056줄**. 정규화 diff **동일**(유일한 차이: 설정 위임이 `this` → `host`). 가드: e2e **106 pass** · vitest **239/4465** · 게이트 **9/9** · mutation **39/39**. |
 | 3a-1d 그래픽 노블 입력 | ✅ `c810dbfa` | `handleGraphicNovelInput` + `exitGraphicNovel` + `startRunFromGraphicNovel` (**44줄**) → `src/app/graphic_novel_input.ts` (`GraphicNovelInputHost`). `main.ts` **2,056 → 2,006줄**. 정규화 diff **3/3 동일**. 가드: e2e **106 pass** · vitest **239/4465** · 게이트 **9/9** · mutation **39/39**. → **Stage 3a-1(입력 계층) 완료** (3a-1a~1d, `main.ts` 2,568 → 2,006). |
-| 3a-2 `draw` | ⬜ | `draw`(~259줄) + `drawPrep` — 화면 라우팅. 다음 슬라이스. |
+| 3a-2 사전 렌더링 | ✅ `fa8b25d5` | `draw` 의 **사전 화면 분기(129줄)** + `drawPrep`(28줄) + `formatMissionOption` → `src/app/pre_game_render.ts` (`PreGameRenderHost`). `main.ts` **2,006 → 1,827줄**. 정규화 diff **3/3 동일**(유일한 차이: 이동한 타입 주석의 상대 경로 `./core/i18n.ts` → `../core/i18n.ts`). **가드가 실제 결함을 잡음** — `tests/nav_index.test.ts` 가 `main.ts` **소스 텍스트**에서 `formatNavIndex` 호출을 찾고 있었다 → 새 위치를 가리키도록 수정(규약은 그대로, 위치만 이동). 가드: e2e **106 pass** · vitest **239/4465** · 게이트 **9/9** · mutation **39/39**. |
+| 3a-2 잔여 (라우터) | ⬜ | `draw` 라우터 본체 — 비트카드/런인트로 오버레이 · 비전투 런(matrix/ending/loot) · 전투 경로. 프레임마다 `this.state` 를 변이하고 `autosave()`·`syncPhase()` 를 호출하므로 **컨트롤러에 남기는 것이 맞다**(오너 확인 대상). |
 | 4 테스트 fixture | ⬜ | |
 
 **Stage 1 종료 시점 확인**: 러틴 8/8 · vitest 238/4459 · typecheck 0 · lint 0 error ·

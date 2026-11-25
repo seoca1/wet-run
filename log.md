@@ -4550,3 +4550,14 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **증거**: e2e **106 pass**(desktop 54 + mobile 58, 6 skip) · vitest **239/4465** · typecheck 0 · lint 0 error · 게이트 **9/9** · mutation **39/39 KILLED** · 골든 byte-identical.
 - **수치**: `main.ts` **1,827 → 1,634줄** (세션 누적 **2,568 → 1,634**, −934) · 신규 2파일(`src/app/run_lifecycle.ts` 265줄 · `tests/controller_source.ts` 23줄) · main.ts 미사용 import 17개 제거.
 - 커밋 `7703a69b` · 다음: 3a-4(루프 ~200줄).
+
+## [2026-11-25] refactor | Stage 3a-4 — 입력 파이프라인 분리 + 소스-텍스트 테스트 결합 제거
+
+- **슬라이스**: `constructor` 안의 `handler` 클로저(**289줄** — 예상 ~200 보다 컸다) + `handleContractPrepInput`(27줄) + `SCREENS_WITH_INPUT` → `src/app/game_input.ts` (`GameInputHost`, 413줄). 라우터/루프와 달리 **영속화를 하지 않는 계층**이라 깨끗하게 이동.
+- **host 구성**: `GameInputHost extends ScreenInputHost, PreGameInputHost, GraphicNovelInputHost, RunLifecycleHost` — 파이프라인은 이 모두에게 디스패치하므로 ~60 멤버를 다시 선언하지 않고 **합성**한다.
+- **동등성**: 정규화 diff **2/2 동일**. 유일한 명명된 차이는 생성자의 지역 `resetIdle()` → `host.idleSinceMs = Date.now()`(같은 문장).
+- **소스-텍스트 테스트 결합 제거**: 남아 있던 6건(`combat_event_sfx`·`matrix_affordance`·`matrix_travel`·`run_end_save`·`program_affordance`·`onboarding`)도 `tests/controller_source.ts` 헬퍼로 이관 + 이동한 코드에 맞춰 단언 문자열 갱신(`this.` → `host.`, `privatematrixEntryHintShown` → `matrixEntryHintShown`). **이제 `grep -rl "src/main.ts" web/tests/` 는 헬퍼 1건만 반환** — 다음 이동이 참인 단언을 깨뜨릴 수 없다.
+- **함정(자체 발생·복구)**: `prettier --write tests/*.test.ts` 를 돌렸더니 **테스트 ~200 파일이 재포맷**됐다. 이 리포의 `npm run format` 은 `prettier --write "src/**/*.{ts,tsx}"` 로 **테스트를 덮지 않는다** → 전부 되돌리고 의도한 7건만 재적용. (테스트 파일에 prettier 를 돌리지 말 것.)
+- **증거**: e2e **106 pass**(desktop 54 + mobile 58, 6 skip) · vitest **239/4465** · typecheck 0 · lint 0 error · 게이트 **9/9** · mutation **39/39 KILLED** · 골든 byte-identical.
+- **수치**: `main.ts` **1,634 → 1,265줄** (세션 누적 **2,568 → 1,265**, −1,303) · 신규 1파일(`src/app/game_input.ts`, 413줄).
+- 커밋 `018cb754` · **Stage 3a 결론**: 남은 것은 합성 루트(`draw` 라우터)와 객체 수명주기(`loop`/`start`/`stop`) — 계획 §7-6 참조.

@@ -1,6 +1,6 @@
 # Wet-Run 검증 보고
 
-**시간**: 2026-11-25T20:03:59Z  
+**시간**: 2026-11-25T22:15:28Z  
 **버전**: 3.1.0 (ADR-0335/0336)  
 **게이트**: 9/9 pass  
 
@@ -112,12 +112,12 @@
   "status": "pass",
   "exit": 0,
   "tail": [
-    "  ✓  107 [mobile-portrait-chromium] › e2e/tier55_vfx.spec.ts:18:3 › Tier 5.5 VFX › matrix shows event glyphs (combat/discovery/trap/etc.) (1.6s)",
+    "  ✓  107 [mobile-portrait-chromium] › e2e/tier55_vfx.spec.ts:18:3 › Tier 5.5 VFX › matrix shows event glyphs (combat/discovery/trap/etc.) (1.5s)",
     "  ✓  108 [mobile-portrait-chromium] › e2e/tier55_vfx.spec.ts:32:3 › Tier 5.5 VFX › combat triggers VFX (canvas changes after card use) (6.8s)",
     "  ✓  109 [mobile-portrait-chromium] › e2e/touch_input.spec.ts:37:3 › mobile touch input › virtual gamepad overlay is visible on touch device (1.5s)",
     "  ✓  110 [mobile-portrait-chromium] › e2e/touch_input.spec.ts:43:3 › mobile touch input › D-pad touch navigates menu options (1.6s)",
-    "  ✓  111 [mobile-portrait-chromium] › e2e/touch_input.spec.ts:56:3 › mobile touch input › A button touch confirms NEW_RUN → jockey_select (1.6s)",
-    "  ✓  112 [mobile-portrait-chromium] › e2e/touch_input.spec.ts:72:3 › mobile touch input › program row touch uses a program in combat (6.7s)",
+    "  ✓  111 [mobile-portrait-chromium] › e2e/touch_input.spec.ts:56:3 › mobile touch input › A button touch confirms NEW_RUN → jockey_select (1.5s)",
+    "  ✓  112 [mobile-portrait-chromium] › e2e/touch_input.spec.ts:72:3 › mobile touch input › program row touch uses a program in combat (6.8s)",
     "  6 skipped",
     "  106 passed (6.0m)"
   ]

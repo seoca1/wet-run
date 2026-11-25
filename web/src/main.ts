@@ -133,19 +133,16 @@ import {
 } from "./save/storage";
 import { getLayout, watchLayout, type Layout } from "./core/layout";
 import {
-  craftItem,
   makeRecipesFromData,
   makeMaterialsFromData,
   type Recipe,
   type MaterialDef,
   makeInfoMarket,
 } from "./core/state/crafting";
-import { equipOn, DEFAULT_REGISTRY, EQUIP_SLOTS } from "./core/state/equipment";
-import { hydrateLoadout, readEquippedIds, writeEquippedIds } from "./core/state/equipment_store";
+import { DEFAULT_REGISTRY, EQUIP_SLOTS } from "./core/state/equipment";
+import { hydrateLoadout, readEquippedIds } from "./core/state/equipment_store";
 import {
-  isOwned,
   mergeDroppedEquipment,
-  ownEquipment,
   readOwnedIds,
   writeOwnedIds,
   type OwnedSet,
@@ -162,6 +159,14 @@ import type { InfoMarket } from "./core/info_market";
 import { loadPersistedLanguage } from "./renderer/settings";
 import { formatNavIndex } from "./renderer/nav_index";
 import { handleSettingsInput } from "./app/settings_input";
+import {
+  handleCraftingInput,
+  handleDungeonInput,
+  handleEquipmentInput,
+  handlePauseInput,
+  handleSettingsStubInput,
+  handleStubInput,
+} from "./app/screen_input";
 
 function fallbackSettingsState(): import("./renderer/settings.ts").SettingsState {
   return {
@@ -325,17 +330,17 @@ class Game {
   private _lastPhase: GamePhase | null = null;
   private _lastIceHp: number | null = null;
   private _lastPlayerHp: number | null = null;
-  private inventory: Inventory;
+  inventory: Inventory;
   /** ADR-0323: the wallet this run was seeded with, so the merge back into the
    * hoard can tell what the run EARNED from what it inherited. */
   private runWalletSeed: Inventory | null = null;
-  private equipmentLoadout: EquipmentLoadout;
-  private recipes: ReadonlyArray<Recipe>;
+  equipmentLoadout: EquipmentLoadout;
+  recipes: ReadonlyArray<Recipe>;
   private materials: ReadonlyArray<MaterialDef>;
   private infoMarket: InfoMarket;
   /** ADR-0325: the gear the runner owns (starters + crafted). The EQUIPMENT
    *  menu equips only from this set, so a craft finally buys something wearable. */
-  private ownedEquipment: OwnedSet;
+  ownedEquipment: OwnedSet;
   private layout: Layout;
   private tutorialActive = false;
   private tutorialOverlay: ReturnType<typeof createTutorialOverlay> | null = null;
@@ -401,8 +406,8 @@ class Game {
 
   settingsState: import("./renderer/settings.ts").SettingsState | null = null;
   pwaController: PwaController | null = null;
-  private dungeonCrawler: DungeonCrawler | null = null;
-  private _message: string = "";
+  dungeonCrawler: DungeonCrawler | null = null;
+  _message: string = "";
   private farGridUnlockedCache: boolean = false;
   private rafId: number | null = null;
   private loopRunning = false;
@@ -505,7 +510,7 @@ class Game {
       // select (ADR-0274) in the same session. Anything with no run state that
       // is not in this set is a stub, by construction.
       if (this.state === null && !SCREENS_WITH_INPUT.has(this.screen)) {
-        this.handleStubInput(action);
+        handleStubInput(this, action);
         return;
       }
       if (this.tutorialActive && this.tutorialOverlay) {
@@ -529,7 +534,7 @@ class Game {
       // Dungeon crawler has its own self-contained state (DungeonCrawler instance);
       // it must be handled before the `state === null` pre-game shortcut.
       if (this.screen === "dungeon") {
-        this.handleDungeonInput(action);
+        handleDungeonInput(this, action);
         this.draw();
         return;
       }
@@ -552,18 +557,18 @@ class Game {
         return;
       }
       if (this.screen === "crafting" || this.screen === "equipment") {
-        if (this.screen === "crafting") this.handleCraftingInput(action);
-        else this.handleEquipmentInput(action);
+        if (this.screen === "crafting") handleCraftingInput(this, action);
+        else handleEquipmentInput(this, action);
         this.draw();
         return;
       }
       if (this.screen === "settings") {
-        this.handleSettingsInput(action);
+        handleSettingsStubInput(this, action);
         this.draw();
         return;
       }
       if (this.screen === "pause") {
-        this.handlePauseInput(action);
+        handlePauseInput(this, action);
         this.draw();
         return;
       }
@@ -796,153 +801,6 @@ class Game {
       );
       this.draw();
     });
-  }
-
-  private handleCraftingInput(action: GameAction): void {
-    if (action.type === "jack_out" || action.type === "cancel") {
-      this.screen = "menu";
-      this._message = "";
-      this.draw();
-      return;
-    }
-    if (action.type === "select_program") {
-      const index = action.handIndex - 1;
-      if (index < 0) return;
-      // Build list of craftable recipes (those with sufficient materials).
-      const craftable: Recipe[] = [];
-      for (const recipe of this.recipes) {
-        let canCraft = true;
-        for (const [mat, qty] of Object.entries(recipe.materials)) {
-          if (this.inventory.materials[mat] ?? 0 < qty) {
-            canCraft = false;
-            break;
-          }
-        }
-        if (canCraft) craftable.push(recipe);
-      }
-      if (index >= craftable.length) {
-        this._message = "No craftable recipe at that slot.";
-        this.draw();
-        return;
-      }
-      const recipe = craftable[index];
-      if (!recipe) {
-        this.draw();
-        return;
-      }
-      // ADR-0325: one transaction — spend the materials AND take ownership of
-      // the piece. The recipe's itemId is a catalog equipment id.
-      const result = craftItem(this.recipes, recipe.itemId, this.inventory.materials);
-      if (result.ok) {
-        this.inventory = { ...this.inventory, materials: result.newInventory };
-        writeWalletMaterials(this.inventory.materials);
-        this.ownedEquipment = ownEquipment(this.ownedEquipment, recipe.itemId);
-        writeOwnedIds(this.ownedEquipment);
-        this._message = `Crafted ${recipe.name} — it's yours now.`;
-      } else {
-        this._message = `Failed to craft ${recipe.name}: ${result.reason}`;
-      }
-      this.draw();
-      return;
-    }
-  }
-
-  private handleEquipmentInput(action: GameAction): void {
-    if (action.type === "jack_out" || action.type === "cancel") {
-      this.screen = "menu";
-      this._message = "";
-      this.draw();
-      return;
-    }
-    if (action.type === "select_program") {
-      const slotIndex = action.handIndex - 1;
-      if (slotIndex < 0 || slotIndex >= EQUIP_SLOTS.length) return;
-      const slot = EQUIP_SLOTS[slotIndex];
-      if (!slot) {
-        this.draw();
-        return;
-      }
-      // ADR-0325: equip only what the runner owns — tier-0 starters plus
-      // anything crafted. Crafting is what makes the menu grow.
-      const candidate = DEFAULT_REGISTRY.all.find(
-        (e) =>
-          e.slot === slot &&
-          isOwned(this.ownedEquipment, e.id) &&
-          this.equipmentLoadout.get(slot) === null,
-      );
-      if (!candidate) {
-        this._message = `No owned equipment for slot ${slot}`;
-        this.draw();
-        return;
-      }
-      const result = equipOn(this.equipmentLoadout, candidate);
-      this.equipmentLoadout = result.loadout;
-      writeEquippedIds(this.equipmentLoadout);
-      this._message = `Equipped ${candidate.name} to ${slot}`;
-      this.draw();
-      return;
-    }
-  }
-
-  private handleDungeonInput(action: GameAction): void {
-    if (!this.dungeonCrawler) return;
-
-    switch (action.type) {
-      case "move_north":
-      case "move_south":
-      case "move_east":
-      case "move_west": {
-        const dx = action.type === "move_east" ? 1 : action.type === "move_west" ? -1 : 0;
-        const dy = action.type === "move_south" ? 1 : action.type === "move_north" ? -1 : 0;
-        this.dungeonCrawler.tryMovePlayer(dx, dy);
-        // Drive monster AI + FOV update each player turn.
-        this.dungeonCrawler.processTurn();
-        if (this.dungeonCrawler.isGameOver()) {
-          this._message = "FLATLINE — dungeon crawl failed";
-          this.screen = "menu";
-          this.dungeonCrawler = null;
-        }
-        break;
-      }
-      case "confirm":
-        this.dungeonCrawler.confirm();
-        break;
-      case "cancel":
-        this.dungeonCrawler.cancel();
-        break;
-      case "jack_out":
-        this.screen = "menu";
-        this.dungeonCrawler = null;
-        this.draw();
-        return;
-      default:
-        break;
-    }
-    this.draw();
-  }
-
-  private handleSettingsInput(action: GameAction): void {
-    if (action.type === "cancel" || action.type === "jack_out") {
-      this.screen = "menu";
-      this.draw();
-      return;
-    }
-    if (action.type === "confirm") {
-      // Toggle settings
-      this.draw();
-    }
-  }
-
-  private handlePauseInput(action: GameAction): void {
-    if (action.type === "cancel" || action.type === "jack_out") {
-      this.screen = "menu";
-      this.draw();
-      return;
-    }
-    if (action.type === "confirm") {
-      this.screen = "settings";
-      this.draw();
-    }
   }
 
   /** ADR-0317: the graphic novel is the run's opening, not a menu mode. The
@@ -1220,14 +1078,6 @@ class Game {
     if (this.screen === "settings") {
       handleSettingsInput(this, action);
       return;
-    }
-  }
-
-  private handleStubInput(action: GameAction): void {
-    // Stub screens: ENTER/ESC/Q all return to main menu.
-    if (action.type === "confirm" || action.type === "jack_out") {
-      this.screen = "menu";
-      this.draw();
     }
   }
 

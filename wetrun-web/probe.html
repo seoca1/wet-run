@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1" /><title>wet-run browser probe</title></head>
+<body>
+<h1>wet-run browser probe</h1>
+<pre id="out">starting...
+</pre>
+<script>
+var out = document.getElementById('out');
+function line(s) { out.textContent += '\n' + s; }
+try {
+  line('UA=' + navigator.userAgent);
+  line('ES-MODULE=' + ('noModule' in document.createElement('script') ? 'yes' : 'NO'));
+  try {
+    var c = document.createElement('canvas');
+    line('CANVAS2D=' + (c.getContext('2d') ? 'yes' : 'NO'));
+  } catch (e) { line('CANVAS2D=ERROR ' + e.message); }
+  try {
+    localStorage.setItem('__p', '1'); localStorage.removeItem('__p');
+    line('LOCALSTORAGE=yes');
+  } catch (e) { line('LOCALSTORAGE=NO ' + e.message); }
+  line('INDEXEDDB=' + (window.indexedDB ? 'yes' : 'NO'));
+  line('FETCH=' + (window.fetch ? 'yes' : 'NO'));
+  line('WASM=' + (typeof WebAssembly === 'object' ? 'yes' : 'NO'));
+  fetch('index.html').then(function (r) { line('SELF-FETCH=' + r.status); })
+    .catch(function (e) { line('SELF-FETCH=ERROR ' + e.message); });
+  try {
+    new Function('return import("data:application/json,{\\"t\\":1}", { with: { type: "json" } })')()
+      .then(function (m) { line('JSON-IMPORT=' + (m.default && m.default.t === 1 ? 'yes' : 'PARTIAL')); })
+      .catch(function (e) { line('JSON-IMPORT=NO ' + e.message); });
+  } catch (e) { line('JSON-IMPORT=NO-SYNC ' + e.message); }
+  fetch('index.html').then(function (r) { return r.text(); }).then(function (html) {
+    var m = html.match(/<script[^>]*type="module"[^>]*src="([^"]+)"/);
+    line('MODULE-SRC=' + (m ? m[1] : 'NOT-FOUND'));
+    if (!m) return;
+    new Function('return import(' + JSON.stringify(m[1]) + ')')()
+      .then(function () { line('GAME-MODULE=LOADED (no canvas here, boot skipped as designed)'); })
+      .catch(function (e) { line('GAME-MODULE=FAIL ' + (e && e.message)); });
+  }).catch(function (e) { line('INDEX-PARSE=ERROR ' + e.message); });
+  line('DONE — if ES-MODULE=NO, this browser cannot run the game.');
+} catch (e) {
+  line('FATAL=' + e.message);
+}
+</script>
+</body>
+</html>

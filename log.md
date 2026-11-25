@@ -4510,3 +4510,13 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **증거**: e2e **106 pass**(desktop 54 + mobile 58, 6 skip) · vitest **239/4465** · typecheck 0 · lint 0 error · 게이트 **9/9** · mutation **39/39 KILLED** · 골든 byte-identical.
 - **수치**: `main.ts` **2,377 → 2,227줄** (세션 누적 **2,568 → 2,227**, −341) · 신규 1파일(`src/app/screen_input.ts`, 193줄) · 미사용 import 5개 제거.
 - 커밋 `970dfa9b` · 다음: 3a-1c(`handlePreGameInput` 잔여 사다리 + 그래픽 노블 입력) → 3a-2(`draw`).
+
+## [2026-11-25] refactor | Stage 3a-1c — 사전 입력 사다리를 main.ts 밖으로
+
+- **슬라이스**: `handlePreGameInput`(**167줄**) → `src/app/pre_game_input.ts`. 라우팅 대상: menu · jockey_select · briefing · prep · mission_select · far_grid_hub · 설정 분기.
+- **인터페이스**: `PreGameInputHost extends SettingsInputHost` — 설정 화면 멤버를 다시 선언하지 않고, 사다리의 설정 분기가 `handleSettingsInput(host, action)` 를 그대로 호출한다(두 모듈이 서로를 모른 채 유지).
+- **부수 이동**: `BeatCard` 는 사다리(showBeat)와 비트 큐만 쓰던 지역 인터페이스 → 모듈로 이동.
+- **동등성**: 정규화 diff **동일**. 유일한 차이는 설정 위임이 `this` → `host` 로 바뀐 한 줄.
+- **증거**: e2e **106 pass**(desktop 54 + mobile 58, 6 skip) · vitest **239/4465** · typecheck 0 · lint 0 error · 게이트 **9/9** · mutation **39/39 KILLED** · 골든 byte-identical.
+- **수치**: `main.ts` **2,227 → 2,056줄** (세션 누적 **2,568 → 2,056**, −512) · 신규 1파일(`src/app/pre_game_input.ts`, 219줄).
+- 커밋 `e23d459f` · 다음: 3a-1d(그래픽 노블 입력) → 3a-2(`draw`).

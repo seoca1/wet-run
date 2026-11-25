@@ -32,6 +32,7 @@ import {
 import missionsData from "../src/data/missions.json";
 import programsData from "../src/data/programs.json";
 import iceData from "../src/data/ice_types.json";
+import { readControllerSource } from "./controller_source";
 import type {
   GameAction,
   GameState,
@@ -411,12 +412,9 @@ describe("ADR-0263 — the defeat screen is escapable", () => {
   });
 
   it("main.ts turns that exit into the title, and the screen states the key", () => {
-    const mainSource = readFileSync(
-      fileURLToPath(new URL("../src/main.ts", import.meta.url)),
-      "utf-8",
-    ).replace(/\s+/g, "");
-    expect(mainSource).toContain("runFailed(previous,this.state)");
-    expect(mainSource).toContain("this._message=FLATLINE_MESSAGE;");
+    const mainSource = readControllerSource().replace(/\s+/g, "");
+    expect(mainSource).toContain("runFailed(previous,host.state)");
+    expect(mainSource).toContain("host._message=FLATLINE_MESSAGE;");
 
     const gridSource = readFileSync(
       fileURLToPath(new URL("../src/renderer/combat_grid.ts", import.meta.url)),

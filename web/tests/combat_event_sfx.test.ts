@@ -4,14 +4,15 @@
  * no in-game event (nothing lowers `player.credits`; `purchaseItem` has no
  * caller), so it stays unwired and must never be picked.
  */
-import { readFileSync } from "node:fs";
-import { fileURLToPath } from "node:url";
+
+
 import { describe, expect, it } from "vitest";
 import { pickEventSfx, pickTransitionSfx } from "../src/core/combat/combat_sfx";
 import { SFX_IDS } from "../src/audio/manager";
 import { makeInitialState } from "../src/core/state/state";
 import type { GameState, Ice, Mission } from "../src/core/types";
 
+import { readControllerSource } from "./controller_source";
 const MISSION: Mission = {
   id: "sfx",
   title: "SFX",
@@ -149,10 +150,7 @@ describe("pickEventSfx", () => {
 });
 
 describe("dispatch sites", () => {
-  const mainSource = readFileSync(
-    fileURLToPath(new URL("../src/main.ts", import.meta.url)),
-    "utf8",
-  ).replace(/\s+/g, "");
+  const mainSource = readControllerSource().replace(/\s+/g, "");
 
   it("both the key handler and the touch program buttons use the full picker", () => {
     const uses =

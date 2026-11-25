@@ -9,7 +9,7 @@ import {
   composeCombatScreen,
   type RunNarrative,
 } from "./renderer/run_screen";
-import { beginMatrixTravel, matrixTravelFrame, type MatrixTravel } from "./renderer/matrix_travel";
+import { matrixTravelFrame, type MatrixTravel } from "./renderer/matrix_travel";
 import { renderCombatHints } from "./renderer/combat_hints";
 import { FAR_GRID_LOCKED_MESSAGE, isFarGridUnlocked } from "./core/dungeon/far_grid_gate";
 import { advanceVfxListBy, WEB_TICK_MS, type CombatVfxInstance } from "./renderer/combat_vfx";
@@ -31,19 +31,9 @@ import { programEffectTag } from "./core/combat/program_effects";
 import { everyProgramBlocked } from "./core/combat/program_affordance";
 import { renderRunIntro } from "./renderer/run_intro";
 import { renderBeatCard } from "./renderer/beat_card";
-import {
-  iceIntroBeat,
-  firstFightWarningBeat,
-  firstVictoryBeat,
-  flatlineBeat,
-  firstReturnBeat,
-  ashpoolCallBeat,
-  endingSignoffBeat,
-  type DialogueBeat,
-} from "./core/state/event_beats";
-import { markIceIntrosSeen, seenIceIntros } from "./core/state/ice_intros";
+import { iceIntroBeat, endingSignoffBeat, type DialogueBeat } from "./core/state/event_beats";
+import { seenIceIntros } from "./core/state/ice_intros";
 import { seenPrologues } from "./core/state/prologue_seen";
-import { hasHeardBeat, markBeatHeard } from "./core/state/story_flags";
 import { jockeyHandle } from "./core/state/jockey";
 import type { PlayMode } from "./core/graphic_novel/graphic_novel_types";
 import { tick as gnTick } from "./core/graphic_novel/graphic_novel_player";
@@ -94,17 +84,9 @@ import type {
   EquipmentLoadout,
 } from "./core/types";
 import { applyAction, resolveProgramSelection } from "./core/state/state";
-import { encounterRoster, runAbandoned } from "./core/state/encounter_verbs";
-import { missionGradeOf } from "./core/combat/ice_scaling";
-import { applyPrep, PREP_OPTIONS, prepGrantFor, type PrepChoice } from "./core/state/prep";
-import { readPrepWallet, spendPrepWallet } from "./core/state/prep_wallet";
-import {
-  FLATLINE_MESSAGE,
-  isTerminalNode,
-  runCompleted,
-  runFailed,
-  RUN_COMPLETE_MESSAGE,
-} from "./core/state/run_end";
+import { encounterRoster } from "./core/state/encounter_verbs";
+import type { PrepChoice } from "./core/state/prep";
+import { isTerminalNode } from "./core/state/run_end";
 import type { Grid } from "./core/grid";
 import { getLayout, watchLayout, type Layout } from "./core/layout";
 import {
@@ -120,23 +102,12 @@ import { readOwnedIds, type OwnedSet } from "./core/state/owned_equipment";
 import { readWalletMaterials } from "./core/state/wallet";
 import type { InfoMarket } from "./core/info_market";
 import { loadPersistedLanguage } from "./renderer/settings";
-import {
-  handleCraftingInput,
-  handleDungeonInput,
-  handleEquipmentInput,
-  handlePauseInput,
-  handleSettingsStubInput,
-  handleStubInput,
-} from "./app/screen_input";
-import { handlePreGameInput } from "./app/pre_game_input";
-import { handleGraphicNovelInput } from "./app/graphic_novel_input";
 import { drawPrep, drawPreGame } from "./app/pre_game_render";
+import { handleGameAction } from "./app/game_input";
 import {
   autosaveRun,
   continueRun,
-  noteRunFinished,
   refreshSaveCache,
-  settleRun,
   startDungeonCrawl,
   startRun,
 } from "./app/run_lifecycle";
@@ -167,21 +138,6 @@ function fallbackSettingsState(): import("./renderer/settings.ts").SettingsState
 
 const loadStorySystem = () => import("./core/graphic_novel/graphic_novel.ts");
 
-/** Pre-game screens that handle their own keys (ADR-0275). A screen missing
- * from this set is a stub: no run state, ENTER returns to the title. Adding a
- * screen means adding it here, in one place, with a handler. */
-const SCREENS_WITH_INPUT: ReadonlySet<ScreenKind> = new Set([
-  "menu",
-  "mission_select",
-  "jockey_select",
-  "briefing",
-  "prep",
-  "tutorial",
-  "settings",
-  "dungeon",
-  "pause",
-  "graphic_novel",
-]);
 const loadAudioSystemRaw = () => import("./audio/manager.ts");
 
 /** ADR-0311: the unique the run holds, if any. Display-only — the controller
@@ -261,7 +217,7 @@ class Game {
   /** Where the run's screen was before the between-leg advance took over
    * (ADR-0318 (a)). Restoring it keeps the run's screen invariant intact — a
    * CONTINUE resumes with `menu`, a fresh run with `prep`. */
-  private contractPrepReturn: ScreenKind = "prep";
+  contractPrepReturn: ScreenKind = "prep";
   prepChoice: PrepChoice = "stim";
   /** ADR-0284: what the stockpile will pay for the run about to start. */
   prepWalletOutlay = 0;
@@ -311,11 +267,11 @@ class Game {
   private combatEntryHintShown = false;
   /** The Matrix-entry hint, same once-per-session pattern: shown on the
    * first board with a route, dismissed by the first input made there. */
-  private matrixEntryHintShown = false;
+  matrixEntryHintShown = false;
   /** The Matrix board's traversal after a confirmed move: visual only and
    * never on `GameState`, so it is neither saved nor seen by the reducer.
    * Null under reduced motion, and replaced by the next input. */
-  private matrixTravel: MatrixTravel | null = null;
+  matrixTravel: MatrixTravel | null = null;
   /** ADR-0262 — display-only growth reveal. Controller-owned and transient:
    * never on `GameState`, so it cannot reach a save, the reducer or the
    * harness. The `matrixTravel` pattern, applied to a card joining the deck. */
@@ -336,10 +292,10 @@ class Game {
   /** ADR-0317 (3b): a one-time beat card that owns the screen until a key.
    * Same shape as the run intro, but for beats that arrive mid-run (the first
    * fight, the first win) and would not fit inline on a dense panel. */
-  private beatCard: BeatCard | null = null;
+  beatCard: BeatCard | null = null;
   /** Cards waiting their turn. A transition can have more than one thing to say
    * (the fixer's debrief, then the next job), and a card owns the screen. */
-  private beatQueue: BeatCard[] = [];
+  beatQueue: BeatCard[] = [];
   /** The commit stage last drawn — the loop redraws only when the clock
    * pushes the panel to a new stage, then stops (ADR-0262). */
   private lootCommitStageShown = -1;
@@ -361,8 +317,8 @@ class Game {
   private pressedProgramName: string | null = null;
   /** ADR-0251 — true while the touch overlay (and its program row) is up. */
   private touchOverlayMounted = false;
-  graphicNovelPlayer:
-    import("./core/graphic_novel/graphic_novel.ts").GraphicNovelPlayer | null = null;
+  graphicNovelPlayer: import("./core/graphic_novel/graphic_novel.ts").GraphicNovelPlayer | null =
+    null;
   gnLanguage: import("./core/graphic_novel/graphic_novel_types.ts").Language = "en";
   graphicNovelState: import("./core/types.ts").GraphicNovelState | null = null;
 
@@ -374,7 +330,7 @@ class Game {
   private rafId: number | null = null;
   private loopRunning = false;
   private lastLoopMs = 0;
-  private idleSinceMs = Date.now();
+  idleSinceMs = Date.now();
   /** Wall-clock deadline of the active P1 hit-stop hold (0 = none). */
   private hitStopDeadlineMs = 0;
   /** The VFX instance list from the previous frame — the hit-stop uses it to
@@ -454,297 +410,7 @@ class Game {
     document.addEventListener("keydown", resetIdle);
     document.addEventListener("pointerdown", resetIdle);
     document.addEventListener("visibilitychange", resetIdle);
-    const handler = (action: GameAction): void => {
-      resetIdle();
-      // ADR-0317 (3b): a beat card owns the screen until a key, whatever is
-      // behind it. It has to be checked FIRST: the fixer's introduction fires on
-      // the mission list, and a card that draws over a screen without consuming
-      // its keys let the briefing and prep advance invisibly behind it.
-      if (this.beatCard !== null) {
-        this.beatCard = this.beatQueue.shift() ?? null;
-        this.draw();
-        return;
-      }
-      // Screens that own their input. This used to be an inline list of
-      // screens to *exclude*, so any screen someone forgot to add fell into
-      // `handleStubInput` and ENTER bounced to the menu -- which is exactly
-      // what happened to the graphic novel (ADR-0273) and then to the jockey
-      // select (ADR-0274) in the same session. Anything with no run state that
-      // is not in this set is a stub, by construction.
-      if (this.state === null && !SCREENS_WITH_INPUT.has(this.screen)) {
-        handleStubInput(this, action);
-        return;
-      }
-      if (this.tutorialActive && this.tutorialOverlay) {
-        const result = this.tutorialOverlay.handleInput(
-          action.type === "jack_out" || action.type === "cancel"
-            ? "Escape"
-            : action.type === "confirm"
-              ? "Enter"
-              : action.type,
-        );
-        if (result.action === "next" || result.action === "skip") {
-          if (result.action === "skip" || this.tutorialOverlay.state.currentStep >= 6) {
-            this.tutorialActive = false;
-            this.tutorialOverlay = null;
-            this.screen = "menu";
-          }
-          this.draw();
-        }
-        return;
-      }
-      // Dungeon crawler has its own self-contained state (DungeonCrawler instance);
-      // it must be handled before the `state === null` pre-game shortcut.
-      if (this.screen === "dungeon") {
-        handleDungeonInput(this, action);
-        this.draw();
-        return;
-      }
-      // ADR-0273: the graphic novel is its own screen with its own keys. The
-      // renderer had always printed "ENTER: skip dialogue | P: pause | ESC:
-      // exit", but nothing routed them: the mode showed one frame and ENTER
-      // fell through to the menu, so the prologue could not be read at all.
-      if (this.screen === "graphic_novel") {
-        handleGraphicNovelInput(this, action);
-        return;
-      }
-      if (this.state === null) {
-        handlePreGameInput(this, action);
-        return;
-      }
-      // ADR-0318 (a): the advance between a contract's legs owns the input the
-      // same way the crafting screens do — the run state is live behind it.
-      if (this.screen === "contract_prep") {
-        this.handleContractPrepInput(action);
-        return;
-      }
-      if (this.screen === "crafting" || this.screen === "equipment") {
-        if (this.screen === "crafting") handleCraftingInput(this, action);
-        else handleEquipmentInput(this, action);
-        this.draw();
-        return;
-      }
-      if (this.screen === "settings") {
-        handleSettingsStubInput(this, action);
-        this.draw();
-        return;
-      }
-      if (this.screen === "pause") {
-        handlePauseInput(this, action);
-        this.draw();
-        return;
-      }
-      // ADR-0272: the opening beat consumes the first key. It is a screen, not
-      // an animation gate: nothing advances on its own and nothing is queued.
-      if (this.runIntroArc !== null) {
-        this.runIntroArc = null;
-        this.runIntroBeat = null;
-        this.draw();
-        return;
-      }
-      const resolved: GameAction = (() => {
-        if (this.state === null) return action;
-        const r = resolveProgramSelection(this.state, action);
-        return r ?? action;
-      })();
-      const previous = this.state;
-      if (shouldShowMatrixEntryHint(this.matrixEntryHintShown, this.state))
-        this.matrixEntryHintShown = true;
-      this.state = applyAction(this.state, resolved);
-      // ADR-0317 (3b): the reveal is the one moment this ICE's voice is new.
-      // Remember it so the tagline is spoken once per profile, not per node.
-      const revealed = this.state;
-      if (
-        revealed !== null &&
-        previous?.encounterDecision?.probed !== true &&
-        revealed.encounterDecision?.probed === true
-      ) {
-        markIceIntrosSeen(
-          typeof localStorage === "undefined" ? null : localStorage,
-          encounterRoster(revealed).map((ice) => ice.id),
-        );
-      }
-      // ADR-0317 (3b): the two moments that are new to the profile. The
-      // construct is in the deck for the whole run, so she speaks when the
-      // player first fights and when they first win, and never again.
-      if (revealed !== null) {
-        const storage = typeof localStorage === "undefined" ? null : localStorage;
-        const language = this.settingsState?.language ?? "en";
-        if (
-          previous?.phase !== "combat" &&
-          revealed.phase === "combat" &&
-          !hasHeardBeat(storage, "first_fight_warning")
-        ) {
-          const beat = firstFightWarningBeat(language);
-          if (beat !== null) {
-            this.showBeat({ title: "ICE AHEAD", beat });
-            markBeatHeard(storage, "first_fight_warning");
-          }
-        }
-        if (
-          previous?.runPhase !== "loot" &&
-          revealed.runPhase === "loot" &&
-          !hasHeardBeat(storage, "first_victory")
-        ) {
-          const beat = firstVictoryBeat(language);
-          if (beat !== null) {
-            this.showBeat({ title: "FIRST BLOOD", beat });
-            markBeatHeard(storage, "first_victory");
-          }
-        }
-        // ADR-0317 3b: the one moment the story went silent was the one it had
-        // been building to. She warned that she can only watch; this is her
-        // watching. Once per run, right after the killing blow.
-        if (previous?.runPhase !== "dead" && revealed.runPhase === "dead") {
-          const beat = flatlineBeat(language);
-          if (beat !== null) this.showBeat({ title: "FLATLINE", beat });
-        }
-        // ADR-0315 slice 2: a contract's next leg opens with the fixer handing
-        // over the job — the mission's own briefing (ADR-0316), on the card the
-        // other beats use, so the chain is a beat rather than a silent reload.
-        const advanced =
-          previous?.campaign !== undefined &&
-          revealed.campaign !== undefined &&
-          revealed.campaign.completed > previous.campaign.completed;
-        if (advanced) {
-          const contract = revealed.campaign;
-          const leg = contract?.legs[contract.completed];
-          const story = leg
-            ? (language === "ko" && leg.mission.briefing_ko) || leg.mission.briefing || ""
-            : "";
-          // ADR-0317 3b: the campaign created two moments that nothing spoke at
-          // — returning from the first job, and Tessier-Ashpool noticing. Both
-          // scenes were authored for exactly these beats and had no trigger.
-          // The debrief comes first; the queue holds the job behind it.
-          const debrief =
-            contract?.completed === 1
-              ? firstReturnBeat(language)
-              : contract?.completed === 2
-                ? ashpoolCallBeat(language)
-                : null;
-          if (debrief !== null) {
-            this.showBeat({
-              title: `CONTRACT ${contract?.completed ?? 0}/${contract?.legs.length ?? 0} · DONE`,
-              beat: debrief,
-            });
-          }
-          // ADR-0318 (a): the next leg's advance. The reducer built the leg
-          // already; the prep screen spends the fixer's advance on it. The
-          // briefing card is read first (a card owns the screen).
-          this.prepCursor = 0;
-          this.contractPrepReturn = this.screen;
-          this.screen = "contract_prep";
-          this.showBeat({
-            title: `CONTRACT ${(contract?.completed ?? 0) + 1}/${contract?.legs.length ?? 0}`,
-            // No speaker: the briefing is the job's file, not a line the fixer
-            // says (2026-11-17). The card names the job and prints it.
-            beat: {
-              speaker: "",
-              lines: story.length > 0 ? [story] : ["The next job."],
-            },
-          });
-        }
-      }
-      if (runAbandoned(previous, this.state)) {
-        // JACK OUT ends the run: leave the board for the main menu.
-        // ADR-0323: the run is over — bank what it earned before dropping it.
-        settleRun(this);
-        this.state = null;
-        this.matrixTravel = null;
-        this.lootCommit = null;
-        this.matrixArrival = null;
-        this.screen = "menu";
-        void refreshSaveCache(this);
-        this.draw();
-        return;
-      }
-      if (runCompleted(previous, this.state)) {
-        // ADR-0252: the ending is the end. The slot was retired on arrival.
-        // ADR-0323: the run is over — bank what it earned before dropping it.
-        settleRun(this);
-        this.state = null;
-        this.matrixTravel = null;
-        this.lootCommit = null;
-        this.matrixArrival = null;
-        this.screen = "menu";
-        this._message = RUN_COMPLETE_MESSAGE;
-        noteRunFinished(this);
-        this.persistQueue = this.persistQueue
-          .then(() => refreshSaveCache(this))
-          .catch(() => undefined);
-        this.draw();
-        return;
-      }
-      if (runFailed(previous, this.state)) {
-        // ADR-0263: a flatline must not trap the player. ENTER / ESC leave the
-        // defeat screen and the run ends at the title, the same shape as the
-        // ending. The dead frame itself was already autosaved (ADR-0252 §A).
-        // ADR-0323: the run is over — bank what it earned before dropping it.
-        settleRun(this);
-        this.state = null;
-        this.matrixTravel = null;
-        this.lootCommit = null;
-        this.matrixArrival = null;
-        this.screen = "menu";
-        this._message = FLATLINE_MESSAGE;
-        noteRunFinished(this);
-        void refreshSaveCache(this);
-        this.draw();
-        return;
-      }
-      // The reducer has already moved `@`; this only chooses the next frames.
-      // Every input re-derives it, so input never waits on (or redirects) it.
-      this.matrixTravel = beginMatrixTravel(
-        previous,
-        this.state,
-        performance.now(),
-        this.reducedMotion,
-      );
-      this.syncGrowthReveal(previous, this.state);
-      void loadAudioSystem().then((audio) => {
-        if (!audio) return;
-        const manager = audio.AudioManager.getInstance();
-        // P5 — the player taking damage had no sound at all (proposal §1.2
-        // U13). `pickTransitionSfx` decides the transition's audio from the
-        // (previous → next) state pair: the combat layers plus the ADR-0251
-        // event ids (boss intro / phase change, credits, loot, heal, death).
-        const nextState = this.state;
-        if (nextState !== null) {
-          for (const id of pickTransitionSfx(previous, nextState)) {
-            manager.playSfx(id);
-          }
-        }
-        if (
-          resolved.type === "use_program" &&
-          previous.phase === "combat" &&
-          this.state?.phase === "combat"
-        ) {
-          // The ICE-hit sound now comes from `pickTransitionSfx` above.
-          // The old `state.ice.hp` delta check was provably dead — the
-          // reducers only ever write `iceRoster`, so `state.ice.hp` never
-          // changed after init and `COMBAT_HIT` never fired from here.
-          const iceDelta = this.state.ice.hp - previous.ice.hp;
-          // (The boss-phase sound used to sit in this dead branch as
-          // VICTORY; `pickTransitionSfx` now plays PHASE_CHANGE for it.)
-          if (iceDelta < 0) {
-            this._lastIceHp = this.state.ice.hp;
-            this._lastPlayerHp = this.state.player.hp;
-          }
-          if (previous.runPhase === "matrix" && this.state.runPhase === "combat") {
-            manager.playSfx(audio.SFX_IDS.COMBAT_HIT);
-          }
-          const burnTickDmg = this.state.player.hp - previous.player.hp;
-          if (
-            burnTickDmg > 0 &&
-            previous.runPhase === "combat" &&
-            this.state.runPhase === "combat"
-          ) {
-            manager.playSfx(audio.SFX_IDS.DEFEAT);
-          }
-        }
-      });
-      this.draw();
-    };
+    const handler = (action: GameAction): void => handleGameAction(this, action);
     this.input.setHandler(handler);
     this.input.start();
     if (isTouchDevice()) {
@@ -956,41 +622,6 @@ class Game {
   /** The profile's storage, or null where there is none (tests, SSR). */
   storagePort(): Storage | null {
     return typeof localStorage === "undefined" ? null : localStorage;
-  }
-
-  /** The advance between a contract's legs (ADR-0318 (a)).
-   *
-   * ↑↓ picks, ENTER spends it and jacks in, ESC keeps it and jacks in anyway.
-   * The leg is already built by the reducer, so this is the one moment the
-   * player chooses what the next job's capacity is worth. */
-  private handleContractPrepInput(action: GameAction): void {
-    const state = this.state;
-    if (state === null) return;
-    const count = PREP_OPTIONS.length;
-    if (action.type === "move_south" || action.type === "move_east") {
-      this.prepCursor = (this.prepCursor + 1) % count;
-      this.draw();
-      return;
-    }
-    if (action.type === "move_north" || action.type === "move_west") {
-      this.prepCursor = (this.prepCursor - 1 + count) % count;
-      this.draw();
-      return;
-    }
-    const spent =
-      action.type === "confirm" || action.type === "jack_out" || action.type === "cancel";
-    if (!spent) return;
-    if (action.type === "confirm") {
-      const choice: PrepChoice = PREP_OPTIONS[this.prepCursor]?.id ?? "stim";
-      const grant = prepGrantFor(missionGradeOf(state.mission), choice, readPrepWallet());
-      this.prepWalletOutlay = grant.fromWallet;
-      spendPrepWallet(grant.fromWallet);
-      this.state = applyPrep(state, choice, this.prepWalletOutlay);
-    }
-    // Back to the run: `draw()` routes by runPhase once the screen is not the
-    // prep, so the leg's board takes over.
-    this.screen = this.contractPrepReturn;
-    this.draw();
   }
 
   /** Queue a story card (ADR-0317 3b). One owns the screen at a time; the rest
@@ -1399,7 +1030,7 @@ class Game {
    * the same way `beginMatrixTravel` derives the traversal. Pure bookkeeping
    * on the controller: no reducer state, no RNG, no input lock.
    */
-  private syncGrowthReveal(previous: GameState, next: GameState): void {
+  syncGrowthReveal(previous: GameState, next: GameState): void {
     const now = performance.now();
     if (next.cardRewardTaken && next.cardRewardTaken !== previous.cardRewardTaken) {
       const card = rewardProgram(next.cardRewardTaken);

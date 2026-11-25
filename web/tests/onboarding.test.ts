@@ -7,10 +7,11 @@
  * extraction pattern of ADR-0234.
  */
 import { describe, it, expect } from "vitest";
-import { readFileSync } from "node:fs";
-import { fileURLToPath } from "node:url";
+
+
 import { makeGrid } from "../src/core/grid";
 import { renderCombatHints } from "../src/renderer/combat_hints";
+import { readControllerSource } from "./controller_source";
 import {
   COMBAT_ENTRY_HINT_LINES,
   HAS_PLAYED_KEY,
@@ -34,10 +35,7 @@ import {
  * sites* still need a regression guard.
  */
 // Ignore layout only; keep the exact call-site tokens and their order.
-const mainSource = readFileSync(
-  fileURLToPath(new URL("../src/main.ts", import.meta.url)),
-  "utf-8",
-).replace(/\s+/g, "");
+const mainSource = readControllerSource().replace(/\s+/g, "");
 
 /** In-memory storage stub — mirrors the `localStorage` surface we use. */
 function makeStorage(

@@ -5,8 +5,8 @@
  * press to a destination, the at-rest prompt is the card's first line (and is
  * never a selection), and a one-time entry hint teaches the board once.
  */
-import { readFileSync } from "node:fs";
-import { fileURLToPath } from "node:url";
+
+
 import { describe, expect, it } from "vitest";
 import { applyAction, makeInitialState } from "../src/core/state/state";
 import { generateProceduralMatrix } from "../src/core/dungeon/matrix";
@@ -23,6 +23,7 @@ import {
 } from "../src/core/state/onboarding";
 import type { GameState, Grid, Matrix } from "../src/core/types";
 
+import { readControllerSource } from "./controller_source";
 const LAYOUTS: ReadonlyArray<readonly [number, number]> = [
   [80, 50],
   [60, 40],
@@ -243,10 +244,7 @@ describe("Matrix affordance — the prompt is primary and is never a selection",
 
 describe("Matrix affordance — one-time entry hint (reuses the ADR-0235 onboarding pattern)", () => {
   const matrix = generateProceduralMatrix(3, 42);
-  const mainSource = readFileSync(
-    fileURLToPath(new URL("../src/main.ts", import.meta.url)),
-    "utf-8",
-  ).replace(/\s+/g, "");
+  const mainSource = readControllerSource().replace(/\s+/g, "");
 
   it("shows only on the matrix board with a route, before it has been shown", () => {
     const board = stateOn(matrix, matrix.startNode);
@@ -312,7 +310,8 @@ describe("Matrix affordance — one-time entry hint (reuses the ADR-0235 onboard
   });
 
   it("main.ts shows it once: gated by its flag, dismissed by the first input on the board", () => {
-    expect(mainSource).toContain("privatematrixEntryHintShown=false;");
+    // Public now: the input pipeline (src/app/game_input.ts) writes it.
+    expect(mainSource).toContain("matrixEntryHintShown=false;");
     // ADR-0262 appended display-only args (the travel frame and the growth
     // reveal) after the entry hint, so the call is matched for containing it
     // rather than for ending on it.
@@ -320,7 +319,7 @@ describe("Matrix affordance — one-time entry hint (reuses the ADR-0235 onboard
       /renderRunScreen\(this\.state,this\.layout\.cols,this\.layout\.rows,shouldShowMatrixEntryHint\(this\.matrixEntryHintShown,this\.state\),[^)]*\)/,
     );
     expect(mainSource).toMatch(
-      /if\(shouldShowMatrixEntryHint\(this\.matrixEntryHintShown,this\.state\)\)this\.matrixEntryHintShown=true;[\s\S]{0,200}this\.state=applyAction\(this\.state,resolved\)/,
+      /if\(shouldShowMatrixEntryHint\(host\.matrixEntryHintShown,host\.state\)\)host\.matrixEntryHintShown=true;[\s\S]{0,200}host\.state=applyAction\(host\.state,resolved\)/,
     );
   });
 });

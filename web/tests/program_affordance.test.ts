@@ -4,8 +4,8 @@
  * the COST `use_program` charges, a BLOCKED row is exactly a play the reducer
  * refuses, and slot N is the program `select_program` N plays.
  */
-import { readFileSync } from "node:fs";
-import { fileURLToPath } from "node:url";
+
+
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { combatEntryHintRows } from "../src/core/state/onboarding";
 import {
@@ -28,6 +28,7 @@ import {
 import type { RunMutator } from "../src/core/state/run_mutators";
 import type { GameState, Ice, Mission, Program } from "../src/core/types";
 
+import { readControllerSource } from "./controller_source";
 const MISSION: Mission = {
   id: "aff",
   title: "Affordance",
@@ -344,10 +345,7 @@ describe("hand block placement", () => {
 });
 
 describe("wiring", () => {
-  const mainSource = readFileSync(
-    fileURLToPath(new URL("../src/main.ts", import.meta.url)),
-    "utf8",
-  ).replace(/\s+/g, "");
+  const mainSource = readControllerSource().replace(/\s+/g, "");
 
   it("feeds the touch row the same affordance rows the canvas draws", () => {
     expect(mainSource).toContain(

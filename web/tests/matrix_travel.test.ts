@@ -10,8 +10,8 @@
  *  - rule 8: one confirmed move is one route action, along the one corridor
  *    of that adjacency, with no default target afterwards.
  */
-import { readFileSync } from "node:fs";
-import { fileURLToPath } from "node:url";
+
+
 import { describe, expect, it } from "vitest";
 import {
   applyAction,
@@ -34,6 +34,7 @@ import {
 } from "../src/renderer/matrix_travel";
 import type { GameState, Grid, Matrix } from "../src/core/types";
 
+import { readControllerSource } from "./controller_source";
 const LAYOUTS: ReadonlyArray<readonly [number, number]> = [
   [80, 50],
   [60, 40],
@@ -217,12 +218,9 @@ describe("reduced motion (ADR-0236) makes the traversal instantaneous", () => {
   });
 
   it("main.ts starts every travel through the controller's reduced-motion flag", () => {
-    const src = readFileSync(
-      fileURLToPath(new URL("../src/main.ts", import.meta.url)),
-      "utf8",
-    );
+    const src = readControllerSource();
     expect(src).toMatch(
-      /this\.matrixTravel = beginMatrixTravel\(\s*previous,\s*this\.state,\s*performance\.now\(\),\s*this\.reducedMotion,?\s*\)/,
+      /host\.matrixTravel = beginMatrixTravel\(\s*previous,\s*host\.state,\s*performance\.now\(\),\s*host\.reducedMotion,?\s*\)/,
     );
     expect(src).toContain("resolveReducedMotion(loadReducedMotionOverride())");
   });
@@ -399,14 +397,11 @@ describe("rule 8: one confirmed move is one route action", () => {
   });
 
   it("input during a traversal ends it: main.ts re-derives the travel on every action", () => {
-    const src = readFileSync(
-      fileURLToPath(new URL("../src/main.ts", import.meta.url)),
-      "utf8",
-    );
+    const src = readControllerSource();
     const apply = src.indexOf(
-      "this.state = applyAction(this.state, resolved);",
+      "host.state = applyAction(host.state, resolved);",
     );
-    const begin = src.indexOf("this.matrixTravel = beginMatrixTravel(");
+    const begin = src.indexOf("host.matrixTravel = beginMatrixTravel(");
     expect(apply).toBeGreaterThan(0);
     expect(begin).toBeGreaterThan(apply);
     // The travel never feeds back into the reducer.

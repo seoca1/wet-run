@@ -96,7 +96,7 @@ describe("ADR-0272 — run intro", () => {
     // Set only in startRun (a fresh run), never in continueRun.
     expect(main).toContain("host.runIntroArc=((mission.arcasArcId)||1)asArcId;");
     expect(main).toContain(
-      "if(this.runIntroArc!==null){this.runIntroArc=null;this.runIntroBeat=null;",
+      "if(host.runIntroArc!==null){host.runIntroArc=null;host.runIntroBeat=null;",
     );
     expect(main).toContain(
       "renderRunIntro(this.runIntroArc,this.layout.cols,this.layout.rows,jockeyHandle(this.state?.jockeyId),this.runIntroBeat,)",

@@ -3,7 +3,6 @@ import { KeyboardInput } from "./input/keyboard";
 import { GamepadInput, isGamepadConnected } from "./input/gamepad";
 import { mountVirtualGamepad, updateProgramRow, isTouchDevice } from "./input/touch";
 import { visibleMenuOptions, type MenuEntry, type MenuOption } from "./renderer/menu";
-import { renderPreGameScreen } from "./renderer/pre_game_screen";
 import {
   renderRunScreen,
   renderCombatScreen,
@@ -12,7 +11,6 @@ import {
 } from "./renderer/run_screen";
 import { beginMatrixTravel, matrixTravelFrame, type MatrixTravel } from "./renderer/matrix_travel";
 import { renderCombatHints } from "./renderer/combat_hints";
-import { filterMissionsByUniverse } from "./core/missions_filter";
 import { FAR_GRID_LOCKED_MESSAGE, isFarGridUnlocked } from "./core/dungeon/far_grid_gate";
 import { advanceVfxListBy, WEB_TICK_MS, type CombatVfxInstance } from "./renderer/combat_vfx";
 import { hitStopActiveAt, hitStopDeadlineFor } from "./renderer/screen_shake";
@@ -49,9 +47,6 @@ import { markIceIntrosSeen, seenIceIntros } from "./core/state/ice_intros";
 import { contractFor } from "./core/state/campaign";
 import { seenPrologues } from "./core/state/prologue_seen";
 import { hasHeardBeat, markBeatHeard } from "./core/state/story_flags";
-import { renderJockeySelect } from "./renderer/jockey_select";
-import { renderPrep } from "./renderer/prep";
-import { renderMissionBriefing } from "./renderer/menu_dialogue";
 import { JOCKEYS, jockeyHandle } from "./core/state/jockey";
 import type { PlayMode } from "./core/graphic_novel/graphic_novel_types";
 import { tick as gnTick } from "./core/graphic_novel/graphic_novel_player";
@@ -138,7 +133,7 @@ import {
   type MaterialDef,
   makeInfoMarket,
 } from "./core/state/crafting";
-import { DEFAULT_REGISTRY, EQUIP_SLOTS } from "./core/state/equipment";
+import { DEFAULT_REGISTRY } from "./core/state/equipment";
 import { hydrateLoadout, readEquippedIds } from "./core/state/equipment_store";
 import {
   mergeDroppedEquipment,
@@ -156,7 +151,6 @@ import {
 } from "./core/state/wallet";
 import type { InfoMarket } from "./core/info_market";
 import { loadPersistedLanguage } from "./renderer/settings";
-import { formatNavIndex } from "./renderer/nav_index";
 import {
   handleCraftingInput,
   handleDungeonInput,
@@ -167,6 +161,7 @@ import {
 } from "./app/screen_input";
 import { handlePreGameInput } from "./app/pre_game_input";
 import { handleGraphicNovelInput } from "./app/graphic_novel_input";
+import { drawPrep, drawPreGame } from "./app/pre_game_render";
 
 function fallbackSettingsState(): import("./renderer/settings.ts").SettingsState {
   return {
@@ -270,21 +265,6 @@ function loadCraftingData(): {
   return { recipes, materials };
 }
 
-/** Format a mission for the select screen (Tier 2a). */
-function formatMissionOption(
-  mission: Mission,
-  index: number,
-  language: import("./core/i18n.ts").Language = "en",
-): string {
-  const grade = `T${mission.grade_max}`;
-  const credits = mission.rewards.credits.toLocaleString();
-  const titleText =
-    language === "ko" && mission.title_ko !== undefined && mission.title_ko.length > 0
-      ? mission.title_ko
-      : mission.title;
-  return `${formatNavIndex(index)} ${titleText}  [${grade} | ${credits}cr]`;
-}
-
 /** A story card: a title, and the voice it carries (ADR-0317 3b).
  * Lives in `app/pre_game_input.ts` now; re-exported here for the beat queue. */
 type BeatCard = import("./app/pre_game_input.ts").BeatCard;
@@ -294,7 +274,7 @@ class Game {
   screen: ScreenKind = "menu";
   selectedMenuIndex = 0;
   /** ADR-0315: the cursor is normalized once per visit, not per frame. */
-  private menuSelectionNormalized = false;
+  menuSelectionNormalized = false;
   selectedMission = 0;
   /** ADR-0274 — the jockey chosen for the next run (index into JOCKEYS). */
   selectedJockey = 0;
@@ -314,13 +294,15 @@ class Game {
   loadAudio = loadAudioSystem;
   /** Lazy story system, the same loader the graphic-novel screen uses. */
   loadStory = loadStorySystem;
+  /** The settings default when the real read fails; shared with the renderer. */
+  fallbackSettings = fallbackSettingsState;
   private input: KeyboardInput;
   private gamepad: GamepadInput;
-  private iceTypes: Readonly<Record<string, Ice>>;
+  iceTypes: Readonly<Record<string, Ice>>;
   private programs: Readonly<Record<string, Program>>;
   missions: ReadonlyArray<Mission>;
-  private hasSaveCache: boolean = false;
-  private saveMetaCache: {
+  hasSaveCache: boolean = false;
+  saveMetaCache: {
     missionId: string;
     turnCount: number;
     savedAt: string;
@@ -336,14 +318,14 @@ class Game {
   private runWalletSeed: Inventory | null = null;
   equipmentLoadout: EquipmentLoadout;
   recipes: ReadonlyArray<Recipe>;
-  private materials: ReadonlyArray<MaterialDef>;
-  private infoMarket: InfoMarket;
+  materials: ReadonlyArray<MaterialDef>;
+  infoMarket: InfoMarket;
   /** ADR-0325: the gear the runner owns (starters + crafted). The EQUIPMENT
    *  menu equips only from this set, so a craft finally buys something wearable. */
   ownedEquipment: OwnedSet;
-  private layout: Layout;
-  private tutorialActive = false;
-  private tutorialOverlay: ReturnType<typeof createTutorialOverlay> | null = null;
+  layout: Layout;
+  tutorialActive = false;
+  tutorialOverlay: ReturnType<typeof createTutorialOverlay> | null = null;
   /** P11 — the combat-entry hint is shown once per run, on the first combat
    * screen the player reaches. */
   private combatEntryHintShown = false;
@@ -821,7 +803,7 @@ class Game {
     });
   }
 
-  private renderGraphicNovel(): void {
+  renderGraphicNovel(): void {
     if (!this.graphicNovelState || !this.graphicNovelPlayer) return;
     void loadStorySystem().then((gn) => {
       void import("./renderer/graphic_novel_screen.ts").then(({ renderGraphicNovelScreen }) => {
@@ -944,7 +926,7 @@ class Game {
    * taken — CONTINUE sits first and FAR GRID is gated. Applied once per visit
    * to the menu: normalizing on every frame would snap the cursor back off a
    * gated row the player deliberately walked to. */
-  private normalizeMenuSelection(): void {
+  normalizeMenuSelection(): void {
     if (this.menuSelectionNormalized) return;
     this.menuSelectionNormalized = true;
     const options = this.visibleMenu();
@@ -1169,40 +1151,6 @@ class Game {
     return typeof localStorage === "undefined" ? null : localStorage;
   }
 
-  /** The fixer's advance, as a screen (ADR-0283 C · ADR-0318 (a)).
-   *
-   * Shared by the pre-run prep and the between-leg prep so the amounts shown
-   * come from the same tables `applyPrep` reads — the screen and the run cannot
-   * disagree (ADR-0251 rule 5). */
-  private drawPrep(mission: Mission): void {
-    const grade = missionGradeOf(mission);
-    updateProgramRow([]);
-    this.renderer.render(
-      renderPrep(
-        {
-          missionTitle: mission.title,
-          grade,
-          cursor: this.prepCursor,
-          wallet: readPrepWallet(),
-          options: PREP_OPTIONS.map((option) => {
-            const grant = prepGrantFor(grade, option.id, readPrepWallet());
-            return {
-              id: option.id,
-              label: option.label,
-              amount: grant.total,
-              fromWallet: grant.fromWallet,
-              unit: option.id === "ice" ? "shield" : "HP",
-              note: option.short,
-            };
-          }),
-        },
-        this.layout.cols,
-        this.layout.rows,
-      ),
-      ["PREP", "", `T${grade}`],
-    );
-  }
-
   /** The advance between a contract's legs (ADR-0318 (a)).
    *
    * ↑↓ picks, ENTER spends it and jacks in, ESC keeps it and jacks in anyway.
@@ -1285,7 +1233,7 @@ class Game {
     // what ADR-0315 Q3 meant by "the prep handles between-mission recovery".
     // It sits after the beat card so the fixer's briefing is read first.
     if (this.screen === "contract_prep" && this.state !== null) {
-      this.drawPrep(this.state.mission);
+      drawPrep(this, this.state.mission);
       return;
     }
     // Tier 5: matrix / loot / ending screens render with a real GameState
@@ -1348,134 +1296,7 @@ class Game {
       return;
     }
     if (this.state === null) {
-      // Pre-game screen routing
-      updateProgramRow([]); // hide row outside combat
-      if (this.tutorialActive && this.tutorialOverlay) {
-        // Tutorial overlay takes priority
-        const tutorialGrid = this.tutorialOverlay.render(this.layout.cols, this.layout.rows);
-        this.renderer.render(tutorialGrid, ["TUTORIAL", "", ""]);
-        this.syncPhase("menu");
-        return;
-      }
-      if (this.screen === "far_grid_hub" && !this.farGridUnlockedCache) {
-        this.screen = "menu";
-        this._message = FAR_GRID_LOCKED_MESSAGE;
-        this.syncPhase("menu");
-        return;
-      }
-      if (this.screen === "settings") {
-        if (this.settingsState === null || this.settingsState === undefined) {
-          try {
-            this.settingsState = getInitialSettingsState();
-          } catch (e) {
-            console.error("[Game] Failed to initialize settingsState in render:", e);
-            this.settingsState = fallbackSettingsState();
-          }
-        }
-      }
-      if (this.screen === "graphic_novel") {
-        this.renderGraphicNovel();
-        return;
-      }
-      if (this.screen === "briefing") {
-        // ADR-0317: the fixer hands over the job — the mission's story from
-        // ADR-0316 — right before the advance (prep) and the jack-in.
-        const mission = MISSIONS[this.selectedMission];
-        if (mission) {
-          const language = this.settingsState?.language ?? "en";
-          const story =
-            (language === "ko" && mission.briefing_ko) ||
-            mission.briefing ||
-            "No briefing on file. Jack in and see for yourself.";
-          updateProgramRow([]);
-          this.renderer.render(
-            renderMissionBriefing(
-              mission.title,
-              mission.fixer,
-              story,
-              this.layout.cols,
-              this.layout.rows,
-            ),
-            ["BRIEFING", "", "ENTER: continue"],
-          );
-          return;
-        }
-      }
-      if (this.screen === "prep") {
-        const mission = MISSIONS[this.selectedMission];
-        if (mission) {
-          this.drawPrep(mission);
-          return;
-        }
-      }
-      if (this.screen === "jockey_select") {
-        updateProgramRow([]);
-        this.renderer.render(
-          renderJockeySelect(this.selectedJockey, this.layout.cols, this.layout.rows),
-          ["JOCKEY", "", `${this.selectedJockey + 1}/${JOCKEYS.length}`],
-        );
-        return;
-      }
-      if (this.screen === "menu") this.normalizeMenuSelection();
-      else this.menuSelectionNormalized = false;
-      const language = this.settingsState?.language ?? "en";
-      const view = renderPreGameScreen(
-        {
-          screen: this.screen,
-          menuIndex: this.selectedMenuIndex,
-          menuOptions: this.visibleMenu(),
-          missionIndex: this.selectedMission,
-          missionRows:
-            this.screen === "mission_select"
-              ? filterMissionsByUniverse(MISSIONS, "sprawl").map((m, i) =>
-                  formatMissionOption(m, i, language),
-                )
-              : [],
-          // ADR-0316: the story the mission carries, lifted from the derivative
-          // fiction, so the screen says what it is about.
-          missionBriefing: (() => {
-            if (this.screen !== "mission_select") return null;
-            const m = filterMissionsByUniverse(MISSIONS, "sprawl")[this.selectedMission];
-            if (!m) return null;
-            return (language === "ko" && m.briefing_ko) || m.briefing || null;
-          })(),
-          // ADR-0318: a mission pick starts a three-mission contract, and the
-          // grade in the row is the contract's whole shape. Say it — a contract
-          // that completes 2.5% of the time must not look like a 51% mission
-          // (owner principle: no choice whose meaning cannot be grasped).
-          missionContract: (() => {
-            if (this.screen !== "mission_select") return null;
-            const m = filterMissionsByUniverse(MISSIONS, "sprawl")[this.selectedMission];
-            if (!m) return null;
-            const contract = contractFor(m, MISSIONS, (x) => missionIce(x, this.iceTypes));
-            const grades = contract.legs.map((leg) => `T${missionGradeOf(leg.mission)}`);
-            return `CONTRACT: ${contract.legs.length} missions · ${grades.join("→")}`;
-          })(),
-          farGridMissions:
-            this.screen === "far_grid_hub" ? filterMissionsByUniverse(MISSIONS, "far-grid") : [],
-          hasSave: this.hasSaveCache,
-          saveMeta: this.saveMetaCache,
-          message: this._message,
-          farGridUnlocked: this.farGridUnlockedCache,
-          language,
-          settings: this.settingsState ?? fallbackSettingsState(),
-          crafting: {
-            inventory: this.inventory,
-            recipes: this.recipes,
-            materials: this.materials,
-            marketItemCount: this.screen === "crafting" ? this.infoMarket.allItems().length : 0,
-            message: this._message,
-          },
-          loadout: this.equipmentLoadout,
-          equipmentSlots: EQUIP_SLOTS,
-          dungeon: this.dungeonCrawler,
-        },
-        this.layout.cols,
-        this.layout.rows,
-      );
-      this.renderer.render(view.grid, view.hud, view.colorFor);
-      if (this.screen === "dungeon") return;
-      this.syncPhase("menu");
+      drawPreGame(this);
       return;
     }
     // In-game (combat) rendering path.
@@ -1549,7 +1370,7 @@ class Game {
     }
   }
 
-  private syncPhase(current: GamePhase): void {
+  syncPhase(current: GamePhase): void {
     if (this._lastPhase === current) return;
     const previous = this._lastPhase;
     this._lastPhase = current;

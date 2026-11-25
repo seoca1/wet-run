@@ -77,14 +77,15 @@ describe("unified numbering across screens", () => {
   });
 
   it("mission select formats entries through formatNavIndex, not `N.`", () => {
-    // main.ts self-boots on import, so the call site is checked in source text
-    // (same approach as tests/onboarding.test.ts).
-    // Compare the same template expressions independently of source layout.
-    const mainSource = readFileSync(
-      fileURLToPath(new URL("../src/main.ts", import.meta.url)),
+    // The call site moved out of main.ts with the pre-game renderers
+    // (refactoring stage 3a-2), so it is checked in its own source file. The
+    // module self-boots nothing, but the source-text approach is kept so the
+    // template expression is compared independently of layout.
+    const source = readFileSync(
+      fileURLToPath(new URL("../src/app/pre_game_render.ts", import.meta.url)),
       "utf-8",
     ).replace(/\s+/g, "");
-    expect(mainSource).toContain("${formatNavIndex(index)}${titleText}");
-    expect(mainSource).not.toContain("${index+1}.${titleText}");
+    expect(source).toContain("${formatNavIndex(index)}${titleText}");
+    expect(source).not.toContain("${index+1}.${titleText}");
   });
 });

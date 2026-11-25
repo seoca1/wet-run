@@ -3,6 +3,7 @@ import { describe, it, expect } from "vitest";
 import { renderFarGridHub } from "../src/renderer/far_grid_hub";
 import type { Cell, Mission, MissionRewards } from "../src/core/types";
 
+import { gridText } from "./view_fixtures";
 const EMPTY_REWARDS: MissionRewards = { credits: 0, materials: {} };
 
 function makeMission(id: string, title: string): Mission {
@@ -33,12 +34,6 @@ function makeMissionWithBriefing(
   briefing: string,
 ): Mission {
   return { ...makeMission(id, title), briefing };
-}
-
-function gridText(grid: { cells: ReadonlyArray<ReadonlyArray<Cell>> }): string {
-  return grid.cells
-    .map((row) => row.map((c) => c?.char ?? " ").join(""))
-    .join("\n");
 }
 
 function getRowText(

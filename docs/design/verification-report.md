@@ -1,6 +1,6 @@
 # Wet-Run 검증 보고
 
-**시간**: 2026-11-25T22:15:28Z  
+**시간**: 2026-11-25T22:59:17Z  
 **버전**: 3.1.0 (ADR-0335/0336)  
 **게이트**: 9/9 pass  
 
@@ -31,6 +31,22 @@
     "  mis T4 arasaka+body                  100 100 100 99 36 57",
     "  mis T6 master+zion                   100 100 100 100 73 70",
     "OK: gear curve matches golden."
+  ]
+}
+
+## 2_tests
+{
+  "status": "pass",
+  "exit": 0,
+  "tail": [
+    "    at HTMLAudioElement.load (/Users/emilio/projects/opencodework/Game/wet_run/web/node_modules/jsdom/lib/jsdom/living/generated/HTMLMediaElement.js:111:34)",
+    "    at Sound.create (/Users/emilio/projects/opencodework/Game/wet_run/web/node_modules/howler/dist/howler.js:2278:20)",
+    "    at Sound.init (/Users/emilio/projects/opencodework/Game/wet_run/web/node_modules/howler/dist/howler.js:2235:12)",
+    "    at Sound.init (/Users/emilio/projects/opencodework/Game/wet_run/web/node_modules/howler/dist/howler.js:3154:14)",
+    "    at new Sound (/Users/emilio/projects/opencodework/Game/wet_run/web/node_modules/howler/dist/howler.js:2207:10)",
+    "    at Howl._inactiveSound (/Users/emilio/projects/opencodework/Game/wet_run/web/node_modules/howler/dist/howler.js:2068:14)",
+    "    at Howl.play (/Users/emilio/projects/opencodework/Game/wet_run/web/node_modules/howler/dist/howler.js:776:51)",
+    "    at AudioManager.playSfx (/Users/emilio/projects/opencodework/Game/wet_run/web/src/audio/manager.ts:654:12) undefined"
   ]
 }
 
@@ -104,22 +120,6 @@
     "Scanned /Users/emilio/projects/opencodework/Game/wet_run [md+source] for CJK contamination",
     "Files with violations: 0",
     "Total violations: 0"
-  ]
-}
-
-## 2b_e2e
-{
-  "status": "pass",
-  "exit": 0,
-  "tail": [
-    "  ✓  107 [mobile-portrait-chromium] › e2e/tier55_vfx.spec.ts:18:3 › Tier 5.5 VFX › matrix shows event glyphs (combat/discovery/trap/etc.) (1.5s)",
-    "  ✓  108 [mobile-portrait-chromium] › e2e/tier55_vfx.spec.ts:32:3 › Tier 5.5 VFX › combat triggers VFX (canvas changes after card use) (6.8s)",
-    "  ✓  109 [mobile-portrait-chromium] › e2e/touch_input.spec.ts:37:3 › mobile touch input › virtual gamepad overlay is visible on touch device (1.5s)",
-    "  ✓  110 [mobile-portrait-chromium] › e2e/touch_input.spec.ts:43:3 › mobile touch input › D-pad touch navigates menu options (1.6s)",
-    "  ✓  111 [mobile-portrait-chromium] › e2e/touch_input.spec.ts:56:3 › mobile touch input › A button touch confirms NEW_RUN → jockey_select (1.5s)",
-    "  ✓  112 [mobile-portrait-chromium] › e2e/touch_input.spec.ts:72:3 › mobile touch input › program row touch uses a program in combat (6.8s)",
-    "  6 skipped",
-    "  106 passed (6.0m)"
   ]
 }
 

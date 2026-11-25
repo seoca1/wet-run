@@ -12,14 +12,10 @@ import { renderMainMenu } from "../src/renderer/menu_main";
 import { renderFarGridHub } from "../src/renderer/far_grid_hub";
 import type { Cell, Mission, MissionRewards } from "../src/core/types";
 
+
+import { gridText } from "./view_fixtures";
+
 type GridLike = { cells: ReadonlyArray<ReadonlyArray<Cell>> };
-
-function gridText(grid: GridLike): string {
-  return grid.cells
-    .map((row) => row.map((c) => c?.char ?? " ").join(""))
-    .join("\n");
-}
-
 function getRowText(
   grid: GridLike,
   y: number,

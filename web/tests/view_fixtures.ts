@@ -1,4 +1,4 @@
-import type { GameState, Grid, Ice, Mission, Program } from "../src/core/types";
+import type { Cell, GameState, Grid, Ice, Mission, Program } from "../src/core/types";
 import { makeInitialState } from "../src/core/state/state";
 import { EQUIP_SLOTS, makeLoadout } from "../src/core/state/equipment";
 import { INITIAL_PWA_STATE } from "../src/core/pwa_manager";
@@ -83,4 +83,15 @@ export function preGameView(overrides: Partial<PreGameView> = {}): PreGameView {
 
 export function rowText(grid: Grid, y: number): string {
   return (grid.cells[y] ?? []).map((c) => c.char).join("");
+}
+
+/** Render a cells-based grid to text, one line per row.
+ *
+ * Ten test files had their own copy of this with identical bodies and three
+ * different parameter spellings; they now share this one (stage 4, 2026-11-25).
+ * `nav_index.test.ts` keeps its own: it reads through `grid.get(x, y)` and pads
+ * with spaces, which is a different function.
+ */
+export function gridText(grid: { cells: ReadonlyArray<ReadonlyArray<Cell>> }): string {
+  return grid.cells.map((row) => row.map((c) => c?.char ?? "").join("")).join("\n");
 }

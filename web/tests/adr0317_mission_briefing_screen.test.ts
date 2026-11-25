@@ -11,10 +11,7 @@ import { describe, expect, it } from "vitest";
 import { renderMissionBriefing } from "../src/renderer/menu_dialogue";
 import missionsJson from "../src/data/missions.json" with { type: "json" };
 
-function gridText(grid: { cells: ReadonlyArray<ReadonlyArray<{ char: string }>> }): string {
-  return grid.cells.map((row) => row.map((c) => c?.char ?? " ").join("")).join("\n");
-}
-
+import { gridText } from "./view_fixtures";
 const STORY =
   "Case takes his first real trace job for The Finn. The target is a mid-level node.";
 

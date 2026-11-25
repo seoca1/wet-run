@@ -18,14 +18,10 @@ import { renderFarGridHub } from "../src/renderer/far_grid_hub";
 import type { Cell, Mission, MissionRewards } from "../src/core/types";
 import type { Language } from "../src/core/i18n";
 
+
+import { gridText } from "./view_fixtures";
+
 type GridLike = { cells: ReadonlyArray<ReadonlyArray<Cell>> };
-
-function gridText(grid: GridLike): string {
-  return grid.cells
-    .map((row) => row.map((c) => c?.char ?? " ").join(""))
-    .join("\n");
-}
-
 function getRowText(grid: GridLike, y: number, x: number, length: number): string {
   let result = "";
   const row = grid.cells[y];

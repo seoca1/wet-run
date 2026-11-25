@@ -156,6 +156,8 @@ export function handlePreGameInput(host: PreGameHost, action: GameAction): boole
 - 중복 fixture: `gridText` **11벌** · `loadDeck` **11벌** · `makeCombatState`/`combatState`/`buildCombatState` **21벌**.
 - 이미 `tests/view_fixtures.ts`(사용 10/240) · `tests/encounter_test_helpers.ts`(22/240)가 있다 → **채택률을 올리는 것**이 목표.
 - **큰 일괄 변경 금지**: 각 Stage 를 진행할 때 **그 영역의 테스트만** 옮긴다(리뷰 부담·회귀 위험 관리).
+- **약화 방지 규칙 (2026-11-25 추가)**: 지역 fixture 를 공용으로 바꿀 때는 **동작이 같은지 먼저 기계적으로 확인**한다(본문 정규화 비교). 테스트는 `src/` 의 가드이므로, 조용히 약해져도 게이트가 초록으로 남는다 — mutation 도 `src/` 만 본다.
+- **진행**: 4a `gridText` 10벌 → 1벌 완료. 남은 것 4b `loadDeck`(11) · 4c combat state(21).
 
 ---
 
@@ -208,6 +210,9 @@ export function handlePreGameInput(host: PreGameHost, action: GameAction): boole
 | 3a-3 런 수명주기 | ✅ `7703a69b` | `launchSelected`(60줄) · `handleContinue`(37) · `endRun`(15) · `startDungeonCrawl`(4) · `autosave`(13) · `noteRunFinished`(3) · `refreshSaveCache`(6) → `src/app/run_lifecycle.ts` (`RunLifecycleHost`, 265줄). 모듈명은 `startRun`/`continueRun`/`settleRun`/`autosaveRun`. `main.ts` **1,827 → 1,634줄**. 정규화 diff **7/7 동일**(유일한 차이: prettier 가 접은 두 호출의 **trailing comma** 2개). **소스-텍스트 테스트 3건이 위치에 묶여 있었다** → 공용 헬퍼 `tests/controller_source.ts` 신설(main.ts + `src/app/*` 를 한 덩어리로 읽는다)로 3건 수정, `growth_reveal` 은 `private` 접두사 고정도 함께 수정. 가드: e2e **106 pass** · vitest **239/4465** · 게이트 **9/9** · mutation **39/39**. |
 | 3a-4 입력 파이프라인 | ✅ `018cb754` | `constructor` 안의 `handler` 클로저(**289줄**) + `handleContractPrepInput`(27줄) + `SCREENS_WITH_INPUT` → `src/app/game_input.ts` (`GameInputHost`, 413줄). `main.ts` **1,634 → 1,265줄**. 정규화 diff **2/2 동일**(차이는 prettier 줄바꿈뿐). **남은 소스-텍스트 테스트 6건도 공용 헬퍼로 이관** → 이제 `src/main.ts` 를 직접 읽는 테스트는 **0건**. 유일한 명명된 차이: 생성자의 지역 `resetIdle()` → `host.idleSinceMs = Date.now()`(같은 문장). 가드: e2e **106 pass** · vitest **239/4465** · 게이트 **9/9** · mutation **39/39**. |
 | 3a-5 잔여 (루프·라우터) | ⬜ | `draw` 라우터(130줄) · `loop`/`start`/`stop`(113줄) · `syncPhase`/`resizeRenderer`/`applyAccessibilitySettings` · 접근자/E2E 훅 — **합성 루트 + 객체 수명주기**. 권고: 여기서 Stage 3a 종료(§7-6). |
+| 4a `gridText` | ✅ | 중복 `gridText` **10벌 → 1벌** (`tests/view_fixtures.ts` 에 공용 추가). 3가지 파라미터 표기(4+3+3 파일)가 **본문은 완전 동일**이었다 → 이동 전 각 지역 본문을 정규화 비교해 **10/10 동작 동일**을 기계적으로 확인(테스트 약화 없음의 근거). `nav_index.test.ts` 는 `grid.get(x,y)` + 공백 패딩이라 **다른 함수** → 잔류. **`src/` 변경 0**(`git diff --name-only \| grep web/src` = 0) → e2e·mutation 은 재실행 대상이 아님. 가드: vitest **239/4465** · 게이트 **9/9**(`--tests`). |
+| 4b `loadDeck` | ⬜ | **11벌** — 다음 슬라이스 |
+| 4c combat state | ⬜ | `makeCombatState`/`combatState`/`buildCombatState` **21벌** — 가장 큰 덩어리, `tests/encounter_test_helpers.ts` 채택률 올리기 |
 | 4 테스트 fixture | ⬜ | |
 
 **Stage 1 종료 시점 확인**: 러틴 8/8 · vitest 238/4459 · typecheck 0 · lint 0 error ·

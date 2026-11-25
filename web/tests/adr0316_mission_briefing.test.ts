@@ -10,11 +10,8 @@ import { describe, expect, it } from "vitest";
 import { renderMissionList } from "../src/renderer/mission_select";
 import missionsJson from "../src/data/missions.json" with { type: "json" };
 
+import { gridText } from "./view_fixtures";
 const ROWS = ["[1] First Jack   T1  500cr", "[2] Data Retrieval   T2  800cr"];
-
-function gridText(grid: { cells: ReadonlyArray<ReadonlyArray<{ char: string }>> }): string {
-  return grid.cells.map((row) => row.map((c) => c?.char ?? " ").join("")).join("\n");
-}
 
 describe("ADR-0316 · mission briefing", () => {
   it("shows the briefing under the list", () => {

@@ -10,10 +10,7 @@ import { renderJockeySelect } from "../src/renderer/jockey_select";
 import { JOCKEYS } from "../src/core/state/jockey";
 import { startingDeckIds } from "../src/core/state/starting_deck";
 
-function gridText(grid: { cells: ReadonlyArray<ReadonlyArray<{ char: string }>> }): string {
-  return grid.cells.map((row) => row.map((c) => c?.char ?? " ").join("")).join("\n");
-}
-
+import { gridText } from "./view_fixtures";
 describe("ADR-0315 · jockey select", () => {
   it("names every jockey", () => {
     const text = gridText(renderJockeySelect(0, 80, 50));

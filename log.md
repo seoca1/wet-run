@@ -4561,3 +4561,13 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **증거**: e2e **106 pass**(desktop 54 + mobile 58, 6 skip) · vitest **239/4465** · typecheck 0 · lint 0 error · 게이트 **9/9** · mutation **39/39 KILLED** · 골든 byte-identical.
 - **수치**: `main.ts` **1,634 → 1,265줄** (세션 누적 **2,568 → 1,265**, −1,303) · 신규 1파일(`src/app/game_input.ts`, 413줄).
 - 커밋 `018cb754` · **Stage 3a 결론**: 남은 것은 합성 루트(`draw` 라우터)와 객체 수명주기(`loop`/`start`/`stop`) — 계획 §7-6 참조.
+
+## [2026-11-25] test | Stage 4a — `gridText` 10벌 → 1벌 (동작 동일을 먼저 확인)
+
+- **슬라이스**: 테스트 10개 파일이 각자 들고 있던 `gridText` 를 `tests/view_fixtures.ts` 의 공용 1벌로. 3가지 파라미터 표기(`Cell` 4벌 · `{char:string}` 3벌 · 지역 `GridLike` 3벌)였는데 **본문은 완전히 동일**했다.
+- **약화 방지(핵심)**: 테스트는 `src/` 의 가드라 **조용히 약해져도 게이트가 초록으로 남는다**(mutation 도 `src/` 만 본다). 그래서 교체 전에 각 지역 본문을 정규화 비교 → **10/10 동작 동일**을 기계적으로 확인하고 옮겼다. 이 규칙을 계획 §5 에 명문화.
+- **남긴 것**: `nav_index.test.ts` 의 `gridText` 는 `grid.get(x,y)` + 공백 패딩으로 **다른 함수** → 합치지 않음(합치면 그 파일의 검사가 미묘하게 바뀐다).
+- **범위**: `git diff --name-only | grep web/src` = **0** → `src/` 무변경. 그래서 e2e(6분)·mutation 은 재실행하지 않았다 — 직전에 두 게이트를 통과한 리비전과 `src/` 가 바이트 동일하다는 것이 근거다.
+- **증거**: vitest **239/4465** · 게이트 **9/9**(`--tests`) · typecheck 0.
+- **수치**: 테스트 11 파일, **−32줄**(25+/57−). `src/main.ts` 는 이 슬라이스에서 무변경(1,265줄).
+- 다음: 4b `loadDeck`(11벌) → 4c combat state(21벌).

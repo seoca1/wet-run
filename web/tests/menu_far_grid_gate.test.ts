@@ -15,12 +15,7 @@ import type { Cell } from "../src/core/types";
 import { FAR_GRID_LOCKED_MESSAGE } from "../src/core/dungeon/far_grid_gate";
 import { PALETTE } from "../src/renderer/palette";
 
-function gridText(grid: { cells: ReadonlyArray<ReadonlyArray<Cell>> }): string {
-  return grid.cells
-    .map((row) => row.map((c) => c?.char ?? " ").join(""))
-    .join("\n");
-}
-
+import { gridText } from "./view_fixtures";
 function getRowText(
   grid: { cells: ReadonlyArray<ReadonlyArray<Cell>> },
   y: number,

@@ -1,13 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { renderLootScreen } from "../src/renderer/ending";
-import type { Cell } from "../src/core/types";
 
-function gridText(grid: { cells: ReadonlyArray<ReadonlyArray<Cell>> }): string {
-  return grid.cells
-    .map((row) => row.map((c) => c?.char ?? " ").join(""))
-    .join("\n");
-}
-
+import { gridText } from "./view_fixtures";
 describe("renderLootScreen (Bug #6 regression: shows credits and items)", () => {
   it("renders credits reward when provided", () => {
     const grid = renderLootScreen(95, 100, 80, 50, 4125, "");

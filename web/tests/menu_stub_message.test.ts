@@ -1,13 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { renderMainMenu } from "../src/renderer/menu";
-import type { Cell } from "../src/core/types";
 
-function gridText(grid: { cells: ReadonlyArray<ReadonlyArray<Cell>> }): string {
-  return grid.cells
-    .map((row) => row.map((c) => c?.char ?? " ").join(""))
-    .join("\n");
-}
-
+import { gridText } from "./view_fixtures";
 describe("Menu: stub options show 'coming soon' status (Bug regression)", () => {
   it("renders statusMessage parameter in menu", () => {
     const grid = renderMainMenu(7, 80, 50, false, null, "credits - coming soon in a future tier");

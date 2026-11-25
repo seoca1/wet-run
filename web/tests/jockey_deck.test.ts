@@ -17,8 +17,7 @@ import {
 import { loadProgramsCatalog } from "../src/core/data_loaders";
 import programsData from "../src/data/programs.json";
 import type { Program } from "../src/core/types";
-import { readFileSync } from "node:fs";
-import { fileURLToPath } from "node:url";
+import { readControllerSource } from "./controller_source";
 
 const PROGRAMS = loadProgramsCatalog(programsData);
 
@@ -32,11 +31,7 @@ const authoredType = (id: string): string =>
 
 describe("ADR-0276 — per-jockey starting decks", () => {
   it("has a deck per jockey plus the curated fallback", () => {
-    expect(Object.keys(JOCKEY_DECK_IDS).sort()).toEqual([
-      "heretic",
-      "novice",
-      "veteran",
-    ]);
+    expect(Object.keys(JOCKEY_DECK_IDS).sort()).toEqual(["heretic", "novice", "veteran"]);
     expect(JOCKEY_DECK_IDS.novice).toEqual(STARTING_DECK_IDS);
     expect(startingDeckIds(null)).toEqual(STARTING_DECK_IDS);
     expect(startingDeckIds("nonsense")).toEqual(STARTING_DECK_IDS);
@@ -68,10 +63,7 @@ describe("ADR-0276 — per-jockey starting decks", () => {
   });
 
   it("the jockey decks are actually different from each other", () => {
-    const decks = Object.entries(JOCKEY_DECK_IDS).map(([k, v]) => [
-      k,
-      v.join(","),
-    ]);
+    const decks = Object.entries(JOCKEY_DECK_IDS).map(([k, v]) => [k, v.join(",")]);
     expect(new Set(decks.map(([, v]) => v)).size).toBe(decks.length);
   });
 
@@ -104,15 +96,13 @@ describe("ADR-0276 — per-jockey starting decks", () => {
     }
   });
 
-  it("main.ts deals the jockey's deck", () => {
-    const main = readFileSync(
-      fileURLToPath(new URL("../src/main.ts", import.meta.url)),
-      "utf-8",
-    ).replace(/\s+/g, "");
+  it("the controller deals the jockey's deck", () => {
+    const main = readControllerSource().replace(/\s+/g, "");
     // Trim the trailing `,` prettier may or may not add before the close: the
     // stable part is the call, not its formatting.
     expect(main).toContain(
-      "startingDeck(programs,JOCKEYS[this.selectedJockey]?.id??null",
+      // host.* : the deal moved to src/app/run_lifecycle.ts.
+      "startingDeck(programs,JOCKEYS[host.selectedJockey]?.id??null",
     );
   });
 });

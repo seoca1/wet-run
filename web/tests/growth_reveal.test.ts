@@ -15,6 +15,7 @@
  *  - rule 7 (redundant colour): the settled state is readable as text.
  */
 import { readFileSync } from "node:fs";
+import { readControllerSource } from "./controller_source";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 import type { Grid } from "../src/core/types";
@@ -54,9 +55,7 @@ describe("Growth reveal — commit stages (ADR-0262)", () => {
     );
     expect(seen).toEqual([0, 1, 2, 3]);
     // Clamps at the settled stage long after the window.
-    expect(lootCommitStage(COMMIT, 1000 + 60_000, false)).toBe(
-      LOOT_COMMIT_STAGES - 1,
-    );
+    expect(lootCommitStage(COMMIT, 1000 + 60_000, false)).toBe(LOOT_COMMIT_STAGES - 1);
   });
 
   it("treats a clock before the start as stage 0, never negative", () => {
@@ -103,26 +102,18 @@ describe("Growth reveal — the panel text", () => {
 
   it("reserves no more rows than LOOT_COMMIT_MAX_LINES claims", () => {
     for (const wide of [true, false]) {
-      expect(
-        lootCommitLines(COMMIT, LOOT_COMMIT_STAGES - 1, wide).length,
-      ).toBeLessThanOrEqual(LOOT_COMMIT_MAX_LINES);
+      expect(lootCommitLines(COMMIT, LOOT_COMMIT_STAGES - 1, wide).length).toBeLessThanOrEqual(
+        LOOT_COMMIT_MAX_LINES,
+      );
     }
   });
 
   it("draws the panel inside the frame at every layout", () => {
     for (const [cols, rows] of LAYOUTS) {
-      const grid = renderLootScreen(
-        63,
-        100,
-        cols,
-        rows,
-        4075,
-        "",
-        false,
-        [],
-        -1,
-        { commit: COMMIT, stage: LOOT_COMMIT_STAGES - 1 },
-      );
+      const grid = renderLootScreen(63, 100, cols, rows, 4075, "", false, [], -1, {
+        commit: COMMIT,
+        stage: LOOT_COMMIT_STAGES - 1,
+      });
       const text = lines(grid).join("\n");
       expect(text).toContain("ACQUIRED");
       // One-screen contract: no row is wider than the layout.
@@ -138,9 +129,7 @@ describe("Growth reveal — the arrival hand-off", () => {
     const arrival = beginMatrixArrival("Kraken", 5000, false);
     expect(arrival).not.toBeNull();
     expect(matrixArrivalActive(arrival, 5000)).toBe(true);
-    expect(matrixArrivalActive(arrival, 5000 + MATRIX_ARRIVAL_MS - 1)).toBe(
-      true,
-    );
+    expect(matrixArrivalActive(arrival, 5000 + MATRIX_ARRIVAL_MS - 1)).toBe(true);
     expect(matrixArrivalActive(arrival, 5000 + MATRIX_ARRIVAL_MS)).toBe(false);
     expect(matrixArrivalActive(null, 5000)).toBe(false);
   });
@@ -231,27 +220,21 @@ describe("Growth reveal — loot screen wiring", () => {
   });
 });
 
-describe("Growth reveal — controller wiring in main.ts", () => {
-  const mainSource = readFileSync(
-    fileURLToPath(new URL("../src/main.ts", import.meta.url)),
-    "utf-8",
-  )
+describe("Growth reveal — controller wiring", () => {
+  const mainSource = readControllerSource()
     .replace(/\/\*[\s\S]*?\*\//g, "")
     .replace(/\/\/[^\n]*/g, "")
     .replace(/\s+/g, "");
 
   it("starts the commit from the card-taken transition, after the reducer", () => {
-    expect(mainSource).toContain("privatelootCommit:LootCommit|null=null;");
-    expect(mainSource).toContain(
-      "this.state=applyAction(this.state,resolved);",
-    );
+    // The field is public now: the run life cycle module writes it.
+    expect(mainSource).toContain("lootCommit:LootCommit|null=null;");
+    expect(mainSource).toContain("this.state=applyAction(this.state,resolved);");
     expect(mainSource).toContain("this.syncGrowthReveal(previous,this.state);");
   });
 
   it("hands the arrival over when the run steps back onto the board", () => {
-    expect(mainSource).toMatch(
-      /previous\.runPhase==="loot"&&next\.runPhase!=="loot"/,
-    );
+    expect(mainSource).toMatch(/previous\.runPhase==="loot"&&next\.runPhase!=="loot"/);
     expect(mainSource).toContain('next.runPhase==="matrix"');
   });
 
@@ -262,9 +245,7 @@ describe("Growth reveal — controller wiring in main.ts", () => {
   it("steps the commit panel from the render loop, then stops", () => {
     // The loot screen draws once per input, so without a clock-driven redraw
     // the panel would freeze on its first stage (found live).
-    expect(mainSource).toContain(
-      "lootCommitStage(this.lootCommit,now,this.reducedMotion)",
-    );
+    expect(mainSource).toContain("lootCommitStage(this.lootCommit,now,this.reducedMotion)");
     expect(mainSource).toContain("lootCommitStageShown");
   });
 });

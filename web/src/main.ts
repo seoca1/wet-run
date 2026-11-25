@@ -17,7 +17,6 @@ import { hitStopActiveAt, hitStopDeadlineFor } from "./renderer/screen_shake";
 import { pickTransitionSfx } from "./core/combat/combat_sfx";
 import { programAffordances, rewardAffordances } from "./core/combat/program_affordance";
 import { idleAlarmAction } from "./core/combat/idle_alarm";
-import { startingDeck } from "./core/state/starting_deck";
 import {
   beginLootCommit,
   beginMatrixArrival,
@@ -33,7 +32,6 @@ import { everyProgramBlocked } from "./core/combat/program_affordance";
 import { renderRunIntro } from "./renderer/run_intro";
 import { renderBeatCard } from "./renderer/beat_card";
 import {
-  runOpeningBeat,
   iceIntroBeat,
   firstFightWarningBeat,
   firstVictoryBeat,
@@ -44,10 +42,9 @@ import {
   type DialogueBeat,
 } from "./core/state/event_beats";
 import { markIceIntrosSeen, seenIceIntros } from "./core/state/ice_intros";
-import { contractFor } from "./core/state/campaign";
 import { seenPrologues } from "./core/state/prologue_seen";
 import { hasHeardBeat, markBeatHeard } from "./core/state/story_flags";
-import { JOCKEYS, jockeyHandle } from "./core/state/jockey";
+import { jockeyHandle } from "./core/state/jockey";
 import type { PlayMode } from "./core/graphic_novel/graphic_novel_types";
 import { tick as gnTick } from "./core/graphic_novel/graphic_novel_player";
 import type { ArcId } from "./core/combat/ending_resolver";
@@ -58,7 +55,6 @@ import {
   hasPlayedBefore,
   isTutorialCompleted,
   markPlayed,
-  markRunFinished,
   runsFinished,
   shouldAutoShowTutorial,
   shouldShowMatrixEntryHint,
@@ -71,7 +67,7 @@ import {
   pressProgramButton,
   type PressFeedbackState,
 } from "./core/state/touch_feedback";
-import { DungeonCrawler, createDungeonCrawlerFromMission } from "./core/dungeon/dungeon_crawler";
+import type { DungeonCrawler } from "./core/dungeon/dungeon_crawler";
 import { getInitialSettingsState } from "./renderer/settings";
 import {
   loadColorblindMode,
@@ -97,34 +93,19 @@ import type {
   Inventory,
   EquipmentLoadout,
 } from "./core/types";
-import {
-  applyAction,
-  makeInitialState,
-  resolveProgramSelection,
-  slotToGameState,
-  stateToSaveSlot,
-} from "./core/state/state";
-import { openArrivalEncounter, encounterRoster, runAbandoned } from "./core/state/encounter_verbs";
-import { missionIce } from "./core/state/mission_ice";
+import { applyAction, resolveProgramSelection } from "./core/state/state";
+import { encounterRoster, runAbandoned } from "./core/state/encounter_verbs";
 import { missionGradeOf } from "./core/combat/ice_scaling";
 import { applyPrep, PREP_OPTIONS, prepGrantFor, type PrepChoice } from "./core/state/prep";
 import { readPrepWallet, spendPrepWallet } from "./core/state/prep_wallet";
 import {
-  autosaveIntent,
   FLATLINE_MESSAGE,
   isTerminalNode,
   runCompleted,
   runFailed,
   RUN_COMPLETE_MESSAGE,
 } from "./core/state/run_end";
-import { makeGrid, type Grid } from "./core/grid";
-import {
-  save as saveToSlot,
-  load as loadFromSlot,
-  clear as clearSlot,
-  hasSave as slotHasSave,
-  getSaveMeta,
-} from "./save/storage";
+import type { Grid } from "./core/grid";
 import { getLayout, watchLayout, type Layout } from "./core/layout";
 import {
   makeRecipesFromData,
@@ -135,20 +116,8 @@ import {
 } from "./core/state/crafting";
 import { DEFAULT_REGISTRY } from "./core/state/equipment";
 import { hydrateLoadout, readEquippedIds } from "./core/state/equipment_store";
-import {
-  mergeDroppedEquipment,
-  readOwnedIds,
-  writeOwnedIds,
-  type OwnedSet,
-} from "./core/state/owned_equipment";
-import { applyEquipmentSurvival } from "./core/state/equipment_stats";
-import {
-  contractSeedMaterials,
-  mergeRunIntoWallet,
-  readWalletMaterials,
-  seedRunWallet,
-  writeWalletMaterials,
-} from "./core/state/wallet";
+import { readOwnedIds, type OwnedSet } from "./core/state/owned_equipment";
+import { readWalletMaterials } from "./core/state/wallet";
 import type { InfoMarket } from "./core/info_market";
 import { loadPersistedLanguage } from "./renderer/settings";
 import {
@@ -162,6 +131,15 @@ import {
 import { handlePreGameInput } from "./app/pre_game_input";
 import { handleGraphicNovelInput } from "./app/graphic_novel_input";
 import { drawPrep, drawPreGame } from "./app/pre_game_render";
+import {
+  autosaveRun,
+  continueRun,
+  noteRunFinished,
+  refreshSaveCache,
+  settleRun,
+  startDungeonCrawl,
+  startRun,
+} from "./app/run_lifecycle";
 
 function fallbackSettingsState(): import("./renderer/settings.ts").SettingsState {
   return {
@@ -270,7 +248,7 @@ function loadCraftingData(): {
 type BeatCard = import("./app/pre_game_input.ts").BeatCard;
 
 class Game {
-  private state: GameState | null = null;
+  state: GameState | null = null;
   screen: ScreenKind = "menu";
   selectedMenuIndex = 0;
   /** ADR-0315: the cursor is normalized once per visit, not per frame. */
@@ -296,10 +274,12 @@ class Game {
   loadStory = loadStorySystem;
   /** The settings default when the real read fails; shared with the renderer. */
   fallbackSettings = fallbackSettingsState;
+  /** The crafting registry loader, shared with the run life cycle. */
+  loadCrafting = loadCraftingData;
   private input: KeyboardInput;
   private gamepad: GamepadInput;
   iceTypes: Readonly<Record<string, Ice>>;
-  private programs: Readonly<Record<string, Program>>;
+  programs: Readonly<Record<string, Program>>;
   missions: ReadonlyArray<Mission>;
   hasSaveCache: boolean = false;
   saveMetaCache: {
@@ -310,12 +290,12 @@ class Game {
   private unmountTouch: () => void = () => {};
   private unwatchLayout: () => void = () => {};
   private _lastPhase: GamePhase | null = null;
-  private _lastIceHp: number | null = null;
-  private _lastPlayerHp: number | null = null;
+  _lastIceHp: number | null = null;
+  _lastPlayerHp: number | null = null;
   inventory: Inventory;
   /** ADR-0323: the wallet this run was seeded with, so the merge back into the
    * hoard can tell what the run EARNED from what it inherited. */
-  private runWalletSeed: Inventory | null = null;
+  runWalletSeed: Inventory | null = null;
   equipmentLoadout: EquipmentLoadout;
   recipes: ReadonlyArray<Recipe>;
   materials: ReadonlyArray<MaterialDef>;
@@ -339,20 +319,20 @@ class Game {
   /** ADR-0262 — display-only growth reveal. Controller-owned and transient:
    * never on `GameState`, so it cannot reach a save, the reducer or the
    * harness. The `matrixTravel` pattern, applied to a card joining the deck. */
-  private lootCommit: LootCommit | null = null;
+  lootCommit: LootCommit | null = null;
   /** ADR-0311 — the unique taken at the free pick. The loot commit panel owns
    * the offer rows (a card ends the stop), so the unique is confirmed inline
    * and its name is carried to the board arrival instead. */
   private uniqueCommitName: string | null = null;
-  private matrixArrival: MatrixArrival | null = null;
+  matrixArrival: MatrixArrival | null = null;
   /** ADR-0272 — the arc's framing beat, shown once when a run starts. Null
    * when there is no run, or once a key has dismissed it. Never saved, so a
    * resumed run does not replay its introduction. */
-  private runIntroArc: ArcId | null = null;
+  runIntroArc: ArcId | null = null;
   /** ADR-0317 (3b): the companion's first words, spoken on the run's opening
    * card. Set with `runIntroArc` and cleared with it — display-only, never
    * saved. Null once the player has finished a run, or after the first key. */
-  private runIntroBeat: DialogueBeat | null = null;
+  runIntroBeat: DialogueBeat | null = null;
   /** ADR-0317 (3b): a one-time beat card that owns the screen until a key.
    * Same shape as the run intro, but for beats that arrive mid-run (the first
    * fight, the first win) and would not fit inline on a dense panel. */
@@ -364,8 +344,8 @@ class Game {
    * pushes the panel to a new stage, then stops (ADR-0262). */
   private lootCommitStageShown = -1;
   /** ADR-0252: slot-0 writes and the retirement run in order. */
-  private persistQueue: Promise<void> = Promise.resolve();
-  private lastPersistedState: GameState | null = null;
+  persistQueue: Promise<void> = Promise.resolve();
+  lastPersistedState: GameState | null = null;
   /** P10 — effective reduced-motion state. True suppresses the P1 canvas
    * shake and the hit-stop hold. */
   reducedMotion = false;
@@ -467,7 +447,7 @@ class Game {
       this.screen = "jockey_select";
       this.selectedJockey = 0;
     }
-    void this.refreshSaveCache();
+    void refreshSaveCache(this);
     const resetIdle = (): void => {
       this.idleSinceMs = Date.now();
     };
@@ -668,29 +648,29 @@ class Game {
       if (runAbandoned(previous, this.state)) {
         // JACK OUT ends the run: leave the board for the main menu.
         // ADR-0323: the run is over — bank what it earned before dropping it.
-        this.endRun();
+        settleRun(this);
         this.state = null;
         this.matrixTravel = null;
         this.lootCommit = null;
         this.matrixArrival = null;
         this.screen = "menu";
-        void this.refreshSaveCache();
+        void refreshSaveCache(this);
         this.draw();
         return;
       }
       if (runCompleted(previous, this.state)) {
         // ADR-0252: the ending is the end. The slot was retired on arrival.
         // ADR-0323: the run is over — bank what it earned before dropping it.
-        this.endRun();
+        settleRun(this);
         this.state = null;
         this.matrixTravel = null;
         this.lootCommit = null;
         this.matrixArrival = null;
         this.screen = "menu";
         this._message = RUN_COMPLETE_MESSAGE;
-        this.noteRunFinished();
+        noteRunFinished(this);
         this.persistQueue = this.persistQueue
-          .then(() => this.refreshSaveCache())
+          .then(() => refreshSaveCache(this))
           .catch(() => undefined);
         this.draw();
         return;
@@ -700,15 +680,15 @@ class Game {
         // defeat screen and the run ends at the title, the same shape as the
         // ending. The dead frame itself was already autosaved (ADR-0252 §A).
         // ADR-0323: the run is over — bank what it earned before dropping it.
-        this.endRun();
+        settleRun(this);
         this.state = null;
         this.matrixTravel = null;
         this.lootCommit = null;
         this.matrixArrival = null;
         this.screen = "menu";
         this._message = FLATLINE_MESSAGE;
-        this.noteRunFinished();
-        void this.refreshSaveCache();
+        noteRunFinished(this);
+        void refreshSaveCache(this);
         this.draw();
         return;
       }
@@ -852,10 +832,10 @@ class Game {
         this.draw();
         break;
       case "dungeon_crawl":
-        this.startDungeonCrawl();
+        startDungeonCrawl(this);
         break;
       case "continue":
-        void this.handleContinue();
+        void continueRun(this);
         break;
       case "craft":
         this.screen = "crafting";
@@ -902,15 +882,6 @@ class Game {
     }
   }
 
-  /** ADR-0315: the menu grows with the player. A finished run (ending or
-   * flatline) unlocks the archive/workshop entries, which otherwise open onto
-   * nothing. Also re-normalizes the cursor, since the visible list just grew. */
-  private noteRunFinished(): void {
-    if (typeof localStorage === "undefined") return;
-    markRunFinished(localStorage);
-    this.menuSelectionNormalized = false;
-  }
-
   /** ADR-0315: the entries this profile has unlocked (the menu grows). */
   visibleMenu(): ReadonlyArray<MenuEntry> {
     const storage = typeof localStorage === "undefined" ? null : localStorage;
@@ -935,172 +906,8 @@ class Game {
     if (this.selectedMenuIndex >= options.length) this.selectedMenuIndex = 0;
   }
 
-  /** Reload hasSave + meta caches from storage. Call after save/load/clear. */
-  private async refreshSaveCache(): Promise<void> {
-    this.hasSaveCache = await slotHasSave(0);
-    this.saveMetaCache = await getSaveMeta(0);
-    // Re-draw the title menu to reflect availability. In a run `screen` can
-    // also be "menu" (after CONTINUE); redrawing it would re-trigger the
-    // autosave and loop on every write.
-    if (this.screen === "menu" && this.state === null) this.draw();
-  }
-
-  /** Load autosave (slot 0) and resume from saved state.
-   *
-   * Returns silently if no save exists (gated by hasSaveCache). On success,
-   * transitions to the in-game state and resets _lastIceHp/_lastPlayerHp
-   * so hit-flash VFX doesn't trigger immediately on resume.
-   */
-  private async handleContinue(): Promise<void> {
-    if (!this.hasSaveCache) {
-      // No save — show stub message (should be unreachable from menu but safe).
-      this.draw();
-      return;
-    }
-    const slot = await loadFromSlot(0);
-    if (!slot) {
-      // Stale cache: hasSave said true but load failed. Refresh + stub.
-      await this.refreshSaveCache();
-      this.draw();
-      return;
-    }
-    const fallbackIce = Object.values(this.iceTypes)[0];
-    if (!fallbackIce) {
-      this.draw();
-      return;
-    }
-    const restored = slotToGameState(
-      slot,
-      this.missions,
-      this.programs,
-      fallbackIce,
-      this.iceTypes,
-    );
-    if (!restored) {
-      // Mission no longer in catalog or all programs disappeared.
-      this.draw();
-      return;
-    }
-    this.state = {
-      ...restored,
-      grid: makeGrid(this.layout.cols, this.layout.rows),
-    };
-    this.screen = "menu"; // game-internal state; main screen renderer picks up state != null
-    this._lastIceHp = restored.ice.hp;
-    this._lastPlayerHp = restored.player.hp;
-    this.draw();
-  }
-
   launchSelected(): void {
-    const mission = MISSIONS[this.selectedMission];
-    if (!mission) return;
-    // A fresh run carries no reveal from the previous one (ADR-0262).
-    this.lootCommit = null;
-    this.matrixArrival = null;
-    // ADR-0272: the run opens on the arc's framing beat. CONTINUE does not set
-    // this (a resumed run is mid-story); only a fresh run does.
-    this.runIntroArc = ((mission.arc as ArcId) || 1) as ArcId;
-    // ADR-0317 (3b): the construct introduces herself on the first jack-in, and
-    // only then — a profile that has finished a run has already met her.
-    this.runIntroBeat = runOpeningBeat(
-      runsFinished(typeof localStorage === "undefined" ? null : localStorage),
-      this.settingsState?.language ?? "en",
-    );
-    const programs = PROGRAMS;
-    // ADR-0276: the jockey decides the opening deck, not just the name.
-    const deck = startingDeck(programs, JOCKEYS[this.selectedJockey]?.id ?? null);
-    const ice = missionIce(mission, this.iceTypes);
-    const initial = makeInitialState(mission, ice, deck);
-    this.state = openArrivalEncounter({
-      // ADR-0284: whatever the stockpile paid for is spent here, so it is a
-      // hoard rather than a permanent bonus.
-      // ADR-0326: the gear's hpBonus/shieldBonus join it — same run-start shape.
-      ...applyEquipmentSurvival(
-        applyPrep(initial, this.prepChoice, this.prepWalletOutlay),
-        this.equipmentLoadout,
-      ),
-      // ADR-0315 slice 2: the run is a contract — this mission, then the rest
-      // of its arc. The chosen mission decides the arc; the length is the
-      // resolver's (`CONTRACT_LENGTH`).
-      campaign: contractFor(mission, MISSIONS, (m) => missionIce(m, this.iceTypes)),
-      jockeyId: JOCKEYS[this.selectedJockey]?.id ?? null,
-      grid: makeGrid(this.layout.cols, this.layout.rows),
-      currentNodeIndex: 0,
-      runPhase: "matrix",
-      phase: "approach",
-    });
-    // ADR-0323 / ADR-0338: the run is seeded from the HOARD, and the seed spans
-    // the WHOLE contract's rewards (the run accumulates every leg's reward, see
-    // `startNextLeg`), so `mergeRunIntoWallet` banks only what the run EARNED —
-    // jacking out on frame one mints nothing. The span lives in `wallet.ts` now
-    // (`contractSeedMaterials`), where a unit test pins it.
-    const seedRewards = contractSeedMaterials(
-      this.state.campaign?.legs,
-      this.state.mission.rewards.materials,
-    );
-    this.runWalletSeed = seedRunWallet(this.inventory, { credits: 0, materials: seedRewards });
-    // ADR-0322: the run reads `state.equipmentLoadout`, so the menu's gear has
-    // to be ON the state — not merely next to it. `makeInitialState` builds it
-    // empty, which is why the menu used to change no number at all.
-    this.state = {
-      ...this.state,
-      equipmentLoadout: this.equipmentLoadout,
-      inventory: seedRunWallet(this.inventory, this.state.mission.rewards),
-    };
-    const crafting = loadCraftingData();
-    this.recipes = crafting.recipes;
-    this.materials = crafting.materials;
-    this.infoMarket = makeInfoMarket({});
-    this.draw();
-  }
-
-  /** ADR-0323: bank the run's earnings into the hoard and clear the seed.
-   *
-   * Called on every way a run ends — jack out, the ending, and a flatline — so
-   * a failed run keeps what it picked up. That is the owner's decision: without
-   * it, no recipe can cost more than one run's yield. */
-  private endRun(): void {
-    const run = this.state?.inventory ?? null;
-    this.inventory = mergeRunIntoWallet(this.inventory, run, this.runWalletSeed);
-    this.runWalletSeed = null;
-    writeWalletMaterials(this.inventory.materials);
-    // ADR-0329 / ADR-0346: gear salvaged during the run becomes owned when it
-    // ends. The fold lives in `owned_equipment.ts` (tested); the same record is
-    // returned when nothing was added, so the write is skipped then.
-    const owned = mergeDroppedEquipment(
-      this.ownedEquipment,
-      this.state?.droppedEquipment ?? [],
-    );
-    if (owned !== this.ownedEquipment) {
-      this.ownedEquipment = owned;
-      writeOwnedIds(owned);
-    }
-  }
-
-  private startDungeonCrawl(): void {
-    const mission = MISSIONS[0] ?? null;
-    this.dungeonCrawler = createDungeonCrawlerFromMission(mission);
-    this.screen = "dungeon";
-    this.draw();
-  }
-
-  /** ADR-0252: write the rendered run state to slot 0, or retire the slot
-   * once the run has reached its ending. Storage operations are chained so
-   * a retirement can never be overtaken by an earlier, slower write. */
-  private autosave(): void {
-    const state = this.state;
-    const intent = autosaveIntent(state);
-    if (state === null || intent === "skip") return;
-    if (state === this.lastPersistedState) return; // unchanged frame
-    this.lastPersistedState = state;
-    // Snapshot now: the slot must hold this frame, not a later one.
-    const slot = intent === "write" ? stateToSaveSlot(state) : null;
-    this.persistQueue = this.persistQueue
-      .then(() => (slot === null ? clearSlot(0) : saveToSlot(0, slot)))
-      .then(() => this.refreshSaveCache())
-      .catch(() => {
-        // Best-effort (fire-and-forget, ADR-0209); the chain must stay usable.
-      });
+    startRun(this);
   }
 
   /** Track the once-per-run hint; delegate drawing beneath the VFX layer. */
@@ -1241,7 +1048,7 @@ class Game {
     if (this.state !== null && ["matrix", "ending", "loot"].includes(this.state.runPhase)) {
       // ADR-0252: a committed move, a won fight and the ending are saved
       // (or retire the slot) like combat frames are.
-      if (persist) this.autosave();
+      if (persist) autosaveRun(this);
       // ADR-0259: on a non-terminal loot screen the same row picks the card
       // reward, so touch players get the same choice as the digits.
       const rewards =
@@ -1328,7 +1135,7 @@ class Game {
         ? (handIndex) => this.handleProgramButton(handIndex)
         : undefined,
     );
-    if (persist) this.autosave();
+    if (persist) autosaveRun(this);
     this.syncPhase(this.state.phase);
   }
 

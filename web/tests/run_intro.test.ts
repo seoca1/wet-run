@@ -6,8 +6,7 @@
  * is that beat per arc: display-only, dismissed by any key, never saved.
  */
 import { describe, expect, it } from "vitest";
-import { readFileSync } from "node:fs";
-import { fileURLToPath } from "node:url";
+import { readControllerSource } from "./controller_source";
 import {
   RUN_INTRO,
   renderRunIntro,
@@ -93,14 +92,9 @@ describe("ADR-0272 — run intro", () => {
   });
 
   it("is shown once at run start and dismissed by the first key (source wiring)", () => {
-    const main = readFileSync(
-      fileURLToPath(new URL("../src/main.ts", import.meta.url)),
-      "utf-8",
-    ).replace(/\s+/g, "");
-    // Set only in launchSelected (a fresh run), never in handleContinue.
-    expect(main).toContain(
-      "this.runIntroArc=((mission.arcasArcId)||1)asArcId;",
-    );
+    const main = readControllerSource().replace(/\s+/g, "");
+    // Set only in startRun (a fresh run), never in continueRun.
+    expect(main).toContain("host.runIntroArc=((mission.arcasArcId)||1)asArcId;");
     expect(main).toContain(
       "if(this.runIntroArc!==null){this.runIntroArc=null;this.runIntroBeat=null;",
     );

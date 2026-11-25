@@ -4520,3 +4520,13 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **증거**: e2e **106 pass**(desktop 54 + mobile 58, 6 skip) · vitest **239/4465** · typecheck 0 · lint 0 error · 게이트 **9/9** · mutation **39/39 KILLED** · 골든 byte-identical.
 - **수치**: `main.ts` **2,227 → 2,056줄** (세션 누적 **2,568 → 2,056**, −512) · 신규 1파일(`src/app/pre_game_input.ts`, 219줄).
 - 커밋 `e23d459f` · 다음: 3a-1d(그래픽 노블 입력) → 3a-2(`draw`).
+
+## [2026-11-25] refactor | Stage 3a-1d — 그래픽 노블 입력 분리, **Stage 3a-1(입력 계층) 완료**
+
+- **슬라이스**: `handleGraphicNovelInput` + `exitGraphicNovel` + `startRunFromGraphicNovel`(**44줄**) → `src/app/graphic_novel_input.ts` (`GraphicNovelInputHost`). 핸들러가 나머지 둘의 유일한 호출자라 함께 이동.
+- **공유 로더**: `loadStory` 를 host 필드로(`loadAudio` 와 같은 패턴) — 렌더러와 입력 핸들러가 같은 lazy 스토리 시스템을 쓴다. 두 번째 dynamic import 를 만들면 이 리팩토링이 없애려는 중복이 된다.
+- **동등성**: 정규화 diff **3/3 동일, 예외 없음**.
+- **증거**: e2e **106 pass**(desktop 54 + mobile 58, 6 skip) · vitest **239/4465** · typecheck 0 · lint 0 error · 게이트 **9/9** · mutation **39/39 KILLED** · 골든 byte-identical.
+- **수치**: `main.ts` **2,056 → 2,006줄**.
+- **Stage 3a-1 결산**: 입력 계층 전체가 4개 모듈로 — `src/app/{settings_input(248), screen_input(193), pre_game_input(219), graphic_novel_input(85)}.ts` (합 745줄). `main.ts` **2,568 → 2,006줄**(−562). 이동 4회 전부 **정규화 diff 로 동일** 확인(유일한 차이 2건: `handleStubInput` 주석 위치, 설정 위임의 `this`→`host`).
+- 커밋 `c810dbfa` · 다음: 3a-2(`draw` ~259줄 + `drawPrep`).

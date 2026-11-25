@@ -40,7 +40,6 @@ import {
   firstFightWarningBeat,
   firstVictoryBeat,
   flatlineBeat,
-  finnIntroBeat,
   firstReturnBeat,
   ashpoolCallBeat,
   endingSignoffBeat,
@@ -158,7 +157,6 @@ import {
 import type { InfoMarket } from "./core/info_market";
 import { loadPersistedLanguage } from "./renderer/settings";
 import { formatNavIndex } from "./renderer/nav_index";
-import { handleSettingsInput } from "./app/settings_input";
 import {
   handleCraftingInput,
   handleDungeonInput,
@@ -167,6 +165,7 @@ import {
   handleSettingsStubInput,
   handleStubInput,
 } from "./app/screen_input";
+import { handlePreGameInput } from "./app/pre_game_input";
 
 function fallbackSettingsState(): import("./renderer/settings.ts").SettingsState {
   return {
@@ -285,30 +284,28 @@ function formatMissionOption(
   return `${formatNavIndex(index)} ${titleText}  [${grade} | ${credits}cr]`;
 }
 
-/** A story card: a title, and the voice it carries (ADR-0317 3b). */
-interface BeatCard {
-  readonly title: string;
-  readonly beat: DialogueBeat;
-}
+/** A story card: a title, and the voice it carries (ADR-0317 3b).
+ * Lives in `app/pre_game_input.ts` now; re-exported here for the beat queue. */
+type BeatCard = import("./app/pre_game_input.ts").BeatCard;
 
 class Game {
   private state: GameState | null = null;
   screen: ScreenKind = "menu";
-  private selectedMenuIndex = 0;
+  selectedMenuIndex = 0;
   /** ADR-0315: the cursor is normalized once per visit, not per frame. */
   private menuSelectionNormalized = false;
-  private selectedMission = 0;
+  selectedMission = 0;
   /** ADR-0274 — the jockey chosen for the next run (index into JOCKEYS). */
-  private selectedJockey = 0;
+  selectedJockey = 0;
   /** ADR-0283: the prep row under the cursor, and what it will buy. */
-  private prepCursor = 0;
+  prepCursor = 0;
   /** Where the run's screen was before the between-leg advance took over
    * (ADR-0318 (a)). Restoring it keeps the run's screen invariant intact — a
    * CONTINUE resumes with `menu`, a fresh run with `prep`. */
   private contractPrepReturn: ScreenKind = "prep";
-  private prepChoice: PrepChoice = "stim";
+  prepChoice: PrepChoice = "stim";
   /** ADR-0284: what the stockpile will pay for the run about to start. */
-  private prepWalletOutlay = 0;
+  prepWalletOutlay = 0;
   renderer: AsciiRenderer;
   /** Lazy audio loader, gated on the audio-off flag. Exposed as a field so the
    * settings handler (app/settings_input.ts) takes the same gate everything
@@ -318,7 +315,7 @@ class Game {
   private gamepad: GamepadInput;
   private iceTypes: Readonly<Record<string, Ice>>;
   private programs: Readonly<Record<string, Program>>;
-  private missions: ReadonlyArray<Mission>;
+  missions: ReadonlyArray<Mission>;
   private hasSaveCache: boolean = false;
   private saveMetaCache: {
     missionId: string;
@@ -408,7 +405,7 @@ class Game {
   pwaController: PwaController | null = null;
   dungeonCrawler: DungeonCrawler | null = null;
   _message: string = "";
-  private farGridUnlockedCache: boolean = false;
+  farGridUnlockedCache: boolean = false;
   private rafId: number | null = null;
   private loopRunning = false;
   private lastLoopMs = 0;
@@ -547,7 +544,7 @@ class Game {
         return;
       }
       if (this.state === null) {
-        this.handlePreGameInput(action);
+        handlePreGameInput(this, action);
         return;
       }
       // ADR-0318 (a): the advance between a contract's legs owns the input the
@@ -807,7 +804,7 @@ class Game {
    * menu entry that let a player browse it was the validation scaffold and is
    * gone (2026-11-17), so leaving the story — finished or skipped — always hands
    * over to the mission list. */
-  private initGraphicNovel(mode: PlayMode = "novice"): void {
+  initGraphicNovel(mode: PlayMode = "novice"): void {
     void loadStorySystem().then((gn) => {
       const player = gn.createPlayer({ mode });
       this.graphicNovelPlayer = player;
@@ -913,175 +910,7 @@ class Game {
     this.draw();
   }
 
-  private handlePreGameInput(action: GameAction): void {
-    // Digit keys 1-9 → menu selection on menu screen (otherwise → combat program select).
-    if (action.type === "select_program" && this.screen === "menu") {
-      const options = this.visibleMenu();
-      const idx = action.handIndex - 1;
-      if (idx >= 0 && idx < options.length) {
-        this.selectedMenuIndex = idx;
-        const opt = options[idx];
-        this.selectMenuOption(opt ? opt.key : undefined);
-      }
-      return;
-    }
-    if (this.screen === "menu") {
-      const options = this.visibleMenu();
-      const count = Math.max(1, options.length);
-      if (action.type === "move_south") {
-        this.selectedMenuIndex = (this.selectedMenuIndex + 1) % count;
-        this.draw();
-      } else if (action.type === "move_north") {
-        this.selectedMenuIndex = (this.selectedMenuIndex - 1 + count) % count;
-        this.draw();
-      } else if (action.type === "confirm") {
-        const opt = options[this.selectedMenuIndex];
-        this.selectMenuOption(opt ? opt.key : undefined);
-      } else if (action.type === "jack_out") {
-        // No-op: already at top-level menu
-        this.draw();
-      }
-      return;
-    }
-    if (this.screen === "jockey_select") {
-      if (action.type === "move_south") {
-        this.selectedJockey = (this.selectedJockey + 1) % JOCKEYS.length;
-        this.draw();
-      } else if (action.type === "move_north") {
-        this.selectedJockey = (this.selectedJockey - 1 + JOCKEYS.length) % JOCKEYS.length;
-        this.draw();
-      } else if (action.type === "confirm") {
-        // ADR-0317: the prologue opens the run — this jockey's story plays,
-        // then the mission list. ESC skips the story, not the run.
-        this.screen = "graphic_novel";
-        this.selectedMission = 0;
-        const jockeyId = JOCKEYS[this.selectedJockey]?.id;
-        this.initGraphicNovel(
-          jockeyId === "veteran" || jockeyId === "heretic" ? jockeyId : "novice",
-        );
-      } else if (action.type === "jack_out") {
-        this.screen = "menu";
-        this.draw();
-      }
-      return;
-    }
-    if (this.screen === "briefing") {
-      // ADR-0317: ENTER continues to the advance; ESC goes back to the list.
-      this.screen = action.type === "jack_out" ? "mission_select" : "prep";
-      this.draw();
-      return;
-    }
-    if (this.screen === "prep") {
-      // ADR-0283 C: spend the fixer's advance. Two rows, so the screen needs no
-      // new key -- ↑↓ picks, ENTER jacks in with the pick, ESC goes back.
-      const count = PREP_OPTIONS.length;
-      if (action.type === "move_south" || action.type === "move_east") {
-        this.prepCursor = (this.prepCursor + 1) % count;
-        this.draw();
-      } else if (action.type === "move_north" || action.type === "move_west") {
-        this.prepCursor = (this.prepCursor - 1 + count) % count;
-        this.draw();
-      } else if (action.type === "confirm") {
-        const picked = PREP_OPTIONS[this.prepCursor];
-        this.prepChoice = picked?.id ?? "stim";
-        // Spend the stockpile's share, then launch.
-        const mission = MISSIONS[this.selectedMission];
-        if (mission) {
-          const grant = prepGrantFor(missionGradeOf(mission), this.prepChoice, readPrepWallet());
-          this.prepWalletOutlay = grant.fromWallet;
-          spendPrepWallet(grant.fromWallet);
-        }
-        this.launchSelected();
-      } else if (action.type === "jack_out") {
-        this.screen = "mission_select";
-        this.draw();
-      }
-      return;
-    }
-    if (this.screen === "mission_select") {
-      // ADR-0213 isolation: the Sprawl board lists sprawl-universe missions
-      // only; far-grid missions live behind the gated hub.
-      const sprawlMissions = filterMissionsByUniverse(MISSIONS, "sprawl");
-      if (action.type === "move_south") {
-        this.selectedMission = (this.selectedMission + 1) % sprawlMissions.length;
-        this.draw();
-      } else if (action.type === "move_north") {
-        this.selectedMission =
-          (this.selectedMission - 1 + sprawlMissions.length) % sprawlMissions.length;
-        this.draw();
-      } else if (action.type === "confirm") {
-        const picked = sprawlMissions[this.selectedMission];
-        const fullIndex = picked ? MISSIONS.indexOf(picked) : -1;
-        if (fullIndex >= 0) {
-          this.selectedMission = fullIndex;
-          this.prepCursor = 0;
-          // ADR-0317: the fixer briefs you on the job before you choose the
-          // advance. ENTER there continues to prep; ESC comes back here.
-          // ADR-0317 3b: the first time, he also introduces himself — the
-          // screen is his office, and the game never opened it.
-          const storage = typeof localStorage === "undefined" ? null : localStorage;
-          if (!hasHeardBeat(storage, "met_the_finn")) {
-            const intro = finnIntroBeat(this.settingsState?.language ?? "en");
-            if (intro !== null) {
-              this.showBeat({ title: "THE FINN", beat: intro });
-              markBeatHeard(storage, "met_the_finn");
-            }
-          }
-          this.screen = "briefing";
-          this.draw();
-        }
-      } else if (action.type === "jack_out") {
-        this.screen = "menu";
-        this.draw();
-      }
-      return;
-    }
-    if (this.screen === "far_grid_hub") {
-      // ADR-0213 Phase 2: defense in depth — if the unlock flag is missing,
-      // bounce back to the main menu rather than running the hub.
-      if (!this.farGridUnlockedCache) {
-        this.screen = "menu";
-        this._message = FAR_GRID_LOCKED_MESSAGE;
-        this.draw();
-        return;
-      }
-      const farGridMissions = filterMissionsByUniverse(MISSIONS, "far-grid");
-      if (farGridMissions.length === 0) {
-        if (action.type === "jack_out") {
-          this.screen = "menu";
-          this.draw();
-        }
-        return;
-      }
-      if (action.type === "move_south") {
-        this.selectedMission = (this.selectedMission + 1) % farGridMissions.length;
-        this.draw();
-      } else if (action.type === "move_north") {
-        this.selectedMission =
-          (this.selectedMission - 1 + farGridMissions.length) % farGridMissions.length;
-        this.draw();
-      } else if (action.type === "confirm") {
-        const picked = farGridMissions[this.selectedMission];
-        const fullIndex = picked ? MISSIONS.indexOf(picked) : -1;
-        if (fullIndex >= 0) {
-          this.selectedMission = fullIndex;
-          this.prepCursor = 0;
-          this.screen = "prep";
-          this.draw();
-        }
-      } else if (action.type === "jack_out") {
-        this.screen = "menu";
-        this.draw();
-      }
-      return;
-    }
-    if (this.screen === "settings") {
-      handleSettingsInput(this, action);
-      return;
-    }
-  }
-
-  private async selectMenuOption(option: MenuOption | undefined): Promise<void> {
+  async selectMenuOption(option: MenuOption | undefined): Promise<void> {
     if (!option) return Promise.resolve();
     switch (option) {
       case "new_run":
@@ -1151,7 +980,7 @@ class Game {
   }
 
   /** ADR-0315: the entries this profile has unlocked (the menu grows). */
-  private visibleMenu(): ReadonlyArray<MenuEntry> {
+  visibleMenu(): ReadonlyArray<MenuEntry> {
     const storage = typeof localStorage === "undefined" ? null : localStorage;
     return visibleMenuOptions({
       hasSave: this.hasSaveCache,
@@ -1230,7 +1059,7 @@ class Game {
     this.draw();
   }
 
-  private launchSelected(): void {
+  launchSelected(): void {
     const mission = MISSIONS[this.selectedMission];
     if (!mission) return;
     // A fresh run carries no reveal from the previous one (ADR-0262).
@@ -1461,7 +1290,7 @@ class Game {
 
   /** Queue a story card (ADR-0317 3b). One owns the screen at a time; the rest
    * wait their turn, so a transition can say two things in order. */
-  private showBeat(card: BeatCard): void {
+  showBeat(card: BeatCard): void {
     if (this.beatCard === null) this.beatCard = card;
     else this.beatQueue.push(card);
   }

@@ -4540,3 +4540,13 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **증거**: e2e **106 pass**(desktop 54 + mobile 58, 6 skip) · vitest **239/4465** · typecheck 0 · lint 0 error · 게이트 **9/9** · mutation **39/39 KILLED** · 골든 byte-identical.
 - **수치**: `main.ts` **2,006 → 1,827줄** (세션 누적 **2,568 → 1,827**, −741) · 신규 1파일(`src/app/pre_game_render.ts`, 254줄) · 테스트 1건 위치 갱신.
 - 커밋 `fa8b25d5` · 다음: 3a-3(런 수명주기) 또는 3a-2 잔여(라우터 — 오너 확인).
+
+## [2026-11-25] refactor | Stage 3a-3 — 런 수명주기 분리 + 소스-텍스트 테스트 3건을 공용 헬퍼로
+
+- **슬라이스**: `launchSelected`(60줄) · `handleContinue`(37) · `endRun`(15) · `startDungeonCrawl`(4) · `autosave`(13) · `noteRunFinished`(3) · `refreshSaveCache`(6) → `src/app/run_lifecycle.ts` (`RunLifecycleHost`, 265줄). 모듈 함수명은 `startRun`/`continueRun`/`settleRun`/`autosaveRun`. `launchSelected` 는 사전 입력 host 가 호출하므로 **Game 에 위임 메서드로 유지**.
+- **동등성**: 정규화 diff **7/7 동일**. 유일한 차이는 prettier 가 한 줄로 접은 두 호출의 **trailing comma 2개**(의미 없음).
+- **가드가 잡은 것 — 소스-텍스트 테스트 3건**: `run_intro`(`this.runIntroArc=…` 이동) · `jockey_deck`(`startingDeck(programs, JOCKEYS[this.selectedJockey]…` 이동) · `growth_reveal`(**이동이 아니라 `private` 접두사 고정**이 깨짐 — `privatelootCommit` → `lootCommit`). 위치만 고치면 3a-4 에서 또 깨지므로 **공용 헬퍼 `tests/controller_source.ts`** 를 신설(main.ts + `src/app/*.ts` 를 한 덩어리로 반환)하고 3건을 이관. 헬퍼에 "왜 소스 텍스트인가"(`main.ts` 는 import 시 self-boot)를 기록.
+- **남은 결합**: `main.ts` 소스를 읽는 테스트가 아직 6건 더 있다(현재는 통과). 다음 이동 때 같은 헬퍼로 옮긴다.
+- **증거**: e2e **106 pass**(desktop 54 + mobile 58, 6 skip) · vitest **239/4465** · typecheck 0 · lint 0 error · 게이트 **9/9** · mutation **39/39 KILLED** · 골든 byte-identical.
+- **수치**: `main.ts` **1,827 → 1,634줄** (세션 누적 **2,568 → 1,634**, −934) · 신규 2파일(`src/app/run_lifecycle.ts` 265줄 · `tests/controller_source.ts` 23줄) · main.ts 미사용 import 17개 제거.
+- 커밋 `7703a69b` · 다음: 3a-4(루프 ~200줄).

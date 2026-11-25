@@ -4589,3 +4589,16 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **실제로 합쳐진 것**: `screen_frames` 의 지역 `rowText` 가 `view_fixtures` 의 것과 **바이트 동일** → 공용으로(1건). `combat_grid` 의 동명 함수는 `grid.width` 루프라 다른 함수 → 잔류.
 - **증거**: vitest **239/4465** · 게이트 **9/9**(`--tests`) · typecheck 0. `src/` 변경 0.
 - **Stage 4 결산**: 4a `gridText` 10→1 · 4b `loadDeck` 11→1 · 4d `rowText` 2→1 · 4c 기각. 테스트 **24 파일, −170줄**.
+
+## [2026-11-26] investigation | 엔딩 7종 도달성 조사 — 32개 중 실플레이 11개(관측은 사실상 5개)
+
+- **질문**(2026-11-22 이월): 엔딩 카테고리 7종 도달성 → 유지/게이트/제거. **조사만 수행, 결정은 오너.**
+- **산출물**: [`docs/design/ending-reachability-2026-11-26.md`](docs/design/ending-reachability-2026-11-26.md) — 게이트 6개 순서 · 카테고리별 도달성 표 · arc별 검증 표 · 실측 곡선 · 죽은 분기의 **3가지 서로 다른 원인** · 옵션 A~D + 권고 D · 열린 질문 3.
+- **핵심 측정**: 리졸버는 **한 곳에서만** 호출된다 — `applyTerminalLoot`(터미널 loot 확정) = **완주 경로**. 사망은 `runFailed` 로 제목에 돌아가고 **엔딩 화면이 없다**. 그래서 실플레이 카테고리는 **`liberation`(6) · `control`(5)** 뿐이고, `find` 가 arc별 **첫 번째**만 고르므로 관측 집합은 **liberation 5개 + control 최대 5개**.
+- **도달 불가 21개**: `sacrifice`(5) · `status_quo`(6) · `exile`(2) · `transcendence`(4) · `corruption`(4).
+- **실측**: `npm run campaign` 660 계약 → 리졸버는 **257건만** 봄(완주분): **liberation 256 · control 1**. 나머지 403은 하네스가 사망을 `sacrifice` 로 **대리 집계**한 것(리졸버 호출 아님).
+- **원인이 3가지로 다르다**(하나의 수정으로 못 살린다): ① 선택 시스템 없음(`requiresChoice`, `ctx.choices` 하드코딩 `[]`) ② **선언만 안 됨**(`requiresFaction` — 팩션 점수는 살아 있는데 엔딩이 안 씀) ③ **구조적으로 밀림**(`status_quo` 는 게이트 5, `sacrifice` 는 호출 경로).
+- **이미 강제되는 것**: `design_conformance.test.ts:188` 의 **`it.fails`**(requiresFaction 0개 = 추적된 격차) · `:206`(requiresChoice 0개) · `:212`(`missionsCompleted` 2 ≠ liberation, 3 = liberation).
+- **부수 발견(하네스 출력 버그)**: `campaign_survival.ts` 가 "every leg, 660 resolutions" 라고 찍지만 실제로는 **계약당 1회 · 완주한 257건만**.
+- **권고 D**: 팩션 선언 하위집합만, **"3-leg 계약에서 팩션 점수 50 도달 가능한가" 를 먼저 측정한 뒤** 배선. 삭제(C)는 ADR-0010 이 포팅한 `story_skeleton.md` 를 되돌리는 일이라 "카탈로그 = 약속 vs 현재 콘텐츠" 전제가 필요.
+- **증거**: 게이트 **9/9**(`--tests`) · typecheck 0 · `src/` 변경 **0**(조사 전용).
